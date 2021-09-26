@@ -110,10 +110,8 @@ class Week {
         return dates(this.start, this.end);
     }
 
-    public day(day: Weekday): Date {
-        let date = setISOWeekYear(new Date(), this.year);
-        date = setISOWeek(date, this.week);
-        return setISODay(date, day);
+    public day(weekday: Weekday): Date {
+        return setISODay(setISOWeek(setISOWeekYear(new Date(), this.year), this.week), weekday);
     }
 
     public contains = (date: Date): boolean =>
