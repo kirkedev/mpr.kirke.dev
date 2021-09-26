@@ -2,18 +2,20 @@ import dates from "@ams/lib/dates";
 import Repository from "@ams/lib/Repository";
 
 const fetch = (start: Date, end: Date) =>
-    Promise.resolve(Array.from(dates(start, end)).map(date => ({ date })));
+    Promise.resolve(Array.from(dates(start, end))
+        .filter(date => date < new Date(2020, 4, 1))
+        .map(date => ({ date })));
 
 describe("Repository caching", () => {
     const spy = jest.fn(fetch);
     const repository = new Repository(spy);
 
-    beforeEach(() => spy.mockClear());
+    beforeEach(spy.mockClear);
 
     test("initial query for multiple weeks", async () => {
         const result = await repository.query(new Date(2020, 3, 11), new Date(2020, 3, 26));
-        expect(spy).toHaveBeenCalledTimes(3);
         expect(result.length).toBe(16);
+        expect(spy).toHaveBeenCalledTimes(3);
     });
 
     test("full cache hit query for one week", async () => {
@@ -33,8 +35,27 @@ describe("Repository caching", () => {
 
     test("partial cache hit query for multiple weeks", async () => {
         const result = await repository.query(new Date(2020, 3, 24), new Date(2020, 3, 30));
+        expect(result.length).toBe(7);
         expect(spy).toHaveBeenCalledTimes(1);
         expect(spy).toHaveBeenCalledWith(new Date(2020, 3, 27), new Date(2020, 4, 3));
+    });
+
+    test("fetch missing data", async () => {
+        const result = await repository.query(new Date(2020, 3, 24), new Date(2020, 3, 30));
         expect(result.length).toBe(7);
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(new Date(2020, 4, 1), new Date(2020, 4, 3));
+    });
+
+    test("empty results are not stored in cache", async () => {
+        let result = await repository.query(new Date(2020, 4, 6), new Date(2020, 4, 8));
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(new Date(2020, 4, 4), new Date(2020, 4, 10));
+        expect(result.length).toBe(0);
+
+        result = await repository.query(new Date(2020, 4, 6), new Date(2020, 4, 8));
+        expect(spy).toHaveBeenCalledTimes(2);
+        expect(spy).toHaveBeenCalledWith(new Date(2020, 4, 4), new Date(2020, 4, 10));
+        expect(result.length).toBe(0);
     });
 });
