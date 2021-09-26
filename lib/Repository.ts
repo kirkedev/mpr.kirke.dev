@@ -11,7 +11,7 @@ class Repository<T extends Observation> {
         private readonly fetch: (start: Date, end: Date) => Promise<T[]>) {
     }
 
-    private async get(week: Week): Promise<T[]> {
+    private get = async (week: Week): Promise<T[]> => {
         const key = week.toString();
 
         if (this.data.has(key)) {
@@ -24,8 +24,8 @@ class Repository<T extends Observation> {
         return result;
     }
 
-    public async query(start: Date, end: Date): Promise<T[]> {
-        const requests = Array.from(Week.with(start, end)).map(week => this.get(week));
+    public query = async (start: Date, end: Date): Promise<T[]> => {
+        const requests = Array.from(Week.with(start, end)).map(this.get);
 
         return Promise.all(requests).then(results => results.flat()
             .filter(record => record.date >= start && record.date <= end));
