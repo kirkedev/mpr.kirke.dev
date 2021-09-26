@@ -34,6 +34,7 @@ describe("Repository caching", () => {
     test("partial cache hit query for multiple weeks", async () => {
         const result = await repository.query(new Date(2020, 3, 24), new Date(2020, 3, 30));
         expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(new Date(2020, 3, 27), new Date(2020, 4, 3));
         expect(result.length).toBe(7);
     });
 });
