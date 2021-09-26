@@ -5,7 +5,7 @@ interface Observation {
 }
 
 class Repository<T extends Observation> {
-    data = new Map<string, T[]>();
+    #data = new Map<string, T[]>();
 
     public constructor(
         private readonly fetch: (start: Date, end: Date) => Promise<T[]>) {
@@ -14,12 +14,12 @@ class Repository<T extends Observation> {
     private get = async (week: Week): Promise<T[]> => {
         const key = week.toString();
 
-        if (this.data.has(key)) {
-            return this.data.get(key) as T[];
+        if (this.#data.has(key)) {
+            return this.#data.get(key) as T[];
         }
 
         const result = await this.fetch(week.start, week.end);
-        this.data.set(key, result);
+        this.#data.set(key, result);
 
         return result;
     }
