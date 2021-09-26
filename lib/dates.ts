@@ -6,7 +6,7 @@ function* iterateDates(start: Date, end: Date) {
 
     while (date <= end) {
         yield date;
-        date = addDays(date, 1)
+        date = addDays(date, 1);
     }
 }
 

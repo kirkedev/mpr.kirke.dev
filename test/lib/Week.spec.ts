@@ -6,13 +6,13 @@ test("format a Week as ISO 8601", () => {
 });
 
 test("get the Week of a specific date", () => {
-   const week = Week.with(new Date(2020, 3, 20));
-   expect(week.year).toBe(2020);
-   expect(week.week).toBe(17);
+    const week = Week.with(new Date(2020, 3, 20));
+    expect(week.year).toBe(2020);
+    expect(week.week).toBe(17);
 });
 
 test("parse a Week from compact ISO 8601 format", () => {
-   const week = Week.parse("2020W17");
+    const week = Week.parse("2020W17");
     expect(week.year).toBe(2020);
     expect(week.week).toBe(17);
 });
@@ -24,8 +24,8 @@ test("parse a Week from delimited ISO 8601 format", () => {
 });
 
 test("get the date at the beginning of a Week", () => {
-   const week = new Week(2020, 17);
-   expect(week.start).toEqual(new Date(2020, 3, 20));
+    const week = new Week(2020, 17);
+    expect(week.start).toEqual(new Date(2020, 3, 20));
 });
 
 test("get the date at the end of a Week", () => {
@@ -69,17 +69,17 @@ test("get the Sunday within a Week", () => {
 });
 
 test("get all dates in a week", () => {
-   const week = new Week(2020, 17);
+    const week = new Week(2020, 17);
 
-   expect(Array.from(week.days)).toEqual([
-       new Date(2020, 3, 20),
-       new Date(2020, 3, 21),
-       new Date(2020, 3, 22),
-       new Date(2020, 3, 23),
-       new Date(2020, 3, 24),
-       new Date(2020, 3, 25),
-       new Date(2020, 3, 26),
-   ]);
+    expect(Array.from(week.days)).toEqual([
+        new Date(2020, 3, 20),
+        new Date(2020, 3, 21),
+        new Date(2020, 3, 22),
+        new Date(2020, 3, 23),
+        new Date(2020, 3, 24),
+        new Date(2020, 3, 25),
+        new Date(2020, 3, 26),
+    ]);
 });
 
 test("get the previous week", () => {
@@ -95,15 +95,15 @@ test("get the previous week before the first week of a year", () => {
 });
 
 test("get the next week", () => {
-   const week = new Week(2020, 17).next;
-   expect(week.year).toBe(2020);
-   expect(week.week).toBe(18);
+    const week = new Week(2020, 17).next;
+    expect(week.year).toBe(2020);
+    expect(week.week).toBe(18);
 });
 
 test("get the next week following the last week of a year", () => {
-   const week = new Week(2020, 53).next;
-   expect(week.year).toBe(2021);
-   expect(week.week).toBe(1);
+    const week = new Week(2020, 53).next;
+    expect(week.year).toBe(2021);
+    expect(week.week).toBe(1);
 });
 
 test("check if a given date is within a Week", () => {

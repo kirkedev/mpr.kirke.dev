@@ -7,7 +7,7 @@
     "license": "ISC",
     "private": true,
     "scripts": {
-        "lint": "eslint . --ext .ts"
+        "lint": "eslint . --ext .ts --fix"
     },
     "workspaces": [
         "api",

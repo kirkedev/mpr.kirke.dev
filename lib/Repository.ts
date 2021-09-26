@@ -27,8 +27,8 @@ class Repository<T extends Observation> {
     public async query(start: Date, end: Date): Promise<T[]> {
         const requests = Array.from(Week.with(start, end)).map(week => this.get(week));
 
-        return await Promise.all(requests).then(results =>
-            results.flat().filter(record => record.date >= start && record.date <= end));
+        return Promise.all(requests).then(results => results.flat()
+            .filter(record => record.date >= start && record.date <= end));
     }
 }
 
