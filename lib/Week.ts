@@ -1,11 +1,11 @@
+import getISOWeek from "date-fns/getISOWeek";
+import getISOWeekYear from "date-fns/getISOWeekYear";
 import getISOWeeksInYear from "date-fns/getISOWeeksInYear";
 import isSameISOWeek from "date-fns/isSameISOWeek";
 import setISODay from "date-fns/setISODay";
 import setISOWeek from "date-fns/setISOWeek";
 import setISOWeekYear from "date-fns/setISOWeekYear";
 import dates from "./dates";
-import getISOWeekYear from "date-fns/getISOWeekYear";
-import getISOWeek from "date-fns/getISOWeek";
 
 function* iterateWeeks(start: Week, end: Week): Iterator<Week> {
     for (let year = start.year; year <= end.year; year++) {
@@ -27,10 +27,17 @@ class Weeks implements Iterable<Week> {
         iterateWeeks(this.start, this.end);
 }
 
-class Week {
-    public start = this.monday;
-    public end = this.sunday;
+export enum Weekday {
+    Monday = 1,
+    Tuesday = 2,
+    Wednesday = 3,
+    Thursday = 4,
+    Friday = 5,
+    Saturday = 6,
+    Sunday = 7
+}
 
+class Week {
     public constructor(
         public readonly year: number,
         public readonly week: number) {
@@ -69,38 +76,41 @@ class Week {
     }
 
     public get monday(): Date {
-        return this.day(1);
+        return this.day(Weekday.Monday);
     }
 
     public get tuesday(): Date {
-        return this.day(2);
+        return this.day(Weekday.Tuesday);
     }
 
     public get wednesday(): Date {
-        return this.day(3);
+        return this.day(Weekday.Wednesday);
     }
 
     public get thursday(): Date {
-        return this.day(4);
+        return this.day(Weekday.Thursday);
     }
 
     public get friday(): Date {
-        return this.day(5);
+        return this.day(Weekday.Friday);
     }
 
     public get saturday(): Date {
-        return this.day(6);
+        return this.day(Weekday.Saturday);
     }
 
     public get sunday(): Date {
-        return this.day(7);
+        return this.day(Weekday.Sunday);
     }
+
+    public start = this.monday;
+    public end = this.sunday;
 
     public get days(): Iterable<Date> {
         return dates(this.start, this.end);
     }
 
-    public day(day: 1 | 2 | 3 | 4 | 5 | 6 | 7): Date {
+    public day(day: Weekday): Date {
         let date = setISOWeekYear(new Date(), this.year);
         date = setISOWeek(date, this.week);
         return setISODay(date, day);
