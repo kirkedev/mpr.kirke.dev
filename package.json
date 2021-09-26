@@ -1,0 +1,24 @@
+{
+    "name": "ams",
+    "version": "0.1.0",
+    "description": "",
+    "main": "index.js",
+    "author": "Andrew Kirkegaard",
+    "license": "ISC",
+    "private": true,
+    "scripts": {
+        "lint": "eslint . --ext .ts"
+    },
+    "workspaces": [
+        "api",
+        "app",
+        "lib",
+        "test"
+    ],
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^4.31.2",
+        "@typescript-eslint/parser": "^4.31.2",
+        "eslint": "^7.32.0",
+        "typescript": "^4.4.3"
+    }
+}

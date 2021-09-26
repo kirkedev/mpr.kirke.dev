@@ -1,0 +1,7 @@
+{
+    "name": "@ams/lib",
+    "version": "0.1.0",
+    "dependencies": {
+        "date-fns": "^2.24.0"
+    }
+}

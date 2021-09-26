@@ -1,0 +1,15 @@
+{
+    "name": "test",
+    "version": "0.1.0",
+    "scripts": {
+        "unit": "jest --projects lib"
+    },
+    "devDependencies": {
+        "@types/jest": "^27.0.2",
+        "jest": "^27.2.2",
+        "ts-jest": "^27.0.5"
+    },
+    "peerDependencies": {
+        "typescript": "^4.4.3"
+    }
+}
