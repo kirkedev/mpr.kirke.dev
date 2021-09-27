@@ -1,17 +1,22 @@
 import Week, { Weekday } from "./Week";
 import compareAsc from "date-fns/compareAsc";
 import getISODay from "date-fns/getISODay";
-import addDays from "date-fns/addDays";
+import isThisISOWeek from "date-fns/isThisISOWeek";
 
 interface Observation {
     date: Date;
+}
+
+interface Archive<T extends Observation> {
+    day: number;
+    data: T[];
 }
 
 const compareObservations = (a: Observation, b: Observation) =>
     compareAsc(a.date, b.date);
 
 class Repository<T extends Observation> {
-    #data = new Map<string, T[]>();
+    #data = new Map<string, Archive<T>>();
 
     public constructor(
         private readonly fetch: (start: Date, end: Date) => Promise<T[]>) {
@@ -21,24 +26,25 @@ class Repository<T extends Observation> {
         const key = week.toString();
 
         if (this.#data.has(key)) {
-            const result = this.#data.get(key) as T[];
-            const { date: last } = result[result.length - 1];
+            const { day, data } = this.#data.get(key) as Archive<T>;
 
-            if (getISODay(last) < Weekday.Friday) {
-                result.concat(await this.fetch(addDays(last, 1), week.end));
-                this.#data.set(key, result);
+            if (day < Weekday.Sunday) {
+                data.concat(await this.fetch(week.day(day + 1), week.end));
+                this.#data.set(key, { day, data });
             }
 
-            return result;
+            return data;
         }
 
-        const result = await this.fetch(week.start, week.end).then(data => data.sort(compareObservations));
+        const data = await this.fetch(week.start, week.end).then(data => data.sort(compareObservations));
 
-        if (result.length > 0) {
-            this.#data.set(key, result);
+        if (data.length > 0) {
+            const { date: last } = data[data.length - 1];
+            const day = isThisISOWeek(last) ? getISODay(last) : Weekday.Sunday;
+            this.#data.set(key, { day, data });
         }
 
-        return result;
+        return data;
     }
 
     public query(start: Date, end: Date): Promise<T[]> {
