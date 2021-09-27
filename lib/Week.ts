@@ -57,9 +57,11 @@ class Week {
     static with(date: Date): Week;
     static with(start: Date, end: Date): Weeks;
     static with(start: Date, end?: Date): Week | Weeks {
+        const week = new Week(getISOWeekYear(start), getISOWeek(start));
+
         return end === undefined
-            ? new Week(getISOWeekYear(start), getISOWeek(start))
-            : Week.range(Week.with(start), Week.with(end));
+            ? week
+            : Week.range(week, new Week(getISOWeekYear(end), getISOWeek(end)));
     }
 
     public get next(): Week {
