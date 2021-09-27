@@ -17,7 +17,7 @@ class Repository<T extends Observation> {
         private readonly fetch: (start: Date, end: Date) => Promise<T[]>) {
     }
 
-    private async get (week: Week): Promise<T[]> {
+    private async get(week: Week): Promise<T[]> {
         const key = week.toString();
 
         if (this.#data.has(key)) {
