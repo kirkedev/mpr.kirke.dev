@@ -33,6 +33,11 @@
             "asyncArrow": "always"
         }],
         "require-await": "error",
-        "no-return-await": "error"
+        "no-return-await": "error",
+        "no-multiple-empty-lines": ["error", { "max": 1 }],
+        "no-await-in-loop": "error",
+        "no-extra-parens": "error",
+        "arrow-parens": ["error", "as-needed"],
+        "arrow-spacing": "error"
     }
 }
