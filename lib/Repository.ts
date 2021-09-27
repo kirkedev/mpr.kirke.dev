@@ -2,6 +2,7 @@ import Week, { Weekday } from "./Week";
 import compareAsc from "date-fns/compareAsc";
 import getISODay from "date-fns/getISODay";
 import isThisISOWeek from "date-fns/isThisISOWeek";
+import LRU from "lru-cache";
 
 interface Observation {
     date: Date;
@@ -15,8 +16,10 @@ interface Archive<T extends Observation> {
 const compareObservations = (a: Observation, b: Observation) =>
     compareAsc(a.date, b.date);
 
+const maxAge = 3 * 24 * 60 * 60 * 1000;
+
 class Repository<T extends Observation> {
-    #data = new Map<string, Archive<T>>();
+    #data = new LRU<string, Archive<T>>({ maxAge });
 
     public constructor(
         private readonly fetch: (start: Date, end: Date) => Promise<T[]>) {

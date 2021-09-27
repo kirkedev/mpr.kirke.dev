@@ -20,7 +20,8 @@ function* iterateWeeks(start: Week, end: Week): Iterator<Week> {
 
 class Weeks implements Iterable<Week> {
     public constructor(
-        private readonly start: Week, private readonly end: Week) {
+        private readonly start: Week,
+        private readonly end: Week) {
     }
 
     [Symbol.iterator] = (): Iterator<Week> =>
