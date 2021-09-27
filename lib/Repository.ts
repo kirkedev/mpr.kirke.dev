@@ -41,7 +41,7 @@ class Repository<T extends Observation> {
         return result;
     }
 
-    public async query(start: Date, end: Date): Promise<T[]> {
+    public query(start: Date, end: Date): Promise<T[]> {
         const requests = Array.from(Week.with(start, end)).map(week => this.get(week));
 
         return Promise.all(requests).then(results => results.flat()
