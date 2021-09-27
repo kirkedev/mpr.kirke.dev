@@ -1,8 +1,9 @@
-import Week, { Weekday } from "./Week";
 import compareAsc from "date-fns/compareAsc";
 import getISODay from "date-fns/getISODay";
+import startOfDay from "date-fns/startOfDay";
 import isThisISOWeek from "date-fns/isThisISOWeek";
 import LRU from "lru-cache";
+import Week, { Weekday } from "./Week";
 
 interface Observation {
     date: Date;
@@ -26,20 +27,27 @@ class Repository<T extends Observation> {
     }
 
     private async get(week: Week): Promise<T[]> {
+        const { start } = week;
+        const end = new Date(Math.min(startOfDay(new Date()).getTime(), week.end.getTime()));
+
+        if (end < start) {
+            return [];
+        }
+
         const key = week.toString();
 
         if (this.#data.has(key)) {
             const { day, data } = this.#data.get(key) as Archive<T>;
 
             if (day < Weekday.Sunday) {
-                data.concat(await this.fetch(week.day(day + 1), week.end));
+                data.concat(await this.fetch(week.day(day + 1), end));
                 this.#data.set(key, { day, data });
             }
 
             return data;
         }
 
-        const data = await this.fetch(week.start, week.end).then(data => data.sort(compareObservations));
+        const data = await this.fetch(start, end).then(data => data.sort(compareObservations));
 
         if (data.length > 0) {
             const { date: last } = data[data.length - 1];

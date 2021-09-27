@@ -9,7 +9,8 @@ describe("Repository caching", () => {
 
     const repository = new Repository(fetch);
 
-    jest.useFakeTimers().setSystemTime(new Date(2020, 4, 1).getTime());
+    beforeAll(() => jest.useFakeTimers().setSystemTime(new Date(2020, 4, 1).getTime()));
+    afterAll(jest.useRealTimers);
 
     beforeEach(fetch.mockClear);
 
@@ -38,25 +39,34 @@ describe("Repository caching", () => {
         const result = await repository.query(new Date(2020, 3, 24), new Date(2020, 3, 30));
         expect(result.length).toBe(7);
         expect(fetch).toHaveBeenCalledTimes(1);
-        expect(fetch).toHaveBeenCalledWith(new Date(2020, 3, 27), new Date(2020, 4, 3));
+        expect(fetch).toHaveBeenCalledWith(new Date(2020, 3, 27), new Date(2020, 4, 1));
     });
 
     test("fetch missing data", async () => {
         const result = await repository.query(new Date(2020, 3, 24), new Date(2020, 3, 30));
         expect(result.length).toBe(7);
         expect(fetch).toHaveBeenCalledTimes(1);
-        expect(fetch).toHaveBeenCalledWith(new Date(2020, 4, 1), new Date(2020, 4, 3));
+        expect(fetch).toHaveBeenCalledWith(new Date(2020, 4, 1), new Date(2020, 4, 1));
     });
 
-    test("empty results are not stored in cache", async () => {
-        let result = await repository.query(new Date(2020, 4, 6), new Date(2020, 4, 8));
-        expect(fetch).toHaveBeenCalledTimes(1);
-        expect(fetch).toHaveBeenCalledWith(new Date(2020, 4, 4), new Date(2020, 4, 10));
+    test("don't request data from the future", async () => {
+        const result = await repository.query(new Date(2020, 4, 6), new Date(2020, 4, 8));
         expect(result.length).toBe(0);
-
-        result = await repository.query(new Date(2020, 4, 6), new Date(2020, 4, 8));
-        expect(fetch).toHaveBeenCalledTimes(2);
-        expect(fetch).toHaveBeenCalledWith(new Date(2020, 4, 4), new Date(2020, 4, 10));
-        expect(result.length).toBe(0);
+        expect(fetch).not.toHaveBeenCalled();
     });
+});
+
+test("don't cache empty results", async () => {
+    const fetch = jest.fn(() => Promise.resolve([]));
+    const repository = new Repository(fetch);
+
+    let result = await repository.query(new Date(2020, 4, 6), new Date(2020, 4, 8));
+    expect(result.length).toBe(0);
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenLastCalledWith(new Date(2020, 4, 4), new Date(2020, 4, 10));
+
+    result = await repository.query(new Date(2020, 4, 6), new Date(2020, 4, 8));
+    expect(result.length).toBe(0);
+    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(fetch).toHaveBeenLastCalledWith(new Date(2020, 4, 4), new Date(2020, 4, 10));
 });
