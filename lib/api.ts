@@ -1,22 +1,19 @@
 import type { Nullable } from ".";
 
-function getOptional(record: Record<string, string>, key: string): Nullable<string> {
-    if (key in record) {
-        const value = record[key];
-        return value === "null" ? null : value;
-    }
+const stripCommas = (value: string) =>
+    value.replace(",", "");
 
-    return null;
-}
+const getOptional = (record: Record<string, Nullable<string>>, key: string): Nullable<string> =>
+    key in record ? record[key] : null;
 
 function optInt(record: Record<string, string>, key: string): number {
     const value = getOptional(record, key);
-    return value === null ? 0 : parseInt(value);
+    return value === null ? 0 : parseInt(stripCommas(value));
 }
 
 function optFloat(record: Record<string, string>, key: string): number {
     const value = getOptional(record, key);
-    return value === null ? NaN : parseInt(value);
+    return value === null ? NaN : parseFloat(stripCommas(value));
 }
 
 export { optInt, optFloat };
