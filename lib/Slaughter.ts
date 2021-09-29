@@ -2,8 +2,9 @@ import parseDate from "date-fns/parse";
 import { optFloat, optInt } from "./api";
 import type { PurchaseType } from "./PurchaseType";
 import { Arrangement, Basis, Seller } from "./PurchaseType";
+import { map } from "./itertools";
 
-interface SlaughterRecord extends Record<string, string>{
+interface SlaughterRecord extends Record<string, string> {
     avg_backfat: string;
     avg_carcass_weight: string;
     avg_lean_percent: string;
@@ -99,8 +100,8 @@ function parse(record: SlaughterRecord): Slaughter {
     };
 }
 
-const parseResponse = (response: ApiResponse): Slaughter[] =>
-    response.results.map(parse);
+const parseResponse = (response: ApiResponse): Iterable<Slaughter> =>
+    map(response.results, parse);
 
 export default parseResponse;
 

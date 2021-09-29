@@ -4,7 +4,7 @@ import { Arrangement, Basis, Seller } from "@ams/lib/PurchaseType";
 import load from "./resources";
 
 describe("parse slaughter records for a single day", () => {
-    const records = parseResponse(load<ApiResponse>("slaughter.json"));
+    const records = Array.from(parseResponse(load<ApiResponse>("slaughter.json")));
 
     test("Producer sold negotiated", () => {
         const record = records[0];
