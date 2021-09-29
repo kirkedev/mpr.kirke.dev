@@ -120,6 +120,9 @@ class Week {
     public contains = (date: Date): boolean =>
         isSameISOWeek(date, this.start);
 
+    public equals = (week: Week): boolean =>
+        week.week === this.week && week.year === this.year;
+
     public toString = (): string =>
         `${this.year}W${this.week.toString(10).padStart(2, "0")}`;
 }
