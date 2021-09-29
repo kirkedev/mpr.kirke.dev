@@ -1,4 +1,4 @@
-import dateParser from "date-fns/parse";
+import parseDate from "date-fns/parse";
 import { optFloat, optInt } from "./api";
 import type { PurchaseType } from "./PurchaseType";
 import { Arrangement, Basis, Seller } from "./PurchaseType";
@@ -33,9 +33,7 @@ interface SlaughterRecord extends Record<string, string>{
 interface ApiResponse {
     reportSection: "Barrows/Gilts";
     stats: {
-        totalRows: number;
         returnedRows: number;
-        userAllowedRows: number;
     },
     results: SlaughterRecord[]
 }
@@ -61,9 +59,10 @@ interface Slaughter {
 }
 
 const dateFormat = "M/d/yyyy";
+const today = new Date();
 
-const parseDate = (date: string): Date =>
-    dateParser(date, dateFormat, new Date());
+const getDate = (date: string): Date =>
+    parseDate(date, dateFormat, today);
 
 const PurchaseTypes: Record<string, PurchaseType> = {
     "Prod. Sold Negotiated": [Seller.Producer, Arrangement.Negotiated, Basis.All],
@@ -80,8 +79,8 @@ function parse(record: SlaughterRecord): Slaughter {
     const [seller, arrangement, basis] = PurchaseTypes[record.purchase_type];
 
     return {
-        date: parseDate(record.for_date_begin),
-        reportDate: parseDate(record.report_date),
+        date: getDate(record.for_date_begin),
+        reportDate: getDate(record.report_date),
         seller,
         arrangement,
         basis,
