@@ -1,15 +1,34 @@
-import { all, count, countIf, each, none, one, some, sumBy } from "@ams/lib/itertools/accumulate";
-import chunk from "@ams/lib/itertools/chunk";
-import { drop, dropUntil, dropWhile } from "@ams/lib/itertools/drop";
-import enumerate from "@ams/lib/itertools/enumerate";
-import { filter, find } from "@ams/lib/itertools/filter";
-import { flatMap, map } from "@ams/lib/itertools/map";
-import { elementAt, first, last, slice } from "@ams/lib/itertools/slice";
-import { take, takeUntil, takeWhile } from "@ams/lib/itertools/take";
-import zip from "@ams/lib/itertools/zip";
 import dates from "@ams/lib/dates";
 import Week from "@ams/lib/Week";
-import { groupBy } from "@ams/lib/itertools";
+
+import {
+    all,
+    chunk,
+    count,
+    countIf,
+    drop,
+    dropUntil,
+    dropWhile,
+    each,
+    elementAt,
+    enumerate,
+    filter,
+    find,
+    first,
+    flatMap,
+    groupBy,
+    last,
+    map,
+    none,
+    one,
+    slice,
+    some,
+    sumBy,
+    take,
+    takeUntil,
+    takeWhile,
+    zip
+} from "@ams/lib/itertools";
 
 test("chunk a date range by size", () => {
     const start = new Date(2019, 5, 1);

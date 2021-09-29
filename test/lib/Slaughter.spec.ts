@@ -1,6 +1,7 @@
-import parseResponse, { ApiResponse } from "@ams/lib/Slaughter";
-import load from "./resources";
+import type { ApiResponse } from "@ams/lib/Slaughter";
+import parseResponse from "@ams/lib/Slaughter";
 import { Arrangement, Basis, Seller } from "@ams/lib/PurchaseType";
+import load from "./resources";
 
 describe("parse slaughter records for a single day", () => {
     const records = parseResponse(load<ApiResponse>("slaughter.json"));
