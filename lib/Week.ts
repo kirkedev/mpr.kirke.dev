@@ -64,6 +64,12 @@ class Week {
             : Week.range(week, new Week(getISOWeekYear(end), getISOWeek(end)));
     }
 
+    static ascending = (week: Week, other: Week): -1 | 0 | 1 =>
+        week.equals(other) ? 0 : week.before(other) ? -1 : 1;
+
+    static descending = (week: Week, other: Week): -1 | 0 | 1 =>
+        week.equals(other) ? 0 : week.after(other) ? -1 : 1;
+
     public get next(): Week {
         const weeks = getISOWeeksInYear(this.year);
 
@@ -122,6 +128,12 @@ class Week {
 
     public equals = (week: Week): boolean =>
         week.week === this.week && week.year === this.year;
+
+    public before = (week: Week): boolean =>
+        this.year === week.year ? this.week < week.week : this.year < week.year;
+
+    public after = (week: Week): boolean =>
+        this.year === week.year ? this.week > week.week : this.year > week.year;
 
     public toString = (): string =>
         `${this.year}W${this.week.toString(10).padStart(2, "0")}`;

@@ -126,6 +126,30 @@ describe("compare weeks to see if they are equal", () => {
     });
 });
 
+describe("sort weeks", () => {
+    const week = Week.with(new Date(2019, 4, 1));
+    const first = Week.with(new Date(2019, 4, 1));
+    const second = Week.with(new Date(2020, 4, 1));
+    const third = Week.with(new Date(2021, 2, 1));
+    const fourth = Week.with(new Date(2021, 4, 1));
+    const fifth = Week.with(new Date(2021, 5, 1));
+    const sixth = Week.with(new Date(2022, 2, 1));
+
+    test("sort weeks ascending", () => {
+        const sorted = [second, first, fourth, sixth, week, third, fifth].sort(Week.ascending);
+
+        expect(sorted.map(week => week.toString())).toEqual(
+            [week, first, second, third, fourth, fifth, sixth].map(week => week.toString()));
+    });
+
+    test("sort weeks descending", () => {
+        const sorted = [second, first, fourth, sixth, week, third, fifth].sort(Week.descending);
+
+        expect(sorted.map(week => week.toString())).toEqual(
+            [sixth, fifth, fourth, third, second, first, week].map(week => week.toString()));
+    });
+});
+
 test("create a sequence of Weeks between two dates", () => {
     const start = new Date(2020, 3, 20);
     const end = new Date(2021, 3, 20);
