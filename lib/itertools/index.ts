@@ -3,7 +3,7 @@ export { default as chunk } from "./chunk";
 export { drop, dropWhile, dropUntil } from "./drop";
 export { default as enumerate } from "./enumerate";
 export { filter, find } from "./filter";
-export { flatten } from "./flatten";
+export { default as flatten } from "./flatten";
 export { default as groupBy } from "./groupBy";
 export { map, flatMap } from "./map";
 export { first, last, elementAt, slice } from "./slice";

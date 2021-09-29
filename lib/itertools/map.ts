@@ -1,6 +1,6 @@
 import type { UnaryOperator } from "..";
 import { iterate } from ".";
-import { flatten } from "./flatten";
+import flatten from "./flatten";
 
 function* mapElements<T, R>(iterator: Iterator<T>, operator: UnaryOperator<T, R>): Iterator<R> {
     let result = iterator.next();

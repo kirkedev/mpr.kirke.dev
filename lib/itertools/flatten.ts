@@ -16,5 +16,7 @@ class FlattenedIterable<T> implements Iterable<T> {
         flattenElements(iterate(this.iterable))
 }
 
-export const flatten = <T>(iterable: Iterable<Iterable<T>>): Iterable<T> =>
+const flatten = <T>(iterable: Iterable<Iterable<T>>): Iterable<T> =>
     new FlattenedIterable(iterable);
+
+export default flatten;
