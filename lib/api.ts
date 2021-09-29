@@ -9,12 +9,14 @@ function getOptional(record: Record<string, string>, key: string): Nullable<stri
     return null;
 }
 
-export function optInt(record: Record<string, string>, key: string): number {
+function optInt(record: Record<string, string>, key: string): number {
     const value = getOptional(record, key);
     return value === null ? 0 : parseInt(value);
 }
 
-export function optFloat(record: Record<string, string>, key: string): number {
+function optFloat(record: Record<string, string>, key: string): number {
     const value = getOptional(record, key);
     return value === null ? NaN : parseInt(value);
 }
+
+export { optInt, optFloat };
