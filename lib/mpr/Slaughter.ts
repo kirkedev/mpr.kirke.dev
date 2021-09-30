@@ -1,8 +1,7 @@
-import parseDate from "date-fns/parse";
-import { optFloat, optInt } from ".";
+import { map } from "../itertools/map";
+import { getDate, MprResponse, optFloat, optInt } from ".";
 import type { PurchaseType } from "./PurchaseType";
 import { Arrangement, Basis, Seller } from "./PurchaseType";
-import { map } from "../itertools/map";
 
 interface SlaughterRecord extends Record<string, string> {
     avg_backfat: string;
@@ -31,14 +30,6 @@ interface SlaughterRecord extends Record<string, string> {
     slug_name: string;
 }
 
-interface ApiResponse {
-    reportSection: "Barrows/Gilts";
-    stats: {
-        returnedRows: number;
-    },
-    results: SlaughterRecord[]
-}
-
 interface Slaughter {
     date: Date;
     reportDate: Date;
@@ -58,12 +49,6 @@ interface Slaughter {
     loineyeArea: number;
     sortLoss: number;
 }
-
-const dateFormat = "M/d/yyyy";
-const today = new Date();
-
-const getDate = (date: string): Date =>
-    parseDate(date, dateFormat, today);
 
 const PurchaseTypes: Record<string, PurchaseType> = {
     "Prod. Sold Negotiated": [Seller.Producer, Arrangement.Negotiated, Basis.All],
@@ -100,9 +85,11 @@ function parse(record: SlaughterRecord): Slaughter {
     };
 }
 
-const parseResponse = (response: ApiResponse): Iterable<Slaughter> =>
+type SlaughterApiResponse = MprResponse<"Barrows/Gilts", SlaughterRecord>;
+
+const parseResponse = (response: SlaughterApiResponse): Iterable<Slaughter> =>
     map(response.results, parse);
 
 export default parseResponse;
 
-export type { ApiResponse, Slaughter, SlaughterRecord };
+export type { SlaughterApiResponse, Slaughter, SlaughterRecord };

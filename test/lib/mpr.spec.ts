@@ -1,7 +1,9 @@
 import { optFloat, optInt } from "@ams/lib/mpr";
-import type { ApiResponse } from "@ams/lib/mpr/Slaughter";
-import parseResponse from "@ams/lib/mpr/Slaughter";
 import { Arrangement, Basis, Seller } from "@ams/lib/mpr/PurchaseType";
+import type { SlaughterApiResponse } from "@ams/lib/mpr/Slaughter";
+import parseSlaughter from "@ams/lib/mpr/Slaughter";
+import type { PrimalsApiResponse, VolumeApiResponse } from "@ams/lib/mpr/Cutout";
+import parseCutout from "@ams/lib/mpr/Cutout";
 import load from "./resources";
 
 describe("get an optional integer value from a record", () => {
@@ -29,7 +31,7 @@ describe("get an optional float value from a record", () => {
 });
 
 describe("parse slaughter records for a single day", () => {
-    const records = Array.from(parseResponse(load<ApiResponse>("slaughter.json")));
+    const records = Array.from(parseSlaughter(load<SlaughterApiResponse>("slaughter.json")));
 
     test("Producer sold negotiated", () => {
         const record = records[0];
@@ -198,4 +200,22 @@ describe("parse slaughter records for a single day", () => {
         expect(record.loineyeArea).toBeCloseTo(7.65);
         expect(record.leanPercent).toBeCloseTo(54.40);
     });
+});
+
+test("parse cutout records for a single day", () => {
+    const volume = load<VolumeApiResponse>("volume.json");
+    const primals = load<PrimalsApiResponse>("primals.json");
+    const [cutout] = Array.from(parseCutout(volume, primals));
+
+    expect(cutout.date).toEqual(new Date(2020, 3, 9));
+    expect(cutout.reportDate).toEqual(new Date(2020, 3, 9));
+    expect(cutout.primalLoads).toBeCloseTo(359.80);
+    expect(cutout.trimmingLoads).toBeCloseTo(75.41);
+    expect(cutout.carcassPrice).toBeCloseTo(51.07);
+    expect(cutout.bellyPrice).toBeCloseTo(31.84);
+    expect(cutout.buttPrice).toBeCloseTo(48.39);
+    expect(cutout.hamPrice).toBeCloseTo(34.98);
+    expect(cutout.loinPrice).toBeCloseTo(88.58);
+    expect(cutout.picnicPrice).toBeCloseTo(27.33);
+    expect(cutout.ribPrice).toBeCloseTo(95.49);
 });
