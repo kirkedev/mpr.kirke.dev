@@ -1,4 +1,4 @@
-import { optFloat, optInt } from "@ams/lib/mpr";
+import { getDate, optFloat, optInt } from "@ams/lib/mpr";
 import { Arrangement, Basis, Seller } from "@ams/lib/mpr/PurchaseType";
 import type { SlaughterResponse } from "@ams/lib/mpr/Slaughter";
 import parseSlaughter from "@ams/lib/mpr/Slaughter";
@@ -30,6 +30,11 @@ describe("get an optional float value from a record", () => {
         const record = { };
         expect(optFloat(record, "key")).toBeNaN();
     });
+});
+
+test("parse a date", () => {
+    const date = getDate("4/20/2020");
+    expect(date).toEqual(new Date(2020, 3, 20));
 });
 
 describe("parse slaughter records for a single day", () => {
