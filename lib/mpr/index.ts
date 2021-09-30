@@ -19,23 +19,25 @@ const getDate = (date: string): Date =>
 const stripCommas = (value: string) =>
     value.replace(",", "");
 
+function getOptional(record: Record<string, Nullable<string>>, key: keyof typeof record): Nullable<string> {
+    const value = record[key];
+    return value === "" ? null : value;
+}
+
 const getInt = (value: string): number =>
     parseInt(stripCommas(value), 10);
 
 const getFloat = (value: string): number =>
     parseFloat(stripCommas(value));
 
-const getOptional = (record: Record<string, Nullable<string>>, key: string): Nullable<string> =>
-    key in record ? record[key] : null;
-
-function optInt(record: Record<string, Nullable<string>>, key: string): number {
+function optInt(record: Record<string, Nullable<string>>, key: keyof typeof record): number {
     const value = getOptional(record, key);
-    return value === null ? 0 : getInt(value);
+    return value == null ? 0 : getInt(value);
 }
 
-function optFloat(record: Record<string, Nullable<string>>, key: string): number {
+function optFloat(record: Record<string, Nullable<string>>, key: keyof typeof record): number {
     const value = getOptional(record, key);
-    return value === null ? NaN : getFloat(value);
+    return value == null ? NaN : getFloat(value);
 }
 
 export { getDate, getInt, getFloat, optInt, optFloat };

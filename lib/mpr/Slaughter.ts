@@ -1,9 +1,11 @@
+import type { Nullable } from "../";
 import { map } from "../itertools/map";
-import { getDate, MprResponse, optFloat, optInt } from ".";
+import type { MprResponse } from ".";
+import { getDate, optFloat, optInt } from ".";
 import type { PurchaseType } from "./PurchaseType";
 import { Arrangement, Basis, Seller } from "./PurchaseType";
 
-interface SlaughterRecord extends Record<string, string> {
+interface SlaughterRecord extends Record<string, Nullable<string>> {
     avg_backfat: string;
     avg_carcass_weight: string;
     avg_lean_percent: string;
@@ -85,11 +87,11 @@ function parse(record: SlaughterRecord): Slaughter {
     };
 }
 
-type SlaughterApiResponse = MprResponse<"Barrows/Gilts", SlaughterRecord>;
+type SlaughterResponse = MprResponse<"Barrows/Gilts", SlaughterRecord>;
 
-const parseResponse = (response: SlaughterApiResponse): Iterable<Slaughter> =>
+const parseResponse = (response: SlaughterResponse): Iterable<Slaughter> =>
     map(response.results, parse);
 
 export default parseResponse;
 
-export type { SlaughterApiResponse, Slaughter, SlaughterRecord };
+export type { SlaughterResponse, Slaughter, SlaughterRecord };

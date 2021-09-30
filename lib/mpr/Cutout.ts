@@ -1,30 +1,31 @@
 import { map } from "../itertools/map";
 import zip from "../itertools/zip";
-import { getDate, getFloat, MprResponse } from ".";
+import type { MprResponse } from ".";
+import { getDate, getFloat } from ".";
 
-interface VolumeRecord {
-    "slug_id": string;
-    "slug_name": string;
-    "report_title": string;
-    "published_date": string;
-    "report_date": string;
-    "temp_cuts_total_load": string;
-    "temp_process_total_load": string;
+interface VolumeRecord extends Record<string, string> {
+    slug_id: string;
+    slug_name: string;
+    report_title: string;
+    published_date: string;
+    report_date: string;
+    temp_cuts_total_load: string;
+    temp_process_total_load: string;
 }
 
-interface PrimalsRecord {
-    "slug_id": string;
-    "slug_name": string;
-    "report_title": string;
-    "published_date": string;
-    "report_date": string;
-    "pork_carcass": string;
-    "pork_belly": string;
-    "pork_butt": string;
-    "pork_ham": string;
-    "pork_loin": string;
-    "pork_picnic": string;
-    "pork_rib": string;
+interface PrimalsRecord extends Record<string, string> {
+    slug_id: string;
+    slug_name: string;
+    report_title: string;
+    published_date: string;
+    report_date: string;
+    pork_carcass: string;
+    pork_belly: string;
+    pork_butt: string;
+    pork_ham: string;
+    pork_loin: string;
+    pork_picnic: string;
+    pork_rib: string;
 }
 
 interface Cutout {
@@ -55,13 +56,13 @@ const parse = ([volume, primals]: [VolumeRecord, PrimalsRecord]): Cutout => ({
     ribPrice: getFloat(primals.pork_rib)
 });
 
-type VolumeApiResponse = MprResponse<"Current Volume", VolumeRecord>;
+type VolumeResponse = MprResponse<"Current Volume", VolumeRecord>;
 
-type PrimalsApiResponse = MprResponse<"Cutout and Primal Values", PrimalsRecord>;
+type PrimalsResponse = MprResponse<"Cutout and Primal Values", PrimalsRecord>;
 
-const parseResponse = (volume: VolumeApiResponse, primals: PrimalsApiResponse): Iterable<Cutout> =>
+const parseResponse = (volume: VolumeResponse, primals: PrimalsResponse): Iterable<Cutout> =>
     map(zip(volume.results, primals.results), parse);
 
 export default parseResponse;
 
-export type { Cutout, PrimalsRecord, VolumeRecord, PrimalsApiResponse, VolumeApiResponse };
+export type { Cutout, PrimalsRecord, VolumeRecord, PrimalsResponse, VolumeResponse };
