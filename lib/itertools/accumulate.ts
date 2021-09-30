@@ -4,7 +4,7 @@ import { filter, find } from "./filter";
 import { map } from "./map";
 import { last } from "./slice";
 
-export function* accumulate<T, R>(iterable: Iterable<T>, accumulator: Accumulator<T, R>, value: R): Iterable<R> {
+function* accumulate<T, R>(iterable: Iterable<T>, accumulator: Accumulator<T, R>, value: R): Iterable<R> {
     for (const item of iterable) {
         yield value = accumulator(value, item);
     }
@@ -50,4 +50,4 @@ function each<T>(iterable: Iterable<T>, callback: Callback<T>): void {
     }
 }
 
-export { reduce, sum, sumBy, count, countIf, one, none, some, all, each };
+export { accumulate, reduce, sum, sumBy, count, countIf, one, none, some, all, each };

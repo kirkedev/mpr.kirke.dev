@@ -112,7 +112,7 @@ test("check if a given date is within a Week", () => {
     expect(week.contains(new Date(2020, 4, 20))).toBe(false);
 });
 
-describe("compare weeks to see if they are equal", () => {
+describe("compare weeks for equality", () => {
     test("the same week", () => {
         const week = Week.with(new Date(2020, 4, 1));
         const other = Week.with(new Date(2020, 4, 2));
@@ -159,7 +159,7 @@ test("create a sequence of Weeks between two dates", () => {
     expect(`${weeks[0]}`).toBe("2020W17");
     expect(`${weeks[1]}`).toBe("2020W18");
     expect(`${weeks[2]}`).toBe("2020W19");
-    expect(`${weeks[3]}`).toBe("2020W20");
+    expect(`${weeks[36]}`).toBe("2020W53");
     expect(`${weeks[37]}`).toBe("2021W01");
     expect(`${weeks[38]}`).toBe("2021W02");
     expect(`${weeks[39]}`).toBe("2021W03");

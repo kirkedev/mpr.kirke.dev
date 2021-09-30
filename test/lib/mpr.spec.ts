@@ -1,7 +1,32 @@
-import type { ApiResponse } from "@ams/lib/Slaughter";
-import parseResponse from "@ams/lib/Slaughter";
-import { Arrangement, Basis, Seller } from "@ams/lib/PurchaseType";
+import { optFloat, optInt } from "@ams/lib/mpr";
+import type { ApiResponse } from "@ams/lib/mpr/Slaughter";
+import parseResponse from "@ams/lib/mpr/Slaughter";
+import { Arrangement, Basis, Seller } from "@ams/lib/mpr/PurchaseType";
 import load from "./resources";
+
+describe("get an optional integer value from a record", () => {
+    test("key is present with value", () => {
+        const record = { "key": "1,234" };
+        expect(optInt(record, "key")).toBe(1234);
+    });
+
+    test("key is not present", () => {
+        const record = { };
+        expect(optInt(record, "key")).toBe(0);
+    });
+});
+
+describe("get an optional float value from a record", () => {
+    test("key is present with value", () => {
+        const record = { "key": "1,234.56" };
+        expect(optFloat(record, "key")).toBe(1234.56);
+    });
+
+    test("key is not present", () => {
+        const record = { };
+        expect(optFloat(record, "key")).toBeNaN();
+    });
+});
 
 describe("parse slaughter records for a single day", () => {
     const records = Array.from(parseResponse(load<ApiResponse>("slaughter.json")));

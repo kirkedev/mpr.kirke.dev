@@ -1,8 +1,8 @@
 import parseDate from "date-fns/parse";
-import { optFloat, optInt } from "./api";
+import { optFloat, optInt } from ".";
 import type { PurchaseType } from "./PurchaseType";
 import { Arrangement, Basis, Seller } from "./PurchaseType";
-import { map } from "./itertools";
+import { map } from "../itertools/map";
 
 interface SlaughterRecord extends Record<string, string> {
     avg_backfat: string;
