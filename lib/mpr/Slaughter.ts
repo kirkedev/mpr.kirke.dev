@@ -6,30 +6,21 @@ import type { PurchaseType } from "./PurchaseType";
 import { Arrangement, Basis, Seller } from "./PurchaseType";
 
 interface SlaughterRecord extends Record<string, Nullable<string>> {
-    avg_backfat: string;
-    avg_carcass_weight: string;
-    avg_lean_percent: string;
-    avg_live_weight: string;
-    avg_loin_depth: string;
-    avg_net_price: string;
-    avg_sort_loss: string;
-    base_price: string;
     for_date_begin: string;
-    head_count: string;
-    highest_net_price: string;
-    loineye_area: string;
-    lowest_net_price: string;
-    market_location_city: string;
-    market_location_name: string;
-    market_location_state: string;
-    market_type: string;
-    market_type_category: string;
-    published_date: string;
-    purchase_type: string;
     report_date: string;
-    report_title: string;
-    slug_id: string;
-    slug_name: string;
+    purchase_type: string;
+    head_count: Nullable<string>;
+    avg_backfat: Nullable<string>;
+    avg_carcass_weight: Nullable<string>;
+    avg_live_weight: Nullable<string>;
+    base_price: Nullable<string>;
+    avg_net_price: Nullable<string>;
+    highest_net_price: Nullable<string>;
+    lowest_net_price: Nullable<string>;
+    avg_lean_percent: Nullable<string>;
+    loineye_area: Nullable<string>;
+    avg_loin_depth: Nullable<string>;
+    avg_sort_loss: Nullable<string>;
 }
 
 interface Slaughter {

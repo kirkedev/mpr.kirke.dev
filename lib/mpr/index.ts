@@ -1,8 +1,8 @@
 import parseDate from "date-fns/parse";
 import type { Nullable } from "..";
 
-interface MprResponse<Section, T> {
-    section: Section;
+interface MprResponse<Section extends string, T extends Record<string, Nullable<string>>> {
+    reportSection: Section;
     stats: {
         returnedRows: number;
     },

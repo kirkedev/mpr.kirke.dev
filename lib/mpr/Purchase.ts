@@ -6,20 +6,16 @@ import { Arrangement, Basis, Seller } from "./PurchaseType";
 import { map } from "../itertools/map";
 
 interface PurchaseRecord extends Record<string, Nullable<string>> {
-    slug_id: string;
-    report_title: string;
-    slug_name: string;
-    published_date: string;
     report_date: string;
     purchase_type: string;
-    head_count: string;
+    head_count: Nullable<string>;
     wtd_avg: Nullable<string>;
     price_high: Nullable<string>;
     price_low: Nullable<string>;
     rolling_avg: Nullable<string>;
 }
 
-interface PriorDayPurchaseRecord extends PurchaseRecord {
+interface HistoricalPurchaseRecord extends PurchaseRecord {
     reported_for_date: string;
 }
 
@@ -35,7 +31,7 @@ interface Purchase {
     highPrice: number;
 }
 
-type PurchaseResponse = MprResponse<"Barrows/Gilts (producer/packer sold)", PurchaseRecord | PriorDayPurchaseRecord>;
+type PurchaseResponse = MprResponse<"Barrows/Gilts (producer/packer sold)", PurchaseRecord | HistoricalPurchaseRecord>;
 
 const PurchaseTypes: Record<string, PurchaseType> = {
     "Negotiated (carcass basis)": [Seller.All, Arrangement.Negotiated, Basis.Carcass],
@@ -47,7 +43,7 @@ const PurchaseTypes: Record<string, PurchaseType> = {
     "Combined Negotiated/Negotiated Formula (live basis)": [Seller.All, Arrangement.AllNegotiated, Basis.Live]
 };
 
-function parse(record: PurchaseRecord | PriorDayPurchaseRecord): Purchase {
+function parse(record: PurchaseRecord | HistoricalPurchaseRecord): Purchase {
     const [seller, arrangement, basis] = PurchaseTypes[record.purchase_type];
     const date = "reported_for_date" in record ? record.reported_for_date : record.report_date;
 
@@ -69,4 +65,4 @@ const parseResponse = (response: PurchaseResponse): Iterable<Purchase> =>
 
 export default parseResponse;
 
-export type { Purchase, PurchaseRecord, PriorDayPurchaseRecord, PurchaseResponse };
+export type { Purchase, PurchaseRecord, HistoricalPurchaseRecord, PurchaseResponse };
