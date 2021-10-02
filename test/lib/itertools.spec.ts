@@ -10,7 +10,7 @@ import { filter, find } from "@ams/lib/itertools/filter";
 import { all, count, countIf, each, none, one, some, sumBy } from "@ams/lib/itertools/accumulate";
 import zip from "@ams/lib/itertools/zip";
 import groupBy from "@ams/lib/itertools/groupBy";
-import movingWindow from "@ams/lib/itertools/window";
+import rolling from "@ams/lib/itertools/rolling";
 
 test("chunk a date range by size", () => {
     const start = new Date(2019, 5, 1);
@@ -225,7 +225,7 @@ test("run a callback against each item in an iterable", () => {
 
 test("create a moving window of an iterable", () => {
     const range = ["a", "b", "c", "d", "e", "f", "g", "h"];
-    const windows = Array.from(movingWindow(range, 3));
+    const windows = Array.from(rolling(range, 3));
 
     expect(windows).toEqual([
         ["a", "b", "c"],

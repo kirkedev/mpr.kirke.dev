@@ -87,6 +87,7 @@ const parseResponse = (response: SalesResponse): Iterable<Sales> =>
     map(response.results, parse(response.reportSection));
 
 export default parseResponse;
+
 export { Cut };
 
 export type { Sales, SalesRecord, HistoricalSalesRecord, SalesResponse, CutType };

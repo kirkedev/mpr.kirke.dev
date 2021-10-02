@@ -41,7 +41,7 @@ function one<T>(iterable: Iterable<T>, predicate: Predicate<T>): boolean {
     if (result.done && result.value === undefined) return false;
 
     result = iterator.next();
-    return (result.done ?? false) && result.value === undefined;
+    return result.done !== undefined && result.done && result.value === undefined;
 }
 
 function each<T>(iterable: Iterable<T>, callback: Callback<T>): void {

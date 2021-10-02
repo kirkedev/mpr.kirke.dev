@@ -1,4 +1,4 @@
-import type { Nullable } from "../";
+import type { Nullable } from "..";
 import { map } from "../itertools/map";
 import type { MprResponse } from ".";
 import { getDate, optFloat, optInt } from ".";

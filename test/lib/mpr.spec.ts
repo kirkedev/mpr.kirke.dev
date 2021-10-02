@@ -17,8 +17,7 @@ describe("get an optional integer value from a record", () => {
     });
 
     test("key is not present", () => {
-        const record = { };
-        expect(optInt(record, "key")).toBe(0);
+        expect(optInt({ }, "key")).toBe(0);
     });
 });
 
@@ -29,8 +28,7 @@ describe("get an optional float value from a record", () => {
     });
 
     test("key is not present", () => {
-        const record = { };
-        expect(optFloat(record, "key")).toBeNaN();
+        expect(optFloat({ }, "key")).toBeNaN();
     });
 });
 

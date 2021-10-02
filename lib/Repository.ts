@@ -17,6 +17,9 @@ interface Archive<T extends Observation> {
 const compareObservations = (a: Observation, b: Observation) =>
     compareAsc(a.date, b.date);
 
+const sortObservations = <T extends Observation>(observations: T[]): T[] =>
+    observations.sort(compareObservations);
+
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 
 class Repository<T extends Observation> {
@@ -47,7 +50,7 @@ class Repository<T extends Observation> {
             return data;
         }
 
-        const data = await this.fetch(start, end).then(data => data.sort(compareObservations));
+        const data = await this.fetch(start, end).then(sortObservations);
 
         if (data.length > 0) {
             const { date: last } = data[data.length - 1];
