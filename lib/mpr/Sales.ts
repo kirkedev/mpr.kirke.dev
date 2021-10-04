@@ -1,4 +1,4 @@
-import type { Nullable } from "..";
+import type { Nullable, Observation } from "..";
 import type { MprResponse } from ".";
 import { getDate, optFloat, optInt } from ".";
 import { map } from "../itertools/map";
@@ -16,8 +16,7 @@ interface HistoricalSalesRecord extends SalesRecord {
     report_for_date: string;
 }
 
-interface Sales {
-    date: Date;
+interface Sales extends Observation {
     reportDate: Date;
     type: Cut;
     description: string;

@@ -1,3 +1,4 @@
+import type { Observation } from "..";
 import { map } from "../itertools/map";
 import zip from "../itertools/zip";
 import type { MprResponse } from ".";
@@ -28,8 +29,7 @@ interface PrimalsRecord extends Record<string, string> {
     pork_rib: string;
 }
 
-interface Cutout {
-    date: Date;
+interface Cutout extends Observation {
     reportDate: Date;
     primalLoads: number;
     trimmingLoads: number;

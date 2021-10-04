@@ -1,4 +1,4 @@
-import type { Nullable } from "..";
+import type { Nullable, Observation } from "..";
 import type { MprResponse } from ".";
 import { getDate, optFloat, optInt } from ".";
 import type { PurchaseType } from "./PurchaseType";
@@ -19,8 +19,7 @@ interface HistoricalPurchaseRecord extends PurchaseRecord {
     reported_for_date: string;
 }
 
-interface Purchase {
-    date: Date;
+interface Purchase extends Observation {
     reportDate: Date;
     seller: Seller;
     arrangement: Arrangement;

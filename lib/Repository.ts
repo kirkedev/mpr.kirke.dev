@@ -1,24 +1,14 @@
-import compareAsc from "date-fns/compareAsc";
 import getISODay from "date-fns/getISODay";
 import startOfDay from "date-fns/startOfDay";
 import isThisISOWeek from "date-fns/isThisISOWeek";
 import LRU from "lru-cache";
 import Week, { Weekday } from "./Week";
-
-interface Observation {
-    date: Date;
-}
+import { Observation, sortObservations } from "./index";
 
 interface Archive<T extends Observation> {
     day: number;
     data: T[];
 }
-
-const compareObservations = (a: Observation, b: Observation) =>
-    compareAsc(a.date, b.date);
-
-const sortObservations = <T extends Observation>(observations: T[]): T[] =>
-    observations.sort(compareObservations);
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 

@@ -1,4 +1,4 @@
-import type { Nullable } from "..";
+import type { Nullable, Observation } from "..";
 import { map } from "../itertools/map";
 import type { MprResponse } from ".";
 import { getDate, optFloat, optInt } from ".";
@@ -23,8 +23,7 @@ interface SlaughterRecord extends Record<string, Nullable<string>> {
     avg_sort_loss: Nullable<string>;
 }
 
-interface Slaughter {
-    date: Date;
+interface Slaughter extends Observation {
     reportDate: Date;
     basis: Basis;
     arrangement: Arrangement;
