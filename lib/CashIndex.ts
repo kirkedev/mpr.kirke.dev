@@ -35,7 +35,7 @@ interface CashIndex extends Observation {
     indexPrice: number;
 }
 
-function cash(slaughter: Iterable<Slaughter>): Iterable<CashIndex> {
+function cashIndex(slaughter: Iterable<Slaughter>): Iterable<CashIndex> {
     const sorted = Array.from(filterSlaughter(slaughter)).sort(sortSlaughter);
     const dates = groupBy(sorted, (last, current) => isSameDay(current.date, last.date));
 
@@ -52,6 +52,6 @@ function cash(slaughter: Iterable<Slaughter>): Iterable<CashIndex> {
     }));
 }
 
-export default cash;
+export default cashIndex;
 
 export type { CashIndex };

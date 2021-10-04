@@ -21,6 +21,6 @@ enum Basis {
     All
 }
 
-export { Seller, Arrangement,Basis };
+export { Seller, Arrangement, Basis };
 
 export type PurchaseType = [Seller, Arrangement, Basis];

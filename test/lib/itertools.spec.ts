@@ -199,7 +199,10 @@ test("combine two months into one sequence", () => {
 
 test("group dates by Week", () => {
     const range = dates(new Date(2020, 3, 1), new Date(2020, 3, 30));
-    const groups = Array.from(groupBy(range, (last, current) => Week.with(last).equals(Week.with(current))));
+
+    const groups = Array.from(groupBy(range, (last, current) =>
+        Week.with(last).equals(Week.with(current))));
+
     expect(groups.length).toBe(5);
 
     expect(groups.map(group => group[0])).toEqual([
