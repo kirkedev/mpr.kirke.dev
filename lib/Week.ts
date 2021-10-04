@@ -6,11 +6,15 @@ import setISODay from "date-fns/setISODay";
 import setISOWeek from "date-fns/setISOWeek";
 import setISOWeekYear from "date-fns/setISOWeekYear";
 import dates from "./dates";
+import type { Comparator } from ".";
 
 function* iterateWeeks(start: Week, end: Week): Iterator<Week> {
-    for (let year = start.year; year <= end.year; year++) {
-        const firstWeek = year === start.year ? start.week : 1;
-        const lastWeek = year === end.year ? end.week : getISOWeeksInYear(year);
+    const { week: startWeek, year: startYear } = start;
+    const { week: endWeek, year: endYear } = end;
+
+    for (let year = startYear; year <= endYear; year++) {
+        const firstWeek = year === startYear ? startWeek : 1;
+        const lastWeek = year === endYear ? endWeek : getISOWeeksInYear(year);
 
         for (let week = firstWeek; week <= lastWeek; week++) {
             yield new Week(year, week);
@@ -64,24 +68,27 @@ class Week {
             : Week.range(week, new Week(getISOWeekYear(end), getISOWeek(end)));
     }
 
-    static ascending = (week: Week, other: Week): -1 | 0 | 1 =>
+    static ascending: Comparator<Week> = (week: Week, other: Week) =>
         week.equals(other) ? 0 : week.before(other) ? -1 : 1;
 
-    static descending = (week: Week, other: Week): -1 | 0 | 1 =>
+    static descending: Comparator<Week> = (week: Week, other: Week) =>
         week.equals(other) ? 0 : week.after(other) ? -1 : 1;
 
     public get next(): Week {
-        const weeks = getISOWeeksInYear(this.year);
+        const { year, week } = this;
+        const weeks = getISOWeeksInYear(year);
 
         return this.week === weeks
-            ? new Week(this.year + 1, 1)
-            : new Week(this.year, this.week + 1);
+            ? new Week(year + 1, 1)
+            : new Week(year, week + 1);
     }
 
     public get previous(): Week {
+        const { year, week } = this;
+
         return this.week === 1
-            ? new Week(this.year - 1, getISOWeeksInYear(this.year - 1))
-            : new Week(this.year, this.week - 1);
+            ? new Week(year - 1, getISOWeeksInYear(year - 1))
+            : new Week(year, week - 1);
     }
 
     public get monday(): Date {
@@ -113,6 +120,7 @@ class Week {
     }
 
     public start = this.monday;
+
     public end = this.sunday;
 
     public get days(): Iterable<Date> {
