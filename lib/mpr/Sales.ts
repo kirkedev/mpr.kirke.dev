@@ -37,6 +37,8 @@ type CutType = "Belly Cuts"
     | "Trim Cuts"
     | "Variety Cuts";
 
+type SalesResponse = MprResponse<CutType, SalesRecord>;
+
 enum Cut {
     Belly,
     Butt,
@@ -63,15 +65,16 @@ const Cuts: Record<CutType, Cut> = {
     "Variety Cuts": Cut.Variety
 };
 
-type SalesResponse = MprResponse<CutType, SalesRecord | HistoricalSalesRecord>;
+const isHistorical = (record: SalesRecord): record is HistoricalSalesRecord =>
+    "report_for_date" in record;
 
 const parse = (section: CutType) =>
-    function(record: SalesRecord | HistoricalSalesRecord): Sales {
+    function(record: SalesRecord): Sales {
         const cut = Cuts[section];
-        const date = "report_for_date" in record ? record.report_for_date : record.report_date;
+        const date = isHistorical(record) ? record.report_for_date : record.report_date;
 
         return {
-            date: getDate(date as string),
+            date: getDate(date),
             reportDate: getDate(record.report_date),
             type: cut,
             description: record.Item_Description,

@@ -30,7 +30,7 @@ interface Purchase extends Observation {
     highPrice: number;
 }
 
-type PurchaseResponse = MprResponse<"Barrows/Gilts (producer/packer sold)", PurchaseRecord | HistoricalPurchaseRecord>;
+type PurchaseResponse = MprResponse<"Barrows/Gilts (producer/packer sold)", PurchaseRecord>;
 
 const PurchaseTypes: Record<string, PurchaseType> = {
     "Negotiated (carcass basis)": [Seller.All, Arrangement.Negotiated, Basis.Carcass],
@@ -42,12 +42,15 @@ const PurchaseTypes: Record<string, PurchaseType> = {
     "Combined Negotiated/Negotiated Formula (live basis)": [Seller.All, Arrangement.AllNegotiated, Basis.Live]
 };
 
-function parse(record: PurchaseRecord | HistoricalPurchaseRecord): Purchase {
+const isHistorical = (record: PurchaseRecord): record is HistoricalPurchaseRecord =>
+    "reported_for_date" in record;
+
+function parse(record: PurchaseRecord): Purchase {
     const [seller, arrangement, basis] = PurchaseTypes[record.purchase_type];
-    const date = "reported_for_date" in record ? record.reported_for_date : record.report_date;
+    const date = isHistorical(record) ? record.reported_for_date : record.report_date;
 
     return {
-        date: getDate(date as string),
+        date: getDate(date),
         reportDate: getDate(record.report_date),
         seller,
         arrangement,
