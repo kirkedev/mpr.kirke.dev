@@ -1,8 +1,8 @@
 import type { Predicate } from "..";
+import { invert } from "..";
 import { iterate } from ".";
 import enumerate from "./enumerate";
 import { map } from "./map";
-import { invert } from "../index";
 
 export function* takeElements<T>(iterator: Iterator<T>, predicate: Predicate<T>): Iterator<T> {
     let { done, value } = iterator.next();

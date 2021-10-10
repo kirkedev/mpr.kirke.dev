@@ -18,6 +18,7 @@ module.exports = {
     ],
     "collectCoverage": true,
     "collectCoverageFrom": [
-        "<rootDir>/lib/**/*.ts"
+        "<rootDir>/lib/**/*.ts",
+        "!<rootDir>/lib/**/*.d.ts"
     ]
 };

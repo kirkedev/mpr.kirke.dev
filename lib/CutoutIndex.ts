@@ -1,8 +1,8 @@
-import { round, sortObservations } from ".";
+import { round, sortObservations } from "./index";
 import { sumBy } from "./itertools/accumulate";
 import { map } from "./itertools/map";
 import rolling from "./itertools/rolling";
-import type { Cutout } from "./mpr/Cutout";
+import { Cutout } from "./cutout";
 
 interface CutoutIndex extends Cutout {
     indexPrice: number;

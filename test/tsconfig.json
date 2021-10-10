@@ -2,6 +2,10 @@
     "extends": "../tsconfig.options.json",
     "include": ["./**/*.ts"],
     "references": [
+        { "path": "../api" },
         { "path": "../lib" }
-    ]
+    ],
+    "compilerOptions": {
+        "composite": true
+    }
 }

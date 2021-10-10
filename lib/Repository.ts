@@ -2,8 +2,9 @@ import getISODay from "date-fns/getISODay";
 import startOfDay from "date-fns/startOfDay";
 import isThisISOWeek from "date-fns/isThisISOWeek";
 import LRU from "lru-cache";
+import type { Observation } from ".";
+import { sortObservations } from ".";
 import Week, { Weekday } from "./Week";
-import { Observation, sortObservations } from "./index";
 
 interface Archive<T extends Observation> {
     day: number;
@@ -54,8 +55,9 @@ class Repository<T extends Observation> {
     public query(start: Date, end: Date): Promise<T[]> {
         const requests = Array.from(Week.with(start, end)).map(week => this.get(week));
 
-        return Promise.all(requests).then(results => results.flat()
-            .filter(record => record.date >= start && record.date <= end));
+        return Promise.all(requests).then(results =>
+            results.flat().filter(record =>
+                record.date >= start && record.date <= end));
     }
 }
 

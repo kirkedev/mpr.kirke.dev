@@ -5,8 +5,8 @@ import isSameISOWeek from "date-fns/isSameISOWeek";
 import setISODay from "date-fns/setISODay";
 import setISOWeek from "date-fns/setISOWeek";
 import setISOWeekYear from "date-fns/setISOWeekYear";
-import dates from "./dates";
 import type { Comparator } from ".";
+import dates from "./dates";
 
 function* iterateWeeks(start: Week, end: Week): Iterator<Week> {
     const { week: startWeek, year: startYear } = start;

@@ -1,4 +1,4 @@
-import compareAsc from "date-fns/compareAsc";
+import parseDate from "date-fns/parse";
 
 type UnaryOperator<T, R> = (item: T) => R;
 type Predicate<T> = UnaryOperator<T, boolean>;
@@ -19,8 +19,17 @@ const invert = <T>(predicate: Predicate<T>): Predicate<T> =>
 const round = (value: number): number =>
     Math.round((value + Number.EPSILON) * 100) / 100;
 
-const compareObservations: Comparator<Observation> = (a: Observation, b: Observation) =>
-    compareAsc(a.date, b.date) as -1 | 0 | 1;
+const compareObservations: Comparator<Observation> = ({ date: a }: Observation, { date: b }: Observation) =>
+    a === b ? 0 : a < b ? -1 : 1;
+
+const dateFormat = "yyyy-mm-dd";
+
+const today = new Date();
+
+const getDate = (date: string): Date =>
+    parseDate(date, dateFormat, today);
+
+export { getDate };
 
 const sortObservations = <T extends Observation>(observations: T[]): T[] =>
     observations.sort(compareObservations);

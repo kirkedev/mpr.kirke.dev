@@ -1,4 +1,5 @@
 import type { Accumulator, Callback, Predicate, UnaryOperator } from "..";
+import { invert } from "..";
 import { iterate } from ".";
 import { filter, find } from "./filter";
 import { map } from "./map";
@@ -32,7 +33,7 @@ const some = <T>(iterable: Iterable<T>, predicate: Predicate<T>): boolean =>
     !none(iterable, predicate);
 
 const all = <T>(iterable: Iterable<T>, predicate: Predicate<T>): boolean =>
-    none(iterable, item => !predicate(item));
+    none(iterable, invert(predicate));
 
 function one<T>(iterable: Iterable<T>, predicate: Predicate<T>): boolean {
     const iterator = iterate(filter(iterable, predicate));

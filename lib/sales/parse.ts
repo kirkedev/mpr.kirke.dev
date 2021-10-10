@@ -1,43 +1,7 @@
-import type { Nullable, Observation } from "..";
-import type { MprResponse } from ".";
-import { getDate, optFloat, optInt } from ".";
 import { map } from "../itertools/map";
-
-interface SalesRecord extends Record<string, Nullable<string>> {
-    report_date: string;
-    Item_Description: string;
-    total_pounds: Nullable<string>;
-    weighted_average: Nullable<string>;
-    price_range_low: Nullable<string>;
-    price_range_high: Nullable<string>;
-}
-
-interface HistoricalSalesRecord extends SalesRecord {
-    report_for_date: string;
-}
-
-interface Sales extends Observation {
-    reportDate: Date;
-    type: Cut;
-    description: string;
-    weight: number;
-    avgPrice: number;
-    lowPrice: number;
-    highPrice: number;
-}
-
-type CutType = "Belly Cuts"
-    | "Butt Cuts"
-    | "Ham Cuts"
-    | "Loin Cuts"
-    | "Picnic Cuts"
-    | "Sparerib Cuts"
-    | "Jowl Cuts"
-    | "Added Ingredient Cuts"
-    | "Trim Cuts"
-    | "Variety Cuts";
-
-type SalesResponse = MprResponse<CutType, SalesRecord>;
+import { getDate, optFloat, optInt } from "../mpr";
+import type { CutType, HistoricalSalesRecord, SalesRecord, SalesResponse } from "./mpr";
+import type { Sales } from ".";
 
 enum Cut {
     Belly,
@@ -89,7 +53,5 @@ const parseResponse = (response: SalesResponse): Iterable<Sales> =>
     map(response.results, parse(response.reportSection));
 
 export default parseResponse;
-
 export { Cut };
-
-export type { Sales, SalesRecord, HistoricalSalesRecord, SalesResponse, CutType };
+export type { CutType };

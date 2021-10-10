@@ -1,36 +1,8 @@
-import type { Nullable, Observation } from "..";
-import type { MprResponse } from ".";
-import { getDate, optFloat, optInt } from ".";
-import type { PurchaseType } from "./PurchaseType";
-import { Arrangement, Basis, Seller } from "./PurchaseType";
+import { Arrangement, Basis, PurchaseType, Seller } from "../PurchaseType";
 import { map } from "../itertools/map";
-
-interface PurchaseRecord extends Record<string, Nullable<string>> {
-    report_date: string;
-    purchase_type: string;
-    head_count: Nullable<string>;
-    wtd_avg: Nullable<string>;
-    price_high: Nullable<string>;
-    price_low: Nullable<string>;
-    rolling_avg: Nullable<string>;
-}
-
-interface HistoricalPurchaseRecord extends PurchaseRecord {
-    reported_for_date: string;
-}
-
-interface Purchase extends Observation {
-    reportDate: Date;
-    seller: Seller;
-    arrangement: Arrangement;
-    basis: Basis;
-    headCount: number;
-    avgPrice: number;
-    lowPrice: number;
-    highPrice: number;
-}
-
-type PurchaseResponse = MprResponse<"Barrows/Gilts (producer/packer sold)", PurchaseRecord>;
+import { getDate, optFloat, optInt } from "../mpr";
+import type { BarrowsGilts, BarrowsGiltsRecord, HistoricalPurchaseRecord } from "./mpr";
+import type { Purchase } from ".";
 
 const PurchaseTypes: Record<string, PurchaseType> = {
     "Negotiated (carcass basis)": [Seller.All, Arrangement.Negotiated, Basis.Carcass],
@@ -42,10 +14,10 @@ const PurchaseTypes: Record<string, PurchaseType> = {
     "Combined Negotiated/Negotiated Formula (live basis)": [Seller.All, Arrangement.AllNegotiated, Basis.Live]
 };
 
-const isHistorical = (record: PurchaseRecord): record is HistoricalPurchaseRecord =>
+const isHistorical = (record: BarrowsGiltsRecord): record is HistoricalPurchaseRecord =>
     "reported_for_date" in record;
 
-function parse(record: PurchaseRecord): Purchase {
+function parse(record: BarrowsGiltsRecord): Purchase {
     const [seller, arrangement, basis] = PurchaseTypes[record.purchase_type];
     const date = isHistorical(record) ? record.reported_for_date : record.report_date;
 
@@ -62,9 +34,7 @@ function parse(record: PurchaseRecord): Purchase {
     };
 }
 
-const parseResponse = (response: PurchaseResponse): Iterable<Purchase> =>
+const parseResponse = (response: BarrowsGilts): Iterable<Purchase> =>
     map(response.results, parse);
 
 export default parseResponse;
-
-export type { Purchase, PurchaseRecord, HistoricalPurchaseRecord, PurchaseResponse };

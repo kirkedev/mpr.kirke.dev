@@ -4,12 +4,14 @@ function* iterateWindows<T>(iterator: Iterator<T>, size: number): Iterator<T[]> 
     const data = new Array<T>();
     let result = iterator.next();
 
-    while (!result.done) {
-        if (data.length === size) {
-            yield data.slice();
-            data.shift();
-        }
+    while (!result.done && data.length < size) {
+        data.push(result.value);
+        result = iterator.next();
+    }
 
+    while (!result.done) {
+        yield data.slice();
+        data.shift();
         data.push(result.value);
         result = iterator.next();
     }

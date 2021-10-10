@@ -1,5 +1,6 @@
 import parseDate from "date-fns/parse";
 import type { Nullable } from "..";
+import { map } from "../itertools/map";
 
 interface MprResponse<Section extends string, T extends Record<string, Nullable<string>>> {
     reportSection: Section;
@@ -40,6 +41,9 @@ function optFloat(record: Record<string, Nullable<string>>, key: keyof typeof re
     return value == null ? NaN : getFloat(value);
 }
 
-export { getDate, getInt, getFloat, optInt, optFloat };
+const queryString = (params: Map<string, string>): string =>
+    params.size === 0 ? "" : Array.from(map(params.entries(), param => param.join("="))).join("&");
+
+export { getDate, getInt, getFloat, optInt, optFloat, queryString };
 
 export type { MprResponse };

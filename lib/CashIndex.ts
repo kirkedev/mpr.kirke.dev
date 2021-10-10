@@ -1,13 +1,13 @@
 import isSameDay from "date-fns/isSameDay";
-import type { Comparator, Observation } from ".";
-import { round } from ".";
+import type { Comparator, Observation } from "./index";
+import { round } from "./index";
+import type { Slaughter } from "./slaughter";
+import { Arrangement } from "./PurchaseType";
 import { sumBy } from "./itertools/accumulate";
 import { filter } from "./itertools/filter";
 import groupBy from "./itertools/groupBy";
 import { map } from "./itertools/map";
 import rolling from "./itertools/rolling";
-import { Arrangement } from "./mpr/PurchaseType";
-import type { Slaughter } from "./mpr/Slaughter";
 
 const value = (slaughter: Slaughter): number =>
     slaughter.netPrice * weight(slaughter);
@@ -19,11 +19,11 @@ const avgPrice = (value: number, weight: number): number =>
     round(value / weight);
 
 const filterSlaughter = (slaughter: Iterable<Slaughter>): Iterable<Slaughter> =>
-    filter(slaughter, record =>
-        !Number.isNaN(record.netPrice) && !Number.isNaN(record.carcassWeight)
-        && (record.arrangement === Arrangement.Negotiated ||
-            record.arrangement === Arrangement.MarketFormula ||
-            record.arrangement == Arrangement.NegotiatedFormula));
+    filter(slaughter, ({ netPrice, carcassWeight, arrangement }) =>
+        !Number.isNaN(netPrice) && !Number.isNaN(carcassWeight)
+        && (arrangement === Arrangement.Negotiated ||
+            arrangement === Arrangement.MarketFormula ||
+            arrangement == Arrangement.NegotiatedFormula));
 
 const sortSlaughter: Comparator<Slaughter> = (a: Slaughter, b: Slaughter) =>
     a.date === b.date
