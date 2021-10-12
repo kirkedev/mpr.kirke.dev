@@ -9,11 +9,12 @@
         "ecmaVersion": 12,
         "sourceType": "module",
         "project": [
+            "./api/tsconfig.json",
             "./lib/tsconfig.json",
             "./test/tsconfig.json"
         ]
     },
-    "ignorePatterns": ["**/*.js"],
+    "ignorePatterns": ["**/*.js", "**/*.d.ts"],
     "plugins": ["@typescript-eslint"],
     "extends": [
         "eslint:recommended",
@@ -38,6 +39,7 @@
         "no-await-in-loop": "error",
         "no-extra-parens": "error",
         "arrow-parens": ["error", "as-needed"],
-        "arrow-spacing": "error"
+        "arrow-spacing": "error",
+        "@typescript-eslint/no-namespace": "off"
     }
 }
