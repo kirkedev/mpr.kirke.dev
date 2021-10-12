@@ -1,10 +1,10 @@
 import type { BarrowsGilts } from "@ams/lib/slaughter/mpr";
-import parseSlaughter from "@ams/lib/slaughter/parse";
+import parse from "@ams/lib/slaughter/parse";
 import cashIndex from "@ams/lib/CashIndex";
 import load from "./resources";
 
 describe("Calculate the CME Lean Hog Index", () => {
-    const slaughter = load<BarrowsGilts>("cash_index.json").results.map(parseSlaughter);
+    const slaughter = parse(load<BarrowsGilts>("cash_index.json"));
     const index = Array.from(cashIndex(slaughter));
 
     test("Lean Hog Index for 2/1/2019", () => {

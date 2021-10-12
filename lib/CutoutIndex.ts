@@ -1,8 +1,9 @@
-import { round, sortObservations } from "./index";
+import { round } from ".";
+import Observation from "./Observation";
 import { sumBy } from "./itertools/accumulate";
 import { map } from "./itertools/map";
 import rolling from "./itertools/rolling";
-import { Cutout } from "./cutout";
+import type Cutout from "./cutout";
 
 interface CutoutIndex extends Cutout {
     indexPrice: number;
@@ -18,7 +19,7 @@ const avgPrice = (records: Cutout[]): number =>
     round(totalValue(records) / totalLoads(records));
 
 const cutoutIndex = (cutout: Iterable<Cutout>): Iterable<CutoutIndex> =>
-    map(rolling(sortObservations(Array.from(cutout)), 5), records =>
+    map(rolling(Observation.sort(Array.from(cutout)), 5), records =>
         Object.assign({ indexPrice: avgPrice(records) }, records[records.length - 1]));
 
 export default cutoutIndex;

@@ -1,5 +1,7 @@
-import type { Observation } from "..";
+import { getDate } from "..";
+import type Observation from "../Observation";
 import { Arrangement, Basis, Seller } from "../PurchaseType";
+import type { PurchaseResponse } from "./serialize";
 
 interface Purchase extends Observation {
     reportDate: Date;
@@ -12,4 +14,12 @@ interface Purchase extends Observation {
     highPrice: number;
 }
 
-export type { Purchase };
+namespace Purchase {
+    export const parse = (purchases: PurchaseResponse): Purchase[] =>
+        purchases.map(record => Object.assign({}, record,{
+            date: getDate(record.date),
+            reportDate: getDate(record.reportDate)
+        }));
+}
+
+export default Purchase;

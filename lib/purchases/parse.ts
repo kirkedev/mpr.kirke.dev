@@ -2,7 +2,7 @@ import { Arrangement, Basis, PurchaseType, Seller } from "../PurchaseType";
 import { map } from "../itertools/map";
 import { getDate, optFloat, optInt } from "../mpr";
 import type { BarrowsGilts, BarrowsGiltsRecord, HistoricalPurchaseRecord } from "./mpr";
-import type { Purchase } from ".";
+import type Purchase from ".";
 
 const PurchaseTypes: Record<string, PurchaseType> = {
     "Negotiated (carcass basis)": [Seller.All, Arrangement.Negotiated, Basis.Carcass],

@@ -1,3 +1,4 @@
+import { formatDate, getDate as parseDate } from "@ams/lib";
 import { getDate, optFloat, optInt } from "@ams/lib/mpr";
 
 describe("get an optional integer value from a record", () => {
@@ -25,4 +26,14 @@ describe("get an optional float value from a record", () => {
 test("parse a date", () => {
     const date = getDate("4/20/2020");
     expect(date).toEqual(new Date(2020, 3, 20));
+});
+
+test("format date as ISO", () => {
+    const date = formatDate(new Date(2021, 9, 1));
+    expect(date).toBe("2021-10-01");
+});
+
+test("parse ISO date", () => {
+    const date = parseDate("2021-10-01");
+    expect(date).toEqual(new Date(2021, 9, 1));
 });

@@ -1,5 +1,6 @@
 import type { MprResponse } from "../mpr";
 import type MprReport from "../mpr/MprReport";
+import type MprSection from "../mpr/MprSection";
 
 interface VolumeRecord extends Record<string, string> {
     slug_id: string;
@@ -11,7 +12,7 @@ interface VolumeRecord extends Record<string, string> {
     temp_process_total_load: string;
 }
 
-interface PrimalsRecord extends Record<string, string> {
+interface ValuesRecord extends Record<string, string> {
     slug_id: string;
     slug_name: string;
     report_title: string;
@@ -28,7 +29,11 @@ interface PrimalsRecord extends Record<string, string> {
 
 type Section = "Current Volume" | "Cutout and Primal Values";
 type VolumeResponse = MprResponse<"Current Volume", VolumeRecord>;
-type PrimalsResponse = MprResponse<"Cutout and Primal Values", PrimalsRecord>;
-type CutoutReport = MprReport<Section>;
+type ValuesResponse = MprResponse<"Cutout and Primal Values", ValuesRecord>;
 
-export type { CutoutReport, PrimalsRecord, VolumeRecord, PrimalsResponse, VolumeResponse };
+interface CutoutReport extends MprReport<Section> {
+    section(section: "Current Volume"): MprSection<"Current Volume", VolumeRecord>;
+    section(section: "Cutout and Primal Values"): MprSection<"Cutout and Primal Values", ValuesRecord>;
+}
+
+export type { CutoutReport, ValuesRecord, VolumeRecord, ValuesResponse, VolumeResponse };

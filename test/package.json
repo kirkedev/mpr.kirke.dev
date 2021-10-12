@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "scripts": {
         "unit": "jest --projects lib",
-        "server": "node server"
+        "server": "node mpr"
     },
     "devDependencies": {
         "@types/jest": "^27.0.2",

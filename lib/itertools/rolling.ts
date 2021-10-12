@@ -1,4 +1,4 @@
-import { iterate } from "./index";
+import { iterate } from ".";
 
 function* iterateWindows<T>(iterator: Iterator<T>, size: number): Iterator<T[]> {
     const data = new Array<T>();

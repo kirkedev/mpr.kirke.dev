@@ -1,4 +1,4 @@
-import type { Observation } from "..";
+import type Observation from "../Observation";
 import type { Cut } from "./parse";
 
 interface Sales extends Observation {

@@ -2,8 +2,7 @@ import getISODay from "date-fns/getISODay";
 import startOfDay from "date-fns/startOfDay";
 import isThisISOWeek from "date-fns/isThisISOWeek";
 import LRU from "lru-cache";
-import type { Observation } from ".";
-import { sortObservations } from ".";
+import Observation from "./Observation";
 import Week, { Weekday } from "./Week";
 
 interface Archive<T extends Observation> {
@@ -41,7 +40,7 @@ class Repository<T extends Observation> {
             return data;
         }
 
-        const data = await this.fetch(start, end).then(sortObservations);
+        const data = await this.fetch(start, end).then(Observation.sort);
 
         if (data.length > 0) {
             const { date: last } = data[data.length - 1];

@@ -1,7 +1,8 @@
 import isSameDay from "date-fns/isSameDay";
-import type { Comparator, Observation } from "./index";
-import { round } from "./index";
-import type { Slaughter } from "./slaughter";
+import type { Comparator } from ".";
+import { round } from ".";
+import type Observation from "./Observation";
+import type Slaughter from "./slaughter";
 import { Arrangement } from "./PurchaseType";
 import { sumBy } from "./itertools/accumulate";
 import { filter } from "./itertools/filter";
