@@ -25,12 +25,12 @@ describe("MPR Report", () => {
 
         expect(report.url).toBe("https://mpr.datamart.ams.usda.gov/services/v1.1/reports/2511?q=report_date=03/09/2020:03/13/2020&sort=for_date_begin&allSections=true");
     });
-});
 
-describe("MPR Section", () => {
-    const report = new MprClient("https://mpr.datamart.ams.usda.gov", "v1.1")
-        .report(2511)
-        .section("Barrows/Gilts");
+    test("get an individual report section", () => {
+        const report = new MprClient("https://mpr.datamart.ams.usda.gov", "v1.1")
+            .report(2511)
+            .section("Barrows/Gilts");
 
-    expect(report.url).toBe("https://mpr.datamart.ams.usda.gov/services/v1.1/reports/2511/Barrows/Gilts");
+        expect(report.url).toBe("https://mpr.datamart.ams.usda.gov/services/v1.1/reports/2511/Barrows/Gilts");
+    });
 });

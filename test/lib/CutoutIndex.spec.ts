@@ -4,8 +4,8 @@ import type { ValuesResponse, VolumeResponse } from "@ams/lib/cutout/mpr";
 import load from "./resources";
 
 describe("Calculate the CME Cutout Index", () => {
-    const [primals, volume] = load<[ValuesResponse, VolumeResponse]>("cutout_index.json");
-    const cutout = Array.from(cutoutIndex(parseCutout(volume, primals)));
+    const [values, volume] = load<[ValuesResponse, VolumeResponse]>("cutout_index.json");
+    const cutout = Array.from(cutoutIndex(parseCutout(volume, values)));
 
     test("Cutout Index for 4/7/2020", () => {
         const record = cutout[0];
