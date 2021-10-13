@@ -14,8 +14,8 @@ function listener(request, response) {
         return response.end();
     }
 
-    const file = path.resolve(__dirname, decodeURIComponent(pathname.slice(1)), `${date}.json`);
-
+    const route = pathname.slice(pathname.indexOf("reports"));
+    const file = path.resolve(__dirname, decodeURIComponent(route), `${date}.json`);
     const result = fs.createReadStream(file);
 
     result
