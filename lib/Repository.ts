@@ -54,9 +54,11 @@ class Repository<T extends Observation> {
     public query(start: Date, end: Date): Promise<T[]> {
         const requests = Array.from(Week.with(start, end)).map(week => this.get(week));
 
-        return Promise.all(requests).then(results =>
-            results.flat().filter(record =>
-                record.date >= start && record.date <= end));
+        return Promise.all(requests)
+            .then(results =>
+                results.flat().filter(record =>
+                    record.date >= start && record.date <= end))
+            .then(Observation.sort);
     }
 }
 
