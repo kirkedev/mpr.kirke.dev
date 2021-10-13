@@ -1,8 +1,8 @@
 import axios from "axios";
 import type { Nullable } from "..";
-import MprRequest from "./MprRequest";
 import type { MprResponse } from ".";
 import { queryString } from ".";
+import MprRequest from "./MprRequest";
 
 class MprSection<Section extends string, T extends Record<string, Nullable<string>>>
     extends MprRequest<MprResponse<Section, T>> {
@@ -12,7 +12,8 @@ class MprSection<Section extends string, T extends Record<string, Nullable<strin
     }
 
     public get url(): string {
-        return `${this.baseUrl}?${queryString(this.query)}`;
+        const query = queryString(this.query);
+        return query.length === 0 ? this.baseUrl : `${this.baseUrl}?${query}`;
     }
 
     public get(): Promise<MprResponse<Section, T>> {
