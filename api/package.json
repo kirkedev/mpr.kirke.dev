@@ -1,10 +1,23 @@
 {
     "name": "@ams/api",
     "version": "0.1.0",
-    "main": "index.ts",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "build": "tsc -b",
+        "clean": "tsc -b --clean",
+        "watch": "tsc -b -w",
+        "dev": "nodemon --ext js --exec node --es-module-specifier-resolution=node --inspect=0.0.0.0 .",
+        "start": "node --es-module-specifier-resolution=node .",
+        "healthy": "node healthcheck"
+    },
     "dependencies": {
         "@ams/lib": "workspace:*",
         "dotenv": "^10.0.0",
         "fastify": "^3.22.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.13",
+        "typescript": "^4.4.4"
     }
 }

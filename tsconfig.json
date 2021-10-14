@@ -1,8 +1,9 @@
 {
     "extends": "./tsconfig.options.json",
+    "files": [],
+    "include": [],
     "references": [
         { "path":  "./api" },
-        { "path":  "./lib" },
-        { "path":  "./test" }
+        { "path":  "./lib" }
     ]
 }

@@ -1,223 +1,144 @@
 import { Arrangement, Basis, Seller } from "@ams/lib/PurchaseType";
 import type { BarrowsGilts } from "@ams/lib/slaughter/mpr";
-import Slaughter from "@ams/lib/slaughter";
 import parse from "@ams/lib/slaughter/parse";
-import type { SlaughterResponse } from "@ams/lib/slaughter/serialize";
-import serialize from "@ams/lib/slaughter/serialize";
 import load from "./resources";
-
-const deserialize = (slaughter: SlaughterResponse): Slaughter =>
-    Slaughter.parse(slaughter)[0];
 
 describe("parse daily slaughter records", () => {
     const records = Array.from(parse(load<BarrowsGilts>("slaughter.json")));
-    const serialized = serialize(records);
 
-    describe("Producer sold negotiated", () => {
-        test("parse", () => {
-            const record = records[0];
-            expect(record.date).toEqual(new Date(2020, 3, 8));
-            expect(record.reportDate).toEqual(new Date(2020, 3, 9));
-            expect(record.seller).toBe(Seller.Producer);
-            expect(record.arrangement).toBe(Arrangement.Negotiated);
-            expect(record.basis).toBe(Basis.All);
-            expect(record.headCount).toBe(5604);
-            expect(record.basePrice).toBeCloseTo(46.03);
-            expect(record.netPrice).toBeCloseTo(46.38);
-            expect(record.lowPrice).toBeCloseTo(36.62);
-            expect(record.highPrice).toBeCloseTo(58.12);
-            expect(record.liveWeight).toBeCloseTo(271.81);
-            expect(record.carcassWeight).toBeCloseTo(204.94);
-            expect(record.leanPercent).toBeCloseTo(54.33);
-        });
-
-        test("serialize", () => {
-            const record = serialized[0];
-            expect(record.date).toBe("2020-04-08");
-            expect(record.reportDate).toBe("2020-04-09");
-            expect(deserialize([record])).toEqual(records[0]);
-        });
+    test("Producer sold negotiated", () => {
+        const record = records[0];
+        expect(record.date).toEqual(new Date(2020, 3, 8));
+        expect(record.reportDate).toEqual(new Date(2020, 3, 9));
+        expect(record.seller).toBe(Seller.Producer);
+        expect(record.arrangement).toBe(Arrangement.Negotiated);
+        expect(record.basis).toBe(Basis.All);
+        expect(record.headCount).toBe(5604);
+        expect(record.basePrice).toBeCloseTo(46.03);
+        expect(record.netPrice).toBeCloseTo(46.38);
+        expect(record.lowPrice).toBeCloseTo(36.62);
+        expect(record.highPrice).toBeCloseTo(58.12);
+        expect(record.liveWeight).toBeCloseTo(271.81);
+        expect(record.carcassWeight).toBeCloseTo(204.94);
+        expect(record.leanPercent).toBeCloseTo(54.33);
     });
 
-    describe("Producer sold other market formula", () => {
-        test("parse", () => {
-            const record = records[1];
-            expect(record.date).toEqual(new Date(2020, 3, 8));
-            expect(record.reportDate).toEqual(new Date(2020, 3, 9));
-            expect(record.seller).toBe(Seller.Producer);
-            expect(record.arrangement).toBe(Arrangement.OtherMarketFormula);
-            expect(record.basis).toBe(Basis.All);
-            expect(record.headCount).toBe(43_510);
-            expect(record.basePrice).toBeCloseTo(56.45);
-            expect(record.netPrice).toBeCloseTo(59.25);
-            expect(record.lowPrice).toBeCloseTo(33.43);
-            expect(record.highPrice).toBeCloseTo(98.03);
-            expect(record.liveWeight).toBeCloseTo(282.71);
-            expect(record.carcassWeight).toBeCloseTo(213.41);
-            expect(record.leanPercent).toBeCloseTo(55.97);
-        });
-
-        test("serialize", () => {
-            const record = serialized[1];
-            expect(record.date).toBe("2020-04-08");
-            expect(record.reportDate).toBe("2020-04-09");
-            expect(deserialize([record])).toEqual(records[1]);
-        });
+    test("Producer sold other market formula", () => {
+        const record = records[1];
+        expect(record.date).toEqual(new Date(2020, 3, 8));
+        expect(record.reportDate).toEqual(new Date(2020, 3, 9));
+        expect(record.seller).toBe(Seller.Producer);
+        expect(record.arrangement).toBe(Arrangement.OtherMarketFormula);
+        expect(record.basis).toBe(Basis.All);
+        expect(record.headCount).toBe(43_510);
+        expect(record.basePrice).toBeCloseTo(56.45);
+        expect(record.netPrice).toBeCloseTo(59.25);
+        expect(record.lowPrice).toBeCloseTo(33.43);
+        expect(record.highPrice).toBeCloseTo(98.03);
+        expect(record.liveWeight).toBeCloseTo(282.71);
+        expect(record.carcassWeight).toBeCloseTo(213.41);
+        expect(record.leanPercent).toBeCloseTo(55.97);
     });
 
-    describe("Producer sold other market formula", () => {
-        test("parse", () => {
-            const record = records[2];
-            expect(record.date).toEqual(new Date(2020, 3, 8));
-            expect(record.reportDate).toEqual(new Date(2020, 3, 9));
-            expect(record.seller).toBe(Seller.Producer);
-            expect(record.arrangement).toBe(Arrangement.MarketFormula);
-            expect(record.basis).toBe(Basis.All);
-            expect(record.headCount).toBe(121_704);
-            expect(record.basePrice).toBeCloseTo(47.98);
-            expect(record.netPrice).toBeCloseTo(50.49);
-            expect(record.lowPrice).toBeCloseTo(29.64);
-            expect(record.highPrice).toBeCloseTo(68.39);
-            expect(record.liveWeight).toBeCloseTo(281.38);
-            expect(record.carcassWeight).toBeCloseTo(211.90);
-            expect(record.leanPercent).toBeCloseTo(55.82);
-        });
-
-        test("serialize", () => {
-            const record = serialized[2];
-            expect(record.date).toBe("2020-04-08");
-            expect(record.reportDate).toBe("2020-04-09");
-            expect(deserialize([record])).toEqual(records[2]);
-        });
+    test("Producer sold other market formula", () => {
+        const record = records[2];
+        expect(record.date).toEqual(new Date(2020, 3, 8));
+        expect(record.reportDate).toEqual(new Date(2020, 3, 9));
+        expect(record.seller).toBe(Seller.Producer);
+        expect(record.arrangement).toBe(Arrangement.MarketFormula);
+        expect(record.basis).toBe(Basis.All);
+        expect(record.headCount).toBe(121_704);
+        expect(record.basePrice).toBeCloseTo(47.98);
+        expect(record.netPrice).toBeCloseTo(50.49);
+        expect(record.lowPrice).toBeCloseTo(29.64);
+        expect(record.highPrice).toBeCloseTo(68.39);
+        expect(record.liveWeight).toBeCloseTo(281.38);
+        expect(record.carcassWeight).toBeCloseTo(211.90);
+        expect(record.leanPercent).toBeCloseTo(55.82);
     });
 
-    describe("Producer sold other purchase arrangement", () => {
-        test("parse", () => {
-            const record = records[3];
-            expect(record.date).toEqual(new Date(2020, 3, 8));
-            expect(record.reportDate).toEqual(new Date(2020, 3, 9));
-            expect(record.seller).toBe(Seller.Producer);
-            expect(record.arrangement).toBe(Arrangement.OtherPurchase);
-            expect(record.basis).toBe(Basis.All);
-            expect(record.headCount).toBe(85_076);
-            expect(record.basePrice).toBeCloseTo(58.60);
-            expect(record.netPrice).toBeCloseTo(60.50);
-            expect(record.lowPrice).toBeCloseTo(41.38);
-            expect(record.highPrice).toBeCloseTo(89.48);
-            expect(record.liveWeight).toBeCloseTo(284.72);
-            expect(record.carcassWeight).toBeCloseTo(213.87);
-            expect(record.leanPercent).toBeCloseTo(55.41);
-        });
-
-        test("serialize", () => {
-            const record = serialized[3];
-            expect(record.date).toBe("2020-04-08");
-            expect(record.reportDate).toBe("2020-04-09");
-            expect(deserialize([record])).toEqual(records[3]);
-        });
+    test("Producer sold other purchase arrangement", () => {
+        const record = records[3];
+        expect(record.date).toEqual(new Date(2020, 3, 8));
+        expect(record.reportDate).toEqual(new Date(2020, 3, 9));
+        expect(record.seller).toBe(Seller.Producer);
+        expect(record.arrangement).toBe(Arrangement.OtherPurchase);
+        expect(record.basis).toBe(Basis.All);
+        expect(record.headCount).toBe(85_076);
+        expect(record.basePrice).toBeCloseTo(58.60);
+        expect(record.netPrice).toBeCloseTo(60.50);
+        expect(record.lowPrice).toBeCloseTo(41.38);
+        expect(record.highPrice).toBeCloseTo(89.48);
+        expect(record.liveWeight).toBeCloseTo(284.72);
+        expect(record.carcassWeight).toBeCloseTo(213.87);
+        expect(record.leanPercent).toBeCloseTo(55.41);
     });
 
-    describe("Producer sold negotiated formula", () => {
-        test("parse", () => {
-            const record = records[4];
-            expect(record.date).toEqual(new Date(2020, 3, 8));
-            expect(record.reportDate).toEqual(new Date(2020, 3, 9));
-            expect(record.seller).toBe(Seller.Producer);
-            expect(record.arrangement).toBe(Arrangement.NegotiatedFormula);
-            expect(record.basis).toBe(Basis.All);
-            expect(record.headCount).toBe(846);
-            expect(record.basePrice).toBeNaN();
-            expect(record.netPrice).toBeNaN();
-            expect(record.lowPrice).toBeNaN();
-            expect(record.highPrice).toBeNaN();
-            expect(record.liveWeight).toBeNaN();
-            expect(record.carcassWeight).toBeNaN();
-            expect(record.leanPercent).toBeNaN();
-        });
-
-        test("serialize", () => {
-            const record = serialized[4];
-            expect(record.date).toBe("2020-04-08");
-            expect(record.reportDate).toBe("2020-04-09");
-            expect(deserialize([record])).toEqual(records[4]);
-        });
+    test("Producer sold negotiated formula", () => {
+        const record = records[4];
+        expect(record.date).toEqual(new Date(2020, 3, 8));
+        expect(record.reportDate).toEqual(new Date(2020, 3, 9));
+        expect(record.seller).toBe(Seller.Producer);
+        expect(record.arrangement).toBe(Arrangement.NegotiatedFormula);
+        expect(record.basis).toBe(Basis.All);
+        expect(record.headCount).toBe(846);
+        expect(record.basePrice).toBeNaN();
+        expect(record.netPrice).toBeNaN();
+        expect(record.lowPrice).toBeNaN();
+        expect(record.highPrice).toBeNaN();
+        expect(record.liveWeight).toBeNaN();
+        expect(record.carcassWeight).toBeNaN();
+        expect(record.leanPercent).toBeNaN();
     });
 
-    describe("All producer sold", () => {
-        test("parse", () => {
-            const record = records[5];
-            expect(record.date).toEqual(new Date(2020, 3, 8));
-            expect(record.reportDate).toEqual(new Date(2020, 3, 9));
-            expect(record.seller).toBe(Seller.Producer);
-            expect(record.arrangement).toBe(Arrangement.All);
-            expect(record.basis).toBe(Basis.All);
-            expect(record.headCount).toBe(256_740);
-            expect(record.basePrice).toBeCloseTo(52.82);
-            expect(record.netPrice).toBeCloseTo(55.32);
-            expect(record.lowPrice).toBeCloseTo(35.51);
-            expect(record.highPrice).toBeCloseTo(76.25);
-            expect(record.liveWeight).toBeCloseTo(282.59);
-            expect(record.carcassWeight).toBeCloseTo(212.73);
-            expect(record.leanPercent).toBeCloseTo(55.72);
-        });
-
-        test("serialize", () => {
-            const record = serialized[5];
-            expect(record.date).toBe("2020-04-08");
-            expect(record.reportDate).toBe("2020-04-09");
-            expect(deserialize([record])).toEqual(records[5]);
-        });
+    test("All producer sold", () => {
+        const record = records[5];
+        expect(record.date).toEqual(new Date(2020, 3, 8));
+        expect(record.reportDate).toEqual(new Date(2020, 3, 9));
+        expect(record.seller).toBe(Seller.Producer);
+        expect(record.arrangement).toBe(Arrangement.All);
+        expect(record.basis).toBe(Basis.All);
+        expect(record.headCount).toBe(256_740);
+        expect(record.basePrice).toBeCloseTo(52.82);
+        expect(record.netPrice).toBeCloseTo(55.32);
+        expect(record.lowPrice).toBeCloseTo(35.51);
+        expect(record.highPrice).toBeCloseTo(76.25);
+        expect(record.liveWeight).toBeCloseTo(282.59);
+        expect(record.carcassWeight).toBeCloseTo(212.73);
+        expect(record.leanPercent).toBeCloseTo(55.72);
     });
 
-    describe("All packer sold", () => {
-        test("parse", () => {
-            const record = records[6];
-            expect(record.date).toEqual(new Date(2020, 3, 8));
-            expect(record.reportDate).toEqual(new Date(2020, 3, 9));
-            expect(record.seller).toBe(Seller.Packer);
-            expect(record.arrangement).toBe(Arrangement.All);
-            expect(record.basis).toBe(Basis.All);
-            expect(record.headCount).toBe(23_068);
-            expect(record.basePrice).toBeCloseTo(48.28);
-            expect(record.netPrice).toBeCloseTo(48.42);
-            expect(record.lowPrice).toBeCloseTo(37.75);
-            expect(record.highPrice).toBeCloseTo(53.10);
-            expect(record.liveWeight).toBeCloseTo(284.03);
-            expect(record.carcassWeight).toBeCloseTo(215.06);
-            expect(record.leanPercent).toBeCloseTo(55.45);
-        });
-
-        test("serialize", () => {
-            const record = serialized[6];
-            expect(record.date).toBe("2020-04-08");
-            expect(record.reportDate).toBe("2020-04-09");
-            expect(deserialize([record])).toEqual(records[6]);
-        });
+    test("All packer sold", () => {
+        const record = records[6];
+        expect(record.date).toEqual(new Date(2020, 3, 8));
+        expect(record.reportDate).toEqual(new Date(2020, 3, 9));
+        expect(record.seller).toBe(Seller.Packer);
+        expect(record.arrangement).toBe(Arrangement.All);
+        expect(record.basis).toBe(Basis.All);
+        expect(record.headCount).toBe(23_068);
+        expect(record.basePrice).toBeCloseTo(48.28);
+        expect(record.netPrice).toBeCloseTo(48.42);
+        expect(record.lowPrice).toBeCloseTo(37.75);
+        expect(record.highPrice).toBeCloseTo(53.10);
+        expect(record.liveWeight).toBeCloseTo(284.03);
+        expect(record.carcassWeight).toBeCloseTo(215.06);
+        expect(record.leanPercent).toBeCloseTo(55.45);
     });
 
-    describe("Packer owned", () => {
-        test("parse", () => {
-            const record = records[7];
-            expect(record.date).toEqual(new Date(2020, 3, 8));
-            expect(record.reportDate).toEqual(new Date(2020, 3, 9));
-            expect(record.seller).toBe(Seller.Packer);
-            expect(record.arrangement).toBe(Arrangement.PackerOwned);
-            expect(record.basis).toBe(Basis.All);
-            expect(record.headCount).toBe(168_042);
-            expect(record.basePrice).toBeNaN();
-            expect(record.netPrice).toBeNaN();
-            expect(record.lowPrice).toBeNaN();
-            expect(record.highPrice).toBeNaN();
-            expect(record.liveWeight).toBeCloseTo(286.44);
-            expect(record.carcassWeight).toBeCloseTo(216.97);
-            expect(record.leanPercent).toBeCloseTo(54.40);
-        });
-
-        test("serialize", () => {
-            const record = serialized[7];
-            expect(record.date).toBe("2020-04-08");
-            expect(record.reportDate).toBe("2020-04-09");
-            expect(deserialize([record])).toEqual(records[7]);
-        });
+    test("Packer owned", () => {
+        const record = records[7];
+        expect(record.date).toEqual(new Date(2020, 3, 8));
+        expect(record.reportDate).toEqual(new Date(2020, 3, 9));
+        expect(record.seller).toBe(Seller.Packer);
+        expect(record.arrangement).toBe(Arrangement.PackerOwned);
+        expect(record.basis).toBe(Basis.All);
+        expect(record.headCount).toBe(168_042);
+        expect(record.basePrice).toBeNaN();
+        expect(record.netPrice).toBeNaN();
+        expect(record.lowPrice).toBeNaN();
+        expect(record.highPrice).toBeNaN();
+        expect(record.liveWeight).toBeCloseTo(286.44);
+        expect(record.carcassWeight).toBeCloseTo(216.97);
+        expect(record.leanPercent).toBeCloseTo(54.40);
     });
 });

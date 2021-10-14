@@ -1,6 +1,8 @@
 const server = require("./server");
 
-const MPR_PORT = process.env.MPR_PORT ?? 3333;
+const MPR_PORT = process.env.MPR_PORT ?? 80;
 
-server().listen(MPR_PORT, () =>
-    console.log(`Server listening on port ${MPR_PORT}`));
+(async function() {
+    await server(MPR_PORT);
+    console.log(`Server listening on port ${MPR_PORT}`);
+}());

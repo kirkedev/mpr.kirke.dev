@@ -2,6 +2,8 @@
     "extends": "../tsconfig.options.json",
     "include": ["**/*.ts"],
     "compilerOptions": {
-        "composite": true
+        "composite": true,
+        "noEmit": false,
+        "outDir": "../build/lib"
     }
 }

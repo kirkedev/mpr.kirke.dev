@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  api:
+    environment:
+      API_PORT: ${API_PORT}
+      MPR_URL: ${MPR_HOST}:${MPR_PORT:-80}
+    healthcheck:
+      test: ["CMD-SHELL", "yarn workspace @ams/api healthy"]
+      interval: 1s
+      retries: 10

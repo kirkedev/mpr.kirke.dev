@@ -1,9 +1,7 @@
 import type { Static } from "@sinclair/typebox";
 import { Type } from "@sinclair/typebox";
-import { formatDate } from "..";
-import type Cutout from ".";
 
-const Response = Type.Array(Type.Object({
+const CutoutResponse = Type.Array(Type.Object({
     date: Type.String({ format: "date" }),
     reportDate: Type.String({ format: "date" }),
     primalLoads: Type.Integer({ minimum: 0 }),
@@ -17,12 +15,7 @@ const Response = Type.Array(Type.Object({
     ribPrice: Type.Number({ minimum: 0 })
 }));
 
-const serialize = (records: Cutout[]): CutoutResponse =>
-    records.map(record => Object.assign({}, record, {
-        date: formatDate(record.date),
-        reportDate: formatDate(record.reportDate)
-    }));
+type CutoutResponse = Static<typeof CutoutResponse>;
 
-export default serialize;
-
-export type CutoutResponse = Static<typeof Response>;
+export default CutoutResponse;
+export type { CutoutResponse };

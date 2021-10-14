@@ -1,6 +1,6 @@
 import { getDate } from "..";
 import type Observation from "../Observation";
-import type { CutoutResponse } from "./serialize";
+import type { CutoutResponse } from "./response";
 
 interface Cutout extends Observation {
     reportDate: Date;

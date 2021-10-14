@@ -1,7 +1,7 @@
 import { getDate } from "..";
 import type Observation from "../Observation";
 import { Arrangement, Basis, Seller } from "../PurchaseType";
-import type { SlaughterResponse } from "./serialize";
+import type { SlaughterResponse } from "./response";
 
 interface Slaughter extends Observation {
     reportDate: Date;
@@ -20,9 +20,20 @@ interface Slaughter extends Observation {
 
 namespace Slaughter {
     export const parse = (slaughter: SlaughterResponse): Slaughter[] =>
-        slaughter.map(record => Object.assign({}, record, {
+        slaughter.map(record => ({
             date: getDate(record.date),
-            reportDate: getDate(record.reportDate)
+            reportDate: getDate(record.reportDate),
+            arrangement: record.arrangement,
+            seller: record.seller,
+            basis: record.basis,
+            headCount: record.headCount,
+            carcassWeight: record.carcassWeight ?? NaN,
+            liveWeight: record.liveWeight ?? NaN,
+            basePrice: record.basePrice ?? NaN,
+            netPrice: record.netPrice ?? NaN,
+            lowPrice: record.lowPrice ?? NaN,
+            highPrice: record.highPrice ?? NaN,
+            leanPercent: record.leanPercent ?? NaN
         }));
 }
 

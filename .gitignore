@@ -1,18 +1,12 @@
 .idea
 .vscode
 .DS_Store
-
-{api,lib,app}/*.js
-*.js.map
-*.d.ts
-*.d.ts.map
-tsconfig.tsbuildinfo
-
-coverage
-features/videos/**
-features/screenshots/**
-
 .env
+
+build
+coverage
+test/*/videos
+test/*/screenshots
 
 .yarn/*
 !.yarn/releases
