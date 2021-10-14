@@ -1,5 +1,5 @@
-import { formatDate, getDate as parseDate } from "@ams/lib";
-import { getDate, optFloat, optInt } from "@ams/lib/mpr";
+import { formatDate, getDate as parseDate } from "lib";
+import { getDate, optFloat, optInt } from "lib/mpr";
 
 describe("get an optional integer value from a record", () => {
     test("key is present with value", () => {

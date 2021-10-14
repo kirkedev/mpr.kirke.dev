@@ -18,7 +18,7 @@ services:
     expose:
       - ${API_PORT}
     healthcheck:
-      test: ["CMD-SHELL", "yarn workspace @ams/api healthy"]
+      test: ["CMD-SHELL", "yarn workspace api healthy"]
       interval: 1s
       retries: 10
     depends_on:

@@ -1,4 +1,4 @@
-import Slaughter from "@ams/lib/slaughter";
+import Slaughter from "lib/slaughter";
 
 it("should return slaughter records by a date range", () => {
     cy.request("/slaughter?start=2021-09-06&end=2021-09-10")

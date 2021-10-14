@@ -1,4 +1,4 @@
-import Week from "@ams/lib/Week";
+import Week from "lib/Week";
 
 test("format a Week as ISO 8601", () => {
     const week = new Week(2020, 17);

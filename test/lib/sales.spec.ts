@@ -1,5 +1,5 @@
-import type { SalesResponse } from "@ams/lib/sales/mpr";
-import parse, { Cut } from "@ams/lib/sales/parse";
+import type { SalesResponse } from "lib/sales/mpr";
+import parse, { Cut } from "lib/sales/parse";
 import load from "./resources";
 
 describe("parse daily meat sales", () => {

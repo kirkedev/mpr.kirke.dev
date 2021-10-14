@@ -1,12 +1,12 @@
 import type { FastifyRequest, FastifySchema } from "fastify";
-import { formatDate, getDate } from "@ams/lib";
-import type { QueryType } from "@ams/lib/DateRangeQuery";
-import DateRangeQuery from "@ams/lib/DateRangeQuery";
-import Repository from "@ams/lib/Repository";
-import type Cutout from "@ams/lib/cutout";
-import type { ValuesResponse, VolumeResponse } from "@ams/lib/cutout/mpr";
-import parse from "@ams/lib/cutout/parse";
-import CutoutResponse from "@ams/lib/cutout/response";
+import { formatDate, getDate } from "lib";
+import type { QueryType } from "lib/DateRangeQuery";
+import DateRangeQuery from "lib/DateRangeQuery";
+import Repository from "lib/Repository";
+import type Cutout from "lib/cutout";
+import type { ValuesResponse, VolumeResponse } from "lib/cutout/mpr";
+import parse from "lib/cutout/parse";
+import CutoutResponse from "lib/cutout/response";
 import client from "./client";
 
 type CutoutQuery = {

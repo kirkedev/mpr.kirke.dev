@@ -14,5 +14,5 @@ COPY api ./api
 COPY lib ./lib
 COPY test ./test
 
-ENTRYPOINT ["yarn", "workspace", "@ams/test"]
+ENTRYPOINT ["yarn", "workspace", "test"]
 CMD ["all"]

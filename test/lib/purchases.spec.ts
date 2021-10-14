@@ -1,6 +1,6 @@
-import type { BarrowsGilts } from "@ams/lib/purchases/mpr";
-import { Arrangement, Basis, Seller } from "@ams/lib/PurchaseType";
-import parse from "@ams/lib/purchases/parse";
+import type { BarrowsGilts } from "lib/purchases/mpr";
+import { Arrangement, Basis, Seller } from "lib/PurchaseType";
+import parse from "lib/purchases/parse";
 import load from "./resources";
 
 describe("Parse afternoon purchase records", () => {

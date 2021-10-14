@@ -1,5 +1,5 @@
 {
-    "name": "@ams/test",
+    "name": "test",
     "version": "0.1.0",
     "scripts": {
         "api": "cypress run --project api",
@@ -17,7 +17,7 @@
         "typescript": "^4.4.4"
     },
     "dependencies": {
-        "@ams/lib": "workspace:*",
-        "cypress": "^8.6.0"
+        "cypress": "^8.6.0",
+        "lib": "workspace:*"
     }
 }

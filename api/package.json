@@ -1,5 +1,5 @@
 {
-    "name": "@ams/api",
+    "name": "api",
     "version": "0.1.0",
     "main": "index.js",
     "type": "module",
@@ -12,9 +12,9 @@
         "healthy": "node healthcheck"
     },
     "dependencies": {
-        "@ams/lib": "workspace:*",
         "dotenv": "^10.0.0",
-        "fastify": "^3.22.0"
+        "fastify": "^3.22.0",
+        "lib": "workspace:*"
     },
     "devDependencies": {
         "nodemon": "^2.0.13",

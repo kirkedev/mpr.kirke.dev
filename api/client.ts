@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import MprClient from "@ams/lib/mpr/MprClient";
+import MprClient from "lib/mpr/MprClient";
 
 dotenv.config();
 

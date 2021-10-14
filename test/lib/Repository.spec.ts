@@ -1,5 +1,5 @@
-import dates from "@ams/lib/dates";
-import Repository from "@ams/lib/Repository";
+import dates from "lib/dates";
+import Repository from "lib/Repository";
 
 describe("Repository caching", () => {
     const fetch = jest.fn((start: Date, end: Date) =>

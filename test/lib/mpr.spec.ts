@@ -1,4 +1,4 @@
-import MprClient from "@ams/lib/mpr/MprClient";
+import MprClient from "lib/mpr/MprClient";
 
 describe("MPR Report", () => {
     test("filter a report by report date", () => {

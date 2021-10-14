@@ -8,12 +8,12 @@ COPY package.json .yarnrc.yml yarn.lock ./
 COPY .yarn ./.yarn
 COPY api/package.json ./api/package.json
 COPY lib/package.json ./lib/package.json
-RUN yarn workspace @ams/api install
+RUN yarn workspace api install
 
 EXPOSE 9929
 EXPOSE ${API_PORT}
 
-ENTRYPOINT ["yarn", "workspace", "@ams/api"]
+ENTRYPOINT ["yarn", "workspace", "api"]
 CMD ["dev"]
 
 FROM node:lts-alpine3.14 as build
@@ -24,7 +24,7 @@ COPY tsconfig.json tsconfig.options.json ./
 COPY api ./api
 COPY lib ./lib
 
-RUN yarn workspace @ams/api build
+RUN yarn workspace api build
 
 FROM node:lts-alpine3.14 as run
 WORKDIR /home/node/mpr
@@ -42,5 +42,5 @@ USER node
 
 EXPOSE ${API_PORT}
 
-ENTRYPOINT ["yarn", "workspace", "@ams/api"]
+ENTRYPOINT ["yarn", "workspace", "api"]
 CMD ["start"]

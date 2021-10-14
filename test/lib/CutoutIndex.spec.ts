@@ -1,6 +1,6 @@
-import cutoutIndex from "@ams/lib/CutoutIndex";
-import parseCutout from "@ams/lib/cutout/parse";
-import type { ValuesResponse, VolumeResponse } from "@ams/lib/cutout/mpr";
+import cutoutIndex from "lib/CutoutIndex";
+import parseCutout from "lib/cutout/parse";
+import type { ValuesResponse, VolumeResponse } from "lib/cutout/mpr";
 import load from "./resources";
 
 describe("Calculate the CME Cutout Index", () => {

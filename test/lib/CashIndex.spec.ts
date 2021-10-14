@@ -1,6 +1,6 @@
-import type { BarrowsGilts } from "@ams/lib/slaughter/mpr";
-import parse from "@ams/lib/slaughter/parse";
-import cashIndex from "@ams/lib/CashIndex";
+import type { BarrowsGilts } from "lib/slaughter/mpr";
+import parse from "lib/slaughter/parse";
+import cashIndex from "lib/CashIndex";
 import load from "./resources";
 
 describe("Calculate the CME Lean Hog Index", () => {

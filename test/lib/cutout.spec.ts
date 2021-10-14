@@ -1,5 +1,5 @@
-import type { ValuesResponse, VolumeResponse } from "@ams/lib/cutout/mpr";
-import parse from "@ams/lib/cutout/parse";
+import type { ValuesResponse, VolumeResponse } from "lib/cutout/mpr";
+import parse from "lib/cutout/parse";
 import load from "./resources";
 
 test("Parse daily cutout records", () => {

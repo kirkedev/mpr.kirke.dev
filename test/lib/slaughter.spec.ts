@@ -1,6 +1,6 @@
-import { Arrangement, Basis, Seller } from "@ams/lib/PurchaseType";
-import type { BarrowsGilts } from "@ams/lib/slaughter/mpr";
-import parse from "@ams/lib/slaughter/parse";
+import { Arrangement, Basis, Seller } from "lib/PurchaseType";
+import type { BarrowsGilts } from "lib/slaughter/mpr";
+import parse from "lib/slaughter/parse";
 import load from "./resources";
 
 describe("parse daily slaughter records", () => {
