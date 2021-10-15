@@ -19,4 +19,5 @@ const SlaughterResponse = Type.Array(Type.Object({
 }));
 
 export default SlaughterResponse;
+
 export type SlaughterResponse = Static<typeof SlaughterResponse>;

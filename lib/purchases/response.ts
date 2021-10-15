@@ -15,4 +15,5 @@ const PurchaseResponse = Type.Array(Type.Object({
 }));
 
 export default PurchaseResponse;
+
 export type PurchaseResponse = Static<typeof PurchaseResponse>;

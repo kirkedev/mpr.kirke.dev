@@ -17,9 +17,7 @@ interface HistoricalPurchaseRecord extends BarrowsGiltsRecord {
 }
 
 type Section = "Barrows/Gilts (producer/packer sold)";
-
 type BarrowsGilts = MprResponse<"Barrows/Gilts (producer/packer sold)", BarrowsGiltsRecord>;
-
 type PurchaseReport = MprReport<Section>;
 
 export type { PurchaseReport, BarrowsGiltsRecord, HistoricalPurchaseRecord, BarrowsGilts };
