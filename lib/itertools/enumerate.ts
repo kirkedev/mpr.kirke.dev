@@ -16,7 +16,7 @@ class EnumeratedIterable<T> implements Iterable<EnumeratedValue<T>> {
     public constructor(private readonly iterable: Iterable<T>) {}
 
     public [Symbol.iterator] = () =>
-        enumerateElements(iterate(this.iterable))
+        enumerateElements(iterate(this.iterable));
 }
 
 const enumerate = <T>(iterable: Iterable<T>): Iterable<EnumeratedValue<T>> =>

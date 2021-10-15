@@ -18,7 +18,7 @@ class FilteredIterable<T> implements Iterable<T> {
         private readonly predicate: Predicate<T>) {}
 
     public [Symbol.iterator] = () =>
-        filterElements(iterate(this.iterable), this.predicate)
+        filterElements(iterate(this.iterable), this.predicate);
 }
 
 const filter = <T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> =>

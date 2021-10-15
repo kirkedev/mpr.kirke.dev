@@ -17,7 +17,7 @@ class MergedIterable<T, U> implements Iterable<[T, U]> {
         private readonly second: Iterable<U>) {}
 
     public [Symbol.iterator] = () =>
-        mergeIterators(iterate(this.first), iterate(this.second))
+        mergeIterators(iterate(this.first), iterate(this.second));
 }
 
 const zip = <T, U>(first: Iterable<T>, second: Iterable<U>): Iterable<[T, U]> =>

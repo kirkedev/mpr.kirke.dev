@@ -13,7 +13,7 @@ class FlattenedIterable<T> implements Iterable<T> {
     public constructor(private readonly iterable: Iterable<Iterable<T>>) {}
 
     public [Symbol.iterator] = () =>
-        flattenElements(iterate(this.iterable))
+        flattenElements(iterate(this.iterable));
 }
 
 const flatten = <T>(iterable: Iterable<Iterable<T>>): Iterable<T> =>

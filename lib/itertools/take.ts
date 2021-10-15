@@ -22,7 +22,7 @@ class TakeFromIterable<T> implements Iterable<T> {
         private readonly predicate: Predicate<T>) {}
 
     public [Symbol.iterator] = () =>
-        takeElements(iterate(this.iterable), this.predicate)
+        takeElements(iterate(this.iterable), this.predicate);
 }
 
 const takeUntil = <T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> =>

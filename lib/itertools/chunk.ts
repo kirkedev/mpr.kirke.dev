@@ -22,7 +22,7 @@ class ChunkedIterable<T> implements Iterable<T[]> {
         private readonly size: number) {}
 
     public [Symbol.iterator] = () =>
-        chunkElements(iterate(this.iterable), this.size)
+        chunkElements(iterate(this.iterable), this.size);
 }
 
 const chunk = <T>(iterable: Iterable<T>, size: number): Iterable<T[]> =>

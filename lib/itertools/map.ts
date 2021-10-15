@@ -17,7 +17,7 @@ class MappedIterable<T, R> implements Iterable<R> {
         private readonly operator: UnaryOperator<T, R>) {}
 
     public [Symbol.iterator] = () =>
-        mapElements(iterate(this.iterable), this.operator)
+        mapElements(iterate(this.iterable), this.operator);
 }
 
 const map = <T, R>(iterable: Iterable<T>, operator: UnaryOperator<T, R>): Iterable<R> =>
