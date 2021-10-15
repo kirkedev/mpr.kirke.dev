@@ -14,7 +14,7 @@
             "./test/tsconfig.json"
         ]
     },
-    "ignorePatterns": ["**/*.js", "**/*.d.ts"],
+    "ignorePatterns": ["build", "**/*.js", "**/*.d.ts"],
     "plugins": ["@typescript-eslint"],
     "extends": [
         "eslint:recommended",
