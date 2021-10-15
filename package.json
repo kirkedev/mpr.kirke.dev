@@ -1,8 +1,7 @@
 {
     "name": "mpr-dashboard",
     "version": "0.1.0",
-    "description": "",
-    "main": "index.js",
+    "description": "Dashboard and analytics for USDA Mandatory Price Reporting",
     "author": "Andrew Kirkegaard",
     "license": "ISC",
     "private": true,
@@ -15,8 +14,7 @@
         "pretest": "docker-compose --file docker-compose.test.yaml down && docker-compose --file docker-compose.test.yaml build",
         "test": "yarn pretest && docker-compose --file docker-compose.test.yaml run --rm sut",
         "prestart": "yarn clean && docker-compose --file docker-compose.yaml down",
-        "start": "docker stack deploy -c docker-compose.yaml",
-        "stop": "docker stack rm ams"
+        "start": "docker stack deploy -c docker-compose.yaml"
     },
     "workspaces": [
         "api",
