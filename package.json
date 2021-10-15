@@ -14,9 +14,9 @@
         "jest": "yarn workspace test unit --watchAll",
         "predev": "docker-compose down",
         "dev": "yarn predev & docker-compose up --build",
-        "pretest": "docker-compose --file docker-compose.test.yaml down && docker-compose --file docker-compose.test.yaml build",
+        "pretest": "docker-compose down && docker-compose --file docker-compose.test.yaml build",
         "test": "yarn pretest && docker-compose --file docker-compose.test.yaml run --rm sut",
-        "prestart": "yarn clean && docker-compose --file docker-compose.yaml down",
+        "prestart": "yarn clean",
         "start": "docker stack deploy -c docker-compose.yaml"
     },
     "workspaces": [
