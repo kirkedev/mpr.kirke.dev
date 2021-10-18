@@ -3,7 +3,7 @@
     "private": true,
     "scripts": {
         "open": "cypress open --detached --config testFiles='*.feature'",
-        "test": "cypress run"
+        "test": "cypress run --spec all.features"
     },
     "devDependencies": {
         "@cypress/browserify-preprocessor": "^3.0.1",

@@ -1,5 +1,10 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 
+interface HealthStatus {
+    uptime: number;
+    timestamp: number;
+}
+
 function getHealth(_: FastifyRequest, reply: FastifyReply): void {
     reply.send({
         uptime: process.uptime(),
@@ -8,3 +13,4 @@ function getHealth(_: FastifyRequest, reply: FastifyReply): void {
 }
 
 export default getHealth;
+export type { HealthStatus };
