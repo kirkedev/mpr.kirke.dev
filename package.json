@@ -11,12 +11,12 @@
         "cypress": "yarn workspace test cypress",
         "jest": "yarn workspace test lib",
         "predev": "docker compose down",
-        "dev": "TAG=$(git describe --tags --dirty); yarn predev && docker compose up --build",
+        "dev": "TAG=$(git describe --tags --dirty --always); yarn predev && docker compose up --build",
         "pretest": "docker-compose --file docker-compose.test.yaml down && docker-compose --file docker-compose.test.yaml build",
         "test": "yarn pretest && docker-compose --file docker-compose.test.yaml run --rm sut",
-        "build": "TAG=$(git describe --tags --dirty); yarn workspace api prepublish && yarn workspace app prepublish",
-        "start": "yarn build && TAG=$(git describe --tags --dirty); docker stack deploy -c docker-compose.yaml mpr-dashboard",
-        "stop": "docker stack rm mpr-dashboard"
+        "build": "yarn workspace api build && yarn workspace app build",
+        "start": "TAG=$(git describe --tags --dirty --always); docker stack deploy -c docker-compose.yaml mpr",
+        "stop": "docker stack rm mpr"
     },
     "workspaces": [
         "api",

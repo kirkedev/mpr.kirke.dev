@@ -20,7 +20,7 @@ COPY --from=dev /home/node/mpr ./
 
 COPY app ./app
 COPY lib ./lib
-RUN yarn workspace app build
+RUN yarn workspace app vite build
 
 FROM nginx:stable-alpine AS router
 COPY --from=build /home/node/mpr/app/build /srv/app

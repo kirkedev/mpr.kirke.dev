@@ -5,11 +5,9 @@
     "type": "module",
     "private": true,
     "scripts": {
-        "dev": "nodemon",
-        "build": "esbuild index.ts --outfile=index.cjs --bundle --platform=node --minify --analyze",
-        "start": "node index.cjs",
-        "healthy": "node healthcheck",
-        "prepublish": "docker build .. -f Dockerfile -t mpr-dashboard/api:$TAG"
+        "dev": "node --es-module-specifier-resolution=node --loader ts-node/esm --inspect=0.0.0.0 index.ts",
+        "build": "TAG=$(git describe --tags --dirty --always); docker build .. -f Dockerfile -t mpr-dashboard/api:$TAG",
+        "healthy": "node healthcheck"
     },
     "dependencies": {
         "dotenv": "^10.0.0",
@@ -29,6 +27,6 @@
             "./",
             "../lib"
         ],
-        "exec": "node --es-module-specifier-resolution=node --loader ts-node/esm --inspect=0.0.0.0 index.ts"
+        "exec": "yarn dev"
     }
 }
