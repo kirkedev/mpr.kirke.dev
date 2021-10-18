@@ -3,7 +3,7 @@ version: "3.9"
 services:
   sut:
     build:
-      dockerfile: test/Dockerfile
+      dockerfile: features/Dockerfile
     environment:
       CYPRESS_BASE_URL: http://app
     depends_on:

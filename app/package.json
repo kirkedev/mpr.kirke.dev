@@ -1,6 +1,6 @@
 {
     "name": "app",
-    "version": "0.1.0",
+    "private": true,
     "scripts": {
         "dev": "vite --host 0.0.0.0",
         "build": "TAG=$(git describe --tags --dirty --always); docker build .. -f Dockerfile -t mpr-dashboard/app:$TAG"

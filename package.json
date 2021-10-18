@@ -8,27 +8,26 @@
     "scripts": {
         "prepare": "husky install .githooks",
         "lint": "eslint . --ext .ts --fix",
-        "cypress": "yarn workspace test cypress",
-        "jest": "yarn workspace test lib",
-        "predev": "docker compose down",
+        "predev": "docker compose down --remove-orphans",
         "dev": "TAG=$(git describe --tags --dirty --always); yarn predev && docker compose up --build",
-        "pretest": "docker-compose --file docker-compose.test.yaml down && docker-compose --file docker-compose.test.yaml build",
+        "pretest": "docker-compose --file docker-compose.test.yaml down --remove-orphans && docker-compose --file docker-compose.test.yaml build",
         "test": "yarn pretest && docker-compose --file docker-compose.test.yaml run --rm sut",
         "build": "yarn workspace api build && yarn workspace app build",
         "start": "TAG=$(git describe --tags --dirty --always); docker stack deploy -c docker-compose.yaml mpr",
         "stop": "docker stack rm mpr"
     },
-    "workspaces": [
-        "api",
-        "app",
-        "lib",
-        "test"
-    ],
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^5.0.0",
         "@typescript-eslint/parser": "^5.0.0",
         "eslint": "^8.0.1",
         "husky": "^7.0.2",
         "typescript": "^4.4.4"
-    }
+    },
+    "workspaces": [
+        "api",
+        "app",
+        "lib",
+        "features",
+        "test"
+    ]
 }

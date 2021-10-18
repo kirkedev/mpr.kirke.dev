@@ -1,35 +1,23 @@
 {
     "name": "test",
-    "version": "0.1.0",
+    "private": true,
     "scripts": {
         "lib": "jest --projects lib --watchAll",
-        "api": "cypress open --global --detached --project api",
-        "features": "cypress open --global --detached --project features --config testFiles='*.feature'",
+        "api": "jest --projects api --watchAll",
         "unit": "jest --projects lib",
-        "integration": "cypress run --project api",
-        "acceptance": "cypress run --project features",
-        "cypress": "yarn api && yarn features",
-        "all": "yarn unit && yarn integration && yarn acceptance",
-        "server": "node mpr"
+        "integration": "jest --projects api",
+        "run": "yarn unit && yarn integration",
+        "watch:": "jest --projects lib api --watchAll"
     },
     "devDependencies": {
-        "@cypress/browserify-preprocessor": "^3.0.1",
-        "@types/cypress-cucumber-preprocessor": "^4.0.1",
         "@types/jest": "^27.0.2",
         "@types/node": "^16.11.1",
         "@types/resolve": "^1.20.1"
     },
     "dependencies": {
-        "cypress": "^8.6.0",
-        "cypress-cucumber-preprocessor": "^4.3.0",
         "jest": "^27.3.0",
         "lib": "workspace:*",
-        "resolve": "^1.20.0",
         "ts-jest": "^27.0.7",
         "typescript": "^4.4.4"
-    },
-    "cypress-cucumber-preprocessor": {
-        "nonGlobalStepDefinitions": true,
-        "stepDefinitions": "."
     }
 }

@@ -5708,6 +5708,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"features@workspace:features":
+  version: 0.0.0-use.local
+  resolution: "features@workspace:features"
+  dependencies:
+    "@cypress/browserify-preprocessor": ^3.0.1
+    "@types/cypress-cucumber-preprocessor": ^4.0.1
+    "@types/resolve": ^1.20.1
+    cypress: ^8.6.0
+    cypress-cucumber-preprocessor: ^4.3.0
+    resolve: ^1.20.0
+    typescript: ^4.4.4
+  languageName: unknown
+  linkType: soft
+
 "figures@npm:2.0.0":
   version: 2.0.0
   resolution: "figures@npm:2.0.0"
@@ -10883,16 +10897,11 @@ resolve@1.1.7:
   version: 0.0.0-use.local
   resolution: "test@workspace:test"
   dependencies:
-    "@cypress/browserify-preprocessor": ^3.0.1
-    "@types/cypress-cucumber-preprocessor": ^4.0.1
     "@types/jest": ^27.0.2
     "@types/node": ^16.11.1
     "@types/resolve": ^1.20.1
-    cypress: ^8.6.0
-    cypress-cucumber-preprocessor: ^4.3.0
     jest: ^27.3.0
     lib: "workspace:*"
-    resolve: ^1.20.0
     ts-jest: ^27.0.7
     typescript: ^4.4.4
   languageName: unknown
