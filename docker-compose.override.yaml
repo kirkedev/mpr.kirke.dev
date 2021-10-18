@@ -4,23 +4,31 @@ services:
   mpr:
     build:
       context: test/mpr
-    environment:
-      MPR_PORT: ${MPR_PORT:-80}
 
   api:
     build:
       dockerfile: api/Dockerfile
       target: dev
     environment:
-      API_PORT: ${API_PORT}
-      MPR_URL: ${MPR_HOST}:${MPR_PORT:-80}
+      MPR_URL: http://mpr:3000
     ports:
       - "9229:9229"
-      - ${API_PORT}:${API_PORT}
     volumes:
-        - ./build/api:/home/node/mpr/api
-        - ./build/lib:/home/node/mpr/lib
-        - ./api/package.json:/home/node/mpr/api/package.json
-        - ./lib/package.json:/home/node/mpr/lib/package.json
+      - ./api:/home/node/mpr/api:ro
+      - ./lib:/home/node/mpr/lib:ro
     depends_on:
       - mpr
+
+  app:
+    build:
+      dockerfile: app/Dockerfile
+      target: dev
+    environment:
+      API_URL: http://api:3000
+    volumes:
+      - ./app:/home/node/mpr/app:ro
+      - ./lib:/home/node/mpr/lib:ro
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api

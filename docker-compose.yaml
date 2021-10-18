@@ -2,10 +2,13 @@ version: "3.9"
 
 services:
   api:
+    image: mpr-dashboard/api:${TAG}
     environment:
-      API_PORT: ${API_PORT}
-      MPR_URL: ${MPR_HOST}:${MPR_PORT:-80}
-    healthcheck:
-      test: ["CMD-SHELL", "yarn workspace api healthy"]
-      interval: 1s
-      retries: 10
+      MPR_URL: https://mpr.datamart.ams.usda.gov
+
+  app:
+    image: mpr-dashboard/app:${TAG}
+    ports:
+      - "80:80"
+    depends_on:
+      - api

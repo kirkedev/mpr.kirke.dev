@@ -1,15 +1,15 @@
 {
     "name": "api",
     "version": "0.1.0",
-    "main": "index.js",
+    "main": "index.ts",
     "type": "module",
+    "private": true,
     "scripts": {
-        "build": "tsc -b",
-        "clean": "tsc -b --clean",
-        "watch": "tsc -b -w",
-        "dev": "nodemon --ext js --exec node --es-module-specifier-resolution=node --inspect=0.0.0.0 .",
-        "start": "node --es-module-specifier-resolution=node .",
-        "healthy": "node healthcheck"
+        "dev": "nodemon",
+        "build": "esbuild index.ts --outfile=index.cjs --bundle --platform=node --minify --analyze",
+        "start": "node index.cjs",
+        "healthy": "node healthcheck",
+        "prepublish": "docker build .. -f Dockerfile -t mpr-dashboard/api:$TAG"
     },
     "dependencies": {
         "dotenv": "^10.0.0",
@@ -17,7 +17,18 @@
         "lib": "workspace:*"
     },
     "devDependencies": {
+        "@types/node": "^16.11.1",
+        "esbuild": "^0.13.8",
         "nodemon": "^2.0.13",
-        "typescript": "^4.4.4"
+        "ts-node": "^10.3.0",
+        "typescript": "4.4.4"
+    },
+    "nodemonConfig": {
+        "ext": "ts",
+        "watch": [
+            "./",
+            "../lib"
+        ],
+        "exec": "node --es-module-specifier-resolution=node --loader ts-node/esm --inspect=0.0.0.0 index.ts"
     }
 }

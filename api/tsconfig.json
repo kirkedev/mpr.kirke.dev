@@ -5,8 +5,6 @@
         { "path": "../lib" }
     ],
     "compilerOptions": {
-        "composite": true,
-        "noEmit": false,
-        "outDir": "../build/api"
+        "composite": true
     }
 }

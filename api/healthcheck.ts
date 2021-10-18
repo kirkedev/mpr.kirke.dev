@@ -1,8 +1,6 @@
 import http from "http";
 
-const API_PORT = process.env.API_PORT ?? 3000;
-
-http.get(`http://0.0.0.0:${API_PORT}/health`, response => {
+http.get("http://0.0.0.0/health", response => {
     console.log(`HEALTH CHECK STATUS: ${response.statusCode} ${response.statusMessage}`);
     process.exit(response.statusCode === 200 ? 0 : 1);
 }).on("error", error => {

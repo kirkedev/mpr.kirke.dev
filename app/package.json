@@ -1,4 +1,31 @@
 {
     "name": "app",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "scripts": {
+        "dev": "vite --host 0.0.0.0",
+        "build": "vite build",
+        "prepublish": "docker build .. -f Dockerfile -t mpr-dashboard/app:$TAG"
+    },
+    "dependencies": {
+        "d3-array": "^3.1.1",
+        "d3-axis": "^3.0.0",
+        "d3-path": "^3.0.1",
+        "d3-scale": "^4.0.2",
+        "lib": "workspace:*",
+        "solid-app-router": "^0.1.9",
+        "solid-js": "^1.1.6"
+    },
+    "devDependencies": {
+        "@types/d3-array": "^3.0.1",
+        "@types/d3-axis": "^3.0.1",
+        "@types/d3-path": "^3.0.0",
+        "@types/d3-scale": "^4.0.1",
+        "autoprefixer": "^10.3.7",
+        "dotenv": "^10.0.0",
+        "postcss": "^8.3.9",
+        "tailwindcss": "^2.2.17",
+        "typescript": "^4.4.4",
+        "vite": "^2.6.7",
+        "vite-plugin-solid": "^2.1.1"
+    }
 }

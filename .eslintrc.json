@@ -1,6 +1,5 @@
 {
     "env": {
-        "browser": true,
         "es2021": true,
         "node": true
     },
@@ -10,6 +9,7 @@
         "sourceType": "module",
         "project": [
             "./api/tsconfig.json",
+            "./app/tsconfig.json",
             "./lib/tsconfig.json",
             "./test/tsconfig.json"
         ]
@@ -41,5 +41,19 @@
         "arrow-parens": ["error", "as-needed"],
         "arrow-spacing": "error",
         "@typescript-eslint/no-namespace": "off"
-    }
+    },
+    "overrides": [{
+        "files": [
+            "app/**/*.ts",
+            "app/**/*.tsx"
+        ],
+        "env": {
+            "browser": true
+        },
+        "parserOptions": {
+            "ecmaFeatures": {
+                "jsx": true
+            }
+        }
+    }]
 }

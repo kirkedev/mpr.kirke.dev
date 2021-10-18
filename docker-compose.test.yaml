@@ -5,7 +5,13 @@ services:
     build:
       dockerfile: test/Dockerfile
     environment:
-      CYPRESS_BASE_URL: http://api:${API_PORT}
+      CYPRESS_BASE_URL: http://app
+    depends_on:
+      - app
+
+  app:
+    build:
+      dockerfile: app/Dockerfile
     depends_on:
       - api
 
@@ -13,10 +19,7 @@ services:
     build:
       dockerfile: api/Dockerfile
     environment:
-      API_PORT: ${API_PORT}
-      MPR_URL: ${MPR_HOST}:${MPR_PORT:-80}
-    expose:
-      - ${API_PORT}
+      MPR_URL: http://mpr:3000
     healthcheck:
       test: ["CMD-SHELL", "yarn workspace api healthy"]
       interval: 1s
@@ -27,7 +30,3 @@ services:
   mpr:
     build:
       context: test/mpr
-    environment:
-      MPR_PORT: ${MPR_PORT:-80}
-    expose:
-      - ${MPR_PORT:-80}

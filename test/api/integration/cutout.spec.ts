@@ -3,7 +3,7 @@ import cutoutIndex from "lib/CutoutIndex";
 
 describe("cutout api", () => {
     it("return cutout records by date range", () => {
-        cy.request("/cutout?start=2021-08-09&end=2021-08-13").should(({ status, body }) => {
+        cy.request("/api/cutout?start=2021-08-09&end=2021-08-13").should(({ status, body }) => {
             expect(status).to.equal(200);
             expect(body.length).to.equal(5);
 
@@ -18,7 +18,7 @@ describe("cutout api", () => {
     });
 
     it("calculate the CME Cutout Index", () => {
-        cy.request("/cutout?start=2021-08-09&end=2021-08-13").should(({ body }) => {
+        cy.request("/api/cutout?start=2021-08-09&end=2021-08-13").should(({ body }) => {
             const [cutout] = Array.from(cutoutIndex(Cutout.parse(body)));
 
             expect(cutout).to.deep.equal({

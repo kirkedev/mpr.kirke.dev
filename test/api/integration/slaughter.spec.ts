@@ -3,7 +3,7 @@ import cashIndex from "lib/CashIndex";
 
 describe("slaughter api", () => {
     it("return slaughter records by date range", () => {
-        cy.request("/slaughter?start=2021-08-09&end=2021-08-13").should(({ status, body }) => {
+        cy.request("/api/slaughter?start=2021-08-09&end=2021-08-13").should(({ status, body }) => {
             expect(status).to.equal(200);
             expect(body.length).to.equal(40);
 
@@ -22,7 +22,7 @@ describe("slaughter api", () => {
     });
 
     it("calculate the CME Lean Hog Index", () => {
-        cy.request("/slaughter?start=2021-08-06&end=2021-08-13").should(({ body }) => {
+        cy.request("/api/slaughter?start=2021-08-06&end=2021-08-13").should(({ body }) => {
             const cash = Array.from(cashIndex(Slaughter.parse(body)));
 
             expect(cash).to.deep.equal([

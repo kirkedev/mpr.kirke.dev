@@ -1,0 +1,13 @@
+{
+    "baseUrl": "http://localhost:3000",
+    "testFiles": "*.{feature,features}",
+    "pluginsFile": "plugins.ts",
+    "supportFile": "support.ts",
+    "integrationFolder": ".",
+    "downloadsFolder": "downloads",
+    "fixturesFolder": "fixtures",
+    "screenshotsFolder": "screenshots",
+    "videosFolder": "videos",
+    "screenshotOnRunFailure": false,
+    "video": false
+}
