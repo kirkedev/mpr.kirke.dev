@@ -1,11 +1,10 @@
 {
     "include": ["**/*.ts", "**/*.tsx"],
     "references": [
-        {"path":  "../lib" }
+        { "path":  "../lib" }
     ],
     "extends": "../tsconfig.options.json",
     "compilerOptions": {
-        "noEmit": false,
         "jsx": "preserve",
         "jsxImportSource": "solid-js",
         "types": ["vite/client"]

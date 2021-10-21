@@ -11,24 +11,24 @@ interface CutoutIndex extends Observation {
     loads: number;
 }
 
-const totalLoads = (records: Cutout[]): number =>
-    sumBy(records, record => record.primalLoads + record.trimmingLoads);
+const totalLoads = (record: Cutout): number =>
+    record.primalLoads + record.trimmingLoads;
 
-const totalValue = (records: Cutout[]): number =>
-    sumBy(records, record => record.carcassPrice * (record.primalLoads + record.trimmingLoads));
+const totalValue = (record: Cutout): number =>
+    record.carcassPrice * totalLoads(record);
 
 const avgPrice = (records: Cutout[]): number =>
-    round(totalValue(records) / totalLoads(records));
+    sumBy(records, totalValue) / sumBy(records, totalLoads);
 
 const cutoutIndex = (cutout: Iterable<Cutout>): Iterable<CutoutIndex> =>
     map(rolling(Observation.sort(Array.from(cutout)), 5), function(records) {
-        const { date, primalLoads, trimmingLoads, carcassPrice } = records[records.length - 1];
+        const record = records[records.length - 1];
 
         return {
-            date,
-            carcassPrice,
-            indexPrice: avgPrice(records),
-            loads: round(primalLoads + trimmingLoads)
+            date: record.date,
+            carcassPrice: record.carcassPrice,
+            indexPrice: round(avgPrice(records)),
+            loads: round(totalLoads(record))
         };
     });
 

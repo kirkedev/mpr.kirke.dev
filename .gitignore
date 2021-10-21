@@ -3,14 +3,14 @@
 .DS_Store
 .env
 
-build
-coverage
-test/*/videos
-test/*/screenshots
-
 .yarn/*
 !.yarn/releases
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+
+build
+coverage
+videos
+screenshots
 node_modules

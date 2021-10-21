@@ -17,9 +17,18 @@ interface Cutout extends Observation {
 
 namespace Cutout {
     export const parse = (cutout: CutoutResponse): Cutout[] =>
-        cutout.map(record => Object.assign({}, record,{
+        cutout.map(record => ({
             date: getDate(record.date),
-            reportDate: getDate(record.reportDate)
+            reportDate: getDate(record.reportDate),
+            primalLoads: record.primalLoads,
+            trimmingLoads: record.trimmingLoads,
+            carcassPrice: record.carcassPrice,
+            bellyPrice: record.bellyPrice,
+            buttPrice: record.buttPrice,
+            hamPrice: record.hamPrice,
+            loinPrice: record.loinPrice,
+            picnicPrice: record.picnicPrice,
+            ribPrice: record.ribPrice
         }));
 }
 

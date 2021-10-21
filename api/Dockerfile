@@ -28,4 +28,4 @@ ENV NODE_ENV production
 ENV MPR_HOST ${MPR_HOST}
 USER node
 
-ENTRYPOINT ["node", "index.cjs"]
+CMD ["node", "index.cjs"]

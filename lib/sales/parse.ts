@@ -34,13 +34,13 @@ const isHistorical = (record: SalesRecord): record is HistoricalSalesRecord =>
 
 const parse = (section: CutType) =>
     function(record: SalesRecord): Sales {
-        const cut = Cuts[section];
+        const type = Cuts[section];
         const date = isHistorical(record) ? record.report_for_date : record.report_date;
 
         return {
             date: getDate(date),
             reportDate: getDate(record.report_date),
-            type: cut,
+            type,
             description: record.Item_Description,
             weight: optInt(record, "total_pounds"),
             avgPrice: optFloat(record, "weighted_average"),

@@ -5,14 +5,16 @@ const { API_URL } = process.env;
 
 export default defineConfig({
     plugins: [solidPlugin()],
+    cacheDir: "../node_modules/.vite",
     build: {
         outDir: "build",
         target: "esnext",
-        polyfillDynamicImport: false
+        polyfillDynamicImport: false,
+        sourcemap: "inline"
     },
     server: {
         proxy: {
-            "/api": {
+            "^/api/[^.]*$": {
                 target: API_URL,
                 rewrite: path => path.replace(/^\/api/, "")
             }

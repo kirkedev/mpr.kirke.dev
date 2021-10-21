@@ -23,7 +23,7 @@ const filterSlaughter = (slaughter: Iterable<Slaughter>): Iterable<Slaughter> =>
         !Number.isNaN(netPrice) && !Number.isNaN(carcassWeight)
         && (arrangement === Arrangement.Negotiated ||
             arrangement === Arrangement.MarketFormula ||
-            arrangement == Arrangement.NegotiatedFormula));
+            arrangement === Arrangement.NegotiatedFormula));
 
 interface CashIndex extends Observation {
     dailyPrice: number;

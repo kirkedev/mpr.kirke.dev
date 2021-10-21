@@ -23,7 +23,6 @@
         "plugin:@typescript-eslint/eslint-recommended"
     ],
     "rules": {
-        "indent": ["error", 4],
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
@@ -41,7 +40,12 @@
         "no-extra-parens": "error",
         "arrow-parens": ["error", "as-needed"],
         "arrow-spacing": "error",
-        "@typescript-eslint/no-namespace": "off"
+        "block-spacing": "error",
+        "keyword-spacing": "error",
+        "comma-spacing": "error",
+        "@typescript-eslint/no-namespace": "off",
+        "indent": "off",
+        "@typescript-eslint/indent": ["error", 4]
     },
     "overrides": [{
         "files": [

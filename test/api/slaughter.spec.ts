@@ -4,14 +4,12 @@ import cashIndex from "lib/CashIndex";
 import request from "./request";
 
 describe("slaughter api", () => {
-    it("return slaughter records by date range", async () => {
+    test("return slaughter records by date range", async () => {
         const [status, body] = await request<SlaughterResponse>("/slaughter?start=2021-08-09&end=2021-08-13");
         expect(status).toBe(200);
         expect(body.length).toBe(40);
 
-        const slaughter = Slaughter.parse(body);
-
-        const dates = Array.from(new Set(slaughter.map(({ date }) => date.getTime())))
+        const dates = Array.from(new Set(Slaughter.parse(body).map(({ date }) => date.getTime())))
             .map(timestamp => new Date(timestamp));
 
         expect(dates).toEqual([
@@ -23,7 +21,7 @@ describe("slaughter api", () => {
         ]);
     });
 
-    it("calculate the CME Lean Hog Index", async () => {
+    test("calculate the CME Lean Hog Index", async () => {
         const cash = await request<SlaughterResponse>("/slaughter?start=2021-08-06&end=2021-08-13")
             .then(([, body]) => Array.from(cashIndex(Slaughter.parse(body))));
 
