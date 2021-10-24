@@ -6,17 +6,10 @@ interface Dimensions {
 }
 
 interface Offset {
-    left?: number;
-    top?: number;
-    right?: number;
-    bottom?: number;
-}
-
-enum Position {
-    Top,
-    Left,
-    Bottom,
-    Right
+    left: number;
+    top: number;
+    right: number;
+    bottom: number;
 }
 
 interface Data extends Observation {
@@ -25,5 +18,4 @@ interface Data extends Observation {
 
 type Series = Iterable<Data>;
 
-export { Position };
 export type { Dimensions, Offset, Data, Series };

@@ -1,19 +1,19 @@
 import type { JSXElement } from "solid-js";
-import { For } from "solid-js";
+import { Index } from "solid-js";
 import { extent } from "d3-array";
 import { scaleLinear, scaleTime } from "d3-scale";
 import { flatMap } from "lib/itertools/map";
 import type { Dimensions, Offset, Series } from ".";
-import { Position } from ".";
-import Axis from "./Axis";
+import { BottomAxis, LeftAxis } from "./Axis";
+import Plot from "./Plot";
 import Path from "./Path";
 import "./Chart.module.css";
 
-interface Props extends Dimensions, Offset {
+interface Props extends Dimensions, Partial<Offset> {
     data: Series[];
 }
 
-function LineChart({ data, width = 640, height = 360, left = 0, bottom = 0, right = 0, top = 0 }: Props): JSXElement {
+function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top = 0 }: Props): JSXElement {
     const dates = scaleTime()
         .domain(extent(flatMap(data, record => record.date)) as [Date, Date])
         .range([left, width - right]);
@@ -23,11 +23,13 @@ function LineChart({ data, width = 640, height = 360, left = 0, bottom = 0, righ
         .range([height - bottom, top]);
 
     return <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
-        <Axis position={Position.Left} left={left} top={top} scale={values}/>
-        <Axis position={Position.Bottom} left={0} top={height - bottom} scale={dates}/>
-        <For each={data}>
-            { series => <Path data={series} x={dates} y={values}/> }
-        </For>
+        <LeftAxis left={left} scale={values}/>
+        <BottomAxis top={height - bottom} scale={dates}/>
+        <Plot>
+            <Index each={data}>
+                { series => <Path data={series()} x={dates} y={values}/> }
+            </Index>
+        </Plot>
     </svg>;
 }
 
