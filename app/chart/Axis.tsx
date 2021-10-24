@@ -6,12 +6,12 @@ import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
 import type { Offset } from ".";
 import { Position } from ".";
 
-interface Props<Domain extends AxisDomain> extends Required<Pick<Offset, "left" | "top">> {
+interface Props<Domain extends AxisDomain> extends Offset {
     scale: AxisScale<Domain>;
     position: Position;
 }
 
-function Axis<Domain extends AxisDomain>({ scale, left, top, position }: Props<Domain>): JSXElement {
+function Axis<Domain extends AxisDomain>({ scale, position, left = 0, top = 0 }: Props<Domain>): JSXElement {
     let group: SVGGElement;
 
     switch (position) {

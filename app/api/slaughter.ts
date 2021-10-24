@@ -1,6 +1,6 @@
-import Slaughter from "lib/slaughter";
 import { formatDate } from "lib";
-import Repository from "../../lib/Repository";
+import Repository from "lib/Repository";
+import Slaughter from "lib/slaughter";
 
 const slaughter = (start: Date, end: Date): Promise<Slaughter[]> =>
     fetch(`/api/slaughter?start=${formatDate(start)}&end=${formatDate(end)}`)

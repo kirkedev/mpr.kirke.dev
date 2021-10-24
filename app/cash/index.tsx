@@ -16,15 +16,7 @@ function Cash(): JSXElement {
         cashIndex.query(new Date(2021, 7, 2), new Date(2021, 9, 3)));
 
     return <Switch
-        fallback={
-            <LineChart
-                width={640}
-                height={360}
-                top={0}
-                right={0}
-                bottom={24}
-                left={0}
-                data={series(data() as CashIndex[])}/>}>
+        fallback={<LineChart width={640} height={360} bottom={24} data={series(data() as CashIndex[])}/>}>
 
         <Match when={data.loading}>
             <div>Loading...</div>

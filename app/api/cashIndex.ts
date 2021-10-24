@@ -1,6 +1,6 @@
+import Repository from "lib/Repository";
 import type { CashIndex } from "lib/CashIndex";
 import cashIndex from "lib/CashIndex";
-import Repository from "lib/Repository";
 import slaughter from "./slaughter";
 
 const getCashIndex = (start: Date, end: Date): Promise<CashIndex[]> =>
