@@ -7,9 +7,9 @@ Given("an app", () => {
 });
 
 When("I load the app", () => {
-    cy.visit(location);
+    cy.visit("/");
 });
 
 Then("I see the MPR Dashboard header", () => {
-    cy.get("header").contains("MPR Dashboard");
+    cy.get("header").contains("MPR Dashboard").should("exist");
 });

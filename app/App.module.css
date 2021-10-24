@@ -12,3 +12,8 @@
     font-size: calc(10px + 2vmin);
     @apply text-blue-500;
 }
+
+.chart {
+    width: 640px;
+    height: 320px;
+}

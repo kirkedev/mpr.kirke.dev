@@ -1,5 +1,4 @@
-import type { FastifyRequest } from "fastify";
-import { FastifySchema } from "fastify";
+import type { FastifyRequest, FastifySchema } from "fastify";
 import { formatDate, getDate } from "lib";
 import type { QueryType } from "lib/DateRangeQuery";
 import DateRangeQuery from "lib/DateRangeQuery";

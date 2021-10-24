@@ -17,15 +17,15 @@ interface HistoricalSalesRecord extends SalesRecord {
 }
 
 type CutType = "Belly Cuts"
-    | "Butt Cuts"
-    | "Ham Cuts"
-    | "Loin Cuts"
-    | "Picnic Cuts"
-    | "Sparerib Cuts"
-    | "Jowl Cuts"
-    | "Added Ingredient Cuts"
-    | "Trim Cuts"
-    | "Variety Cuts";
+| "Butt Cuts"
+| "Ham Cuts"
+| "Loin Cuts"
+| "Picnic Cuts"
+| "Sparerib Cuts"
+| "Jowl Cuts"
+| "Added Ingredient Cuts"
+| "Trim Cuts"
+| "Variety Cuts";
 
 type SalesResponse = MprResponse<CutType, SalesRecord>;
 
