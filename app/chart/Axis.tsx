@@ -6,42 +6,45 @@ import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
 import type { Offset } from ".";
 import styles from "./Chart.module.css";
 
-interface BaseProps extends Partial<Offset> {
-    tickSize?: number;
-    tickCount?: number;
-}
-
-interface ChartAxisProps<Domain extends AxisDomain> extends BaseProps {
+interface ChartAxisProps<Domain extends AxisDomain> extends Partial<Offset>{
     axis: Axis<Domain>;
 }
 
-interface AxisProps<Domain extends AxisDomain> extends BaseProps {
+interface AxisProps<Domain extends AxisDomain> extends Partial<Offset> {
+    tickSize?: number;
+    tickCount?: number;
+    tickPadding?: number;
     scale: AxisScale<Domain>
 }
 
-function ChartAxis<Domain extends AxisDomain>({ axis, tickCount, tickSize = 0, left = 0, top = 0 }: ChartAxisProps<Domain>): JSXElement {
+const mapProps = <Domain extends AxisDomain>(
+    axis: (scale: AxisScale<Domain>) => Axis<Domain>,
+    props: AxisProps<Domain>
+): ChartAxisProps<Domain> => ({
+    left: props.left,
+    top: props.top,
+    axis: axis(props.scale)
+        .ticks(props.tickCount)
+        .tickSize(props.tickSize ?? 0)
+        .tickPadding(props.tickPadding ?? 8)
+});
+
+function ChartAxis<Domain extends AxisDomain>({ axis, left = 0, top = 0 }: ChartAxisProps<Domain>): JSXElement {
     let group: SVGGElement;
-
-    onMount(() =>
-        select(group).call(axis
-            .ticks(tickCount)
-            .tickSizeOuter(0)
-            .tickSizeInner(tickSize)
-            .tickPadding(8)));
-
+    onMount(() => select(group).call(axis));
     return <g class={styles.axis} ref={el => group = el} transform={`translate(${left},${top})`}/>;
 }
 
-const LeftAxis = <Domain extends AxisDomain>({ scale, tickSize, tickCount, top, left }: AxisProps<Domain>) =>
-    <ChartAxis left={left} top={top} axis={axisLeft(scale)} tickCount={tickCount} tickSize={tickSize}/>;
+const LeftAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>
+    <ChartAxis { ...mapProps(axisLeft, props) }/>;
 
-const BottomAxis = <Domain extends AxisDomain>({ scale, tickSize, tickCount, top, left }: AxisProps<Domain>) =>
-    <ChartAxis left={left} top={top} axis={axisBottom(scale)} tickCount={tickCount} tickSize={tickSize}/>;
+const BottomAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>
+    <ChartAxis { ...mapProps(axisBottom, props) }/>;
 
-const TopAxis = <Domain extends AxisDomain>({ scale, tickSize, tickCount, top, left }: AxisProps<Domain>) =>
-    <ChartAxis left={left} top={top} axis={axisTop(scale)} tickCount={tickCount} tickSize={tickSize}/>;
+const TopAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>
+    <ChartAxis { ...mapProps(axisTop, props) }/>;
 
-const RightAxis = <Domain extends AxisDomain>({ scale, tickSize, tickCount, top, left }: AxisProps<Domain>) =>
-    <ChartAxis left={left} top={top} axis={axisRight(scale)} tickCount={tickCount} tickSize={tickSize}/>;
+const RightAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>
+    <ChartAxis { ...mapProps(axisRight, props) }/>;
 
 export { LeftAxis, BottomAxis, RightAxis, TopAxis };

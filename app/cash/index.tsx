@@ -17,10 +17,10 @@ function Cash(): JSXElement {
         fallback={<LineChart
             width={640}
             height={360}
-            left={40}
+            right={40}
             bottom={40}
+            left={8}
             top={8}
-            right={8}
             data={series(data() as CashIndex[])}/>
         }>
 
