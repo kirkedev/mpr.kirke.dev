@@ -12,6 +12,7 @@ const extractColorVars = (colorObj, colorGroup = "") =>
     }, {});
 
 module.exports = {
+    mode: "jit",
     purge: ["index.html", "**/*.tsx", "**/*.module.css"],
     darkMode: false,
     theme: {
