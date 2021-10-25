@@ -14,11 +14,12 @@ interface Props {
 function Path({ x, y, data }: Props) {
     let path: SVGPathElement;
 
-    onMount(() => select(path).datum(data)
-        .attr("d", line<Data>()
-            .curve(curveBasis)
-            .x(({ date }) => x(date))
-            .y(({ value }) => y(value))));
+    onMount(() =>
+        select(path).datum(data)
+            .attr("d", line<Data>()
+                .curve(curveBasis)
+                .x(({ date }) => x(date))
+                .y(({ value }) => y(value))));
 
     return <path class={styles.series} ref={el => path = el}/>;
 }

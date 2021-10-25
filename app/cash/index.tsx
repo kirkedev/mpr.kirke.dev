@@ -7,8 +7,7 @@ import type { Series } from "../chart";
 import LineChart from "../chart/LineChart";
 
 const series = (data: CashIndex[]): Series[] => [
-    map(data, ({ date, indexPrice: value }) => ({ date, value })),
-    map(data, ({ date, dailyPrice: value }) => ({ date, value }))
+    map(data, ({ date, indexPrice: value }) => ({ date, value }))
 ];
 
 function Cash(): JSXElement {
@@ -19,7 +18,7 @@ function Cash(): JSXElement {
             width={640}
             height={360}
             left={40}
-            bottom={24}
+            bottom={40}
             top={8}
             right={8}
             data={series(data() as CashIndex[])}/>

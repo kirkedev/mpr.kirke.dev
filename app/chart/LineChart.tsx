@@ -23,8 +23,8 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
         .range([height - bottom, top]);
 
     return <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
-        <LeftAxis left={left} scale={values}/>
-        <BottomAxis top={height - bottom} scale={dates}/>
+        <LeftAxis left={left} scale={values} tickCount={5} tickSize={-right + left}/>
+        <BottomAxis top={height - bottom} scale={dates} tickCount={8} tickSize={8}/>
         <Plot>
             <Index each={data}>
                 { series => <Path data={series()} x={dates} y={values}/> }
