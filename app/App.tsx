@@ -5,8 +5,11 @@ import styles from "./App.module.css";
 const App: Component = () =>
     <div class={styles.App}>
         <header>MPR Dashboard</header>
-        <div class={styles.chart}>
-            <CashIndex/>
+
+        <div class={styles.charts}>
+            <div class={styles.chart}>
+                <CashIndex/>
+            </div>
         </div>
     </div>;
 

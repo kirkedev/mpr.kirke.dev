@@ -1,19 +1,24 @@
 .App {
-    text-align: center;
+    @apply container;
+    @apply mx-auto;
+    @apply p-8;
+    @apply max-w-screen-xl;
 }
 
-.header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    @apply text-blue-500;
+.charts {
+    @apply grid;
+    @apply grid-cols-1;
+    @apply md:grid-cols-2;
+    @apply gap-8;
+}
+
+header {
+    @apply text-2xl;
+    @apply text-center;
+    @apply mb-8;
 }
 
 .chart {
-    width: 640px;
-    height: 360px;
+    @apply shadow-lg;
+    @apply p-4;
 }
