@@ -13,18 +13,21 @@ interface Props extends Dimensions, Partial<Offset> {
     data: Series[];
 }
 
+const extendBy = ([min = 0, max = 0]: [number?, number?], multiple: number): [number, number] =>
+    [Math.floor(min / multiple) * multiple, Math.ceil(max / multiple) * multiple];
+
 function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top = 0 }: Props): JSXElement {
     const dates = scaleTime()
-        .domain(extent(flatMap(data, record => record.date)) as [Date, Date])
-        .range([left, width - right]);
+        .range([left, width - right])
+        .domain(extent(flatMap(data, record => record.date)) as [Date, Date]);
 
     const values = scaleLinear()
-        .domain(extent(flatMap(data, record => record.value)) as [number, number])
-        .range([height - bottom, top]);
+        .range([height - bottom, top])
+        .domain(extendBy(extent(flatMap(data, record => record.value)), 5));
 
     return <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
         <RightAxis left={width - right} scale={values} tickCount={5} tickSize={left - width + right}/>
-        <BottomAxis top={height - bottom} scale={dates} tickCount={8} tickPadding={16}/>
+        <BottomAxis top={height - bottom} scale={dates} tickCount={8} tickPadding={24}/>
         <Plot>
             <Index each={data}>
                 { series => <Path data={series()} x={dates} y={values}/> }

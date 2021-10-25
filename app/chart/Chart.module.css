@@ -4,20 +4,18 @@ svg {
 }
 
 .series {
-    @apply fill-current;
-    @apply text-transparent;
     @apply stroke-green-400;
-    stroke-width: 4px;
+    stroke-width: 5px;
 }
 
-.axis :global(path.domain), .axis :global(.tick) line {
+.axis :global(path.domain) {
+    @apply opacity-0;
+}
+
+.axis :global(.tick) line {
     @apply opacity-10;
 }
 
 .axis :global(.tick) text {
     @apply opacity-70;
  }
-
-.axis:first-child :global(path.domain) {
-    @apply opacity-0;
-}

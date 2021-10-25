@@ -25,7 +25,8 @@ const mapProps = <Domain extends AxisDomain>(
     top: props.top,
     axis: axis(props.scale)
         .ticks(props.tickCount)
-        .tickSize(props.tickSize ?? 0)
+        .tickSizeInner(props.tickSize ?? 0)
+        .tickSizeOuter(0)
         .tickPadding(props.tickPadding ?? 8)
 });
 
