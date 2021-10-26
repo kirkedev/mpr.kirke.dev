@@ -1,27 +1,28 @@
 import { onMount } from "solid-js";
 import { select } from "d3-selection";
+import { area } from "d3-shape";
 import type { ScaleLinear, ScaleTime } from "d3-scale";
 import type { Data, Series } from ".";
-import styles from "./Chart.module.css";
-import { area, curveBasis } from "d3-shape";
 
 interface Props {
     x: ScaleTime<number, number>;
     y: ScaleLinear<number, number>;
     data: Series;
+    marker: Data;
 }
 
-function Path({ x, y, data }: Props) {
+function Path(props: Props) {
     let path: SVGPathElement;
 
     onMount(() =>
-        select(path).datum(data)
-            .attr("d", area<Data>()
-                .curve(curveBasis)
-                .x(({ date }) => x(date))
-                .y(({ value }) => y(value))));
+        select(path).datum(props.data).attr("d", area<Data>()
+            .x(({ date }) => props.x(date))
+            .y(({ value }) => props.y(value))));
 
-    return <path class={styles.series} ref={el => path = el}/>;
+    return <g>
+        <path class="series" ref={el => path = el}/>
+        <circle r={6} cx={props.x(props.marker.date)} cy={props.y(props.marker.value)} />
+    </g>;
 }
 
 export default Path;

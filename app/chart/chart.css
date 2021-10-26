@@ -1,0 +1,27 @@
+svg {
+    @apply w-full;
+    @apply h-full;
+}
+
+path.domain {
+    @apply opacity-0;
+}
+
+.tick > line {
+    @apply opacity-10;
+}
+
+.tick > text {
+    @apply opacity-70;
+}
+
+.marker > text {
+    @apply fill-white;
+}
+
+.marker-line {
+    @apply stroke-black;
+    @apply opacity-10;
+    @apply stroke-1;
+    stroke-dasharray: 0 4 8;
+}

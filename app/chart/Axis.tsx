@@ -4,7 +4,7 @@ import { select } from "d3-selection";
 import type { Axis, AxisDomain, AxisScale } from "d3-axis";
 import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
 import type { Offset } from ".";
-import styles from "./Chart.module.css";
+import "./chart.css";
 
 interface ChartAxisProps<Domain extends AxisDomain> extends Partial<Offset>{
     axis: Axis<Domain>;
@@ -33,7 +33,7 @@ const mapProps = <Domain extends AxisDomain>(
 function ChartAxis<Domain extends AxisDomain>({ axis, left = 0, top = 0 }: ChartAxisProps<Domain>): JSXElement {
     let group: SVGGElement;
     onMount(() => select(group).call(axis));
-    return <g class={styles.axis} ref={el => group = el} transform={`translate(${left},${top})`}/>;
+    return <g ref={el => group = el} transform={`translate(${left},${top})`}/>;
 }
 
 const LeftAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>

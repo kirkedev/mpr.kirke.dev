@@ -4,12 +4,10 @@ import styles from "./App.module.css";
 
 const App: Component = () =>
     <div class={styles.App}>
-        <header>MPR Dashboard</header>
+        <h1>MPR Dashboard</h1>
 
-        <div class={styles.charts}>
-            <div class={styles.chart}>
-                <CashIndex/>
-            </div>
+        <div class={styles.reports}>
+            <CashIndex/>
         </div>
     </div>;
 

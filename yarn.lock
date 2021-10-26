@@ -1815,6 +1815,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/d3-time-format@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@types/d3-time-format@npm:4.0.0"
+  checksum: ac3a841b0cd6e7f4d4c6c2cd09a2662facea6993c16b10f40fdf84f55adf7be59a6d08fd6ac1c42c27c7340f3b5eeafef968b45b052a5476a580c78a991668db
+  languageName: node
+  linkType: hard
+
 "@types/d3-time@npm:*":
   version: 3.0.0
   resolution: "@types/d3-time@npm:3.0.0"
@@ -2357,12 +2364,14 @@ __metadata:
     "@types/d3-scale": ^4.0.2
     "@types/d3-selection": ^3.0.1
     "@types/d3-shape": ^3.0.2
+    "@types/d3-time-format": ^4.0.0
     autoprefixer: ^10.3.7
     d3-array: ^3.1.1
     d3-axis: ^3.0.0
     d3-scale: ^4.0.2
     d3-selection: ^3.0.0
     d3-shape: ^3.0.1
+    d3-time-format: ^4.0.0
     dotenv: ^10.0.0
     lib: "workspace:*"
     postcss: ^8.3.10
@@ -4291,7 +4300,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-time-format@npm:2 - 4":
+"d3-time-format@npm:2 - 4, d3-time-format@npm:^4.0.0":
   version: 4.0.0
   resolution: "d3-time-format@npm:4.0.0"
   dependencies:

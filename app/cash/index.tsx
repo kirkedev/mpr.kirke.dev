@@ -1,29 +1,13 @@
 import type { JSXElement } from "solid-js";
 import { createResource, Match, Switch } from "solid-js";
 import type { CashIndex } from "lib/CashIndex";
-import { map } from "lib/itertools/map";
 import cashIndex from "../api/cashIndex";
-import type { Series } from "../chart";
-import LineChart from "../chart/LineChart";
-
-const series = (data: CashIndex[]): Series[] => [
-    map(data, ({ date, indexPrice: value }) => ({ date, value }))
-];
+import Report from "./Report";
 
 function Cash(): JSXElement {
     const [data] = createResource(() => cashIndex.query(new Date(2021, 7, 2), new Date(2021, 9, 3)));
 
-    return <Switch
-        fallback={<LineChart
-            width={640}
-            height={360}
-            right={40}
-            bottom={40}
-            left={8}
-            top={8}
-            data={series(data() as CashIndex[])}/>
-        }>
-
+    return <Switch fallback={<Report cash={data() as CashIndex[]}/>}>
         <Match when={data.loading}>
             <div>Loading...</div>
         </Match>

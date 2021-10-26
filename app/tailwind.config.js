@@ -13,8 +13,7 @@ const svgUtilities = (colorObj, colorGroup = "") =>
     }, {});
 
 module.exports = {
-    mode: "jit",
-    purge: ["index.html", "**/*.tsx", "**/*.module.css"],
+    purge: ["index.html", "**/*.tsx", "**/*.css", "**/*.module.css"],
     darkMode: false,
     variants: {
         extend: {},

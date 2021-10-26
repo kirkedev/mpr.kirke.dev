@@ -1,0 +1,57 @@
+.cash {
+    @apply pt-8;
+    @apply pr-12;
+    @apply pb-8;
+    @apply pl-8;
+}
+
+.stats {
+    @apply flex;
+    @apply justify-between;
+    @apply flex-row;
+    @apply mb-4;
+}
+
+.cash :global(.plot) path {
+    stroke-width: 4;
+    @apply stroke-green-400;
+}
+
+.cash circle {
+    @apply fill-green-400;
+}
+
+.cash :global(.marker) rect {
+    @apply fill-green-400;
+}
+
+.cash :global(.marker) text {
+    @apply text-xs;
+}
+
+.cash :global(.marker-line) {
+    @apply stroke-green-200;
+    @apply opacity-100;
+}
+
+.stats > h2 {
+    @apply text-gray-800;
+    @apply m-0;
+    @apply mt-auto;
+    @apply ml-4;
+}
+
+.stat {
+    @apply text-right;
+}
+
+.stat > .value {
+    @apply text-gray-800;
+    @apply m-0;
+    @apply mb-1;
+}
+
+.stat > .date {
+    @apply text-gray-400;
+    @apply m-0;
+}

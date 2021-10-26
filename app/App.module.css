@@ -5,20 +5,18 @@
     @apply max-w-screen-xl;
 }
 
-.charts {
+.App > h1 {
+    @apply text-center;
+    @apply mb-16;
+}
+
+.reports {
     @apply grid;
     @apply grid-cols-1;
     @apply md:grid-cols-2;
     @apply gap-8;
 }
 
-header {
-    @apply text-2xl;
-    @apply text-center;
-    @apply mb-8;
-}
-
-.chart {
+.reports > div {
     @apply shadow-lg;
-    @apply p-4;
 }
