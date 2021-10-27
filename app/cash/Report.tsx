@@ -48,9 +48,9 @@ function Report({ cash }: Props): JSXElement {
         <LineChart
             width={640}
             height={360}
-            right={56}
-            bottom={40}
-            left={28}
+            right={32}
+            bottom={48}
+            left={32}
             top={16}
             data={[data]}
         />

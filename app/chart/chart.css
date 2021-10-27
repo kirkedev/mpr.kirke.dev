@@ -4,16 +4,16 @@ svg {
 }
 
 path.domain {
-    @apply opacity-0;
+    @apply hidden;
 }
 
-.marker > text {
+.marker text {
     @apply fill-white;
+    @apply text-xs;
+    @apply font-bold;
 }
 
 .marker-line {
-    @apply stroke-black;
-    @apply opacity-10;
+    @apply stroke-gray-200;
     @apply stroke-1;
-    stroke-dasharray: 0 4 8;
 }

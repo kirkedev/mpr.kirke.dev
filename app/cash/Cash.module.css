@@ -29,13 +29,7 @@
 }
 
 .cash :global(.marker) text {
-    @apply text-xs;
     @apply fill-white;
-}
-
-.cash :global(.marker-line) {
-    @apply stroke-green-200;
-    stroke-dasharray: 0 4 8;
 }
 
 .stats > h2 {
@@ -50,7 +44,7 @@
 
 .stat > .value {
     @apply text-gray-700;
-    @apply mb-2;
+    @apply mb-1;
     @apply font-normal;
 }
 

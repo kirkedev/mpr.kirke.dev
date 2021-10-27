@@ -1,9 +1,11 @@
 .axis :global(.tick) > line {
-    @apply opacity-10;
+    @apply stroke-gray-200;
 }
 
 .axis :global(.tick) > text {
-    @apply opacity-70;
+    @apply text-gray-500;
+    @apply text-xs;
+    @apply font-thin;
 }
 
 .axis :global(.domain) {
@@ -11,5 +13,6 @@
 }
 
 .vertical.axis :global(.tick) > text {
-    transform: translate(-28px, -8px);
+    transform: translate(-14px, -8px);
+    text-anchor: end;
 }

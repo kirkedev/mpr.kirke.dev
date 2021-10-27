@@ -1,15 +1,19 @@
 import type { JSXElement, PropsWithChildren } from "solid-js";
 import type { Offset } from ".";
-import "./Chart.module.css";
+import "./chart.css";
 
 interface Props extends PropsWithChildren, Partial<Offset> {}
 
-const AxisMarker = (props: Props): JSXElement =>
-    <g class={"marker"} transform={`translate(${(props.left ?? 0) - 28},${props.top ?? 0})`}>
-        <rect height={24} width={56} rx={4} y={16}/>
-        <text dominant-baseline="middle" text-anchor="middle" y={20} x={28} dy={"0.71em"}>
-            { props.children }
+function AxisMarker(props: Props): JSXElement {
+    const height = 32;
+    const width = 64;
+
+    return <g class={"marker"} transform={`translate(${(props.left ?? 0) - width / 2},${props.top ?? 0})`}>
+        <rect height={height} width={width} rx={4} y={height / 2 - 4} />
+        <text dominant-baseline="middle" text-anchor="middle" y={height - 2} x={width / 2}>
+            {props.children}
         </text>
     </g>;
+}
 
 export default AxisMarker;

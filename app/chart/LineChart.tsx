@@ -12,7 +12,7 @@ import Path from "./Path";
 import { BottomAxis, RightAxis } from "./Axis";
 import AxisMarker from "./AxisMarker";
 import MarkerLine from "./MarkerLine";
-import "./Chart.module.css";
+import "./chart.css";
 
 interface Props extends Dimensions, Partial<Offset> {
     data: Series[];
@@ -67,14 +67,6 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
 
     return <div class={"chart"} onmousemove={updateMarkers} onmouseleave={resetMarkers}>
         <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
-            <Plot>
-                <Index each={data}>
-                    { (series, index) =>
-                        <Path data={series()} x={dates} y={values} marker={markers()[index]}/>
-                    }
-                </Index>
-            </Plot>
-
             <RightAxis
                 scale={values}
                 left={width}
@@ -92,6 +84,14 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
                 left={dates(markers()[0].date)}
                 top={values(markers()[0].value)}
                 bottom={bottom}/>
+
+            <Plot>
+                <Index each={data}>
+                    { (series, index) =>
+                        <Path data={series()} x={dates} y={values} marker={markers()[index]}/>
+                    }
+                </Index>
+            </Plot>
 
             <AxisMarker left={dates(markers()[0].date)} top={bottom}>
                 {formatDate(markers()[0].date)}
