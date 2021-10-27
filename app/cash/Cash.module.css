@@ -1,15 +1,18 @@
 .cash {
     @apply pt-8;
-    @apply pr-12;
-    @apply pb-8;
-    @apply pl-8;
+    @apply pb-5;
 }
 
 .stats {
     @apply flex;
     @apply justify-between;
     @apply flex-row;
-    @apply mb-4;
+    @apply mb-5;
+    @apply px-10;
+}
+
+.cash :global(.chart) {
+    @apply px-10;
 }
 
 .cash :global(.plot) path {
@@ -27,18 +30,18 @@
 
 .cash :global(.marker) text {
     @apply text-xs;
+    @apply fill-white;
 }
 
 .cash :global(.marker-line) {
     @apply stroke-green-200;
-    @apply opacity-100;
+    stroke-dasharray: 0 4 8;
 }
 
 .stats > h2 {
-    @apply text-gray-800;
-    @apply m-0;
+    @apply text-gray-700;
     @apply mt-auto;
-    @apply ml-4;
+    @apply font-normal;
 }
 
 .stat {
@@ -46,12 +49,12 @@
 }
 
 .stat > .value {
-    @apply text-gray-800;
-    @apply m-0;
-    @apply mb-1;
+    @apply text-gray-700;
+    @apply mb-2;
+    @apply font-normal;
 }
 
 .stat > .date {
     @apply text-gray-400;
-    @apply m-0;
+    @apply font-thin;
 }

@@ -4,7 +4,7 @@ import { select } from "d3-selection";
 import type { Axis, AxisDomain, AxisScale } from "d3-axis";
 import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
 import type { Offset } from ".";
-import "./chart.css";
+import styles from "./Axis.module.css";
 
 interface ChartAxisProps<Domain extends AxisDomain> extends Partial<Offset>{
     axis: Axis<Domain>;
@@ -30,22 +30,36 @@ const mapProps = <Domain extends AxisDomain>(
         .tickPadding(props.tickPadding ?? 8)
 });
 
-function ChartAxis<Domain extends AxisDomain>({ axis, left = 0, top = 0 }: ChartAxisProps<Domain>): JSXElement {
+function HorizontalAxis<Domain extends AxisDomain>({ axis, left = 0, top = 0 }: ChartAxisProps<Domain>): JSXElement {
     let group: SVGGElement;
+
     onMount(() => select(group).call(axis));
-    return <g ref={el => group = el} transform={`translate(${left},${top})`}/>;
+
+    return <g class={styles.axis}
+        transform={`translate(${left},${top})`}
+        ref={el => group = el} />;
+}
+
+function VerticalAxis<Domain extends AxisDomain>({ axis, left = 0, top = 0 }: ChartAxisProps<Domain>): JSXElement {
+    let group: SVGGElement;
+
+    onMount(() => select(group).call(axis));
+
+    return <g class={`${styles.vertical} ${styles.axis}`}
+        transform={`translate(${left},${top})`}
+        ref={el => group = el} />;
 }
 
 const LeftAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>
-    <ChartAxis { ...mapProps(axisLeft, props) }/>;
-
-const BottomAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>
-    <ChartAxis { ...mapProps(axisBottom, props) }/>;
-
-const TopAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>
-    <ChartAxis { ...mapProps(axisTop, props) }/>;
+    <VerticalAxis { ...mapProps(axisLeft, props) }/>;
 
 const RightAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>
-    <ChartAxis { ...mapProps(axisRight, props) }/>;
+    <VerticalAxis { ...mapProps(axisRight, props) }/>;
+
+const BottomAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>
+    <HorizontalAxis { ...mapProps(axisBottom, props) }/>;
+
+const TopAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>
+    <HorizontalAxis { ...mapProps(axisTop, props) }/>;
 
 export { LeftAxis, BottomAxis, RightAxis, TopAxis };

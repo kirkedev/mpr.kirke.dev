@@ -19,6 +19,7 @@ declare module "solid-js" {
 }
 
 const formatDate = timeFormat("%b %d, %Y");
+
 const formatNumber = format("(.2f");
 
 const series = (data: CashIndex[]): Data[] =>
@@ -32,22 +33,27 @@ function Report({ cash }: Props): JSXElement {
     return <div on:stats={updateStats} class={styles.cash}>
         <div class={styles.stats}>
             <h2>Cash Index</h2>
+
             <div class={styles.stat}>
-                <h3 class={styles.value}>{ formatNumber(getStats().value) }</h3>
-                <h5 class={styles.date}>{ formatDate(getStats().date) }</h5>
+                <h3 class={styles.value}>
+                    {formatNumber(getStats().value)}
+                </h3>
+
+                <h5 class={styles.date}>
+                    {formatDate(getStats().date)}
+                </h5>
             </div>
         </div>
 
-        <div>
-            <LineChart
-                width={640}
-                height={360}
-                right={40}
-                bottom={40}
-                left={24}
-                top={16}
-                data={[data]} />
-        </div>
+        <LineChart
+            width={640}
+            height={360}
+            right={56}
+            bottom={40}
+            left={28}
+            top={16}
+            data={[data]}
+        />
     </div>;
 }
 

@@ -5,11 +5,6 @@
     @apply max-w-screen-xl;
 }
 
-.App > h1 {
-    @apply text-center;
-    @apply mb-16;
-}
-
 .reports {
     @apply grid;
     @apply grid-cols-1;

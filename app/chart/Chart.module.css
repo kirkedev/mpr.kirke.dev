@@ -7,14 +7,6 @@ path.domain {
     @apply opacity-0;
 }
 
-.tick > line {
-    @apply opacity-10;
-}
-
-.tick > text {
-    @apply opacity-70;
-}
-
 .marker > text {
     @apply fill-white;
 }

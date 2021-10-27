@@ -1,6 +1,6 @@
 import type { JSXElement, PropsWithChildren } from "solid-js";
 import type { Offset } from ".";
-import "./chart.css";
+import "./Chart.module.css";
 
 interface Props extends PropsWithChildren, Partial<Offset> {}
 

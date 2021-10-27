@@ -1,0 +1,15 @@
+.axis :global(.tick) > line {
+    @apply opacity-10;
+}
+
+.axis :global(.tick) > text {
+    @apply opacity-70;
+}
+
+.axis :global(.domain) {
+    @apply hidden;
+}
+
+.vertical.axis :global(.tick) > text {
+    transform: translate(-28px, -8px);
+}

@@ -12,7 +12,7 @@ import Path from "./Path";
 import { BottomAxis, RightAxis } from "./Axis";
 import AxisMarker from "./AxisMarker";
 import MarkerLine from "./MarkerLine";
-import "./chart.css";
+import "./Chart.module.css";
 
 interface Props extends Dimensions, Partial<Offset> {
     data: Series[];
@@ -56,42 +56,39 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
         select(target).dispatch("stats", { detail, bubbles: true, cancelable: true });
     }
 
-    return <svg
-        viewBox={`0 0 ${width} ${height}`}
-        preserveAspectRatio="xMidYMid meet"
-        onmousemove={updateMarkers}
-        onmouseleave={resetMarkers}>
+    return <div class={"chart"} onmousemove={updateMarkers} onmouseleave={resetMarkers}>
+        <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
+            <Plot>
+                <Index each={data}>
+                    { (series, index) =>
+                        <Path data={series()} x={dates} y={values} marker={markers()[index]}/>
+                    }
+                </Index>
+            </Plot>
 
-        <Plot>
-            <Index each={data}>
-                { (series, index) =>
-                    <Path data={series()} x={dates} y={values} marker={markers()[index]}/>
-                }
-            </Index>
-        </Plot>
+            <RightAxis
+                scale={values}
+                left={width}
+                tickSize={-width}
+                tickCount={5}
+                tickPadding={12}/>
 
-        <RightAxis
-            scale={values}
-            left={right}
-            tickSize={-right + left}
-            tickCount={5}
-            tickPadding={16}/>
+            <BottomAxis
+                top={bottom}
+                scale={dates}
+                tickCount={8}
+                tickPadding={24}/>
 
-        <BottomAxis
-            top={bottom}
-            scale={dates}
-            tickCount={8}
-            tickPadding={24}/>
+            <MarkerLine
+                left={dates(markers()[0].date)}
+                top={values(markers()[0].value)}
+                bottom={bottom}/>
 
-        <MarkerLine
-            left={dates(markers()[0].date)}
-            top={values(markers()[0].value)}
-            bottom={bottom}/>
-
-        <AxisMarker left={dates(markers()[0].date)} top={bottom}>
-            {formatDate(markers()[0].date)}
-        </AxisMarker>
-    </svg>;
+            <AxisMarker left={dates(markers()[0].date)} top={bottom}>
+                {formatDate(markers()[0].date)}
+            </AxisMarker>
+        </svg>
+    </div>;
 }
 
 export default LineChart;
