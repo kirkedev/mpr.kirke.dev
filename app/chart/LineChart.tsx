@@ -26,15 +26,18 @@ const extendBy = ([min = 0, max = 0]: [number?, number?], multiple: number): [nu
     [Math.floor(min / multiple) * multiple, Math.ceil(max / multiple) * multiple];
 
 function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top = 0 }: Props): JSXElement {
+    right = width - right;
+    bottom = height - bottom;
+
     const array = data.map(series => Array.from(series));
     const [markers, setMarkers] = createSignal<Data[]>(array.map(series => series[series.length - 1]));
 
     const dates = scaleTime()
-        .range([left, width - right])
+        .range([left, right])
         .domain(extent(flatMap(data, record => record.date)) as [Date, Date]);
 
     const values = scaleLinear()
-        .range([height - bottom, top])
+        .range([bottom, top])
         .domain(extendBy(extent(flatMap(data, record => record.value)), 5));
 
     function updateMarkers(event: MouseEvent) {
@@ -69,13 +72,13 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
 
         <RightAxis
             scale={values}
-            left={width - right}
-            tickSize={left - width + right}
+            left={right}
+            tickSize={-right + left}
             tickCount={5}
             tickPadding={16}/>
 
         <BottomAxis
-            top={height - bottom}
+            top={bottom}
             scale={dates}
             tickCount={8}
             tickPadding={24}/>
@@ -83,9 +86,9 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
         <MarkerLine
             left={dates(markers()[0].date)}
             top={values(markers()[0].value)}
-            bottom={height - bottom}/>
+            bottom={bottom}/>
 
-        <AxisMarker left={dates(markers()[0].date) - 24} top={height - bottom}>
+        <AxisMarker left={dates(markers()[0].date)} top={bottom}>
             {formatDate(markers()[0].date)}
         </AxisMarker>
     </svg>;
