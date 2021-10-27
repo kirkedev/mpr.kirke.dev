@@ -19,6 +19,7 @@ interface Props extends Dimensions, Partial<Offset> {
 }
 
 const formatDate = timeFormat("%b %d");
+
 const { center: bisectDate } = bisector<Observation, Date>(observation => observation.date);
 
 const extendBy = ([min = 0, max = 0]: [number?, number?], multiple: number): [number, number] =>
@@ -37,7 +38,7 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
         .domain(extendBy(extent(flatMap(data, record => record.value)), 5));
 
     function updateMarkers(event: MouseEvent) {
-        const target = event.target as Element;
+        const target = event.currentTarget as Element;
         const [position] = pointer(event, target);
         const x0 = dates.invert(position);
         const detail = array.map(series => series[bisectDate(series, x0)] ?? series[series.length - 1]);
