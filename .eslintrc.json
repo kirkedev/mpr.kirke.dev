@@ -16,11 +16,12 @@
         ]
     },
     "ignorePatterns": ["build", "**/*.js", "**/*.d.ts"],
-    "plugins": ["@typescript-eslint"],
+    "plugins": ["@typescript-eslint", "solid"],
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/eslint-recommended"
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:solid/recommended"
     ],
     "rules": {
         "linebreak-style": ["error", "unix"],
