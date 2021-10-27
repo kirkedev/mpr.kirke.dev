@@ -38,8 +38,11 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
     right = width - right;
     bottom = height - bottom;
 
+    let plot: Element;
+
     const array = data.map(series => Array.from(series));
     const [markers, setMarkers] = createSignal<Data[]>(array.map(series => series[series.length - 1]));
+    const [showMarkers, setShowMarkers] = createSignal<boolean>(false);
 
     const dates = scaleTime()
         .range([left, right])
@@ -50,22 +53,26 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
         .domain(extendBy(extent(flatMap(data, record => record.value)), 5));
 
     function updateMarkers(event: MouseEvent) {
-        const target = event.currentTarget as Element;
-        const [position] = pointer(event, target);
+        const [position] = pointer(event, plot);
         const x0 = dates.invert(position);
         const markers = array.map(series => series[bisectDate(series, x0)] ?? series[series.length - 1]);
         setMarkers(markers);
-        dispatch.call(target, "stats", markers);
+        setShowMarkers(true);
+        dispatch.call(event.currentTarget as HTMLElement, "stats", markers);
     }
 
     function resetMarkers(event: MouseEvent) {
-        const target = event.target as Element;
         const markers = array.map(series => series[series.length - 1]);
         setMarkers(markers);
-        dispatch.call(target, "stats", markers);
+        setShowMarkers(false);
+        dispatch.call(event.currentTarget as HTMLElement, "stats", markers);
     }
 
-    return <div class={"chart"} onmousemove={updateMarkers} onmouseleave={resetMarkers}>
+    return <div class={"chart"}
+        classList={{ "with-markers": showMarkers() }}
+        onmousemove={updateMarkers}
+        onmouseleave={resetMarkers}>
+
         <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
             <RightAxis
                 scale={values}
@@ -85,7 +92,7 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
                 top={values(markers()[0].value)}
                 bottom={bottom}/>
 
-            <Plot>
+            <Plot ref={(el: SVGElement) => plot = el}>
                 <Index each={data}>
                     { (series, index) =>
                         <Path data={series()} x={dates} y={values} marker={markers()[index]}/>

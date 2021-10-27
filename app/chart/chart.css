@@ -7,6 +7,30 @@ path.domain {
     @apply hidden;
 }
 
+.chart .marker {
+    @apply hidden;
+}
+
+.chart .marker-line {
+    @apply hidden;
+}
+
+.chart .plot circle {
+    @apply hidden;
+}
+
+.chart.with-markers .marker {
+    @apply inline;
+}
+
+.chart.with-markers .marker-line {
+    @apply inline;
+}
+
+.chart.with-markers .plot circle {
+    @apply inline;
+}
+
 .marker text {
     @apply fill-white;
     @apply text-xs;
@@ -15,5 +39,4 @@ path.domain {
 
 .marker-line {
     @apply stroke-gray-200;
-    @apply stroke-1;
 }

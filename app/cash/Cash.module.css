@@ -15,23 +15,6 @@
     @apply px-10;
 }
 
-.cash :global(.plot) path {
-    stroke-width: 4;
-    @apply stroke-green-400;
-}
-
-.cash circle {
-    @apply fill-green-400;
-}
-
-.cash :global(.marker) rect {
-    @apply fill-green-400;
-}
-
-.cash :global(.marker) text {
-    @apply fill-white;
-}
-
 .stats > h2 {
     @apply text-gray-700;
     @apply mt-auto;
@@ -51,4 +34,21 @@
 .stat > .date {
     @apply text-gray-400;
     @apply font-thin;
+}
+
+.cash :global(.plot) path {
+    stroke-width: 4;
+    @apply stroke-green-400;
+}
+
+.cash circle {
+    @apply fill-green-400;
+}
+
+.cash :global(.marker) rect {
+    @apply fill-green-400;
+}
+
+.cash :global(.marker) text {
+    @apply fill-white;
 }
