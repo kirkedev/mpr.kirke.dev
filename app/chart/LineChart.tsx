@@ -3,7 +3,7 @@ import { createSignal, Index } from "solid-js";
 import { timeFormat } from "d3-time-format";
 import { bisector, extent } from "d3-array";
 import { scaleLinear, scaleTime } from "d3-scale";
-import { pointer, select } from "d3-selection";
+import { pointer } from "d3-selection";
 import type Observation from "lib/Observation";
 import { flatMap } from "lib/itertools/map";
 import type { Data, Dimensions, Offset, Series } from ".";
@@ -25,6 +25,15 @@ const { center: bisectDate } = bisector<Observation, Date>(observation => observ
 const extendBy = ([min = 0, max = 0]: [number?, number?], multiple: number): [number, number] =>
     [Math.floor(min / multiple) * multiple, Math.ceil(max / multiple) * multiple];
 
+function dispatch<T>(this: Element, name: string, detail: T, options?: EventInit) {
+    const event = new CustomEvent(name, Object.assign({ detail }, options ?? {
+        bubbles: true,
+        cancelable: true
+    }));
+
+    this.dispatchEvent(event);
+}
+
 function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top = 0 }: Props): JSXElement {
     right = width - right;
     bottom = height - bottom;
@@ -44,16 +53,16 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
         const target = event.currentTarget as Element;
         const [position] = pointer(event, target);
         const x0 = dates.invert(position);
-        const detail = array.map(series => series[bisectDate(series, x0)] ?? series[series.length - 1]);
-        setMarkers(detail);
-        select(target).dispatch("stats", { detail, bubbles: true, cancelable: true });
+        const markers = array.map(series => series[bisectDate(series, x0)] ?? series[series.length - 1]);
+        setMarkers(markers);
+        dispatch.call(target, "stats", markers);
     }
 
     function resetMarkers(event: MouseEvent) {
         const target = event.target as Element;
-        const detail = array.map(series => series[series.length - 1]);
-        setMarkers(detail);
-        select(target).dispatch("stats", { detail, bubbles: true, cancelable: true });
+        const markers = array.map(series => series[series.length - 1]);
+        setMarkers(markers);
+        dispatch.call(target, "stats", markers);
     }
 
     return <div class={"chart"} onmousemove={updateMarkers} onmouseleave={resetMarkers}>
