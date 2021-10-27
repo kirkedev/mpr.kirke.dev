@@ -4,6 +4,7 @@ import type { CashIndex } from "lib/CashIndex";
 import type { Data } from "../chart";
 import LineChart from "../chart/LineChart";
 import styles from "./Cash.module.css";
+import { format } from "d3-format";
 
 interface Props {
     cash: CashIndex[];
@@ -18,6 +19,7 @@ declare module "solid-js" {
 }
 
 const formatDate = timeFormat("%b %d, %Y");
+const formatNumber = format("(.2f");
 
 const series = (data: CashIndex[]): Data[] =>
     data.map(({ date, indexPrice: value }) => ({ date, value }));
@@ -31,7 +33,7 @@ function Report({ cash }: Props): JSXElement {
         <div class={styles.stats}>
             <h2>Cash Index</h2>
             <div class={styles.stat}>
-                <h3 class={styles.value}>{ getStats().value }</h3>
+                <h3 class={styles.value}>{ formatNumber(getStats().value) }</h3>
                 <h5 class={styles.date}>{ formatDate(getStats().date) }</h5>
             </div>
         </div>
