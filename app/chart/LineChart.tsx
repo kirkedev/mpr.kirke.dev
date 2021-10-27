@@ -19,7 +19,7 @@ interface Props extends Dimensions, Partial<Offset> {
 }
 
 const formatDate = timeFormat("%b %d");
-const { right: bisectDate } = bisector<Observation, Date>(observation => observation.date);
+const { center: bisectDate } = bisector<Observation, Date>(observation => observation.date);
 
 const extendBy = ([min = 0, max = 0]: [number?, number?], multiple: number): [number, number] =>
     [Math.floor(min / multiple) * multiple, Math.ceil(max / multiple) * multiple];
