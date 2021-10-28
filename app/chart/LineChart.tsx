@@ -8,11 +8,11 @@ import type Observation from "lib/Observation";
 import { flatMap } from "lib/itertools/map";
 import { dispatch, getElement } from "../dom";
 import type { Data, Dimensions, Offset, Series } from ".";
-import Plot from "./Plot";
-import Path from "./Path";
 import { BottomAxis, RightAxis } from "./Axis";
 import AxisMarker from "./AxisMarker";
 import MarkerLine from "./MarkerLine";
+import Plot from "./Plot";
+import Path from "./Path";
 import "./chart.css";
 
 interface Props extends Dimensions, Partial<Offset> {
