@@ -5,7 +5,7 @@
     "type": "module",
     "dependencies": {
         "@sinclair/typebox": "^0.20.5",
-        "axios": "^0.23.0",
+        "axios": "^0.24.0",
         "date-fns": "^2.25.0",
         "lru-cache": "^6.0.0"
     },

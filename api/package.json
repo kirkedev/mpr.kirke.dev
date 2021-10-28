@@ -14,10 +14,10 @@
         "lib": "workspace:*"
     },
     "devDependencies": {
-        "@types/node": "^16.11.1",
-        "esbuild": "^0.13.8",
+        "@types/node": "^16.11.6",
+        "esbuild": "^0.13.10",
         "nodemon": "^2.0.14",
-        "ts-node": "^10.3.0",
+        "ts-node": "^10.4.0",
         "typescript": "4.4.4"
     },
     "nodemonConfig": {
