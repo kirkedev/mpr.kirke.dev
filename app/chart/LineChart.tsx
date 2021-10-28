@@ -6,6 +6,7 @@ import { scaleLinear, scaleTime } from "d3-scale";
 import { pointer } from "d3-selection";
 import type Observation from "lib/Observation";
 import { flatMap } from "lib/itertools/map";
+import { dispatch, getElement } from "../dom";
 import type { Data, Dimensions, Offset, Series } from ".";
 import Plot from "./Plot";
 import Path from "./Path";
@@ -25,20 +26,9 @@ const { center: bisectDate } = bisector<Observation, Date>(observation => observ
 const extendBy = ([min = 0, max = 0]: [number?, number?], multiple: number): [number, number] =>
     [Math.floor(min / multiple) * multiple, Math.ceil(max / multiple) * multiple];
 
-function dispatch<T>(this: Element, name: string, detail: T, options?: EventInit) {
-    const event = new CustomEvent(name, Object.assign({ detail }, options ?? {
-        bubbles: true,
-        cancelable: true
-    }));
-
-    this.dispatchEvent(event);
-}
-
 function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top = 0 }: Props): JSXElement {
     right = width - right;
     bottom = height - bottom;
-
-    let plot: Element;
 
     const array = data.map(series => Array.from(series));
     const [markers, setMarkers] = createSignal<Data[]>(array.map(series => series[series.length - 1]));
@@ -52,20 +42,23 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
         .range([bottom, top])
         .domain(extendBy(extent(flatMap(data, record => record.value)), 5));
 
+    const getPlot = getElement(".plot");
+
     function updateMarkers(event: MouseEvent) {
-        const [position] = pointer(event, plot);
-        const x0 = dates.invert(position);
-        const markers = array.map(series => series[bisectDate(series, x0)] ?? series[series.length - 1]);
+        const target = event.currentTarget as HTMLElement;
+        const [position] = pointer(event, getPlot(target));
+        const date = dates.invert(position);
+        const markers = array.map(series => series[bisectDate(series, date)] ?? series[series.length - 1]);
         setMarkers(markers);
         setShowMarkers(true);
-        dispatch.call(event.currentTarget as HTMLElement, "stats", markers);
+        dispatch.call(target, "stats", markers);
     }
 
     function resetMarkers(event: MouseEvent) {
         const markers = array.map(series => series[series.length - 1]);
         setMarkers(markers);
         setShowMarkers(false);
-        dispatch.call(event.currentTarget as HTMLElement, "stats", markers);
+        dispatch.call(event.currentTarget as EventTarget, "stats", markers);
     }
 
     return <div class={"chart"}
@@ -92,7 +85,7 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
                 top={values(markers()[0].value)}
                 bottom={bottom}/>
 
-            <Plot ref={(el: SVGElement) => plot = el}>
+            <Plot>
                 <Index each={data}>
                     { (series, index) =>
                         <Path data={series()} x={dates} y={values} marker={markers()[index]}/>
