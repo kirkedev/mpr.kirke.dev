@@ -7,7 +7,7 @@
         "unit": "jest --projects lib",
         "integration": "jest --projects api",
         "all": "yarn unit && yarn integration",
-        "watch:": "jest --projects lib api --watchAll"
+        "watch": "jest --projects lib api --watchAll"
     },
     "devDependencies": {
         "@types/jest": "^27.0.2",

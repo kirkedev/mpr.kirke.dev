@@ -1,17 +1,17 @@
 import type { JSXElement } from "solid-js";
 import { createResource, Match, Switch } from "solid-js";
-import type { CashIndex } from "lib/CashIndex";
-import cashIndex from "lib/CashIndex";
 import Report from "./Report";
-import slaughter from "../api/slaughter";
+import type { CutoutIndex } from "lib/CutoutIndex";
+import cutoutIndex from "lib/CutoutIndex";
+import cutout from "../api/cutout";
 
 function Cash(): JSXElement {
     const [data] = createResource(() =>
-        slaughter.query(new Date(2021, 7, 2), new Date(2021, 9, 3))
-            .then(cashIndex)
+        cutout.query(new Date(2021, 7, 2), new Date(2021, 9, 3))
+            .then(cutoutIndex)
             .then(Array.from));
 
-    return <Switch fallback={<Report cash={data() as CashIndex[]}/>}>
+    return <Switch fallback={<Report cutout={data() as CutoutIndex[]}/>}>
         <Match when={data.loading}>
             <div>Loading...</div>
         </Match>

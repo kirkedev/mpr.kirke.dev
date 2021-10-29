@@ -1,4 +1,4 @@
-.cash {
+.cutout {
     @apply pt-8;
     @apply pb-5;
 }
@@ -11,7 +11,7 @@
     @apply px-10;
 }
 
-.cash :global(.chart) {
+.cutout :global(.chart) {
     @apply px-10;
 }
 
@@ -36,19 +36,29 @@
     @apply font-normal;
 }
 
-.cash :global(.plot) g:first-child path {
+.cutout :global(.plot) g:first-child path {
+    @apply stroke-blue-200;
     stroke-width: 4;
-    @apply stroke-green-400;
+    stroke-dasharray: 8 12;
 }
 
-.cash :global(.plot) g:first-child circle {
-    @apply fill-green-400;
+.cutout :global(.plot) g:nth-child(2) path {
+    @apply stroke-blue-400;
+    stroke-width: 4;
 }
 
-.cash :global(.marker) rect {
-    @apply fill-green-400;
+.cutout :global(.plot) g:first-child circle {
+    @apply hidden;
 }
 
-.cash :global(.marker) text {
+.cutout :global(.plot) g:nth-child(2) circle {
+    @apply fill-blue-400;
+}
+
+.cutout :global(.marker) rect {
+    @apply fill-blue-400;
+}
+
+.cutout :global(.marker) text {
     @apply fill-white;
 }

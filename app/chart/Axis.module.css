@@ -5,7 +5,6 @@
 .axis :global(.tick) > text {
     @apply text-gray-500;
     @apply text-xs;
-    @apply font-thin;
 }
 
 .axis :global(.domain) {

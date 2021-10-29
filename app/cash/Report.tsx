@@ -1,10 +1,11 @@
-import { createSignal, JSXElement } from "solid-js";
+import type { JSXElement } from "solid-js";
+import { createSignal } from "solid-js";
+import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
 import type { CashIndex } from "lib/CashIndex";
 import type { Data } from "../chart";
 import LineChart from "../chart/LineChart";
 import styles from "./Cash.module.css";
-import { format } from "d3-format";
 
 interface Props {
     cash: CashIndex[];
@@ -22,12 +23,13 @@ const formatDate = timeFormat("%b %d, %Y");
 
 const formatNumber = format("(.2f");
 
-const series = (data: CashIndex[]): Data[] =>
-    data.map(({ date, indexPrice: value }) => ({ date, value }));
+const series = (data: CashIndex[]): Data[][] => [
+    data.map(({ date, indexPrice: value }) => ({ date, value }))
+];
 
 function Report({ cash }: Props): JSXElement {
     const data = series(cash);
-    const [getStats, setStats] = createSignal<Data>(data[data.length - 1]);
+    const [getStats, setStats] = createSignal<Data>(data[0][data.length - 1]);
     const updateStats = ({ detail }: CustomEvent<Data[]>) => setStats(detail[0]);
 
     return <div on:stats={updateStats} class={styles.cash}>
@@ -52,7 +54,7 @@ function Report({ cash }: Props): JSXElement {
             bottom={48}
             left={32}
             top={16}
-            data={[data]}
+            data={data}
         />
     </div>;
 }
