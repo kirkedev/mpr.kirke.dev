@@ -6,8 +6,8 @@
         "api": "jest --projects api --watchAll",
         "unit": "jest --projects lib",
         "integration": "jest --projects api",
-        "all": "yarn unit && yarn integration",
-        "watch": "jest --projects lib api --watchAll"
+        "all": "jest --projects lib api --collectCoverageFrom='{api,lib}/**/*.ts'",
+        "watch": "jest --projects lib api --watchAll --collectCoverageFrom='{api,lib}/**/*.ts'"
     },
     "devDependencies": {
         "@types/jest": "^27.0.2",

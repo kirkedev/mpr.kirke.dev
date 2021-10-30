@@ -17,8 +17,5 @@ module.exports = {
         "jsx",
     ],
     "collectCoverage": true,
-    "collectCoverageFrom": [
-        "<rootDir>/lib/**/*.ts",
-        "!<rootDir>/lib/**/*.d.ts"
-    ]
+    "collectCoverageFrom": ["<rootDir>/lib/**/*.ts"]
 };
