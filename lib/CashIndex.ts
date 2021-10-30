@@ -9,21 +9,20 @@ import { map } from "./itertools/map";
 import rolling from "./itertools/rolling";
 import type Slaughter from "./slaughter";
 
-const value = (slaughter: Slaughter): number =>
-    slaughter.netPrice * weight(slaughter);
-
 const weight = (slaughter: Slaughter): number =>
     slaughter.headCount * slaughter.carcassWeight;
+
+const value = (slaughter: Slaughter): number =>
+    slaughter.netPrice * weight(slaughter);
 
 const avgPrice = (value: number, weight: number): number =>
     round(value / weight);
 
+const arrangements = [Arrangement.Negotiated, Arrangement.MarketFormula, Arrangement.NegotiatedFormula];
+
 const filterSlaughter = (slaughter: Iterable<Slaughter>): Iterable<Slaughter> =>
     filter(slaughter, ({ netPrice, carcassWeight, arrangement }) =>
-        !Number.isNaN(netPrice) && !Number.isNaN(carcassWeight)
-        && (arrangement === Arrangement.Negotiated ||
-            arrangement === Arrangement.MarketFormula ||
-            arrangement === Arrangement.NegotiatedFormula));
+        !Number.isNaN(netPrice) && !Number.isNaN(carcassWeight) && arrangements.includes(arrangement));
 
 interface CashIndex extends Observation {
     dailyPrice: number;
@@ -43,7 +42,7 @@ function cashIndex(records: Iterable<Slaughter>): Iterable<CashIndex> {
     return map(rolling(totals, 2), ([last, { date, weight, value }]) => ({
         date,
         dailyPrice: avgPrice(value, weight),
-        indexPrice: avgPrice(last.value + value, last.weight + weight),
+        indexPrice: avgPrice(last.value + value, last.weight + weight)
     }));
 }
 

@@ -12,8 +12,8 @@ function* iterateDates(start: Date, end: Date): Iterator<Date> {
 
 class DateRange implements Iterable<Date> {
     public constructor(
-        private start: Date,
-        private end: Date) {
+        private readonly start: Date,
+        private readonly end: Date) {
     }
 
     public [Symbol.iterator] = (): Iterator<Date> =>

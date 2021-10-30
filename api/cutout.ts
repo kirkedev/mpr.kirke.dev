@@ -9,7 +9,7 @@ import parse from "lib/cutout/parse";
 import CutoutResponse from "lib/cutout/response";
 import client from "./client";
 
-type CutoutQuery = {
+interface CutoutQuery {
     Querystring: QueryType;
 }
 

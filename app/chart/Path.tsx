@@ -1,6 +1,7 @@
 import { area } from "d3-shape";
 import type { ScaleLinear, ScaleTime } from "d3-scale";
 import type { Data, Series } from ".";
+import type { JSXElement } from "solid-js";
 
 interface Props {
     x: ScaleTime<number, number>;
@@ -9,7 +10,7 @@ interface Props {
     marker: Data;
 }
 
-function Path(props: Props) {
+function Path(props: Props): JSXElement {
     const { x, y } = props;
 
     const path = area<Data>()

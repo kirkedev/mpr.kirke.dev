@@ -18,7 +18,7 @@ declare module "solid-js" {
     }
 }
 
-const formatNumber = format("(.2f");
+const formatNumber = format(".2f");
 
 const series = (data: CashIndex[]): Data[][] => [
     data.map(({ date, indexPrice: value }) => ({ date, value }))
@@ -27,7 +27,7 @@ const series = (data: CashIndex[]): Data[][] => [
 function Report({ cash }: Props): JSXElement {
     const data = series(cash);
     const [getStats, setStats] = createSignal<Data>(data[0][data.length - 1]);
-    const updateStats = ({ detail }: CustomEvent<Data[]>) => setStats(detail[0]);
+    const updateStats = ({ detail }: CustomEvent<Data[]>): Data => setStats(detail[0]);
 
     return <div on:stats={updateStats} class={styles.cash}>
         <div class={styles.stats}>

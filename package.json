@@ -7,7 +7,8 @@
     "private": true,
     "scripts": {
         "prepare": "husky install .githooks",
-        "lint": "eslint . --ext .ts --fix",
+        "lint": "eslint . --ext .ts,.tsx",
+        "fix": "yarn lint --fix",
         "predev": "docker compose down --remove-orphans",
         "dev": "TAG=$(git describe --tags --dirty --always); yarn predev && docker compose up --build",
         "pretest": "docker-compose --file docker-compose.test.yaml down --remove-orphans && docker-compose --file docker-compose.test.yaml build",

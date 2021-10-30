@@ -78,7 +78,7 @@ test("get all dates in a week", () => {
         new Date(2020, 3, 23),
         new Date(2020, 3, 24),
         new Date(2020, 3, 25),
-        new Date(2020, 3, 26),
+        new Date(2020, 3, 26)
     ]);
 });
 

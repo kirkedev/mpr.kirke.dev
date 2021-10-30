@@ -9,7 +9,7 @@ import parse from "lib/slaughter/parse";
 import SlaughterResponse from "lib/slaughter/response";
 import client from "./client";
 
-type SlaughterQuery = {
+interface SlaughterQuery {
     Querystring: QueryType;
 }
 

@@ -9,7 +9,7 @@ interface Props<Domain extends AxisDomain> extends Partial<Offset> {
     tickSize?: number;
     tickCount?: number;
     tickPadding?: number;
-    scale: AxisScale<Domain>
+    scale: AxisScale<Domain>;
 }
 
 interface AxisProps<Domain extends AxisDomain> extends Partial<Offset>{
@@ -39,16 +39,16 @@ const VerticalAxis = <Domain extends AxisDomain>({ axis, left = 0, top = 0 }: Ax
         transform={`translate(${left},${top})`}
         ref={el => select(el).call(axis)} />;
 
-const LeftAxis = <Domain extends AxisDomain>(props: Props<Domain>) =>
+const LeftAxis = <Domain extends AxisDomain>(props: Props<Domain>): JSXElement =>
     <VerticalAxis { ...mapProps(axisLeft, props) }/>;
 
-const RightAxis = <Domain extends AxisDomain>(props: Props<Domain>) =>
+const RightAxis = <Domain extends AxisDomain>(props: Props<Domain>): JSXElement =>
     <VerticalAxis { ...mapProps(axisRight, props) }/>;
 
-const BottomAxis = <Domain extends AxisDomain>(props: Props<Domain>) =>
+const BottomAxis = <Domain extends AxisDomain>(props: Props<Domain>): JSXElement =>
     <HorizontalAxis { ...mapProps(axisBottom, props) }/>;
 
-const TopAxis = <Domain extends AxisDomain>(props: Props<Domain>) =>
+const TopAxis = <Domain extends AxisDomain>(props: Props<Domain>): JSXElement =>
     <HorizontalAxis { ...mapProps(axisTop, props) }/>;
 
 export { LeftAxis, BottomAxis, RightAxis, TopAxis };

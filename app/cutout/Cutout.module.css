@@ -4,7 +4,6 @@
 
 .stats {
     @apply flex;
-    @apply justify-around;
     @apply flex-row;
     @apply mb-4;
     @apply px-10;
@@ -18,6 +17,7 @@
     @apply text-center;
     @apply px-4;
     @apply py-2;
+    @apply mr-8;
     border-bottom: 3px solid;
 }
 

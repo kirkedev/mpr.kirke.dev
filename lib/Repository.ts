@@ -13,7 +13,7 @@ interface Archive<T extends Observation> {
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 
 class Repository<T extends Observation> {
-    private data = new LRU<string, Archive<T>>({ maxAge });
+    private readonly data = new LRU<string, Archive<T>>({ maxAge });
 
     public constructor(
         private readonly fetch: (start: Date, end: Date) => Promise<T[]>) {

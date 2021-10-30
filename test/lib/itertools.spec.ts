@@ -236,6 +236,6 @@ test("create a moving window of an iterable", () => {
         ["c", "d", "e"],
         ["d", "e", "f"],
         ["e", "f", "g"],
-        ["f", "g", "h"],
+        ["f", "g", "h"]
     ]);
 });

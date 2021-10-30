@@ -44,7 +44,7 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
 
     const getPlot = getElement(".plot");
 
-    function updateMarkers(event: MouseEvent) {
+    function updateMarkers(event: MouseEvent): void {
         const target = event.currentTarget as HTMLElement;
         const [position] = pointer(event, getPlot(target));
         const date = dates.invert(position);
@@ -54,7 +54,7 @@ function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top =
         dispatch.call(target, "stats", markers);
     }
 
-    function resetMarkers(event: MouseEvent) {
+    function resetMarkers(event: MouseEvent): void {
         const markers = array.map(series => series[series.length - 1]);
         setMarkers(markers);
         setShowMarkers(false);
