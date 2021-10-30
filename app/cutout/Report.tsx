@@ -43,10 +43,10 @@ function Report(props: Props): JSXElement {
         <LineChart
             width={640}
             height={360}
-            right={32}
+            right={48}
             bottom={48}
             left={32}
-            top={16}
+            top={32}
             data={data}
         />
     </div>;

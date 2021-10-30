@@ -6,7 +6,6 @@
     @apply flex;
     @apply justify-between;
     @apply flex-row;
-    @apply mb-5;
     @apply px-10;
 }
 
