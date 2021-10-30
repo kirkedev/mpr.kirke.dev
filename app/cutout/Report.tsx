@@ -1,42 +1,43 @@
-import { createSignal, JSXElement } from "solid-js";
-import LineChart from "../chart/LineChart";
+import type { JSXElement } from "solid-js";
+import { createSignal, Index } from "solid-js";
 import styles from "./Cutout.module.css";
 import { Data } from "../chart";
-import { timeFormat } from "d3-time-format";
 import { format } from "d3-format";
 import type { CutoutIndex } from "lib/CutoutIndex";
+import LineChart from "../chart/LineChart";
 
 interface Props {
     cutout: CutoutIndex[]
 }
 
-const formatDate = timeFormat("%b %d, %Y");
-
 const formatNumber = format("(.2f");
 
 const series = (cutout: CutoutIndex[]) => [
     cutout.map(({ date, indexPrice: value }) => ({ date, value })),
-    cutout.map(({ date, carcassPrice: value }) => ({ date, value })),
+    cutout.map(({ date, carcassPrice: value }) => ({ date, value }))
 ];
+
+const labels = ["Cutout", "Index"];
 
 function Report(props: Props): JSXElement {
     const data = series(props.cutout);
-    const [getStats, setStats] = createSignal<Data>(data[1][data.length - 1]);
-    const updateStats = ({ detail }: CustomEvent<Data[]>) => setStats(detail[1]);
+    const [getStats, setStats] = createSignal<Data[]>(data.map(series => series[series.length - 1]));
+    const updateStats = ({ detail }: CustomEvent<Data[]>) => setStats(detail);
 
     return <div on:stats={updateStats} class={styles.cutout}>
         <div class={styles.stats}>
-            <h2>Cutout</h2>
+            <Index each={getStats().reverse()}>
+                { (stat, index) => <div class={styles.stat}>
+                    <h5 class={styles.label}>
+                        {labels[index]}
+                    </h5>
 
-            <div class={styles.stat}>
-                <h3 class={styles.value}>
-                    {formatNumber(getStats().value)}
-                </h3>
-
-                <h5 class={styles.date}>
-                    {formatDate(getStats().date)}
-                </h5>
-            </div>
+                    <h3 class={styles.value}>
+                        {formatNumber(stat().value)}
+                    </h3>
+                </div>
+                }
+            </Index>
         </div>
 
         <LineChart

@@ -1,6 +1,5 @@
 .cash {
-    @apply pt-8;
-    @apply pb-5;
+    @apply py-5;
 }
 
 .stats {
@@ -17,7 +16,7 @@
 
 .stats h2 {
     @apply text-gray-700;
-    @apply my-auto;
+    @apply mt-auto;
     @apply font-normal;
 }
 

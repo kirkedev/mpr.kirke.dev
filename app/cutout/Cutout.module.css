@@ -1,13 +1,12 @@
 .cutout {
-    @apply pt-8;
-    @apply pb-5;
+    @apply py-4;
 }
 
 .stats {
     @apply flex;
-    @apply justify-between;
+    @apply justify-around;
     @apply flex-row;
-    @apply mb-5;
+    @apply mb-4;
     @apply px-10;
 }
 
@@ -15,14 +14,19 @@
     @apply px-10;
 }
 
-.stats h2 {
-    @apply text-gray-700;
-    @apply my-auto;
-    @apply font-normal;
+.stat {
+    @apply text-center;
+    @apply px-4;
+    @apply py-2;
+    border-bottom: 3px solid;
 }
 
-.stat {
-    @apply text-right;
+.stat:first-child {
+    @apply border-blue-400;
+}
+
+.stat:nth-child(2) {
+    @apply border-blue-200;
 }
 
 .value {
@@ -31,15 +35,18 @@
     @apply font-normal;
 }
 
-.date {
+.label {
     @apply text-gray-400;
-    @apply font-normal;
+    @apply font-thin;
+    @apply uppercase;
+    @apply mb-2;
+    @apply text-xs;
 }
 
 .cutout :global(.plot) g:first-child path {
     @apply stroke-blue-200;
     stroke-width: 4;
-    stroke-dasharray: 8 12;
+    opacity: 50%;
 }
 
 .cutout :global(.plot) g:nth-child(2) path {

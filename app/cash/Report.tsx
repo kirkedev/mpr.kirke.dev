@@ -1,7 +1,6 @@
 import type { JSXElement } from "solid-js";
 import { createSignal } from "solid-js";
 import { format } from "d3-format";
-import { timeFormat } from "d3-time-format";
 import type { CashIndex } from "lib/CashIndex";
 import type { Data } from "../chart";
 import LineChart from "../chart/LineChart";
@@ -19,8 +18,6 @@ declare module "solid-js" {
     }
 }
 
-const formatDate = timeFormat("%b %d, %Y");
-
 const formatNumber = format("(.2f");
 
 const series = (data: CashIndex[]): Data[][] => [
@@ -37,13 +34,9 @@ function Report({ cash }: Props): JSXElement {
             <h2>Cash Index</h2>
 
             <div class={styles.stat}>
-                <h3 class={styles.value}>
+                <h2 class={styles.value}>
                     {formatNumber(getStats().value)}
-                </h3>
-
-                <h5 class={styles.date}>
-                    {formatDate(getStats().date)}
-                </h5>
+                </h2>
             </div>
         </div>
 
