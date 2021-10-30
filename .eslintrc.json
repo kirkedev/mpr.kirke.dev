@@ -15,13 +15,11 @@
             "./test/tsconfig.json"
         ]
     },
-    "ignorePatterns": ["build", "**/*.js", "**/*.d.ts"],
-    "plugins": ["@typescript-eslint", "solid"],
+    "plugins": ["@typescript-eslint"],
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:solid/recommended"
+        "plugin:@typescript-eslint/eslint-recommended"
     ],
     "rules": {
         "linebreak-style": ["error", "unix"],
@@ -60,6 +58,8 @@
             "ecmaFeatures": {
                 "jsx": true
             }
-        }
+        },
+        "plugins": ["solid"],
+        "extends": ["plugin:solid/recommended"]
     }]
 }
