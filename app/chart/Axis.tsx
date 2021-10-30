@@ -1,5 +1,4 @@
 import type { JSXElement } from "solid-js";
-import { onMount } from "solid-js";
 import { select } from "d3-selection";
 import type { Axis, AxisDomain, AxisScale } from "d3-axis";
 import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
@@ -30,25 +29,15 @@ const mapProps = <Domain extends AxisDomain>(
         .tickPadding(props.tickPadding ?? 8)
 });
 
-function HorizontalAxis<Domain extends AxisDomain>({ axis, left = 0, top = 0 }: ChartAxisProps<Domain>): JSXElement {
-    let group: SVGGElement;
+const HorizontalAxis = <Domain extends AxisDomain>({ axis, left = 0, top = 0 }: ChartAxisProps<Domain>): JSXElement =>
+    <g class={styles.axis}
+        ref={el => select(el).call(axis)}
+        transform={`translate(${left},${top})`} />;
 
-    onMount(() => select(group).call(axis));
-
-    return <g class={styles.axis}
+const VerticalAxis = <Domain extends AxisDomain>({ axis, left = 0, top = 0 }: ChartAxisProps<Domain>): JSXElement =>
+    <g class={`${styles.vertical} ${styles.axis}`}
         transform={`translate(${left},${top})`}
-        ref={el => group = el} />;
-}
-
-function VerticalAxis<Domain extends AxisDomain>({ axis, left = 0, top = 0 }: ChartAxisProps<Domain>): JSXElement {
-    let group: SVGGElement;
-
-    onMount(() => select(group).call(axis));
-
-    return <g class={`${styles.vertical} ${styles.axis}`}
-        transform={`translate(${left},${top})`}
-        ref={el => group = el} />;
-}
+        ref={el => select(el).call(axis)} />;
 
 const LeftAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>) =>
     <VerticalAxis { ...mapProps(axisLeft, props) }/>;
