@@ -1,6 +1,6 @@
 import { getDate } from "..";
 import type Observation from "../Observation";
-import { Arrangement, Basis, Seller } from "../PurchaseType";
+import type { Arrangement, Basis, Seller } from "../PurchaseType";
 import type { PurchaseResponse } from "./response";
 
 interface Purchase extends Observation {
@@ -23,9 +23,9 @@ namespace Purchase {
             arrangement: record.arrangement,
             basis: record.basis,
             headCount: record.headCount,
-            avgPrice: record.avgPrice ?? NaN,
-            lowPrice: record.lowPrice ?? NaN,
-            highPrice: record.highPrice ?? NaN
+            avgPrice: record.avgPrice ?? Number.NaN,
+            lowPrice: record.lowPrice ?? Number.NaN,
+            highPrice: record.highPrice ?? Number.NaN
         }));
 }
 

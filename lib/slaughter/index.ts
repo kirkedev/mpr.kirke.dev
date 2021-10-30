@@ -1,6 +1,6 @@
 import { getDate } from "..";
 import type Observation from "../Observation";
-import { Arrangement, Basis, Seller } from "../PurchaseType";
+import type { Arrangement, Basis, Seller } from "../PurchaseType";
 import type { SlaughterResponse } from "./response";
 
 interface Slaughter extends Observation {
@@ -27,13 +27,13 @@ namespace Slaughter {
             seller: record.seller,
             basis: record.basis,
             headCount: record.headCount,
-            carcassWeight: record.carcassWeight ?? NaN,
-            liveWeight: record.liveWeight ?? NaN,
-            basePrice: record.basePrice ?? NaN,
-            netPrice: record.netPrice ?? NaN,
-            lowPrice: record.lowPrice ?? NaN,
-            highPrice: record.highPrice ?? NaN,
-            leanPercent: record.leanPercent ?? NaN
+            carcassWeight: record.carcassWeight ?? Number.NaN,
+            liveWeight: record.liveWeight ?? Number.NaN,
+            basePrice: record.basePrice ?? Number.NaN,
+            netPrice: record.netPrice ?? Number.NaN,
+            lowPrice: record.lowPrice ?? Number.NaN,
+            highPrice: record.highPrice ?? Number.NaN,
+            leanPercent: record.leanPercent ?? Number.NaN
         }));
 }
 

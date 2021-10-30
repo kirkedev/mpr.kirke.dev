@@ -1,4 +1,5 @@
-import { Arrangement, Basis, PurchaseType, Seller } from "../PurchaseType";
+import type { PurchaseType } from "../PurchaseType";
+import { Arrangement, Basis, Seller } from "../PurchaseType";
 import { getDate, optFloat, optInt } from "../mpr";
 import { map } from "../itertools/map";
 import type Slaughter from ".";

@@ -6,8 +6,8 @@ interface MprResponse<Section extends string, T extends Record<string, Nullable<
     reportSection: Section;
     stats: {
         returnedRows: number;
-    },
-    results: T[]
+    };
+    results: T[];
 }
 
 const dateFormat = "M/d/yyyy";
@@ -17,7 +17,7 @@ const today = new Date();
 const getDate = (date: string): Date =>
     parseDate(date, dateFormat, today);
 
-const stripCommas = (value: string) =>
+const stripCommas = (value: string): string =>
     value.replace(",", "");
 
 function getOptional(record: Record<string, Nullable<string>>, key: keyof typeof record): Nullable<string> {

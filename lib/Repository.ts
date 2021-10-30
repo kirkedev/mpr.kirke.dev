@@ -13,7 +13,7 @@ interface Archive<T extends Observation> {
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 
 class Repository<T extends Observation> {
-    #data = new LRU<string, Archive<T>>({ maxAge });
+    private data = new LRU<string, Archive<T>>({ maxAge });
 
     public constructor(
         private readonly fetch: (start: Date, end: Date) => Promise<T[]>) {
@@ -29,12 +29,12 @@ class Repository<T extends Observation> {
 
         const key = week.toString();
 
-        if (this.#data.has(key)) {
-            const { day, data } = this.#data.get(key) as Archive<T>;
+        if (this.data.has(key)) {
+            const { day, data } = this.data.get(key) as Archive<T>;
 
             if (day < Weekday.Sunday) {
                 data.concat(await this.fetch(week.day(day + 1), end));
-                this.#data.set(key, { day, data });
+                this.data.set(key, { day, data });
             }
 
             return data;
@@ -45,7 +45,7 @@ class Repository<T extends Observation> {
         if (data.length > 0) {
             const { date: last } = data[data.length - 1];
             const day = isThisISOWeek(last) ? getISODay(last) : Weekday.Sunday;
-            this.#data.set(key, { day, data });
+            this.data.set(key, { day, data });
         }
 
         return data;

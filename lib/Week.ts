@@ -28,7 +28,7 @@ class Weeks implements Iterable<Week> {
         private readonly end: Week) {
     }
 
-    [Symbol.iterator] = (): Iterator<Week> =>
+    public [Symbol.iterator] = (): Iterator<Week> =>
         iterateWeeks(this.start, this.end);
 }
 
@@ -48,19 +48,19 @@ class Week {
         public readonly week: number) {
     }
 
-    static parse(iso: string): Week {
+    public static parse(iso: string): Week {
         const [year, week] = iso.split(/-?W/)
             .map(value => parseInt(value, 10));
 
         return new Week(year, week);
     }
 
-    static range = (start: Week, end: Week): Weeks =>
+    public static range = (start: Week, end: Week): Weeks =>
         new Weeks(start, end);
 
-    static with(date: Date): Week;
-    static with(start: Date, end: Date): Weeks;
-    static with(start: Date, end?: Date): Week | Weeks {
+    public static with(date: Date): Week;
+    public static with(start: Date, end: Date): Weeks;
+    public static with(start: Date, end?: Date): Week | Weeks {
         const week = new Week(getISOWeekYear(start), getISOWeek(start));
 
         return end === undefined
@@ -68,10 +68,10 @@ class Week {
             : Week.range(week, new Week(getISOWeekYear(end), getISOWeek(end)));
     }
 
-    static ascending: Comparator<Week> = (week: Week, other: Week) =>
+    public static ascending: Comparator<Week> = (week: Week, other: Week) =>
         week.equals(other) ? 0 : week.before(other) ? -1 : 1;
 
-    static descending: Comparator<Week> = (week: Week, other: Week) =>
+    public static descending: Comparator<Week> = (week: Week, other: Week) =>
         week.equals(other) ? 0 : week.after(other) ? -1 : 1;
 
     public get next(): Week {

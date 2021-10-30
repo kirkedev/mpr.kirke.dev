@@ -25,7 +25,7 @@ class WindowedIterable<T> implements Iterable<T[]> {
         private readonly size: number) {
     }
 
-    [Symbol.iterator] = (): Iterator<T[]> =>
+    public [Symbol.iterator] = (): Iterator<T[]> =>
         iterateWindows(iterate(this.iterable), this.size);
 }
 

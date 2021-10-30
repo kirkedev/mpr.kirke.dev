@@ -4,26 +4,26 @@ export abstract class MprRequest<T> {
         protected sortColumn?: string) {
     }
 
-    readonly abstract url: string;
+    public readonly abstract url: string;
 
-    abstract get(): Promise<T>;
+    public abstract get(): Promise<T>;
 
-    filter(key: string, ...values: string[]): this {
+    public filter(key: string, ...values: string[]): this {
         this.filters.set(key, values.join(":"));
         return this;
     }
 
-    between(key: string, start: string, end: string): this {
+    public between(key: string, start: string, end: string): this {
         this.filters.set(key, `${start}:${end}`);
         return this;
     }
 
-    sort(column: string): this {
+    public sort(column: string): this {
         this.sortColumn = column;
         return this;
     }
 
-    get query(): Map<string, string> {
+    public get query(): Map<string, string> {
         const params = new Map<string, string>();
 
         if (this.filters.size > 0) {

@@ -12,7 +12,7 @@ function* flattenElements<T>(iterator: Iterator<Iterable<T>>): Iterator<T> {
 class FlattenedIterable<T> implements Iterable<T> {
     public constructor(private readonly iterable: Iterable<Iterable<T>>) {}
 
-    public [Symbol.iterator] = () =>
+    public [Symbol.iterator] = (): Iterator<T> =>
         flattenElements(iterate(this.iterable));
 }
 

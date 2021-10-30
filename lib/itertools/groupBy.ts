@@ -30,7 +30,7 @@ class GroupedIterable<T> implements Iterable<T[]>{
         private readonly group: (last: T, current: T) => boolean) {
     }
 
-    [Symbol.iterator] = (): Iterator<T[]> =>
+    public [Symbol.iterator] = (): Iterator<T[]> =>
         groupItems(iterate(this.iterable), this.group);
 }
 

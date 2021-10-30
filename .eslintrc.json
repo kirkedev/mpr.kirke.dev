@@ -43,8 +43,20 @@
         "keyword-spacing": "error",
         "comma-spacing": "error",
         "@typescript-eslint/no-namespace": "off",
-        "indent": "off",
-        "@typescript-eslint/indent": ["error", 4]
+        "@typescript-eslint/indent": ["error", 4],
+        "@typescript-eslint/consistent-type-exports": "error",
+        "@typescript-eslint/consistent-type-imports": ["error", {
+            "prefer": "type-imports"
+        }],
+        "@typescript-eslint/explicit-function-return-type": ["error", {
+            "allowExpressions": true
+        }],
+        "@typescript-eslint/explicit-member-accessibility": "error",
+        "@typescript-eslint/member-delimiter-style": "error",
+        "@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
+        "@typescript-eslint/no-unnecessary-condition": "error",
+        "@typescript-eslint/no-unnecessary-qualifier": "error",
+        "@typescript-eslint/no-unnecessary-type-arguments": "error"
     },
     "overrides": [{
         "files": [

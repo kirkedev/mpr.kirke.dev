@@ -1,7 +1,7 @@
 import startOfDay from "date-fns/startOfDay";
 import addDays from "date-fns/addDays";
 
-function* iterateDates(start: Date, end: Date) {
+function* iterateDates(start: Date, end: Date): Iterator<Date> {
     let date = startOfDay(start);
 
     while (date <= end) {
@@ -16,7 +16,7 @@ class DateRange implements Iterable<Date> {
         private end: Date) {
     }
 
-    [Symbol.iterator] = (): Iterator<Date> =>
+    public [Symbol.iterator] = (): Iterator<Date> =>
         iterateDates(this.start, this.end);
 }
 
@@ -40,7 +40,7 @@ class DateSequence implements Iterable<Date> {
         private readonly start: Date) {
     }
 
-    [Symbol.iterator] = (): Iterator<Date> =>
+    public [Symbol.iterator] = (): Iterator<Date> =>
         new DateIterator(this.start);
 }
 

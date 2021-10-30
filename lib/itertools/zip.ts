@@ -16,7 +16,7 @@ class MergedIterable<T, U> implements Iterable<[T, U]> {
         private readonly first: Iterable<T>,
         private readonly second: Iterable<U>) {}
 
-    public [Symbol.iterator] = () =>
+    public [Symbol.iterator] = (): Iterator<[T, U]> =>
         mergeIterators(iterate(this.first), iterate(this.second));
 }
 

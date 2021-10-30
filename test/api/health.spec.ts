@@ -1,5 +1,5 @@
 import request from "./request";
-import { HealthStatus } from "api/health";
+import type { HealthStatus } from "api/health";
 
 test("get api health status", async () => {
     const now = Date.now();

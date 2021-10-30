@@ -1,4 +1,5 @@
-import { Arrangement, Basis, PurchaseType, Seller } from "../PurchaseType";
+import { Arrangement, Basis, Seller } from "../PurchaseType";
+import type { PurchaseType } from "../PurchaseType";
 import { map } from "../itertools/map";
 import { getDate, optFloat, optInt } from "../mpr";
 import type { BarrowsGilts, BarrowsGiltsRecord, HistoricalPurchaseRecord } from "./mpr";

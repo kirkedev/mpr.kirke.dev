@@ -19,7 +19,7 @@ class MprReport<Section extends string> extends MprRequest<Response<Section>> {
         return new MprSection<Section, T>(`${this.baseUrl}/${section}`, this.filters, this.sortColumn);
     }
 
-    get url(): string {
+    public get url(): string {
         return `${this.baseUrl}?${queryString(this.query.set("allSections", "true"))}`;
     }
 

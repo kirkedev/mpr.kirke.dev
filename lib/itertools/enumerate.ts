@@ -15,7 +15,7 @@ function* enumerateElements<T>(iterator: Iterator<T>): Iterator<EnumeratedValue<
 class EnumeratedIterable<T> implements Iterable<EnumeratedValue<T>> {
     public constructor(private readonly iterable: Iterable<T>) {}
 
-    public [Symbol.iterator] = () =>
+    public [Symbol.iterator] = (): Iterator<EnumeratedValue<T>> =>
         enumerateElements(iterate(this.iterable));
 }
 
