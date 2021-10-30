@@ -10,9 +10,11 @@ interface Props {
 }
 
 function Path(props: Props) {
+    const { x, y } = props;
+
     const path = area<Data>()
-        .x(({ date }) => props.x(date))
-        .y(({ value }) => props.y(value));
+        .x(({ date }) => x(date))
+        .y(({ value }) => y(value));
 
     return <g>
         <path class="series" d={path(props.data) as string}/>
