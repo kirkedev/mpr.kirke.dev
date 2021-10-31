@@ -49,7 +49,8 @@
             "prefer": "type-imports"
         }],
         "@typescript-eslint/explicit-function-return-type": ["error", {
-            "allowExpressions": true
+            "allowExpressions": true,
+            "allowConciseArrowFunctionExpressionsStartingWithVoid": true
         }],
         "@typescript-eslint/explicit-member-accessibility": "error",
         "@typescript-eslint/member-delimiter-style": "error",

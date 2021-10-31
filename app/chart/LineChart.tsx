@@ -26,9 +26,10 @@ const { center: bisectDate } = bisector<Observation, Date>(observation => observ
 const extendBy = ([min = 0, max = 0]: [number?, number?], multiple: number): [number, number] =>
     [Math.floor(min / multiple) * multiple, Math.ceil(max / multiple) * multiple];
 
-function LineChart({ data, width, height, left = 0, bottom = 0, right = 0, top = 0 }: Props): JSXElement {
-    right = width - right;
-    bottom = height - bottom;
+function LineChart(props: Props): JSXElement {
+    const { data, width, height, top = 0, left = 0 } = props;
+    const bottom = height - (props.bottom ?? 0);
+    const right = width - (props.right ?? 0);
 
     const array = data.map(series => Array.from(series));
     const [markers, setMarkers] = createSignal<Data[]>(array.map(series => series[series.length - 1]));

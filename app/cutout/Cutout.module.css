@@ -35,7 +35,7 @@
 }
 
 .label {
-    @apply text-gray-700;
+    @apply text-gray-400;
     @apply font-thin;
     @apply uppercase;
     @apply mb-2;

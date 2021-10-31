@@ -2,6 +2,7 @@ import type { JSXElement } from "solid-js";
 import { select } from "d3-selection";
 import type { Axis, AxisDomain, AxisScale } from "d3-axis";
 import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
+import "d3-transition";
 import type { Offset } from ".";
 import styles from "./Axis.module.css";
 
@@ -29,15 +30,15 @@ const mapProps = <Domain extends AxisDomain>(
         .tickPadding(props.tickPadding ?? 8)
 });
 
-const HorizontalAxis = <Domain extends AxisDomain>({ axis, left = 0, top = 0 }: AxisProps<Domain>): JSXElement =>
+const HorizontalAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>): JSXElement =>
     <g class={styles.axis}
-        ref={el => select(el).call(axis)}
-        transform={`translate(${left},${top})`} />;
+        transform={`translate(${props.left ?? 0 },${props.top ?? 0})`}
+        ref={el => select(el).transition().call(props.axis)} />;
 
-const VerticalAxis = <Domain extends AxisDomain>({ axis, left = 0, top = 0 }: AxisProps<Domain>): JSXElement =>
+const VerticalAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>): JSXElement =>
     <g class={`${styles.vertical} ${styles.axis}`}
-        transform={`translate(${left},${top})`}
-        ref={el => select(el).call(axis)} />;
+        transform={`translate(${props.left ?? 0},${props.top ?? 0})`}
+        ref={el => select(el).transition().call(props.axis)} />;
 
 const LeftAxis = <Domain extends AxisDomain>(props: Props<Domain>): JSXElement =>
     <VerticalAxis { ...mapProps(axisLeft, props) }/>;

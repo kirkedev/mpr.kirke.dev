@@ -7,6 +7,7 @@
     @apply justify-between;
     @apply flex-row;
     @apply px-10;
+    @apply py-4;
 }
 
 .cash :global(.chart) {
@@ -17,7 +18,6 @@
     @apply text-gray-700;
     @apply mt-auto;
     @apply font-normal;
-    @apply py-4;
 }
 
 .stat {

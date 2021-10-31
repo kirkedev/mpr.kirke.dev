@@ -3,9 +3,9 @@ import type { Offset } from ".";
 
 type Props = PropsWithChildren & Partial<Offset>;
 
-const Plot = ({ children, left = 0, top = 0 }: Props): JSXElement =>
-    <g class={"plot"} transform={`translate(${left},${top})`}>
-        {children}
+const Plot = (props: Props): JSXElement =>
+    <g class="plot" transform={`translate(${props.left ?? 0},${props.top ?? 0})`}>
+        {props.children}
     </g>;
 
 export default Plot;
