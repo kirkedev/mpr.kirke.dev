@@ -1,8 +1,9 @@
-import type { JSXElement } from "solid-js";
+import type { Accessor, JSXElement } from "solid-js";
+import { createEffect } from "solid-js";
 import { select } from "d3-selection";
-import type { Axis, AxisDomain, AxisScale } from "d3-axis";
-import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis";
 import "d3-transition";
+import type { AxisDomain, AxisScale } from "d3-axis";
+import { axisBottom, axisRight } from "d3-axis";
 import type { Offset } from ".";
 import styles from "./Axis.module.css";
 
@@ -10,46 +11,39 @@ interface Props<Domain extends AxisDomain> extends Partial<Offset> {
     tickSize?: number;
     tickCount?: number;
     tickPadding?: number;
-    scale: AxisScale<Domain>;
+    scale: Accessor<AxisScale<Domain>>;
 }
 
-interface AxisProps<Domain extends AxisDomain> extends Partial<Offset>{
-    axis: Axis<Domain>;
+function RightAxis<Domain extends AxisDomain>(props: Props<Domain>): JSXElement {
+    const { tickCount, left = 0, top = 0, tickSize = 0, tickPadding = 8 } = props;
+    let axis: SVGGElement;
+
+    createEffect(() => select(axis).transition().call(
+        axisRight(props.scale())
+            .ticks(tickCount)
+            .tickSizeInner(tickSize)
+            .tickSizeOuter(0)
+            .tickPadding(tickPadding)));
+
+    return <g class={`${styles.vertical} ${styles.axis}`}
+        transform={`translate(${left},${top})`}
+        ref={el => axis = el}/>;
 }
 
-const mapProps = <Domain extends AxisDomain>(
-    axis: (scale: AxisScale<Domain>) => Axis<Domain>,
-    props: Props<Domain>
-): AxisProps<Domain> => ({
-    left: props.left,
-    top: props.top,
-    axis: axis(props.scale)
-        .ticks(props.tickCount)
-        .tickSizeInner(props.tickSize ?? 0)
-        .tickSizeOuter(0)
-        .tickPadding(props.tickPadding ?? 8)
-});
+function BottomAxis<Domain extends AxisDomain>(props: Props<Domain>): JSXElement {
+    const { tickCount, left = 0, top = 0, tickSize = 0, tickPadding = 8 } = props;
+    let axis: SVGGElement;
 
-const HorizontalAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>): JSXElement =>
-    <g class={styles.axis}
-        transform={`translate(${props.left ?? 0 },${props.top ?? 0})`}
-        ref={el => select(el).transition().call(props.axis)} />;
+    createEffect(() => select(axis).transition().call(
+        axisBottom(props.scale())
+            .ticks(tickCount)
+            .tickSizeInner(tickSize)
+            .tickSizeOuter(0)
+            .tickPadding(tickPadding)));
 
-const VerticalAxis = <Domain extends AxisDomain>(props: AxisProps<Domain>): JSXElement =>
-    <g class={`${styles.vertical} ${styles.axis}`}
-        transform={`translate(${props.left ?? 0},${props.top ?? 0})`}
-        ref={el => select(el).transition().call(props.axis)} />;
+    return <g class={styles.axis}
+        transform={`translate(${left},${top})`}
+        ref={el => axis = el}/>;
+}
 
-const LeftAxis = <Domain extends AxisDomain>(props: Props<Domain>): JSXElement =>
-    <VerticalAxis { ...mapProps(axisLeft, props) }/>;
-
-const RightAxis = <Domain extends AxisDomain>(props: Props<Domain>): JSXElement =>
-    <VerticalAxis { ...mapProps(axisRight, props) }/>;
-
-const BottomAxis = <Domain extends AxisDomain>(props: Props<Domain>): JSXElement =>
-    <HorizontalAxis { ...mapProps(axisBottom, props) }/>;
-
-const TopAxis = <Domain extends AxisDomain>(props: Props<Domain>): JSXElement =>
-    <HorizontalAxis { ...mapProps(axisTop, props) }/>;
-
-export { LeftAxis, BottomAxis, RightAxis, TopAxis };
+export { BottomAxis, RightAxis };

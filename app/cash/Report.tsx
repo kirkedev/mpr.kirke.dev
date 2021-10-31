@@ -1,7 +1,7 @@
 import type { JSXElement } from "solid-js";
 import { createSignal } from "solid-js";
-import { format } from "d3-format";
 import type { CashIndex } from "lib/CashIndex";
+import { bisectDate, formatNumber } from "../report";
 import type { Data } from "../chart";
 import LineChart from "../chart/LineChart";
 import styles from "./Cash.module.css";
@@ -10,32 +10,22 @@ interface Props {
     cash: CashIndex[];
 }
 
-declare module "solid-js" {
-    namespace JSX {
-        interface CustomEvents {
-            stats: CustomEvent<Data[]>;
-        }
-    }
-}
-
-const formatNumber = format(".2f");
-
 const series = (data: CashIndex[]): Data[][] => [
     data.map(({ date, indexPrice: value }) => ({ date, value }))
 ];
 
 function Report({ cash }: Props): JSXElement {
-    const data = series(cash);
-    const [getStats, setStats] = createSignal<Data>(data[0][data.length - 1]);
-    const updateStats = ({ detail }: CustomEvent<Data[]>): Data => setStats(detail[0]);
+    const [data] = series(cash);
+    const [selected, setSelected] = createSignal<Data>(data[data.length - 1]);
+    const getDate = (date: Date): Data => data[bisectDate(data, date)];
 
-    return <div on:stats={updateStats} class={styles.cash}>
+    return <div class={styles.cash} on:selectDate={({ detail }) => setSelected(getDate(detail))} >
         <div class={styles.stats}>
             <h2>Cash Index</h2>
 
             <div class={styles.stat}>
                 <h2 class={styles.value}>
-                    {formatNumber(getStats().value)}
+                    {formatNumber(selected().value)}
                 </h2>
             </div>
         </div>
@@ -47,8 +37,8 @@ function Report({ cash }: Props): JSXElement {
             bottom={48}
             left={32}
             top={32}
-            data={data}
-        />
+            data={[data]}
+            marker={selected()} />
     </div>;
 }
 

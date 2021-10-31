@@ -1,0 +1,59 @@
+.primals {
+    @apply py-4;
+}
+
+.stats {
+    @apply flex;
+    @apply flex-row;
+    @apply justify-between;
+    @apply px-10;
+}
+
+.primals :global(.chart) {
+    @apply px-10;
+}
+
+.stat {
+    border-bottom: 3px solid;
+    transition: border-bottom 500ms, color 500ms;
+    @apply text-center;
+    @apply px-2;
+    @apply py-2;
+    @apply cursor-pointer;
+    @apply text-gray-400;
+    @apply border-transparent;
+}
+
+.stat:global(.active) {
+    @apply border-purple-400;
+    @apply text-gray-700;
+}
+
+.value {
+    @apply mb-1;
+    @apply font-normal;
+}
+
+.label {
+    @apply font-thin;
+    @apply uppercase;
+    @apply mb-2;
+    @apply text-xs;
+}
+
+.primals :global(.plot) g path {
+    @apply stroke-purple-400;
+    stroke-width: 4;
+}
+
+.primals :global(.plot) g circle {
+    @apply fill-purple-400;
+}
+
+.primals :global(.marker) rect {
+    @apply fill-purple-400;
+}
+
+.primals :global(.marker) text {
+    @apply fill-white;
+}

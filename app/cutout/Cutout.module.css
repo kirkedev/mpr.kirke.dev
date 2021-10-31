@@ -13,6 +13,7 @@
 }
 
 .stat {
+    @apply text-gray-700;
     @apply text-center;
     @apply px-4;
     @apply py-2;
@@ -29,13 +30,11 @@
 }
 
 .value {
-    @apply text-gray-700;
     @apply mb-1;
     @apply font-normal;
 }
 
 .label {
-    @apply text-gray-400;
     @apply font-thin;
     @apply uppercase;
     @apply mb-2;
