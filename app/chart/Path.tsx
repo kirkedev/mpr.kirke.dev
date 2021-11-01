@@ -1,10 +1,10 @@
 import type { JSXElement } from "solid-js";
 import { createEffect } from "solid-js";
-import "d3-transition";
+import { select } from "d3-selection";
 import { area } from "d3-shape";
+import "d3-transition";
 import type { ScaleLinear, ScaleTime } from "d3-scale";
 import type { Data, Series } from ".";
-import { select } from "d3-selection";
 
 interface Props {
     x: ScaleTime<number, number>;

@@ -8,10 +8,10 @@ import { flatMap } from "lib/itertools/map";
 import { dispatch, getElement } from "../dom";
 import type { Data, Dimensions, Offset, Series } from ".";
 import { BottomAxis, RightAxis } from "./Axis";
-import Path from "./Path";
-import Plot from "./Plot";
-import MarkerLine from "./MarkerLine";
 import AxisMarker from "./AxisMarker";
+import MarkerLine from "./MarkerLine";
+import Plot from "./Plot";
+import Path from "./Path";
 import "./chart.css";
 
 interface Props extends Dimensions, Partial<Offset> {
@@ -32,6 +32,10 @@ const formatDate = timeFormat("%b %d");
 const extendBy = ([min = 0, max = 0]: [number?, number?], multiple: number): [number, number] =>
     [Math.floor(min / multiple) * multiple, Math.ceil(max / multiple) * multiple];
 
+function equals<T>(previous: T[], current: T[]): boolean {
+    return previous.every((value, index) => value === current[index]);
+}
+
 function LineChart(props: Props): JSXElement {
     const { width, height, top = 0, left = 0 } = props;
     const bottom = height - (props.bottom ?? 0);
@@ -39,40 +43,37 @@ function LineChart(props: Props): JSXElement {
 
     const dates = createMemo(scale =>
         scale.copy().domain(extent(flatMap(props.data, record => record.date)) as [Date, Date]),
-    scaleTime().range([left, right]), {
-        equals: function(prev, next) {
-            const domain = prev.domain();
-            const [y0, y1] = next.domain();
-            return y0 === domain[0] && y1 === domain[1];
-        }
+    scaleTime().range([left, right]), { equals: (previous, current) =>
+        equals(previous.domain(), current.domain())
     });
 
     const values = createMemo(scale =>
         scale.copy().domain(extendBy(extent(flatMap(props.data, record => record.value)), 5)),
-    scaleLinear().range([bottom, top]), {
-        equals: function(prev, next) {
-            const domain = prev.domain();
-            const [y0, y1] = next.domain();
-            return y0 === domain[0] && y1 === domain[1];
-        }
+    scaleLinear().range([bottom, top]), { equals: (previous, current) =>
+        equals(previous.domain(), current.domain())
     });
+
+    const marker = createMemo(() => ({
+        left: dates()(props.marker.date),
+        top: values()(props.marker.value)
+    }));
 
     const getPlot = getElement(".plot");
 
-    function updateMarkers(event: MouseEvent): void {
+    function selectDate(event: MouseEvent): void {
         const target = event.currentTarget as HTMLElement;
         const [position] = pointer(event, getPlot(target));
         const date = dates().invert(position);
         dispatch.call(target, "selectDate", date);
     }
 
-    function resetMarkers(event: MouseEvent): void {
+    function resetDate(event: MouseEvent): void {
         dispatch.call(event.currentTarget as EventTarget, "selectDate", dates().domain()[1]);
     }
 
     return <div class="chart"
-        onmousemove={updateMarkers}
-        onmouseleave={resetMarkers}>
+        onmousemove={selectDate}
+        onmouseleave={resetDate}>
 
         <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
             <RightAxis
@@ -89,8 +90,8 @@ function LineChart(props: Props): JSXElement {
                 tickPadding={24}/>
 
             <MarkerLine
-                left={dates()(props.marker.date)}
-                top={values()(props.marker.value)}
+                left={marker().left}
+                top={marker().top}
                 bottom={bottom + 14}/>
 
             <Plot>
@@ -99,7 +100,7 @@ function LineChart(props: Props): JSXElement {
                 </Index>
             </Plot>
 
-            <AxisMarker left={dates()(props.marker.date)} top={bottom}>
+            <AxisMarker left={marker().left} top={bottom}>
                 {formatDate(props.marker.date)}
             </AxisMarker>
         </svg>
