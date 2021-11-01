@@ -1,13 +1,14 @@
 import type { JSXElement } from "solid-js";
-import { createSignal, Index } from "solid-js";
+import { createMemo, createSignal, Index } from "solid-js";
 import type Cutout from "lib/cutout";
 import type { Data } from "../chart";
 import styles from "./Primals.module.css";
-import { bisectDate, formatNumber } from "../report";
+import { formatNumber, getDate } from "../App";
 import LineChart from "../chart/LineChart";
 
 interface Props {
     cutout: Cutout[];
+    selected: Date;
 }
 
 const mapData = (cutout: Cutout[]): Data[][] => [
@@ -24,12 +25,9 @@ const labels = ["Belly", "Ham", "Loin", "Butt", "Rib", "Picnic"];
 function Primals(props: Props): JSXElement {
     const data = mapData(props.cutout);
     const [selected, setSelected] = createSignal(0);
-    const [stats, setStats] = createSignal<Data[]>(data.map(series => series[series.length - 1]));
+    const stats = createMemo<Data[]>(() => data.map(series => getDate(series, props.selected)));
 
-    const updateStats = ({ detail }: CustomEvent<Date>) =>
-        void setStats(data.map(series => series[bisectDate(series, detail)]));
-
-    return <div on:selectDate={updateStats} class={styles.primals}>
+    return <div class={styles.primals}>
         <div class={styles.stats}>
             <Index each={stats()}>
                 { (stat, index) =>

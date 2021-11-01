@@ -1,17 +1,15 @@
 import type { JSXElement } from "solid-js";
-import { createSignal, Index } from "solid-js";
+import { createMemo, Index } from "solid-js";
 import styles from "./Cutout.module.css";
 import type { Data } from "../chart";
-import { format } from "d3-format";
 import type { CutoutIndex } from "lib/CutoutIndex";
 import LineChart from "../chart/LineChart";
-import { bisectDate } from "../report";
+import { formatNumber, getDate } from "../App";
 
 interface Props {
     cutout: CutoutIndex[];
+    selected: Date;
 }
-
-const formatNumber = format(".2f");
 
 const series = (cutout: CutoutIndex[]): Data[][] => [
     cutout.map(record => ({ date: record.date, value: record.indexPrice })),
@@ -22,12 +20,11 @@ const labels = ["Cutout", "Index"];
 
 function Cutout(props: Props): JSXElement {
     const data = series(props.cutout);
-    const [stats, setStats] = createSignal<Data[]>(data.map(series => series[series.length - 1]).reverse());
 
-    const updateStats = ({ detail }: CustomEvent<Date>): Data[] =>
-        setStats(data.map(series => series[bisectDate(series, detail)]).reverse());
+    const stats = createMemo<Data[]>(() =>
+        data.map(series => getDate(series, props.selected)).reverse());
 
-    return <div on:selectDate={updateStats} class={styles.cutout}>
+    return <div class={styles.cutout}>
         <div class={styles.stats}>
             <Index each={stats()}>
                 { (stat, index) =>

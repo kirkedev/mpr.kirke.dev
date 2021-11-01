@@ -12,8 +12,12 @@ import type Cutout from "lib/cutout";
 import cutout from "./api/cutout";
 import slaughter from "./api/slaughter";
 import type Slaughter from "lib/slaughter";
+import { format } from "d3-format";
+import { bisector } from "d3-array";
+import type Observation from "lib/Observation";
+import type { Data } from "./chart";
 
-interface Data {
+interface Resources {
     cutout: Cutout[];
     cutoutIndex: CutoutIndex[];
     cashIndex: CashIndex[];
@@ -24,7 +28,13 @@ interface DateRange {
     end: Date;
 }
 
-const fetch = ({ start, end }: DateRange): Promise<Data> =>
+const formatNumber = format(".2f");
+
+const { center: bisectDate } = bisector<Observation, Date>(observation => observation.date);
+
+const getDate = (data: Data[], date: Date): Data => data[bisectDate(data, date)];
+
+const fetch = ({ start, end }: DateRange): Promise<Resources> =>
     Promise.all<Cutout[], Slaughter[]>([
         cutout.query(start, end),
         slaughter.query(start, end)
@@ -48,12 +58,22 @@ function App(): JSXElement {
         }
     });
 
+    const [selected, setSelected] = createSignal<Date>(dateRange().end);
+
     return <div class={styles.App}>
-        <div class={styles.reports}>
+        <div class={styles.reports} on:selectDate={({ detail: date }) => setSelected(date)}>
             <Switch fallback={<>
-                <CashIndexChart cash={data().cashIndex} />
-                <CutoutChart cutout={data().cutoutIndex}/>
-                <PrimalsChart cutout={data().cutout} />
+                <CashIndexChart
+                    cash={data().cashIndex}
+                    selected={selected()}/>
+
+                <CutoutChart
+                    cutout={data().cutoutIndex}
+                    selected={selected()}/>
+
+                <PrimalsChart
+                    cutout={data().cutout}
+                    selected={selected()}/>
             </>}>
                 <Match when={data.loading}>
                     <div>Loading...</div>
@@ -68,3 +88,5 @@ function App(): JSXElement {
 }
 
 export default App;
+
+export { formatNumber, getDate };
