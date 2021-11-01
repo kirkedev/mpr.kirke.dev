@@ -1,7 +1,7 @@
 import type { JSXElement } from "solid-js";
 import { createMemo } from "solid-js";
 import type { CashIndex } from "lib/CashIndex";
-import { formatNumber, getDate } from "../App";
+import { formatNumber, getObservation } from "../App";
 import type { Data } from "../chart";
 import LineChart from "../chart/LineChart";
 import styles from "./Cash.module.css";
@@ -17,7 +17,7 @@ const series = (data: CashIndex[]): Data[][] => [
 
 function Cash(props: Props): JSXElement {
     const data = series(props.cash);
-    const stats = createMemo<Data>(() => getDate(data[0], props.selected));
+    const stats = createMemo<Data>(() => getObservation(data[0], props.selected));
 
     return <div class={styles.cash}>
         <div class={styles.stats}>

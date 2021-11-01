@@ -1,4 +1,4 @@
-.primals {
+.primal {
     @apply py-4;
 }
 
@@ -9,7 +9,7 @@
     @apply px-10;
 }
 
-.primals :global(.chart) {
+.primal :global(.chart) {
     @apply px-10;
 }
 
@@ -41,19 +41,19 @@
     @apply text-xs;
 }
 
-.primals :global(.plot) g path {
+.primal :global(.plot) g path {
     @apply stroke-purple-400;
     stroke-width: 4;
 }
 
-.primals :global(.plot) g circle {
+.primal :global(.plot) g circle {
     @apply fill-purple-400;
 }
 
-.primals :global(.marker) rect {
+.primal :global(.marker) rect {
     @apply fill-purple-400;
 }
 
-.primals :global(.marker) text {
+.primal :global(.marker) text {
     @apply fill-white;
 }

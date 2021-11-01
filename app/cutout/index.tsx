@@ -4,7 +4,7 @@ import styles from "./Cutout.module.css";
 import type { Data } from "../chart";
 import type { CutoutIndex } from "lib/CutoutIndex";
 import LineChart from "../chart/LineChart";
-import { formatNumber, getDate } from "../App";
+import { formatNumber, getObservation } from "../App";
 
 interface Props {
     cutout: CutoutIndex[];
@@ -22,7 +22,7 @@ function Cutout(props: Props): JSXElement {
     const data = series(props.cutout);
 
     const stats = createMemo<Data[]>(() =>
-        data.map(series => getDate(series, props.selected)).reverse());
+        data.map(series => getObservation(series, props.selected)).reverse());
 
     return <div class={styles.cutout}>
         <div class={styles.stats}>

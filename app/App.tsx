@@ -2,7 +2,7 @@ import type { JSXElement } from "solid-js";
 import { createResource, createSignal, Match, Switch } from "solid-js";
 import CashIndexChart from "./cash";
 import CutoutChart from "./cutout";
-import PrimalsChart from "./primals";
+import PrimalChart from "./primal";
 import styles from "./App.module.css";
 import type { CutoutIndex } from "lib/CutoutIndex";
 import cutoutIndex from "lib/CutoutIndex";
@@ -32,7 +32,7 @@ const formatNumber = format(".2f");
 
 const { center: bisectDate } = bisector<Observation, Date>(observation => observation.date);
 
-const getDate = (data: Data[], date: Date): Data => data[bisectDate(data, date)];
+const getObservation = (data: Data[], date: Date): Data => data[bisectDate(data, date)];
 
 const fetch = ({ start, end }: DateRange): Promise<Resources> =>
     Promise.all<Cutout[], Slaughter[]>([
@@ -62,19 +62,21 @@ function App(): JSXElement {
 
     return <div class={styles.App}>
         <div class={styles.reports} on:selectDate={({ detail: date }) => setSelected(date)}>
-            <Switch fallback={<>
-                <CashIndexChart
-                    cash={data().cashIndex}
-                    selected={selected()}/>
+            <Switch fallback={
+                <>
+                    <CashIndexChart
+                        cash={data().cashIndex}
+                        selected={selected()}/>
 
-                <CutoutChart
-                    cutout={data().cutoutIndex}
-                    selected={selected()}/>
+                    <CutoutChart
+                        cutout={data().cutoutIndex}
+                        selected={selected()}/>
 
-                <PrimalsChart
-                    cutout={data().cutout}
-                    selected={selected()}/>
-            </>}>
+                    <PrimalChart
+                        cutout={data().cutout}
+                        selected={selected()}/>
+                </>
+            }>
                 <Match when={data.loading}>
                     <div>Loading...</div>
                 </Match>
@@ -89,4 +91,4 @@ function App(): JSXElement {
 
 export default App;
 
-export { formatNumber, getDate };
+export { formatNumber, getObservation };

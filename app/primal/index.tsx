@@ -2,8 +2,8 @@ import type { JSXElement } from "solid-js";
 import { createMemo, createSignal, Index } from "solid-js";
 import type Cutout from "lib/cutout";
 import type { Data } from "../chart";
-import styles from "./Primals.module.css";
-import { formatNumber, getDate } from "../App";
+import styles from "./Primal.module.css";
+import { formatNumber, getObservation } from "../App";
 import LineChart from "../chart/LineChart";
 
 interface Props {
@@ -22,12 +22,12 @@ const mapData = (cutout: Cutout[]): Data[][] => [
 
 const labels = ["Belly", "Ham", "Loin", "Butt", "Rib", "Picnic"];
 
-function Primals(props: Props): JSXElement {
+function Primal(props: Props): JSXElement {
     const data = mapData(props.cutout);
     const [selected, setSelected] = createSignal(0);
-    const stats = createMemo<Data[]>(() => data.map(series => getDate(series, props.selected)));
+    const stats = createMemo<Data[]>(() => data.map(series => getObservation(series, props.selected)));
 
-    return <div class={styles.primals}>
+    return <div class={styles.primal}>
         <div class={styles.stats}>
             <Index each={stats()}>
                 { (stat, index) =>
@@ -60,4 +60,4 @@ function Primals(props: Props): JSXElement {
     </div>;
 }
 
-export default Primals;
+export default Primal;

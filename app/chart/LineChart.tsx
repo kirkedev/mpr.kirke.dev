@@ -2,6 +2,7 @@ import type { JSXElement } from "solid-js";
 import { createMemo, Index } from "solid-js";
 import { timeFormat } from "d3-time-format";
 import { extent } from "d3-array";
+import type { NumberValue } from "d3-scale";
 import { scaleLinear, scaleTime } from "d3-scale";
 import { pointer } from "d3-selection";
 import { flatMap } from "lib/itertools/map";
@@ -32,23 +33,22 @@ const formatDate = timeFormat("%b %d");
 const extendBy = ([min = 0, max = 0]: [number?, number?], multiple: number): [number, number] =>
     [Math.floor(min / multiple) * multiple, Math.ceil(max / multiple) * multiple];
 
-function equals<T>(previous: T[], current: T[]): boolean {
-    return previous.every((value, index) => value === current[index]);
-}
+const equals = <T extends NumberValue>(previous: T[], current: T[]): boolean =>
+    previous.every((value, index) => value === current[index]);
 
 function LineChart(props: Props): JSXElement {
     const { width, height, top = 0, left = 0 } = props;
     const bottom = height - (props.bottom ?? 0);
     const right = width - (props.right ?? 0);
 
-    const dates = createMemo(scale =>
-        scale.copy().domain(extent(flatMap(props.data, record => record.date)) as [Date, Date]),
+    const dates = createMemo(scale => scale.copy()
+        .domain(extent(flatMap(props.data, record => record.date)) as [Date, Date]),
     scaleTime().range([left, right]), { equals: (previous, current) =>
         equals(previous.domain(), current.domain())
     });
 
-    const values = createMemo(scale =>
-        scale.copy().domain(extendBy(extent(flatMap(props.data, record => record.value)), 5)),
+    const values = createMemo(scale => scale.copy()
+        .domain(extendBy(extent(flatMap(props.data, record => record.value)), 5)),
     scaleLinear().range([bottom, top]), { equals: (previous, current) =>
         equals(previous.domain(), current.domain())
     });
