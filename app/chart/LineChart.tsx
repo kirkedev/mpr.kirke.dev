@@ -92,7 +92,7 @@ function LineChart(props: Props): JSXElement {
             <MarkerLine
                 left={marker().left}
                 top={marker().top}
-                bottom={bottom + 14}/>
+                bottom={bottom + 16}/>
 
             <Plot>
                 <Index each={props.data}>
@@ -100,7 +100,7 @@ function LineChart(props: Props): JSXElement {
                 </Index>
             </Plot>
 
-            <AxisMarker left={marker().left} top={bottom}>
+            <AxisMarker width={64} height={32} left={marker().left} top={bottom}>
                 {formatDate(props.marker.date)}
             </AxisMarker>
         </svg>
