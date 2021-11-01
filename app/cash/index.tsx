@@ -1,25 +1,45 @@
 import type { JSXElement } from "solid-js";
-import { createResource, Match, Switch } from "solid-js";
+import { createSignal } from "solid-js";
 import type { CashIndex } from "lib/CashIndex";
-import cashIndex from "lib/CashIndex";
-import Report from "./Report";
-import slaughter from "../api/slaughter";
+import { bisectDate, formatNumber } from "../report";
+import type { Data } from "../chart";
+import LineChart from "../chart/LineChart";
+import styles from "./Cash.module.css";
 
-function Cash(): JSXElement {
-    const [data] = createResource(() =>
-        slaughter.query(new Date(2021, 7, 2), new Date(2021, 9, 3))
-            .then(cashIndex)
-            .then(Array.from));
+interface Props {
+    cash: CashIndex[];
+}
 
-    return <Switch fallback={<Report cash={data() as CashIndex[]}/>}>
-        <Match when={data.loading}>
-            <div>Loading...</div>
-        </Match>
+const series = (data: CashIndex[]): Data[][] => [
+    data.map(({ date, indexPrice: value }) => ({ date, value }))
+];
 
-        <Match when={data.error}>
-            <div>Error</div>
-        </Match>
-    </Switch>;
+function Cash({ cash }: Props): JSXElement {
+    const [data] = series(cash);
+    const [selected, setSelected] = createSignal<Data>(data[data.length - 1]);
+    const getDate = (date: Date): Data => data[bisectDate(data, date)];
+
+    return <div class={styles.cash} on:selectDate={({ detail }) => setSelected(getDate(detail))}>
+        <div class={styles.stats}>
+            <h2>Cash Index</h2>
+
+            <div class={styles.stat}>
+                <h2 class={styles.value}>
+                    {formatNumber(selected().value)}
+                </h2>
+            </div>
+        </div>
+
+        <LineChart
+            width={640}
+            height={360}
+            right={48}
+            bottom={48}
+            left={32}
+            top={32}
+            data={[data]}
+            marker={selected()} />
+    </div>;
 }
 
 export default Cash;
