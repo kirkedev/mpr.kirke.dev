@@ -1,21 +1,21 @@
 import type { JSXElement } from "solid-js";
 import { createResource, createSignal, Match, Switch } from "solid-js";
-import CashIndexChart from "./cash";
-import CutoutChart from "./cutout";
-import PrimalChart from "./primal";
-import styles from "./App.module.css";
+import { format } from "d3-format";
+import { bisector } from "d3-array";
 import type { CutoutIndex } from "lib/CutoutIndex";
 import cutoutIndex from "lib/CutoutIndex";
+import type Observation from "lib/Observation";
 import type { CashIndex } from "lib/CashIndex";
 import cashIndex from "lib/CashIndex";
 import type Cutout from "lib/cutout";
 import cutout from "./api/cutout";
 import slaughter from "./api/slaughter";
 import type Slaughter from "lib/slaughter";
-import { format } from "d3-format";
-import { bisector } from "d3-array";
-import type Observation from "lib/Observation";
 import type { Data } from "./chart";
+import CashIndexChart from "./cash";
+import CutoutChart from "./cutout";
+import PrimalChart from "./primal";
+import styles from "./App.module.css";
 
 interface Resources {
     cutout: Cutout[];
@@ -61,31 +61,29 @@ function App(): JSXElement {
     const [selected, setSelected] = createSignal<Date>(dateRange().end);
 
     return <div class={styles.App}>
-        <div class={styles.reports} on:selectDate={({ detail: date }) => setSelected(date)}>
-            <Switch fallback={
-                <>
-                    <CashIndexChart
-                        cash={data().cashIndex}
-                        selected={selected()}/>
+        <Switch fallback={
+            <div class={styles.reports} on:selectDate={({ detail: date }) => setSelected(date ?? dateRange().end)}>
+                <CashIndexChart
+                    cash={data().cashIndex}
+                    selected={selected()}/>
 
-                    <CutoutChart
-                        cutout={data().cutoutIndex}
-                        selected={selected()}/>
+                <CutoutChart
+                    cutout={data().cutoutIndex}
+                    selected={selected()}/>
 
-                    <PrimalChart
-                        cutout={data().cutout}
-                        selected={selected()}/>
-                </>
-            }>
-                <Match when={data.loading}>
-                    <div>Loading...</div>
-                </Match>
+                <PrimalChart
+                    cutout={data().cutout}
+                    selected={selected()}/>
+            </div>
+        }>
+            <Match when={data.loading}>
+                <div class={styles.loading}>Loading...</div>
+            </Match>
 
-                <Match when={data.error}>
-                    <div>Error</div>
-                </Match>
-            </Switch>
-        </div>
+            <Match when={data.error}>
+                <div class={styles.error}>Error</div>
+            </Match>
+        </Switch>
     </div>;
 }
 

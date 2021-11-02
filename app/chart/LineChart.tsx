@@ -5,6 +5,7 @@ import { extent } from "d3-array";
 import type { NumberValue } from "d3-scale";
 import { scaleLinear, scaleTime } from "d3-scale";
 import { pointer } from "d3-selection";
+import type { Nullable } from "lib";
 import { flatMap } from "lib/itertools/map";
 import { dispatch, getElement } from "../dom";
 import type { Data, Dimensions, Offset, Series } from ".";
@@ -23,7 +24,7 @@ interface Props extends Dimensions, Partial<Offset> {
 declare module "solid-js" {
     namespace JSX {
         interface CustomEvents {
-            selectDate: CustomEvent<Date>;
+            selectDate: CustomEvent<Nullable<Date>>;
         }
     }
 }
@@ -68,7 +69,7 @@ function LineChart(props: Props): JSXElement {
     }
 
     function resetDate(event: MouseEvent): void {
-        dispatch.call(event.currentTarget as EventTarget, "selectDate", dates().domain()[1]);
+        dispatch.call(event.currentTarget as EventTarget, "selectDate", null);
     }
 
     return <div class="chart"
