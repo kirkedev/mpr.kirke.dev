@@ -6,7 +6,7 @@
         "test": "cypress run --spec all.features"
     },
     "devDependencies": {
-        "@cypress/browserify-preprocessor": "^3.0.1",
+        "@cypress/browserify-preprocessor": "^3.0.2",
         "@types/cypress-cucumber-preprocessor": "^4.0.1",
         "@types/resolve": "^1.20.1"
     },

@@ -3,7 +3,7 @@ version: "3.9"
 services:
   mpr:
     build:
-      context: test/mpr
+      dockerfile: test/mpr/Dockerfile
 
   api:
     build:

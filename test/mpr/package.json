@@ -1,0 +1,18 @@
+{
+    "name": "mpr",
+    "type": "module",
+    "main": "index.ts",
+    "scripts": {
+        "start": "node --es-module-specifier-resolution=node --loader ts-node/esm .",
+        "ingest": "node --es-module-specifier-resolution=node --loader ts-node/esm mpr/ingest.ts"
+    },
+    "dependencies": {
+        "command-line-args": "^5.2.0",
+        "ts-node": "^10.4.0",
+        "typescript": "^4.4.4"
+    },
+    "devDependencies": {
+        "@types/node": "^16.11.6",
+        "lib": "workspace:*"
+    }
+}

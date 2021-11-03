@@ -10,6 +10,7 @@
         "watch": "jest --projects lib api --watchAll --collectCoverageFrom='{api,lib}/**/*.ts'"
     },
     "devDependencies": {
+        "@types/command-line-args": "^5.2.0",
         "@types/jest": "^27.0.2",
         "@types/node": "^16.11.6",
         "@types/resolve": "^1.20.1"
