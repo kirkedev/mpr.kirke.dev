@@ -3,7 +3,7 @@ ENV NODE_ENV development
 ENV MPR_HOST ${MPR_HOST}
 
 WORKDIR /home/node/mpr
-COPY package.json .yarnrc.yml yarn.lock tsconfig.json tsconfig.options.json ./
+COPY package.json .yarnrc.yml yarn.lock tsconfig.json ./
 COPY .yarn ./.yarn
 COPY api/package.json ./api/package.json
 COPY lib/package.json ./lib/package.json

@@ -3,13 +3,11 @@ ENV NODE_ENV development
 ENV API_URL ${API_URL}
 
 WORKDIR /home/node/mpr
-COPY package.json .yarnrc.yml yarn.lock ./
+COPY package.json .yarnrc.yml yarn.lock tsconfig.json ./
 COPY .yarn ./.yarn
 COPY app/package.json ./app/
 COPY lib/package.json ./lib/
 RUN yarn workspace app install
-
-COPY tsconfig.json tsconfig.options.json ./
 
 ENTRYPOINT ["yarn", "workspace", "app"]
 CMD ["dev"]

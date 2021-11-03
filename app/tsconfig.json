@@ -3,8 +3,9 @@
     "references": [
         { "path":  "../lib" }
     ],
-    "extends": "../tsconfig.options.json",
+    "extends": "../tsconfig.json",
     "compilerOptions": {
+        "composite": true,
         "jsx": "preserve",
         "jsxImportSource": "solid-js",
         "types": ["vite/client"]
