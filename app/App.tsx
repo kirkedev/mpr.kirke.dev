@@ -18,6 +18,7 @@ import CashIndexChart from "./cash";
 import CutoutChart from "./cutout";
 import PrimalChart from "./primal";
 import styles from "./App.module.css";
+import Week from "lib/Week";
 
 interface Resources {
     cutout: Cutout[];
@@ -39,8 +40,8 @@ const getObservation = (data: Data[], date: Date): Data =>
 
 const fetch = ({ start, end }: DateRange): Promise<Resources> =>
     Promise.all<Cutout[], Slaughter[]>([
-        cutout.query(new Date(new Date(start).setDate(start.getDate() - 7)), end),
-        slaughter.query(new Date(new Date(start).setDate(start.getDate() - 7)), end)
+        cutout.query(Week.with(start).previous.start, end),
+        slaughter.query(Week.with(start).previous.start, end)
     ]).then(([cutout, slaughter]) => ({
         cutout: Array.from(dropWhile(cutout, record => record.date < start)),
         cutoutIndex: Array.from(dropWhile(cutoutIndex(cutout), record => record.date < start)),
