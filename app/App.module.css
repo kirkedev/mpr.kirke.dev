@@ -5,6 +5,64 @@
     @apply max-w-screen-xl;
 }
 
+.datepicker {
+    @apply mx-auto;
+    @apply w-1/3;
+    @apply mb-16;
+}
+
+.datepicker input:focus {
+    @apply outline-none
+}
+
+.datepicker input {
+    @apply appearance-none;
+    @apply bg-transparent;
+}
+
+.datepicker input::-webkit-slider-thumb {
+    @apply bg-blue-500;
+    @apply border-0;
+    @apply shadow;
+}
+
+.datepicker input::-ms-thumb {
+    @apply bg-blue-500;
+    @apply border-0;
+    @apply shadow;
+}
+
+.datepicker input::-moz-range-thumb {
+    @apply bg-blue-500;
+    @apply border-0;
+    @apply shadow;
+}
+
+.datepicker input::-webkit-slider-runnable-track {
+    @apply bg-gray-300;
+    @apply border-0;
+}
+
+.datepicker input::-moz-range-track {
+    @apply bg-gray-300;
+    @apply border-0;
+}
+
+.datepicker input::-ms-track {
+    @apply bg-gray-300;
+    @apply border-0;
+}
+
+.datepicker h3 {
+    @apply text-center;
+    @apply font-normal;
+    @apply mb-2;
+}
+
+.datepicker input {
+    width: 100%;
+}
+
 .reports {
     @apply grid;
     @apply grid-cols-1;

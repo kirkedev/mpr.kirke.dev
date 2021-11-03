@@ -1,5 +1,5 @@
 import type { JSXElement } from "solid-js";
-import { createMemo, Index } from "solid-js";
+import { createEffect, createMemo, createSignal, Index } from "solid-js";
 import styles from "./Cutout.module.css";
 import type { Data } from "../chart";
 import type { CutoutIndex } from "lib/CutoutIndex";
@@ -8,7 +8,7 @@ import { formatNumber, getObservation } from "../App";
 
 interface Props {
     cutout: CutoutIndex[];
-    selected: Date;
+    end: Date;
 }
 
 const series = (cutout: CutoutIndex[]): Data[][] => [
@@ -20,11 +20,11 @@ const labels = ["Cutout", "Index"];
 
 function Cutout(props: Props): JSXElement {
     const data = series(props.cutout);
+    const [date, setDate] = createSignal(props.end);
+    const stats = createMemo<Data[]>(() => data.map(series => getObservation(series, date())).reverse());
+    createEffect(() => setDate(getObservation(data[0], props.end).date));
 
-    const stats = createMemo<Data[]>(() =>
-        data.map(series => getObservation(series, props.selected)).reverse());
-
-    return <div class={styles.cutout}>
+    return <div class={styles.cutout} on:selectDate={({ detail: date }) => setDate(date)}>
         <div class={styles.stats}>
             <Index each={stats()}>
                 { (stat, index) =>
@@ -50,7 +50,7 @@ function Cutout(props: Props): JSXElement {
             top={32}
             data={data}
             marker={stats()[0]}
-        />
+            end={getObservation(data[0], props.end).date}/>
     </div>;
 }
 

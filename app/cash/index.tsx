@@ -1,5 +1,5 @@
 import type { JSXElement } from "solid-js";
-import { createMemo } from "solid-js";
+import { createEffect, createMemo, createSignal } from "solid-js";
 import type { CashIndex } from "lib/CashIndex";
 import { formatNumber, getObservation } from "../App";
 import type { Data } from "../chart";
@@ -8,7 +8,7 @@ import styles from "./Cash.module.css";
 
 interface Props {
     cash: CashIndex[];
-    selected: Date;
+    end: Date;
 }
 
 const series = (data: CashIndex[]): Data[][] => [
@@ -17,9 +17,11 @@ const series = (data: CashIndex[]): Data[][] => [
 
 function Cash(props: Props): JSXElement {
     const data = series(props.cash);
-    const stats = createMemo<Data>(() => getObservation(data[0], props.selected));
+    const [date, setDate] = createSignal(props.end);
+    const stats = createMemo<Data>(() => getObservation(data[0], date()));
+    createEffect(() => setDate(props.end));
 
-    return <div class={styles.cash}>
+    return <div class={styles.cash} on:selectDate={({ detail: date }) => setDate(date)}>
         <div class={styles.stats}>
             <h2>Cash Index</h2>
 
@@ -38,7 +40,8 @@ function Cash(props: Props): JSXElement {
             left={32}
             top={32}
             data={data}
-            marker={stats()} />
+            marker={stats()}
+            end={getObservation(data[0], props.end).date}/>
     </div>;
 }
 

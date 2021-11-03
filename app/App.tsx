@@ -1,6 +1,7 @@
 import type { JSXElement } from "solid-js";
 import { createResource, createSignal, Match, Switch } from "solid-js";
 import { format } from "d3-format";
+import { timeFormat } from "d3-time-format";
 import { bisector } from "d3-array";
 import type { CutoutIndex } from "lib/CutoutIndex";
 import cutoutIndex from "lib/CutoutIndex";
@@ -8,6 +9,7 @@ import type Observation from "lib/Observation";
 import type { CashIndex } from "lib/CashIndex";
 import cashIndex from "lib/CashIndex";
 import type Cutout from "lib/cutout";
+import { dropWhile } from "lib/itertools/drop";
 import cutout from "./api/cutout";
 import slaughter from "./api/slaughter";
 import type Slaughter from "lib/slaughter";
@@ -29,26 +31,29 @@ interface DateRange {
 }
 
 const formatNumber = format(".2f");
+const formatDate = timeFormat("%b %d, %Y");
+const { right: bisectDate } = bisector<Observation, Date>(observation => observation.date);
 
-const { center: bisectDate } = bisector<Observation, Date>(observation => observation.date);
-
-const getObservation = (data: Data[], date: Date): Data => data[bisectDate(data, date)];
+const getObservation = (data: Data[], date: Date): Data =>
+    data[Math.min(bisectDate(data, date) - 1, data.length - 1)];
 
 const fetch = ({ start, end }: DateRange): Promise<Resources> =>
     Promise.all<Cutout[], Slaughter[]>([
-        cutout.query(start, end),
-        slaughter.query(start, end)
+        cutout.query(new Date(new Date(start).setDate(start.getDate() - 7)), end),
+        slaughter.query(new Date(new Date(start).setDate(start.getDate() - 7)), end)
     ]).then(([cutout, slaughter]) => ({
-        cutout,
-        cutoutIndex: Array.from(cutoutIndex(cutout)),
-        cashIndex: Array.from(cashIndex(slaughter))
+        cutout: Array.from(dropWhile(cutout, record => record.date < start)),
+        cutoutIndex: Array.from(dropWhile(cutoutIndex(cutout), record => record.date < start)),
+        cashIndex: Array.from(dropWhile(cashIndex(slaughter), record => record.date < start))
     }));
 
 function App(): JSXElement {
     const [dateRange] = createSignal<DateRange>({
-        start: new Date(2021, 7, 2),
+        start: new Date(2021, 7, 9),
         end: new Date(2021, 9, 3)
     });
+
+    const [end, setEnd] = createSignal<Date>(dateRange().end);
 
     const [data] = createResource(dateRange, fetch, {
         initialValue: {
@@ -58,22 +63,35 @@ function App(): JSXElement {
         }
     });
 
-    const [selected, setSelected] = createSignal<Date>(dateRange().end);
-
     return <div class={styles.App}>
+        <div class={styles.datepicker}>
+            <div>
+                <h3>{formatDate(end())}</h3>
+
+                <input type="range"
+                    min={dateRange().start.getTime()}
+                    max={dateRange().end.getTime()}
+                    value={end().getTime()}
+                    step={1000 * 60 * 60 * 24}
+                    oninput={event => setEnd(new Date(parseInt(event.currentTarget.value, 10)))}/>
+            </div>
+        </div>
+
         <Switch fallback={
-            <div class={styles.reports} on:selectDate={({ detail: date }) => setSelected(date ?? dateRange().end)}>
+            <div class={styles.reports}
+                classList={{ [styles.selected]: end().getTime() < dateRange().end.getTime() }}>
+
                 <CashIndexChart
                     cash={data().cashIndex}
-                    selected={selected()}/>
+                    end={end()}/>
 
                 <CutoutChart
                     cutout={data().cutoutIndex}
-                    selected={selected()}/>
+                    end={end()}/>
 
                 <PrimalChart
                     cutout={data().cutout}
-                    selected={selected()}/>
+                    end={end()}/>
             </div>
         }>
             <Match when={data.loading}>

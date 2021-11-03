@@ -1,5 +1,5 @@
 import type { JSXElement } from "solid-js";
-import { createMemo, createSignal, Index } from "solid-js";
+import { createEffect, createMemo, createSignal, Index } from "solid-js";
 import type Cutout from "lib/cutout";
 import type { Data } from "../chart";
 import styles from "./Primal.module.css";
@@ -8,7 +8,7 @@ import LineChart from "../chart/LineChart";
 
 interface Props {
     cutout: Cutout[];
-    selected: Date;
+    end: Date;
 }
 
 const mapData = (cutout: Cutout[]): Data[][] => [
@@ -24,10 +24,12 @@ const labels = ["Belly", "Ham", "Loin", "Butt", "Rib", "Picnic"];
 
 function Primal(props: Props): JSXElement {
     const data = mapData(props.cutout);
+    const [date, setDate] = createSignal(props.end);
     const [selected, setSelected] = createSignal(0);
-    const stats = createMemo<Data[]>(() => data.map(series => getObservation(series, props.selected)));
+    const stats = createMemo<Data[]>(() => data.map(series => getObservation(series, date())));
+    createEffect(() => setDate(getObservation(data[selected()], props.end).date));
 
-    return <div class={styles.primal}>
+    return <div class={styles.primal} on:selectDate={({ detail: date }) => setDate(date)}>
         <div class={styles.stats}>
             <Index each={stats()}>
                 { (stat, index) =>
@@ -56,7 +58,7 @@ function Primal(props: Props): JSXElement {
             top={32}
             data={[data[selected()]]}
             marker={stats()[selected()]}
-        />
+            end={getObservation(data[selected()], props.end).date}/>
     </div>;
 }
 

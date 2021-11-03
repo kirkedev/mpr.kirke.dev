@@ -5,6 +5,7 @@ import { area } from "d3-shape";
 import "d3-transition";
 import type { ScaleLinear, ScaleTime } from "d3-scale";
 import type { Data, Series } from ".";
+import styles from "./Path.module.css";
 
 interface Props {
     x: ScaleTime<number, number>;
@@ -23,8 +24,8 @@ function Path(props: Props): JSXElement {
             .y(data => props.y(data.value))));
 
     return <g>
-        <path class="series" ref={el => path = el}/>
-        <circle r={6} cx={props.x(props.marker.date)} cy={props.y(props.marker.value)} />
+        <path class="series" ref={el => path = el} mask={`url(#${styles.active})`}/>
+        <circle r={6} cx={props.x(props.marker.date)} cy={props.y(props.marker.value)}/>
     </g>;
 }
 
