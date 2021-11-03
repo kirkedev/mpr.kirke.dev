@@ -3,6 +3,7 @@ import { createResource, createSignal, Match, Switch } from "solid-js";
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
 import { bisector } from "d3-array";
+import Week from "lib/Week";
 import type { CutoutIndex } from "lib/CutoutIndex";
 import cutoutIndex from "lib/CutoutIndex";
 import type Observation from "lib/Observation";
@@ -18,7 +19,6 @@ import CashIndexChart from "./cash";
 import CutoutChart from "./cutout";
 import PrimalChart from "./primal";
 import styles from "./App.module.css";
-import Week from "lib/Week";
 
 interface Resources {
     cutout: Cutout[];
@@ -65,23 +65,30 @@ function App(): JSXElement {
     });
 
     return <div class={styles.App}>
-        <div class={styles.datepicker}>
-            <div>
-                <h3>{formatDate(end())}</h3>
+        <div class={styles.timeperiod}>
+            <h3>Time Period</h3>
 
-                <input type="range"
-                    min={dateRange().start.getTime()}
-                    max={dateRange().end.getTime()}
-                    value={end().getTime()}
-                    step={1000 * 60 * 60 * 24}
-                    oninput={event => setEnd(new Date(parseInt(event.currentTarget.value, 10)))}/>
+            <div class={styles.periods}>
+                <span>1M</span>
+                <span class={styles.active}>3M</span>
+                <span>6M</span>
+                <span>1Y</span>
             </div>
         </div>
 
-        <Switch fallback={
-            <div class={styles.reports}
-                classList={{ [styles.selected]: end().getTime() < dateRange().end.getTime() }}>
+        <div class={styles.datepicker}>
+            <h3>{formatDate(end())}</h3>
 
+            <input type="range"
+                min={dateRange().start.getTime()}
+                max={dateRange().end.getTime()}
+                value={end().getTime()}
+                step={1000 * 60 * 60 * 24}
+                oninput={event => setEnd(new Date(parseInt(event.currentTarget.value, 10)))}/>
+        </div>
+
+        <Switch fallback={
+            <>
                 <CashIndexChart
                     cash={data().cashIndex}
                     end={end()}/>
@@ -93,7 +100,7 @@ function App(): JSXElement {
                 <PrimalChart
                     cutout={data().cutout}
                     end={end()}/>
-            </div>
+            </>
         }>
             <Match when={data.loading}>
                 <div class={styles.loading}>Loading...</div>
