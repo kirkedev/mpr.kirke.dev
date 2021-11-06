@@ -1,5 +1,5 @@
-import { resolve } from "path";
 import { createReadStream } from "fs";
+import { resolve } from "path";
 import type { IncomingMessage, Server, ServerResponse } from "http";
 import { createServer } from "http";
 import { getDate } from "lib";

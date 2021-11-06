@@ -7,7 +7,8 @@
         "unit": "jest --projects lib",
         "integration": "jest --projects api",
         "all": "jest --projects lib api --collectCoverageFrom='{api,lib}/**/*.ts'",
-        "watch": "jest --projects lib api --watchAll --collectCoverageFrom='{api,lib}/**/*.ts'"
+        "watch": "jest --projects lib api --watchAll --collectCoverageFrom='{api,lib}/**/*.ts'",
+        "server": "node --es-module-specifier-resolution=node --loader ts-node/esm mpr"
     },
     "devDependencies": {
         "@types/command-line-args": "^5.2.0",
