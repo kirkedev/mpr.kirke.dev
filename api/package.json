@@ -10,12 +10,12 @@
     },
     "dependencies": {
         "dotenv": "^10.0.0",
-        "fastify": "^3.22.1",
+        "fastify": "^3.23.0",
         "lib": "workspace:*"
     },
     "devDependencies": {
         "@types/node": "^16.11.6",
-        "esbuild": "^0.13.10",
+        "esbuild": "^0.13.12",
         "nodemon": "^2.0.14",
         "ts-node": "^10.4.0",
         "typescript": "4.4.4"

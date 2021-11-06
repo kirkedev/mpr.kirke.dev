@@ -16,7 +16,7 @@
         "d3-transition": "^3.0.1",
         "lib": "workspace:*",
         "solid-app-router": "^0.1.11",
-        "solid-js": "^1.2.0"
+        "solid-js": "^1.2.2"
     },
     "devDependencies": {
         "@types/d3-array": "^3.0.2",
@@ -30,9 +30,9 @@
         "autoprefixer": "^10.4.0",
         "dotenv": "^10.0.0",
         "postcss": "^8.3.11",
-        "tailwindcss": "^2.2.17",
+        "tailwindcss": "^2.2.19",
         "typescript": "^4.4.4",
         "vite": "^2.6.13",
-        "vite-plugin-solid": "^2.1.1"
+        "vite-plugin-solid": "^2.1.2"
     }
 }
