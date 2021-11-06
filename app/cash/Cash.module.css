@@ -1,7 +1,5 @@
 .cash {
     @apply py-4;
-    @apply shadow-xl;
-    @apply mb-16;
 }
 
 .stats {

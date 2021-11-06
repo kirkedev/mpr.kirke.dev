@@ -8,7 +8,7 @@ import LineChart from "../chart/LineChart";
 
 interface Props {
     cutout: Cutout[];
-    end: Date;
+    date: Date;
 }
 
 const mapData = (cutout: Cutout[]): Data[][] => [
@@ -24,10 +24,10 @@ const labels = ["Belly", "Ham", "Loin", "Butt", "Rib", "Picnic"];
 
 function Primal(props: Props): JSXElement {
     const data = mapData(props.cutout);
-    const [date, setDate] = createSignal(props.end);
+    const [date, setDate] = createSignal(props.date);
     const [selected, setSelected] = createSignal(0);
     const stats = createMemo<Data[]>(() => data.map(series => getObservation(series, date())));
-    createEffect(() => setDate(getObservation(data[selected()], props.end).date));
+    createEffect(() => setDate(getObservation(data[selected()], props.date).date));
 
     return <div class={styles.primal} on:selectDate={({ detail: date }) => setDate(date)}>
         <div class={styles.stats}>
@@ -58,7 +58,7 @@ function Primal(props: Props): JSXElement {
             top={32}
             data={[data[selected()]]}
             marker={stats()[selected()]}
-            end={getObservation(data[selected()], props.end).date}/>
+            end={getObservation(data[selected()], props.date).date}/>
     </div>;
 }
 

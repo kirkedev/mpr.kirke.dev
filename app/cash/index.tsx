@@ -8,7 +8,7 @@ import styles from "./Cash.module.css";
 
 interface Props {
     cash: CashIndex[];
-    end: Date;
+    date: Date;
 }
 
 const series = (data: CashIndex[]): Data[][] => [
@@ -17,9 +17,9 @@ const series = (data: CashIndex[]): Data[][] => [
 
 function Cash(props: Props): JSXElement {
     const data = series(props.cash);
-    const [date, setDate] = createSignal(props.end);
+    const [date, setDate] = createSignal(props.date);
     const stats = createMemo<Data>(() => getObservation(data[0], date()));
-    createEffect(() => setDate(props.end));
+    createEffect(() => setDate(props.date));
 
     return <div class={styles.cash} on:selectDate={({ detail: date }) => setDate(date)}>
         <div class={styles.stats}>
@@ -41,7 +41,7 @@ function Cash(props: Props): JSXElement {
             top={32}
             data={data}
             marker={stats()}
-            end={getObservation(data[0], props.end).date}/>
+            end={getObservation(data[0], props.date).date}/>
     </div>;
 }
 

@@ -101,7 +101,7 @@ function LineChart(props: Props): JSXElement {
             <BottomAxis
                 top={bottom}
                 scale={dates}
-                tickCount={8}
+                tickCount={5}
                 tickPadding={24}/>
 
             <MarkerLine
