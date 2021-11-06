@@ -19,14 +19,14 @@ const client = new MprClient("https://mpr.datamart.ams.usda.gov", "v1.1")
     .section(args.section);
 
 const filename = (week: Week): string =>
-    path.resolve(`./mpr/reports/${args.report}/${args.section}/${week}.json`);
+    path.resolve(`./reports/${args.report}/${args.section}/${week}.json`);
 
 const sleep = promisify(setTimeout);
 
 const weeks = Array.from(Week.with(new Date(Date.parse(args.start)), new Date(Date.parse(args.end))));
 
 (async function() {
-    await mkdir(`./mpr/reports/${args.report}/${args.section}`, { recursive: true });
+    await mkdir(`./reports/${args.report}/${args.section}`, { recursive: true });
 
     for (const week of weeks) {
         // eslint-disable-next-line no-await-in-loop

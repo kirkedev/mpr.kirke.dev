@@ -4,7 +4,7 @@
     "main": "index.ts",
     "scripts": {
         "start": "node --es-module-specifier-resolution=node --loader ts-node/esm .",
-        "ingest": "node --es-module-specifier-resolution=node --loader ts-node/esm mpr/ingest.ts"
+        "ingest": "node --es-module-specifier-resolution=node --loader ts-node/esm ingest.ts"
     },
     "dependencies": {
         "command-line-args": "^5.2.0",

@@ -59,7 +59,7 @@ function App(): JSXElement {
     const [period, setPeriod] = createSignal(Period.ThreeMonths);
 
     const range = createMemo(function(): DateRange {
-        const start = new Date(2021, 10, 4);
+        const start = new Date(2021, 10, 7);
         const end = new Date(start);
 
         switch (period()) {
