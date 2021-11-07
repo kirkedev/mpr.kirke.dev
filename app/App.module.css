@@ -7,7 +7,7 @@
 }
 
 .reports {
-    @apply mt-36;
+    @apply mt-24;
     @apply container;
     @apply grid;
     @apply grid-cols-1;
@@ -22,7 +22,6 @@
 }
 
 .timepicker {
-    @apply mt-8;
     @apply py-4;
     @apply container;
     @apply items-center;
@@ -32,7 +31,7 @@
     @apply gap-16;
     @apply fixed;
     @apply bg-white;
-    @apply shadow-md;
+    @apply shadow;
     @apply max-w-screen-xl;
 }
 
