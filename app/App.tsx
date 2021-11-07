@@ -43,7 +43,7 @@ const formatDate = timeFormat("%b %d");
 const { right: bisectDate } = bisector<Observation, Date>(observation => observation.date);
 
 const getObservation = (data: Data[], date: Date): Data =>
-    data[Math.min(bisectDate(data, date) - 1, data.length - 1)];
+    data[Math.min(Math.max(bisectDate(data, date) - 1, 0), data.length - 1)];
 
 const fetch = ({ start, end }: DateRange): Promise<Resources> =>
     Promise.all<Cutout[], Slaughter[]>([
