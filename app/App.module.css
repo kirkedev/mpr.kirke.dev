@@ -31,8 +31,8 @@
     @apply gap-16;
     @apply fixed;
     @apply bg-white;
-    @apply shadow;
     @apply max-w-screen-xl;
+    @apply shadow-sm;
 }
 
 .loading:before {
@@ -50,128 +50,4 @@
     @apply border-solid;
     @apply border-gray-200;
     border-top-color: rgba(59, 130, 246);
-}
-
-.period {
-    @apply flex;
-    @apply flex-row;
-    @apply flex-1;
-    @apply items-center;
-    @apply justify-evenly;
-}
-
-.period h3 {
-    @apply font-normal;
-    @apply text-gray-800;
-    @apply hidden;
-    @apply md:flex;
-}
-
-.periods {
-    @apply flex;
-    @apply flex-row;
-    @apply justify-center;
-    @apply items-center;
-}
-
-.periods > span {
-    @apply cursor-pointer;
-    @apply text-sm;
-    @apply mx-3;
-    @apply bg-gray-200;
-    @apply text-center;
-    @apply text-gray-800;
-    @apply w-16;
-    @apply py-2;
-    @apply rounded-full;
-}
-
-.periods > span.active {
-    @apply bg-blue-500;
-    @apply text-white;
-}
-
-.datepicker {
-    @apply flex-1;
-    @apply hidden;
-    @apply md:flex;
-    @apply flex-col;
-    @apply relative;
-    @apply mx-auto;
-    @apply w-2/3;
-}
-
-.datepicker input:focus {
-    @apply outline-none
-}
-
-.datepicker input {
-    @apply appearance-none;
-    @apply bg-transparent;
-}
-
-.datepicker input::-webkit-slider-thumb {
-    @apply bg-blue-500;
-    @apply border-0;
-    @apply shadow;
-}
-
-.datepicker input::-ms-thumb {
-    @apply bg-blue-500;
-    @apply border-0;
-    @apply shadow;
-}
-
-.datepicker input::-moz-range-thumb {
-    @apply bg-blue-500;
-    @apply border-0;
-    @apply shadow;
-}
-
-.datepicker input::-webkit-slider-runnable-track {
-    @apply bg-gray-300;
-    @apply border-0;
-}
-
-.datepicker input::-moz-range-track {
-    @apply bg-gray-300;
-    @apply border-0;
-}
-
-.datepicker input::-ms-track {
-    @apply bg-gray-300;
-    @apply border-0;
-}
-
-.datepicker .tooltip {
-    @apply text-center;
-    @apply font-normal;
-    @apply text-white;
-    @apply bg-blue-500;
-    @apply w-16;
-    @apply h-8;
-    @apply mb-2;
-    @apply text-xs;
-    @apply items-center;
-    @apply justify-center;
-    @apply flex;
-    @apply rounded;
-    @apply absolute;
-    @apply -mt-6;
-    @apply left-1/2;
-    transform: translate(-50%, -50%);
-}
-
-.datepicker .tooltip .arrow {
-    @apply w-2;
-    @apply h-2;
-    @apply absolute;
-    @apply bg-blue-500;
-    @apply -bottom-1;
-    transform: rotate(45deg);
-}
-
-.datepicker input {
-    @apply w-full;
-    @apply block;
 }

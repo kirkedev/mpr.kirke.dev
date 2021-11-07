@@ -1,0 +1,17 @@
+.period {
+    @apply flex;
+    @apply flex-row;
+    @apply flex-1;
+    @apply items-center;
+    @apply justify-evenly;
+}
+
+.datepicker {
+    @apply flex-1;
+    @apply hidden;
+    @apply md:flex;
+    @apply flex-col;
+    @apply relative;
+    @apply mx-auto;
+    @apply w-4/5;
+}

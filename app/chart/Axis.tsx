@@ -1,4 +1,4 @@
-import type { Accessor, JSXElement } from "solid-js";
+import type { JSXElement } from "solid-js";
 import { createEffect } from "solid-js";
 import { select } from "d3-selection";
 import "d3-transition";
@@ -11,7 +11,7 @@ interface Props<Domain extends AxisDomain> extends Partial<Offset> {
     tickSize?: number;
     tickCount?: number;
     tickPadding?: number;
-    scale: Accessor<AxisScale<Domain>>;
+    scale: AxisScale<Domain>;
 }
 
 function RightAxis<Domain extends AxisDomain>(props: Props<Domain>): JSXElement {
@@ -19,7 +19,7 @@ function RightAxis<Domain extends AxisDomain>(props: Props<Domain>): JSXElement 
     let axis: SVGGElement;
 
     createEffect(() => select(axis).transition().call(
-        axisRight(props.scale())
+        axisRight(props.scale)
             .ticks(tickCount)
             .tickSizeInner(tickSize)
             .tickSizeOuter(0)
@@ -35,7 +35,7 @@ function BottomAxis<Domain extends AxisDomain>(props: Props<Domain>): JSXElement
     let axis: SVGGElement;
 
     createEffect(() => select(axis).transition().call(
-        axisBottom(props.scale())
+        axisBottom(props.scale)
             .ticks(tickCount)
             .tickSizeInner(tickSize)
             .tickSizeOuter(0)

@@ -1,7 +1,6 @@
 import type { JSXElement } from "solid-js";
-import { createMemo, createResource, createSignal, Index, Match, Switch } from "solid-js";
+import { createMemo, createResource, createSignal, Match, Switch } from "solid-js";
 import { format } from "d3-format";
-import { timeFormat } from "d3-time-format";
 import { bisector } from "d3-array";
 import Week from "lib/Week";
 import type { CutoutIndex } from "lib/CutoutIndex";
@@ -15,6 +14,8 @@ import cutout from "./api/cutout";
 import slaughter from "./api/slaughter";
 import type Slaughter from "lib/slaughter";
 import type { Data } from "./chart";
+import { Period } from "./timepicker/Periods";
+import TimePicker from "./timepicker";
 import CashIndexChart from "./cash";
 import CutoutChart from "./cutout";
 import PrimalChart from "./primal";
@@ -31,15 +32,7 @@ interface DateRange {
     end: Date;
 }
 
-enum Period {
-    OneMonth = "1M",
-    ThreeMonths = "3M",
-    SixMonths = "6M",
-    OneYear = "1Y"
-}
-
 const formatNumber = format(".2f");
-const formatDate = timeFormat("%b %d");
 const { right: bisectDate } = bisector<Observation, Date>(observation => observation.date);
 
 const getObservation = (data: Data[], date: Date): Data =>
@@ -87,8 +80,6 @@ function App(): JSXElement {
         return { start, end };
     });
 
-    const [date, setDate] = createSignal<Date>(range().end);
-
     const [data] = createResource(range, fetch, {
         initialValue: {
             cutout: [],
@@ -97,38 +88,24 @@ function App(): JSXElement {
         }
     });
 
+    const [date, setDate] = createSignal<Date>(range().end);
+
+    function selectDate(event: CustomEvent<Date>): void {
+        setDate(event.detail);
+    }
+
+    function selectPeriod(event: CustomEvent<Period>): void {
+        setPeriod(event.detail);
+        setDate(range().end);
+    }
+
     return <div class={styles.App}>
-        <div class={styles.timepicker}>
-            <div class={styles.period}>
-                <h3>Time Period</h3>
-                <div class={styles.periods}>
-                    <Index each={Object.values(Period)}>
-                        { value =>
-                            <span classList={{ [styles.active]: value() === period() }}
-                                onClick={function() {
-                                    setPeriod(value());
-                                    setDate(range().end);
-                                }}>
-                                {value()}
-                            </span>
-                        }
-                    </Index>
-                </div>
-            </div>
-
-            <div class={styles.datepicker}>
-                <div class={styles.tooltip}>
-                    <span class={styles.caption}>{formatDate(date())}</span>
-                    <div class={styles.arrow}/>
-                </div>
-
-                <input type="range"
-                    min={range().start.getTime()}
-                    max={range().end.getTime()}
-                    value={date().getTime()}
-                    step={1000 * 60 * 60 * 24}
-                    oninput={event => setDate(new Date(parseInt(event.currentTarget.value, 10)))}/>
-            </div>
+        <div class={styles.timepicker} on:selectDate={selectDate} on:selectPeriod={selectPeriod}>
+            <TimePicker
+                date={date()}
+                start={range().start}
+                end={range().end}
+                period={period()} />
         </div>
 
         <Switch fallback={

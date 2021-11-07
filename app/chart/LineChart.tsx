@@ -2,7 +2,6 @@ import type { JSXElement } from "solid-js";
 import { createMemo, Index } from "solid-js";
 import { timeFormat } from "d3-time-format";
 import { extent } from "d3-array";
-import type { NumberValue } from "d3-scale";
 import { scaleLinear, scaleTime } from "d3-scale";
 import { pointer } from "d3-selection";
 import { flatMap } from "lib/itertools/map";
@@ -41,9 +40,6 @@ const getDateRange = (data: Series[]): [Date, Date] =>
 const getValueRange = (data: Series[]): [number, number] =>
     extent(flatMap(data, record => record.value)) as [number, number];
 
-const equals = <T extends NumberValue>(array: T[], other: T[]): boolean =>
-    array.every((value, index) => value === other[index]);
-
 function LineChart(props: Props): JSXElement {
     const { width, height, top = 0, left = 0 } = props;
     const bottom = height - (props.bottom ?? 0);
@@ -51,17 +47,11 @@ function LineChart(props: Props): JSXElement {
 
     const dates = createMemo(scale =>
         scale.copy().domain(getDateRange(props.data)),
-    scaleTime().range([left, right]), {
-        equals: (previous, current) =>
-            equals(previous.domain(), current.domain())
-    });
+    scaleTime().range([left, right]));
 
     const values = createMemo(scale =>
         scale.copy().domain(extendBy(getValueRange(props.data), 5)),
-    scaleLinear().range([bottom, top]), {
-        equals: (previous, current) =>
-            equals(previous.domain(), current.domain())
-    });
+    scaleLinear().range([bottom, top]));
 
     const marker = createMemo(() => ({
         left: dates()(props.marker.date),
@@ -92,7 +82,7 @@ function LineChart(props: Props): JSXElement {
             </defs>
 
             <RightAxis
-                scale={values}
+                scale={values()}
                 left={width}
                 tickSize={-width}
                 tickCount={5}
@@ -100,7 +90,7 @@ function LineChart(props: Props): JSXElement {
 
             <BottomAxis
                 top={bottom}
-                scale={dates}
+                scale={dates()}
                 tickCount={5}
                 tickPadding={24}/>
 
