@@ -11,16 +11,16 @@
 
 .slider {
     @apply text-center;
+    @apply text-sm;
     @apply font-normal;
     @apply text-white;
     @apply bg-blue-500;
-    @apply w-16;
-    @apply h-8;
-    @apply text-xs;
+    @apply py-4;
+    @apply px-3;
     @apply items-center;
     @apply justify-center;
     @apply flex;
-    @apply rounded;
+    @apply rounded-lg;
     @apply relative;
     @apply left-full;
     @apply shadow-md;

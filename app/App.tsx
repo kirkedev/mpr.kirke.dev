@@ -32,7 +32,7 @@ interface DateRange {
     end: Date;
 }
 
-const formatNumber = format(".2f");
+const formatNumber = format("3>.2f");
 const { right: bisectDate } = bisector<Observation, Date>(observation => observation.date);
 
 const getObservation = (data: Data[], date: Date): Data =>

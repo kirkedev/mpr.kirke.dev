@@ -7,9 +7,9 @@
 }
 
 .datepicker {
-    @apply flex-1;
     @apply hidden;
     @apply md:flex;
+    @apply flex-1;
     @apply flex-col;
     @apply relative;
     @apply mx-auto;

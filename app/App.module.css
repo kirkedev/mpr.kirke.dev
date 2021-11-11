@@ -28,7 +28,7 @@
     @apply grid;
     @apply grid-cols-1;
     @apply md:grid-cols-2;
-    @apply gap-16;
+    @apply gap-12;
     @apply fixed;
     @apply bg-white;
     @apply max-w-screen-xl;
