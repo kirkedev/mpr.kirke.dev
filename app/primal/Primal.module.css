@@ -7,6 +7,7 @@
     @apply flex-row;
     @apply justify-between;
     @apply px-10;
+    @apply pt-4;
 }
 
 .primal :global(.chart) {
@@ -16,10 +17,11 @@
 .stat {
     border-bottom: 3px solid;
     transition: border-bottom 500ms, color 500ms;
-    @apply text-center;
-    @apply px-2;
-    @apply py-2;
+    @apply flex;
+    @apply flex-col;
+    @apply justify-center;
     @apply cursor-pointer;
+    @apply p-1;
     @apply text-gray-400;
     @apply border-transparent;
 }
@@ -30,13 +32,16 @@
 }
 
 .value {
+    @apply w-16;
     @apply mb-1;
+    @apply text-center;
     @apply font-normal;
 }
 
 .label {
     @apply font-thin;
     @apply uppercase;
+    @apply text-center;
     @apply mb-2;
     @apply text-xs;
 }

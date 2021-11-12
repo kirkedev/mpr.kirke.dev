@@ -6,6 +6,7 @@
     @apply flex;
     @apply flex-row;
     @apply px-10;
+    @apply pt-4;
 }
 
 .cutout :global(.chart) {
@@ -15,9 +16,11 @@
 .stat {
     @apply text-gray-700;
     @apply text-center;
-    @apply px-4;
-    @apply py-2;
-    @apply mr-8;
+    @apply mr-12;
+    @apply flex;
+    @apply flex-col;
+    @apply p-1;
+    @apply justify-center;
     border-bottom: 3px solid;
 }
 
@@ -31,6 +34,8 @@
 
 .value {
     @apply mb-1;
+    @apply w-16;
+    @apply text-center;
     @apply font-normal;
 }
 

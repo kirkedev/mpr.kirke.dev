@@ -7,7 +7,8 @@
     @apply justify-between;
     @apply flex-row;
     @apply px-10;
-    @apply py-4;
+    @apply pt-6;
+    @apply pb-6;
 }
 
 .cash :global(.chart) {
@@ -26,8 +27,8 @@
 
 .value {
     @apply text-gray-700;
-    @apply mb-1;
     @apply font-normal;
+    @apply mb-1;
 }
 
 .date {
