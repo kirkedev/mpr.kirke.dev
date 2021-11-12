@@ -52,8 +52,8 @@ function App(): JSXElement {
     const [period, setPeriod] = createSignal(Period.ThreeMonths);
 
     const range = createMemo(function(): DateRange {
-        const start = new Date(2021, 10, 7);
-        const end = new Date(start);
+        const start = new Date();
+        const end = new Date();
 
         switch (period()) {
             case Period.OneMonth: {
