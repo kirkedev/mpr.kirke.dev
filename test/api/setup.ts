@@ -12,6 +12,6 @@ const globals = global as Globals;
 dotenv.config({ path: path.resolve("./api", ".env") });
 
 export default async function(): Promise<void> {
-    process.chdir("./mpr");
+    if (!process.cwd().endsWith("mpr")) process.chdir("./mpr");
     globals.server = await server(3001);
 }
