@@ -18,19 +18,17 @@ function listener(request: IncomingMessage, response: ServerResponse): void {
     }
 
     const [start] = date.split(":").map(getDate);
-    const route = pathname.slice(pathname.indexOf("reports"));
-    const file = resolve(decodeURIComponent(route), `${Week.with(start)}.json`);
+    const route = decodeURIComponent(pathname.slice(pathname.indexOf("reports")));
+    const file = resolve(route, `${Week.with(start)}.json`);
     const result = createReadStream(file);
 
+    response.writeHead(200, { "Content-Type": "application/json" });
+
     result
-        .once("open", () => {
-            response.writeHead(200, { "Content-Type": "application/json" });
-            result.pipe(response);
-        })
-        .once("error", error => {
-            const code = error.name === "ENOENT" ? 404 : 500;
-            response.writeHead(code, error.message);
-            response.end();
+        .once("open", () => result.pipe(response))
+        .once("error", function() {
+            const [, reportSection] = route.match(/\d+\/([A-z\s]+)/) as [string, string];
+            response.end(JSON.stringify({ reportSection, results: [] }), "utf-8");
         });
 }
 
