@@ -1,14 +1,9 @@
 import type { JSXElement } from "solid-js";
 import { Index } from "solid-js";
+import type Period from "lib/Period";
+import { Periods } from "lib/Period";
 import { dispatch } from "../dom";
 import styles from "./Periods.module.css";
-
-enum Period {
-    OneMonth = "1M",
-    ThreeMonths = "3M",
-    SixMonths = "6M",
-    OneYear = "1Y"
-}
 
 interface Props {
     selected: Period;
@@ -22,18 +17,18 @@ declare module "solid-js" {
     }
 }
 
-function Periods(props: Props): JSXElement {
+function PeriodSelector(props: Props): JSXElement {
     return <>
         <h3 class={styles.caption}>Time Period</h3>
         <div class={styles.periods}>
-            <Index each={Object.values(Period)}>
+            <Index each={Periods}>
                 { value =>
-                    <span classList={{ [styles.active]: value() === props.selected }}
+                    <span classList={{ [styles.active]: props.selected.equals(value()) }}
                         onClick={event => {
                             if (event.target.className.includes(styles.active)) return false;
                             dispatch.call(event.target, "selectPeriod", value());
                         }}>
-                        { value() }
+                        { value().description }
                     </span>
                 }
             </Index>
@@ -41,6 +36,4 @@ function Periods(props: Props): JSXElement {
     </>;
 }
 
-export default Periods;
-
-export { Period };
+export default PeriodSelector;

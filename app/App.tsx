@@ -6,6 +6,7 @@ import Week from "lib/Week";
 import type { CutoutIndex } from "lib/CutoutIndex";
 import cutoutIndex from "lib/CutoutIndex";
 import type Observation from "lib/Observation";
+import Period from "lib/Period";
 import type { CashIndex } from "lib/CashIndex";
 import cashIndex from "lib/CashIndex";
 import type Cutout from "lib/cutout";
@@ -14,7 +15,6 @@ import cutout from "./api/cutout";
 import slaughter from "./api/slaughter";
 import type Slaughter from "lib/slaughter";
 import type { Data } from "./chart";
-import { Period } from "./timepicker/Periods";
 import TimePicker from "./timepicker";
 import CashIndexChart from "./cash";
 import CutoutChart from "./cutout";
@@ -32,7 +32,7 @@ interface DateRange {
     end: Date;
 }
 
-const formatNumber = format("3>.2f");
+const formatNumber = format(".2f");
 const { right: bisectDate } = bisector<Observation, Date>(observation => observation.date);
 
 const getObservation = (data: Data[], date: Date): Data =>
@@ -52,32 +52,8 @@ function App(): JSXElement {
     const [period, setPeriod] = createSignal(Period.ThreeMonths);
 
     const range = createMemo(function(): DateRange {
-        const start = new Date();
         const end = new Date();
-
-        switch (period()) {
-            case Period.OneMonth: {
-                start.setMonth(start.getMonth() - 1);
-                break;
-            }
-
-            case Period.ThreeMonths: {
-                start.setMonth(start.getMonth() - 3);
-                break;
-            }
-
-            case Period.SixMonths: {
-                start.setMonth(start.getMonth() - 6);
-                break;
-            }
-
-            case Period.OneYear: {
-                start.setFullYear(start.getFullYear() - 1);
-                break;
-            }
-        }
-
-        return { start, end };
+        return { start: period().from(end), end };
     });
 
     const [data] = createResource(range, fetch, {
