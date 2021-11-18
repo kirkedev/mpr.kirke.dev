@@ -11,7 +11,7 @@ export default {
     "transform": {
         "^.+\\.tsx?$": "ts-jest"
     },
-    "testRegex": ".*(test|spec)\\.tsx?$",
+    "testRegex": "^.+spec\\.tsx?$",
     "moduleFileExtensions": [
         "ts",
         "tsx",

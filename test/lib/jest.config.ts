@@ -1,7 +1,7 @@
-const path = require("path");
+import path from "path";
 
-module.exports = {
-    "rootDir": path.resolve(__dirname, "../.."),
+export default {
+    "rootDir": path.resolve(".."),
     "roots": [
         "<rootDir>/lib",
         "<rootDir>/test/lib"
@@ -9,12 +9,10 @@ module.exports = {
     "transform": {
         "^.+\\.tsx?$": "ts-jest"
     },
-    "testRegex": ".*(test|spec)\\.tsx?$",
+    "testRegex": "^.+spec\\.tsx?$",
     "moduleFileExtensions": [
         "ts",
-        "tsx",
-        "js",
-        "jsx",
+        "js"
     ],
     "collectCoverage": true,
     "collectCoverageFrom": ["<rootDir>/lib/**/*.ts"]
