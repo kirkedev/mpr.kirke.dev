@@ -16,8 +16,8 @@
         "d3-time-format": "^4.0.0",
         "d3-transition": "^3.0.1",
         "lib": "workspace:*",
-        "solid-app-router": "^0.1.11",
-        "solid-js": "^1.2.2"
+        "solid-app-router": "^0.1.13",
+        "solid-js": "^1.2.5"
     },
     "devDependencies": {
         "@types/d3-array": "^3.0.2",
@@ -31,10 +31,10 @@
         "@types/d3-transition": "^3.0.1",
         "autoprefixer": "^10.4.0",
         "dotenv": "^10.0.0",
-        "postcss": "^8.3.11",
+        "postcss": "^8.4.4",
         "tailwindcss": "^2.2.19",
-        "typescript": "^4.4.4",
-        "vite": "^2.6.13",
+        "typescript": "^4.5.2",
+        "vite": "^2.6.14",
         "vite-plugin-solid": "^2.1.2"
     }
 }

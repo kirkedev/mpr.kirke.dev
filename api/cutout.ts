@@ -4,7 +4,6 @@ import type { QueryType } from "lib/DateRangeQuery";
 import DateRangeQuery from "lib/DateRangeQuery";
 import Repository from "lib/Repository";
 import type Cutout from "lib/cutout";
-import type { ValuesResponse, VolumeResponse } from "lib/cutout/mpr";
 import parse from "lib/cutout/parse";
 import CutoutResponse from "lib/cutout/response";
 import client from "./client";
@@ -25,7 +24,7 @@ const report = client.report(2498);
 function fetch(start: Date, end: Date): Promise<Cutout[]> {
     const request = report.between("report_date", formatDate(start), formatDate(end));
 
-    return Promise.all<VolumeResponse, ValuesResponse>([
+    return Promise.all([
         request.section("Current Volume").get(),
         request.section("Cutout and Primal Values").get()
     ]).then(([volume, values]) =>
