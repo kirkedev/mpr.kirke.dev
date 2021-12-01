@@ -1,13 +1,8 @@
-.primal {
-    @apply py-4;
-}
-
 .stats {
     @apply flex;
     @apply flex-row;
     @apply justify-between;
     @apply px-10;
-    @apply pt-4;
 }
 
 .primal :global(.chart) {
@@ -33,9 +28,9 @@
 
 .value {
     @apply w-16;
-    @apply mb-1;
     @apply text-center;
     @apply font-normal;
+    @apply pb-2;
 }
 
 .label {

@@ -19,6 +19,11 @@
 .reports > div {
     @apply shadow-md;
     @apply bg-white;
+    @apply flex;
+    @apply flex-col;
+    @apply justify-evenly;
+    @apply pt-8;
+    @apply pb-4;
 }
 
 .timepicker {

@@ -1,13 +1,8 @@
-.cash {
-    @apply py-4;
-}
-
 .stats {
     @apply flex;
     @apply justify-between;
     @apply flex-row;
     @apply px-10;
-    @apply pt-6;
     @apply pb-6;
 }
 
@@ -28,7 +23,7 @@
 .value {
     @apply text-gray-700;
     @apply font-normal;
-    @apply mb-1;
+    @apply pb-2;
 }
 
 .date {

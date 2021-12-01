@@ -16,10 +16,12 @@ const series = (data: CashIndex[]): Data[][] => [
 ];
 
 function Cash(props: Props): JSXElement {
-    const data = series(props.cash);
     const [date, setDate] = createSignal(props.date);
-    const stats = createMemo<Data>(() => getObservation(data[0], date()));
-    createEffect(() => setDate(props.date));
+    const data = createMemo(() => series(props.cash));
+    const stats = createMemo<Data>(() => getObservation(data()[0], date()));
+    const end = createMemo<Date>(() => getObservation(data()[0], props.date).date);
+
+    createEffect(() => setDate(end()));
 
     return <div class={styles.cash} on:selectDate={({ detail: date }) => setDate(date)}>
         <div class={styles.stats}>
@@ -35,13 +37,13 @@ function Cash(props: Props): JSXElement {
         <LineChart
             width={640}
             height={360}
-            right={48}
+            right={32}
             bottom={48}
             left={32}
             top={32}
-            data={data}
+            data={data()}
             marker={stats()}
-            end={getObservation(data[0], props.date).date}/>
+            end={end()}/>
     </div>;
 }
 

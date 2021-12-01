@@ -13,7 +13,6 @@ import type Cutout from "lib/cutout";
 import { dropWhile } from "lib/itertools/drop";
 import cutout from "./api/cutout";
 import slaughter from "./api/slaughter";
-import type Slaughter from "lib/slaughter";
 import type { Data } from "./chart";
 import TimePicker from "./timepicker";
 import CashIndexChart from "./cash";
@@ -33,13 +32,14 @@ interface DateRange {
 }
 
 const formatNumber = format(".2f");
-const { right: bisectDate } = bisector<Observation, Date>(observation => observation.date);
+
+const { center: bisectDate } = bisector<Observation, Date>(observation => observation.date);
 
 const getObservation = (data: Data[], date: Date): Data =>
-    data[Math.min(Math.max(bisectDate(data, date) - 1, 0), data.length - 1)];
+    data[bisectDate(data, date)];
 
 const fetch = ({ start, end }: DateRange): Promise<Resources> =>
-    Promise.all<Cutout[], Slaughter[]>([
+    Promise.all([
         cutout.query(Week.with(start).previous.start, end),
         slaughter.query(Week.with(start).previous.start, end)
     ]).then(([cutout, slaughter]) => ({

@@ -1,8 +1,8 @@
 import type { JSXElement } from "solid-js";
 import { createEffect, createMemo, createSignal, Index } from "solid-js";
 import styles from "./Cutout.module.css";
-import type { Data } from "../chart";
 import type { CutoutIndex } from "lib/CutoutIndex";
+import type { Data } from "../chart";
 import LineChart from "../chart/LineChart";
 import { formatNumber, getObservation } from "../App";
 
@@ -12,17 +12,19 @@ interface Props {
 }
 
 const series = (cutout: CutoutIndex[]): Data[][] => [
-    cutout.map(record => ({ date: record.date, value: record.indexPrice })),
-    cutout.map(record => ({ date: record.date, value: record.carcassPrice }))
+    cutout.map(record => ({ date: record.date, value: record.carcassPrice })),
+    cutout.map(record => ({ date: record.date, value: record.indexPrice }))
 ];
 
 const labels = ["Cutout", "Index"];
 
 function Cutout(props: Props): JSXElement {
-    const data = series(props.cutout);
+    const data = createMemo(() => series(props.cutout));
     const [date, setDate] = createSignal(props.date);
-    const stats = createMemo<Data[]>(() => data.map(series => getObservation(series, date())).reverse());
-    createEffect(() => setDate(getObservation(data[0], props.date).date));
+    const stats = createMemo<Data[]>(() => data().map(series => getObservation(series, date())));
+    const end = createMemo<Date>(() => getObservation(data()[0], props.date).date);
+
+    createEffect(() => setDate(end()));
 
     return <div class={styles.cutout} on:selectDate={({ detail: date }) => setDate(date)}>
         <div class={styles.stats}>
@@ -44,13 +46,13 @@ function Cutout(props: Props): JSXElement {
         <LineChart
             width={640}
             height={360}
-            right={48}
+            right={32}
             bottom={48}
             left={32}
             top={32}
-            data={data}
+            data={data()}
             marker={stats()[0]}
-            end={getObservation(data[0], props.date).date}/>
+            end={end()}/>
     </div>;
 }
 

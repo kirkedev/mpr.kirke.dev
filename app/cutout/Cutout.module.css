@@ -1,12 +1,7 @@
-.cutout {
-    @apply py-4;
-}
-
 .stats {
     @apply flex;
     @apply flex-row;
     @apply px-10;
-    @apply pt-4;
 }
 
 .cutout :global(.chart) {
@@ -33,10 +28,10 @@
 }
 
 .value {
-    @apply mb-1;
     @apply w-16;
     @apply text-center;
     @apply font-normal;
+    @apply pb-2;
 }
 
 .label {
@@ -49,20 +44,20 @@
 .cutout :global(.plot) g:first-child path {
     @apply stroke-blue-400;
     stroke-width: 4;
-    opacity: 25%;
 }
 
 .cutout :global(.plot) g:nth-child(2) path {
     @apply stroke-blue-400;
+    @apply opacity-25;
     stroke-width: 4;
 }
 
 .cutout :global(.plot) g:first-child circle {
-    @apply hidden;
+    @apply fill-blue-400;
 }
 
 .cutout :global(.plot) g:nth-child(2) circle {
-    @apply fill-blue-400;
+    @apply hidden;
 }
 
 .cutout :global(.marker) rect {

@@ -9,11 +9,10 @@ import { dispatch, getElement } from "../dom";
 import type { Data, Dimensions, Offset, Series } from ".";
 import { BottomAxis, RightAxis } from "./Axis";
 import AxisMarker from "./AxisMarker";
-import MarkerLine from "./MarkerLine";
+import Line from "./Line";
 import Plot from "./Plot";
 import Path from "./Path";
 import "./chart.css";
-import styles from "./Path.module.css";
 
 interface Props extends Dimensions, Partial<Offset> {
     data: Series[];
@@ -31,9 +30,6 @@ declare module "solid-js" {
 
 const formatDate = timeFormat("%b %d");
 
-const extendBy = ([min = 0, max = 0]: [number?, number?], multiple: number): [number, number] =>
-    [Math.floor(min / multiple) * multiple, Math.ceil(max / multiple) * multiple];
-
 const getDateRange = (data: Series[]): [Date, Date] =>
     extent(flatMap(data, record => record.date)) as [Date, Date];
 
@@ -44,22 +40,21 @@ function LineChart(props: Props): JSXElement {
     const { width, height, top = 0, left = 0 } = props;
     const bottom = height - (props.bottom ?? 0);
     const right = width - (props.right ?? 0);
+    const getPlot = getElement(".plot");
 
     const dates = createMemo(scale =>
         scale.copy().domain(getDateRange(props.data)),
-    scaleTime().range([left, right]));
+    scaleTime().rangeRound([left, right]));
 
     const values = createMemo(scale =>
-        scale.copy().domain(extendBy(getValueRange(props.data), 5)),
-    scaleLinear().range([bottom, top]));
+        scale.copy().domain(getValueRange(props.data)).nice(),
+    scaleLinear().rangeRound([bottom, top]));
 
     const marker = createMemo(() => ({
         left: dates()(props.marker.date),
         top: values()(props.marker.value),
         end: dates()(props.end)
     }));
-
-    const getPlot = getElement(".plot");
 
     function selectDate(event: MouseEvent): void {
         const target = event.currentTarget as HTMLElement;
@@ -72,12 +67,14 @@ function LineChart(props: Props): JSXElement {
         dispatch.call(event.currentTarget as EventTarget, "selectDate", props.end);
     }
 
+    const mask = Math.random().toString(32).substring(2, 7) + Math.random().toString(32).substring(2, 7);
+
     return <div class="chart" onmousemove={selectDate} onmouseleave={resetDate}>
         <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
             <defs>
-                <mask id={styles.active}>
+                <mask id={mask}>
                     <rect x={0} y={top} width={marker().end} height={bottom} fill="white"/>
-                    <rect x={marker().end} width={right - marker().end} height={bottom} fill="white" opacity={.4}/>
+                    <rect x={marker().end} width={right - marker().end} height={bottom} fill="white" opacity={.5}/>
                 </mask>
             </defs>
 
@@ -94,7 +91,7 @@ function LineChart(props: Props): JSXElement {
                 tickCount={5}
                 tickPadding={24}/>
 
-            <MarkerLine
+            <Line
                 left={marker().left}
                 top={top}
                 bottom={bottom + 16}/>
@@ -105,7 +102,9 @@ function LineChart(props: Props): JSXElement {
 
             <Plot>
                 <Index each={props.data}>
-                    { series => <Path data={series()} x={dates()} y={values()} marker={props.marker}/> }
+                    { series =>
+                        <Path data={series()} x={dates()} y={values()} marker={props.marker} mask={`url(#${mask})`}/>
+                    }
                 </Index>
             </Plot>
         </svg>

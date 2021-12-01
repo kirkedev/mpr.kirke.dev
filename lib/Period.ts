@@ -29,6 +29,21 @@ namespace Period {
 
     export const OneYear = new Period("1Y", (date = new Date()) =>
         subYears(date, 1));
+
+    export function from(description: string): Period {
+        switch (description) {
+            case "1M":
+                return OneMonth;
+            case "3M":
+                return ThreeMonths;
+            case "6M":
+                return SixMonths;
+            case "1Y":
+                return OneYear;
+            default:
+                throw new Error(`Invalid Period description: ${description}`);
+        }
+    }
 }
 
 const Periods = [Period.OneMonth, Period.ThreeMonths, Period.SixMonths, Period.OneYear] as const;
