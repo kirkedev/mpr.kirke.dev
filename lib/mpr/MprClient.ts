@@ -14,8 +14,8 @@ class MprClient {
     public report(id: 2498): CutoutReport & SalesReport;
     public report(id: 2500): SalesReport;
     public report(id: 2504): SalesReport;
-    public report(id: 2510): PurchaseReport;
     public report(id: 2511): SlaughterReport;
+    public report(id: 3458): PurchaseReport;
     public report<Section extends string>(id: number): MprReport<Section> {
         return new MprReport<Section>(this.url, id);
     }
