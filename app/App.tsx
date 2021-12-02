@@ -7,23 +7,27 @@ import type { CutoutIndex } from "lib/CutoutIndex";
 import cutoutIndex from "lib/CutoutIndex";
 import type Observation from "lib/Observation";
 import Period from "lib/Period";
+import { dropWhile } from "lib/itertools/drop";
 import type { CashIndex } from "lib/CashIndex";
 import cashIndex from "lib/CashIndex";
 import type Cutout from "lib/cutout";
-import { dropWhile } from "lib/itertools/drop";
+import type Purchase from "lib/purchases";
 import cutout from "./api/cutout";
 import slaughter from "./api/slaughter";
+import purchases from "./api/purchases";
 import type { Data } from "./chart";
 import TimePicker from "./timepicker";
 import CashIndexChart from "./cash";
 import CutoutChart from "./cutout";
 import PrimalChart from "./primal";
+import PurchasesChart from "./purchases";
 import styles from "./App.module.css";
 
 interface Resources {
     cutout: Cutout[];
     cutoutIndex: CutoutIndex[];
     cashIndex: CashIndex[];
+    purchases: Purchase[];
 }
 
 interface DateRange {
@@ -41,11 +45,13 @@ const getObservation = (data: Data[], date: Date): Data =>
 const fetch = ({ start, end }: DateRange): Promise<Resources> =>
     Promise.all([
         cutout.query(Week.with(start).previous.start, end),
-        slaughter.query(Week.with(start).previous.start, end)
-    ]).then(([cutout, slaughter]) => ({
+        slaughter.query(Week.with(start).previous.start, end),
+        purchases.query(Week.with(start).previous.start, end)
+    ]).then(([cutout, slaughter, purchases]) => ({
         cutout: Array.from(dropWhile(cutout, record => record.date < start)),
         cutoutIndex: Array.from(dropWhile(cutoutIndex(cutout), record => record.date < start)),
-        cashIndex: Array.from(dropWhile(cashIndex(slaughter), record => record.date < start))
+        cashIndex: Array.from(dropWhile(cashIndex(slaughter), record => record.date < start)),
+        purchases: Array.from(dropWhile(purchases, record => record.date < start))
     }));
 
 function App(): JSXElement {
@@ -60,7 +66,8 @@ function App(): JSXElement {
         initialValue: {
             cutout: [],
             cutoutIndex: [],
-            cashIndex: []
+            cashIndex: [],
+            purchases: []
         }
     });
 
@@ -92,6 +99,10 @@ function App(): JSXElement {
 
                 <CutoutChart
                     cutout={data().cutoutIndex}
+                    date={date()}/>
+
+                <PurchasesChart
+                    purchases={data().purchases}
                     date={date()}/>
 
                 <PrimalChart
