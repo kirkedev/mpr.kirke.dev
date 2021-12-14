@@ -13,13 +13,13 @@
     "devDependencies": {
         "@types/command-line-args": "^5.2.0",
         "@types/jest": "^27.0.3",
-        "@types/node": "^16.11.11",
+        "@types/node": "^16.11.13",
         "@types/resolve": "^1.20.1"
     },
     "dependencies": {
-        "jest": "^27.4.3",
+        "jest": "^27.4.5",
         "lib": "workspace:*",
-        "ts-jest": "^27.0.7",
-        "typescript": "^4.5.2"
+        "ts-jest": "^27.1.1",
+        "typescript": "^4.5.4"
     }
 }

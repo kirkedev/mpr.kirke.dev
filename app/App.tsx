@@ -57,7 +57,7 @@ const fetch = ({ start, end }: DateRange): Promise<Resources> =>
 function App(): JSXElement {
     const [period, setPeriod] = createSignal(Period.ThreeMonths);
 
-    const range = createMemo(function(): DateRange {
+    const range = createMemo<DateRange>(function() {
         const end = new Date();
         return { start: period().from(end), end };
     });

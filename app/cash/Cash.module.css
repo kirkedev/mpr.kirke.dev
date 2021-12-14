@@ -33,15 +33,15 @@
 
 .cash :global(.plot) g:first-child path {
     stroke-width: 4;
-    @apply stroke-green-400;
+    @apply stroke-emerald-400;
 }
 
 .cash :global(.plot) g:first-child circle {
-    @apply fill-green-400;
+    @apply fill-emerald-400;
 }
 
 .cash :global(.marker) rect {
-    @apply fill-green-400;
+    @apply fill-emerald-400;
 }
 
 .cash :global(.marker) text {
