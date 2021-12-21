@@ -5,11 +5,12 @@ import request from "./request";
 
 describe("cutout api", () => {
     test("return cutout records by date range", async () => {
-        const [status, body] = await request<CutoutResponse>("/cutout?start=2021-08-09&end=2021-08-13");
+        const [status, body] = await request<CutoutResponse>("/cutout?start=2021-08-06&end=2021-08-13");
         expect(status).toBe(200);
-        expect(body.length).toBe(5);
+        expect(body.length).toBe(6);
 
         expect(Cutout.parse(body).map(({ date }) => date)).toEqual([
+            new Date(2021, 7, 6),
             new Date(2021, 7, 9),
             new Date(2021, 7, 10),
             new Date(2021, 7, 11),

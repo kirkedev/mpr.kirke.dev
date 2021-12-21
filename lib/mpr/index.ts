@@ -1,6 +1,6 @@
 import parseDate from "date-fns/parse";
 import type { Nullable } from "..";
-import { map } from "../itertools/map";
+import map from "../itertools/map";
 
 interface MprResponse<Section extends string, T extends Record<string, Nullable<string>>> {
     reportSection: Section;

@@ -1,5 +1,5 @@
 import type { JSXElement } from "solid-js";
-import type { IPeriod } from "./PeriodSelector";
+import type Period from "lib/Period";
 import PeriodSelector from "./PeriodSelector";
 import DateSlider from "./DateSlider";
 import styles from "./index.module.css";
@@ -8,7 +8,7 @@ interface Props {
     date: Date;
     start: Date;
     end: Date;
-    period: IPeriod;
+    period: Period;
 }
 
 function TimePicker(props: Props): JSXElement {

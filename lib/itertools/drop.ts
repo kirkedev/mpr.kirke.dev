@@ -2,7 +2,7 @@ import type { Predicate } from "..";
 import { invert } from "..";
 import { iterate } from ".";
 import enumerate from "./enumerate";
-import { map } from "./map";
+import map from "./map";
 
 function* dropElements<T>(iterator: Iterator<T>, predicate: Predicate<T>): Iterator<T> {
     let result = iterator.next();
@@ -35,4 +35,6 @@ const dropWhile = <T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<
 const drop = <T>(iterable: Iterable<T>, count: number): Iterable<T> =>
     map(dropWhile(enumerate(iterable), ([index]) => index < count), ([, value]) => value);
 
-export { drop, dropWhile, dropUntil };
+export default drop;
+
+export { dropWhile, dropUntil };

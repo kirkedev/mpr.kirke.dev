@@ -1,6 +1,6 @@
 import { iterate } from ".";
-import { drop } from "./drop";
-import { take } from "./take";
+import drop from "./drop";
+import take from "./take";
 
 const slice = <T>(iterable: Iterable<T>, start: number, end?: number): Iterable<T> =>
     end === undefined ? drop(iterable, start) : take(drop(iterable, start), end - start);
@@ -24,4 +24,6 @@ function last<T>(iterable: Iterable<T>): T {
 const elementAt = <T>(iterable: Iterable<T>, index: number): T =>
     first(drop(iterable, index));
 
-export { slice, first, last, elementAt };
+export default slice;
+
+export { first, last, elementAt };

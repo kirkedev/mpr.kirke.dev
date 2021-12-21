@@ -1,7 +1,7 @@
 import { round } from ".";
 import Observation from "./Observation";
 import { sumBy } from "./itertools/accumulate";
-import { map } from "./itertools/map";
+import map from "./itertools/map";
 import rolling from "./itertools/rolling";
 import type Cutout from "./cutout";
 

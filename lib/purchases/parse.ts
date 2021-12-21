@@ -1,6 +1,6 @@
 import type { PurchaseType } from "../PurchaseType";
 import { Arrangement, Basis, Seller } from "../PurchaseType";
-import { map } from "../itertools/map";
+import map from "../itertools/map";
 import { getDate, optFloat, optInt } from "../mpr";
 import type { PurchaseRecord, Purchases } from "./mpr";
 import type Purchase from ".";

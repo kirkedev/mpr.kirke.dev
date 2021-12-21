@@ -26,4 +26,6 @@ const map = <T, R>(iterable: Iterable<T>, operator: UnaryOperator<T, R>): Iterab
 const flatMap = <T, R>(iterable: Iterable<Iterable<T>>, operator: UnaryOperator<T, R>): Iterable<R> =>
     map(flatten(iterable), operator);
 
-export { map, flatMap };
+export default map;
+
+export { flatMap };

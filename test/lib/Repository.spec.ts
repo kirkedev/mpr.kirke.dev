@@ -17,7 +17,7 @@ describe("Repository caching", () => {
     test("initial query for multiple weeks", async () => {
         const result = await repository.query(new Date(2020, 3, 11), new Date(2020, 3, 26));
         expect(result.length).toBe(16);
-        expect(fetch).toHaveBeenCalledTimes(3);
+        expect(fetch).toHaveBeenCalledTimes(1);
     });
 
     test("full cache hit query for one week", async () => {
@@ -44,9 +44,9 @@ describe("Repository caching", () => {
 
     test("fetch missing data", async () => {
         const result = await repository.query(new Date(2020, 3, 24), new Date(2020, 3, 30));
+        expect(fetch).toHaveBeenCalledWith(new Date(2020, 4, 1), new Date(2020, 4, 1));
         expect(result.length).toBe(7);
         expect(fetch).toHaveBeenCalledTimes(1);
-        expect(fetch).toHaveBeenCalledWith(new Date(2020, 4, 1), new Date(2020, 4, 1));
     });
 
     test("don't request data from the future", async () => {

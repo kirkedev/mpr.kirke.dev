@@ -27,4 +27,6 @@ const filter = <T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<T> 
 const find = <T>(iterable: Iterable<T>, predicate: Predicate<T>): T =>
     first(filter(iterable, predicate));
 
-export { filter, find };
+export default filter;
+
+export { find };

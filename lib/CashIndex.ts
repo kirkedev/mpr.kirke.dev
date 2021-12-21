@@ -3,9 +3,9 @@ import { round } from ".";
 import Observation from "./Observation";
 import { Arrangement } from "./PurchaseType";
 import { sumBy } from "./itertools/accumulate";
-import { filter } from "./itertools/filter";
+import filter from "./itertools/filter";
 import groupBy from "./itertools/groupBy";
-import { map } from "./itertools/map";
+import map from "./itertools/map";
 import rolling from "./itertools/rolling";
 import type Slaughter from "./slaughter";
 

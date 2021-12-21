@@ -1,9 +1,28 @@
-import { createReadStream } from "fs";
 import { resolve } from "path";
+import { readFile } from "fs/promises";
 import type { IncomingMessage, Server, ServerResponse } from "http";
 import { createServer } from "http";
 import { getDate } from "lib";
 import Week from "lib/Week";
+import map from "lib/itertools/map";
+import { reduce } from "lib/itertools/accumulate";
+import type { MprResponse } from "lib/mpr";
+
+async function merge<Section extends string, T extends Record<string, string>>(...files: string[]): Promise<MprResponse<Section, T>> {
+    const contents = await Promise.all(files.map(file =>
+        readFile(file, "utf8")
+            .catch(() => "{\"results\":[]}")
+            .then(JSON.parse) as Promise<MprResponse<Section, T>>));
+
+    const results = reduce<MprResponse<Section, T>, T[]>(contents, (results, response) =>
+        results.concat(response.results), []);
+
+    return {
+        reportSection: contents[0].reportSection,
+        stats: { returnedRows: results.length },
+        results
+    };
+}
 
 function listener(request: IncomingMessage, response: ServerResponse): void {
     const { pathname, searchParams } = new URL(request.url as string, `http://${request.headers.host}`);
@@ -17,19 +36,15 @@ function listener(request: IncomingMessage, response: ServerResponse): void {
         return response.end();
     }
 
-    const [start] = date.split(":").map(getDate);
+    const [start, end] = date.split(":").map(getDate);
     const route = decodeURIComponent(pathname.slice(pathname.indexOf("reports")));
-    const file = resolve(route, `${Week.with(start)}.json`);
-    const result = createReadStream(file);
+    const files = map(Week.with(start, end), week => resolve(route, `${week}.json`));
 
-    response.writeHead(200, { "Content-Type": "application/json" });
-
-    result
-        .once("open", () => result.pipe(response))
-        .once("error", function() {
-            const [, reportSection] = route.match(/\d+\/([A-z\s]+)/) as [string, string];
-            response.end(JSON.stringify({ reportSection, results: [] }), "utf-8");
-        });
+    merge(...Array.from(files)).then(result => {
+        response.writeHead(200, { "Content-Type": "application/json" });
+        response.write(JSON.stringify(result));
+        response.end();
+    });
 }
 
 const server = (port: number): Promise<Server> =>

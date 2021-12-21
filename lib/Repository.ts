@@ -1,66 +1,93 @@
-import getISODay from "date-fns/getISODay";
-import startOfDay from "date-fns/startOfDay";
-import isThisISOWeek from "date-fns/isThisISOWeek";
 import LRU from "lru-cache";
+import min from "date-fns/min";
+import isThisISOWeek from "date-fns/isThisISOWeek";
+import getISODay from "date-fns/getISODay";
+import type { BinaryOperator, Optional } from ".";
 import Observation from "./Observation";
 import Week, { Weekday } from "./Week";
+import groupBy from "./itertools/groupBy";
+import map from "./itertools/map";
+import filter from "./itertools/filter";
+import { dropWhile } from "./itertools/drop";
+import { takeWhile } from "./itertools/take";
 
-interface Archive<T extends Observation> {
-    day: number;
-    data: T[];
+class Archive<T extends Observation> {
+    public static from<T extends Observation>(data: T[]): Archive<T>[] {
+        if (data.length === 0) return [];
+
+        const weeks = groupBy(Observation.sort(data), (previous, current) =>
+            Week.with(current.date).equals(Week.with(previous.date)));
+
+        return Array.from(map(weeks, data => {
+            const { date: first } = data[0];
+            const { date: end } = data[data.length - 1];
+            const day = isThisISOWeek(end) ? getISODay(end) : Weekday.Sunday;
+
+            return new Archive<T>(Week.with(first), day, data);
+        }));
+    }
+
+    public constructor(
+        public readonly week: Week,
+        public readonly day: Weekday,
+        public readonly data: T[]) {
+    }
+
+    public isComplete(): boolean {
+        return this.day === Weekday.Sunday;
+    }
 }
 
 class Repository<T extends Observation> {
     private readonly data = new LRU<string, Archive<T>>({
         max: 54,
-        maxAge: 3 * 24 * 60 * 60 * 1000,
-        updateAgeOnGet: true
+        maxAge: 24 * 60 * 60 * 1000
     });
 
     public constructor(
-        private readonly fetch: (start: Date, end: Date) => Promise<T[]>) {
+        private readonly fetch: BinaryOperator<Date, Date, Promise<T[]>>) {
     }
 
-    private async get(week: Week): Promise<T[]> {
-        const { start } = week;
-        const end = new Date(Math.min(startOfDay(new Date()).getTime(), week.end.getTime()));
+    public save = (data: T[]): Archive<T>[] =>
+        Array.from(map(Archive.from(data), archive => {
+            this.data.set(archive.week.toString(), archive);
+            return archive;
+        }));
 
-        if (end < start) {
+    public get = (week: Week): Optional<Archive<T>> =>
+        this.data.get(week.toString());
+
+    public async query(start: Date, end: Date): Promise<T[]> {
+        end = min([end, new Date()]);
+
+        if (start > end) {
             return [];
         }
 
-        const key = week.toString();
+        const missing = filter(Week.with(start, end), week =>
+            !(this.get(week)?.isComplete() ?? false));
 
-        if (this.data.has(key)) {
-            const { day, data } = this.data.get(key) as Archive<T>;
+        const grouped = groupBy(missing, (previous, current) =>
+            current.previous.equals(previous));
 
-            if (day < Weekday.Sunday) {
-                data.concat(await this.fetch(week.day(day + 1), end));
-                this.data.set(key, { day, data });
-            }
+        const dates = map(grouped, group => {
+            const today = new Date();
+            const first = group[0];
+            const last = group[group.length - 1];
+            const start = first.day((this.get(first)?.day ?? 0) + 1);
 
-            return data;
-        }
+            return [start, min([today, last.end])];
+        });
 
-        const data = await this.fetch(start, end).then(Observation.sort);
+        await Promise.all(map(dates, ([start, end]) =>
+            this.fetch(start, end).then(this.save)));
 
-        if (data.length > 0) {
-            const { date: last } = data[data.length - 1];
-            const day = isThisISOWeek(last) ? getISODay(last) : Weekday.Sunday;
-            this.data.set(key, { day, data });
-        }
+        const results = map(Week.with(start, end), week => this.get(week)?.data ?? []);
 
-        return data;
-    }
+        const data = Observation.sort(Array.from(results).flat());
 
-    public query(start: Date, end: Date): Promise<T[]> {
-        const requests = Array.from(Week.with(start, end)).map(week => this.get(week));
-
-        return Promise.all(requests)
-            .then(results =>
-                results.flat().filter(record =>
-                    record.date >= start && record.date <= end))
-            .then(Observation.sort);
+        return Array.from(takeWhile(dropWhile(data, result =>
+            result.date < start), result => result.date <= end));
     }
 }
 

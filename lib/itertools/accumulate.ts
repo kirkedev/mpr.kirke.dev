@@ -1,8 +1,8 @@
 import type { Accumulator, Callback, Predicate, UnaryOperator } from "..";
 import { invert } from "..";
 import { iterate } from ".";
-import { filter, find } from "./filter";
-import { map } from "./map";
+import filter, { find } from "./filter";
+import map from "./map";
 import { last } from "./slice";
 
 function* accumulate<T, R>(iterable: Iterable<T>, accumulator: Accumulator<T, R>, value: R): Iterable<R> {

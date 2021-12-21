@@ -2,7 +2,7 @@ import type { Predicate } from "..";
 import { invert } from "..";
 import { iterate } from ".";
 import enumerate from "./enumerate";
-import { map } from "./map";
+import map from "./map";
 
 export function* takeElements<T>(iterator: Iterator<T>, predicate: Predicate<T>): Iterator<T> {
     let { done, value } = iterator.next();
@@ -34,4 +34,6 @@ const takeWhile = <T>(iterable: Iterable<T>, predicate: Predicate<T>): Iterable<
 const take = <T>(iterable: Iterable<T>, count: number): Iterable<T> =>
     map(takeWhile(enumerate(iterable), ([index]) => index < count), ([, value]) => value);
 
-export { take, takeUntil, takeWhile };
+export default take;
+
+export { takeUntil, takeWhile };

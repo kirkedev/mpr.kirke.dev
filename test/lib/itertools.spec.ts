@@ -1,12 +1,12 @@
 import dates from "lib/dates";
 import Week from "lib/Week";
-import { flatMap, map } from "lib/itertools/map";
-import { take, takeUntil, takeWhile } from "lib/itertools/take";
+import map, { flatMap } from "lib/itertools/map";
+import take, { takeUntil, takeWhile } from "lib/itertools/take";
 import chunk from "lib/itertools/chunk";
-import { drop, dropUntil, dropWhile } from "lib/itertools/drop";
-import { elementAt, first, last, slice } from "lib/itertools/slice";
+import drop, { dropUntil, dropWhile } from "lib/itertools/drop";
+import slice, { elementAt, first, last } from "lib/itertools/slice";
 import enumerate from "lib/itertools/enumerate";
-import { filter, find } from "lib/itertools/filter";
+import filter, { find } from "lib/itertools/filter";
 import { all, count, countIf, each, none, one, some, sumBy } from "lib/itertools/accumulate";
 import zip from "lib/itertools/zip";
 import groupBy from "lib/itertools/groupBy";

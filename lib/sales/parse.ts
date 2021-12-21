@@ -1,4 +1,4 @@
-import { map } from "../itertools/map";
+import map from "../itertools/map";
 import { getDate, optFloat, optInt } from "../mpr";
 import type { CutType, HistoricalSalesRecord, SalesRecord, SalesResponse } from "./mpr";
 import type { Sales } from ".";

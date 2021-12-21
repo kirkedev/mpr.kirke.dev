@@ -1,7 +1,7 @@
 import type { PurchaseType } from "../PurchaseType";
 import { Arrangement, Basis, Seller } from "../PurchaseType";
 import { getDate, optFloat, optInt } from "../mpr";
-import { map } from "../itertools/map";
+import map from "../itertools/map";
 import type Slaughter from ".";
 import type { BarrowsGilts, BarrowsGiltsRecord } from "./mpr";
 

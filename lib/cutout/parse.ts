@@ -1,4 +1,4 @@
-import { map } from "../itertools/map";
+import map from "../itertools/map";
 import zip from "../itertools/zip";
 import { getDate, getFloat } from "../mpr";
 import type Cutout from ".";
