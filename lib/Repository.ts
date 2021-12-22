@@ -1,41 +1,56 @@
 import LRU from "lru-cache";
 import min from "date-fns/min";
-import isThisISOWeek from "date-fns/isThisISOWeek";
 import getISODay from "date-fns/getISODay";
+import isThisISOWeek from "date-fns/isThisISOWeek";
 import type { BinaryOperator, Optional } from ".";
 import Observation from "./Observation";
 import Week, { Weekday } from "./Week";
 import groupBy from "./itertools/groupBy";
 import map from "./itertools/map";
 import filter from "./itertools/filter";
+import flatten from "./itertools/flatten";
 import { dropWhile } from "./itertools/drop";
 import { takeWhile } from "./itertools/take";
 
-class Archive<T extends Observation> {
-    public static from<T extends Observation>(data: T[]): Archive<T>[] {
-        if (data.length === 0) return [];
+interface Archive<T extends Observation> {
+    readonly week: Week;
+    readonly day: Weekday;
+    readonly data: T[];
+}
 
-        const weeks = groupBy(Observation.sort(data), (previous, current) =>
-            Week.with(current.date).equals(Week.with(previous.date)));
+function archives<T extends Observation>(data: T[]): Iterable<Archive<T>> {
+    const weeks = groupBy(Observation.sort(data), (previous, current) =>
+        Week.with(current.date).equals(Week.with(previous.date)));
 
-        return Array.from(map(weeks, data => {
-            const { date: first } = data[0];
-            const { date: end } = data[data.length - 1];
-            const day = isThisISOWeek(end) ? getISODay(end) : Weekday.Sunday;
+    return map(weeks, data => {
+        const { date: first } = data[0];
+        const { date: end } = data[data.length - 1];
 
-            return new Archive<T>(Week.with(first), day, data);
-        }));
-    }
+        return {
+            week: Week.with(first),
+            day: isThisISOWeek(end) ? getISODay(end) : Weekday.Sunday,
+            data
+        };
+    });
+}
 
-    public constructor(
-        public readonly week: Week,
-        public readonly day: Weekday,
-        public readonly data: T[]) {
-    }
+function merge<T extends Observation>(archive: Archive<T>, other: Archive<T>): Archive<T> {
+    const data = other.data.reduce((values, value) => {
+        values[getISODay(value.date) - 1] = value;
+        return values;
+    }, archive.data.reduce((values, value) => {
+        values[getISODay(value.date) - 1] = value;
+        return values;
+    }, new Array<T>(7)));
 
-    public isComplete(): boolean {
-        return this.day === Weekday.Sunday;
-    }
+    const start = data[0].date;
+    const end = data[data.length - 1].date;
+
+    return {
+        week: Week.with(start),
+        day: isThisISOWeek(end) ? getISODay(end) : Weekday.Sunday,
+        data
+    };
 }
 
 class Repository<T extends Observation> {
@@ -49,13 +64,22 @@ class Repository<T extends Observation> {
     }
 
     public save = (data: T[]): Archive<T>[] =>
-        Array.from(map(Archive.from(data), archive => {
-            this.data.set(archive.week.toString(), archive);
-            return archive;
-        }));
+        Array.from(map(archives(data), this.set));
 
     public get = (week: Week): Optional<Archive<T>> =>
         this.data.get(week.toString());
+
+    public set = (archive: Archive<T>): Archive<T> => {
+        const key = archive.week.toString();
+
+        if (this.data.has(key)) {
+            this.data.set(key, merge(this.data.get(key) as Archive<T>, archive));
+        } else {
+            this.data.set(key, archive);
+        }
+
+        return archive;
+    };
 
     public async query(start: Date, end: Date): Promise<T[]> {
         end = min([end, new Date()]);
@@ -65,7 +89,7 @@ class Repository<T extends Observation> {
         }
 
         const missing = filter(Week.with(start, end), week =>
-            !(this.get(week)?.isComplete() ?? false));
+            !(this.get(week)?.day === Weekday.Sunday));
 
         const grouped = groupBy(missing, (previous, current) =>
             current.previous.equals(previous));
@@ -82,11 +106,9 @@ class Repository<T extends Observation> {
         await Promise.all(map(dates, ([start, end]) =>
             this.fetch(start, end).then(this.save)));
 
-        const results = map(Week.with(start, end), week => this.get(week)?.data ?? []);
+        const results = flatten(map(Week.with(start, end), week => this.get(week)?.data ?? []));
 
-        const data = Observation.sort(Array.from(results).flat());
-
-        return Array.from(takeWhile(dropWhile(data, result =>
+        return Array.from(takeWhile(dropWhile(Observation.sort(results), result =>
             result.date < start), result => result.date <= end));
     }
 }

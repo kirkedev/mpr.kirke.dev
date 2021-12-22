@@ -8,8 +8,8 @@ const comparator: Comparator<Observation> = ({ date: a }: Observation, { date: b
     a === b ? 0 : a < b ? -1 : 1;
 
 namespace Observation {
-    export const sort = <T extends Observation>(observations: T[]): T[] =>
-        observations.sort(comparator);
+    export const sort = <T extends Observation>(observations: Iterable<T>): T[] =>
+        Array.from(observations).sort(comparator);
 }
 
 export default Observation;
