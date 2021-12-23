@@ -4,7 +4,7 @@
     "main": "index.ts",
     "type": "module",
     "dependencies": {
-        "@sinclair/typebox": "^0.23.1",
+        "@sinclair/typebox": "^0.23.2",
         "axios": "^0.24.0",
         "date-fns": "^2.27.0",
         "lru-cache": "^6.0.0"
