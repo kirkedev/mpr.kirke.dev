@@ -1,7 +1,6 @@
 import type { FastifyRequest, FastifySchema } from "fastify";
 import { formatDate, getDate } from "lib";
-import type { QueryType } from "lib/DateRangeQuery";
-import DateRangeQuery from "lib/DateRangeQuery";
+import DateRangeQuery, { type QueryType } from "lib/DateRangeQuery";
 import Repository from "lib/Repository";
 import type Purchase from "lib/purchases";
 import type { PurchaseRecord } from "lib/purchases/mpr";
@@ -25,7 +24,8 @@ const report = client.report(3458).section<PurchaseRecord>("National Volume and 
 const fetch = (start: Date, end: Date): Promise<Purchase[]> =>
     report.between("reported_for_date", formatDate(start), formatDate(end))
         .get()
-        .then(response => Array.from(parse(response)));
+        .then(response => Array.from(parse(response)))
+        .catch(() => []);
 
 const repository = new Repository(fetch);
 

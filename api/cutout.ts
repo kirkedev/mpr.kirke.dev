@@ -27,8 +27,10 @@ function fetch(start: Date, end: Date): Promise<Cutout[]> {
     return Promise.all([
         request.section("Current Volume").get(),
         request.section("Cutout and Primal Values").get()
-    ]).then(([volume, values]) =>
-        Array.from(parse(volume, values)));
+    ])
+        .then(([volume, values]) =>
+            Array.from(parse(volume, values)))
+        .catch(() => []);
 }
 
 const repository = new Repository(fetch);

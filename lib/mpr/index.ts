@@ -8,6 +8,7 @@ interface MprResponse<Section extends string, T extends Record<string, Nullable<
         returnedRows: number;
     };
     results: T[];
+    message?: string;
 }
 
 const dateFormat = "M/d/yyyy";

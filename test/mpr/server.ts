@@ -42,7 +42,13 @@ function listener(request: IncomingMessage, response: ServerResponse): void {
 
     merge(...Array.from(files)).then(result => {
         response.writeHead(200, { "Content-Type": "application/json" });
-        response.write(JSON.stringify(result));
+
+        if (result.results.length === 0) {
+            response.write("No Results Found. ");
+        } else {
+            response.write(JSON.stringify(result));
+        }
+
         response.end();
     });
 }

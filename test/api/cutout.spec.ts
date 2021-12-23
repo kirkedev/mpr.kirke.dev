@@ -30,4 +30,10 @@ describe("cutout api", () => {
             loads: 378.72
         });
     });
+
+    test("No results found response", async () => {
+        const [response, body] = await request<CutoutResponse>("/cutout?start=2021-12-31&end=2021-12-31");
+        expect(response).toBe(200);
+        expect(body).toEqual([]);
+    });
 });

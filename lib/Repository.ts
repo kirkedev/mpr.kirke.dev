@@ -9,9 +9,9 @@ import map from "./itertools/map";
 import filter from "./itertools/filter";
 import flatten from "./itertools/flatten";
 import groupBy from "./itertools/groupBy";
-import { reduce } from "./itertools/accumulate";
 import { dropWhile } from "./itertools/drop";
 import { takeWhile } from "./itertools/take";
+import { each } from "./itertools/accumulate";
 
 interface Archive<T extends Observation> {
     readonly week: Week;
@@ -32,23 +32,11 @@ namespace Archive {
     };
 }
 
-function archives<T extends Observation>(data: T[]): Iterable<Archive<T>> {
+function archives<T extends Observation>(data: Iterable<T>): Iterable<Archive<T>> {
     const weeks = groupBy(Observation.sort(data), (previous, current) =>
         Week.with(current.date).equals(Week.with(previous.date)));
 
     return map(weeks, Archive.from);
-}
-
-function merge<T extends Observation>(archive: Archive<T>, other: Archive<T>): Archive<T> {
-    const data = reduce(other.data, (values, value) => {
-        values[getISODay(value.date) - 1] = value;
-        return values;
-    }, reduce(archive.data, (values, value) => {
-        values[getISODay(value.date) - 1] = value;
-        return values;
-    }, new Array<T>(7)));
-
-    return Archive.from(data);
 }
 
 class Repository<T extends Observation> {
@@ -64,21 +52,20 @@ class Repository<T extends Observation> {
     public get = (week: Week): Optional<Archive<T>> =>
         this.data.get(week.toString());
 
-    public set = (archive: Archive<T>): Archive<T> => {
-        const key = archive.week.toString();
-        const data = this.data.get(key);
-
-        if (data === undefined) {
-            this.data.set(key, archive);
-        } else {
-            this.data.set(key, merge(data, archive));
+    public save(data: T[]): void {
+        if (data.length === 0) {
+            return;
         }
 
-        return archive;
-    };
+        const start = data[0].date;
+        const end = data[data.length - 1].date;
 
-    public save = (data: T[]): Archive<T>[] =>
-        Array.from(map(archives(data), this.set));
+        const cached = flatten(map(Week.with(start, end), week =>
+            this.data.get(week.toString())?.data ?? []));
+
+        each(archives(Observation.sort(flatten([cached, data]))), archive =>
+            this.data.set(archive.week.toString(), archive));
+    }
 
     public async query(start: Date, end: Date): Promise<T[]> {
         end = min([end, new Date()]);
@@ -102,8 +89,8 @@ class Repository<T extends Observation> {
             return [start, min([today, last.end])];
         });
 
-        await Promise.all(map(dates, ([start, end]) =>
-            this.fetch(start, end).then(this.save)));
+        await Promise.all(map(dates, ([start, end]) => this.fetch(start, end)))
+            .then(results => this.save(Array.from(flatten(results))));
 
         const results = flatten(map(Week.with(start, end), week => this.get(week)?.data ?? []));
 

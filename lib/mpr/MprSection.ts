@@ -17,7 +17,9 @@ class MprSection<Section extends string, T extends Record<string, Nullable<strin
     }
 
     public get(): Promise<MprResponse<Section, T>> {
-        return axios.get<MprResponse<Section, T>>(this.url).then(response => response.data);
+        return axios.get<MprResponse<Section, T>>(this.url)
+            .then(response => response.data)
+            .then(data => typeof data === "string" ? Promise.reject(data) : data);
     }
 }
 
