@@ -5,10 +5,11 @@ import isThisISOWeek from "date-fns/isThisISOWeek";
 import type { BinaryOperator, Optional } from ".";
 import Observation from "./Observation";
 import Week, { Weekday } from "./Week";
-import groupBy from "./itertools/groupBy";
 import map from "./itertools/map";
 import filter from "./itertools/filter";
 import flatten from "./itertools/flatten";
+import groupBy from "./itertools/groupBy";
+import { reduce } from "./itertools/accumulate";
 import { dropWhile } from "./itertools/drop";
 import { takeWhile } from "./itertools/take";
 
@@ -18,11 +19,8 @@ interface Archive<T extends Observation> {
     readonly data: T[];
 }
 
-function archives<T extends Observation>(data: T[]): Iterable<Archive<T>> {
-    const weeks = groupBy(Observation.sort(data), (previous, current) =>
-        Week.with(current.date).equals(Week.with(previous.date)));
-
-    return map(weeks, data => {
+namespace Archive {
+    export const from = <T extends Observation>(data: T[]): Archive<T> => {
         const { date: first } = data[0];
         const { date: end } = data[data.length - 1];
 
@@ -31,26 +29,26 @@ function archives<T extends Observation>(data: T[]): Iterable<Archive<T>> {
             day: isThisISOWeek(end) ? getISODay(end) : Weekday.Sunday,
             data
         };
-    });
+    };
+}
+
+function archives<T extends Observation>(data: T[]): Iterable<Archive<T>> {
+    const weeks = groupBy(Observation.sort(data), (previous, current) =>
+        Week.with(current.date).equals(Week.with(previous.date)));
+
+    return map(weeks, Archive.from);
 }
 
 function merge<T extends Observation>(archive: Archive<T>, other: Archive<T>): Archive<T> {
-    const data = other.data.reduce((values, value) => {
+    const data = reduce(other.data, (values, value) => {
         values[getISODay(value.date) - 1] = value;
         return values;
-    }, archive.data.reduce((values, value) => {
+    }, reduce(archive.data, (values, value) => {
         values[getISODay(value.date) - 1] = value;
         return values;
     }, new Array<T>(7)));
 
-    const start = data[0].date;
-    const end = data[data.length - 1].date;
-
-    return {
-        week: Week.with(start),
-        day: isThisISOWeek(end) ? getISODay(end) : Weekday.Sunday,
-        data
-    };
+    return Archive.from(data);
 }
 
 class Repository<T extends Observation> {
@@ -63,23 +61,24 @@ class Repository<T extends Observation> {
         private readonly fetch: BinaryOperator<Date, Date, Promise<T[]>>) {
     }
 
-    public save = (data: T[]): Archive<T>[] =>
-        Array.from(map(archives(data), this.set));
-
     public get = (week: Week): Optional<Archive<T>> =>
         this.data.get(week.toString());
 
     public set = (archive: Archive<T>): Archive<T> => {
         const key = archive.week.toString();
+        const data = this.data.get(key);
 
-        if (this.data.has(key)) {
-            this.data.set(key, merge(this.data.get(key) as Archive<T>, archive));
-        } else {
+        if (data === undefined) {
             this.data.set(key, archive);
+        } else {
+            this.data.set(key, merge(data, archive));
         }
 
         return archive;
     };
+
+    public save = (data: T[]): Archive<T>[] =>
+        Array.from(map(archives(data), this.set));
 
     public async query(start: Date, end: Date): Promise<T[]> {
         end = min([end, new Date()]);
