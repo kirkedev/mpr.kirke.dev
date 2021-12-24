@@ -52,20 +52,22 @@ class Repository<T extends Observation> {
     public get = (week: Week): Optional<Archive<T>> =>
         this.data.get(week.toString());
 
-    public save(data: T[]): void {
+    public save = (data: T[]): void => {
         if (data.length === 0) {
             return;
         }
 
         const start = data[0].date;
         const end = data[data.length - 1].date;
+        const dates = new Set(map(data, record => record.date.getTime()));
 
-        const cached = flatten(map(Week.with(start, end), week =>
-            this.data.get(week.toString())?.data ?? []));
+        const cached = filter(flatten(map(Week.with(start, end), week =>
+            this.data.get(week.toString())?.data ?? [])
+        ), record => dates.has(record.date.getTime()));
 
         each(archives(Observation.sort(flatten([cached, data]))), archive =>
             this.data.set(archive.week.toString(), archive));
-    }
+    };
 
     public async query(start: Date, end: Date): Promise<T[]> {
         end = min([end, new Date()]);
@@ -89,8 +91,10 @@ class Repository<T extends Observation> {
             return [start, min([today, last.end])];
         });
 
-        await Promise.all(map(dates, ([start, end]) => this.fetch(start, end)))
-            .then(results => this.save(Array.from(flatten(results))));
+        await Promise.all(map(dates, ([start, end]) =>
+            this.fetch(start, end)
+                .catch(() => [])
+                .then(this.save)));
 
         const results = flatten(map(Week.with(start, end), week => this.get(week)?.data ?? []));
 

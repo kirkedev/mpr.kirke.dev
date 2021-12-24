@@ -24,8 +24,7 @@ const report = client.report(3458).section<PurchaseRecord>("National Volume and 
 const fetch = (start: Date, end: Date): Promise<Purchase[]> =>
     report.between("reported_for_date", formatDate(start), formatDate(end))
         .get()
-        .then(response => Array.from(parse(response)))
-        .catch(() => []);
+        .then(response => Array.from(parse(response)));
 
 const repository = new Repository(fetch);
 
