@@ -40,19 +40,21 @@ function archives<T extends Observation>(data: Iterable<T>): Iterable<Archive<T>
 }
 
 class Repository<T extends Observation> {
-    private readonly data = new LRU<string, Archive<T>>({
+    readonly #data = new LRU<string, Archive<T>>({
         max: 54,
         maxAge: 24 * 60 * 60 * 1000
     });
 
-    public constructor(
-        private readonly fetch: BinaryOperator<Date, Date, Promise<T[]>>) {
+    readonly #fetch: BinaryOperator<Date, Date, Promise<T[]>>;
+
+    public constructor(fetch: BinaryOperator<Date, Date, Promise<T[]>>) {
+        this.#fetch = fetch;
     }
 
-    public get = (week: Week): Optional<Archive<T>> =>
-        this.data.get(week.toString());
+    #get = (week: Week): Optional<Archive<T>> =>
+        this.#data.get(week.toString());
 
-    public save = (data: T[]): void => {
+    #save = (data: T[]): void => {
         if (data.length === 0) {
             return;
         }
@@ -62,11 +64,10 @@ class Repository<T extends Observation> {
         const dates = new Set(map(data, record => record.date.getTime()));
 
         const cached = filter(flatten(map(Week.with(start, end), week =>
-            this.data.get(week.toString())?.data ?? [])
-        ), record => dates.has(record.date.getTime()));
+            this.#get(week)?.data ?? [])), record => !dates.has(record.date.getTime()));
 
         each(archives(Observation.sort(flatten([cached, data]))), archive =>
-            this.data.set(archive.week.toString(), archive));
+            this.#data.set(archive.week.toString(), archive));
     };
 
     public async query(start: Date, end: Date): Promise<T[]> {
@@ -77,7 +78,7 @@ class Repository<T extends Observation> {
         }
 
         const missing = filter(Week.with(start, end), week =>
-            !(this.get(week)?.day === Weekday.Sunday));
+            !(this.#get(week)?.day === Weekday.Sunday));
 
         const grouped = groupBy(missing, (previous, current) =>
             current.previous.equals(previous));
@@ -86,17 +87,17 @@ class Repository<T extends Observation> {
             const today = new Date();
             const first = group[0];
             const last = group[group.length - 1];
-            const start = first.day((this.get(first)?.day ?? 0) + 1);
+            const start = first.day((this.#get(first)?.day ?? 0) + 1);
 
             return [start, min([today, last.end])];
         });
 
         await Promise.all(map(dates, ([start, end]) =>
-            this.fetch(start, end)
+            this.#fetch(start, end)
                 .catch(() => [])
-                .then(this.save)));
+                .then(this.#save)));
 
-        const results = flatten(map(Week.with(start, end), week => this.get(week)?.data ?? []));
+        const results = flatten(map(Week.with(start, end), week => this.#get(week)?.data ?? []));
 
         return Array.from(takeWhile(dropWhile(Observation.sort(results), result =>
             result.date < start), result => result.date <= end));
