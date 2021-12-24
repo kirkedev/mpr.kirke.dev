@@ -15,7 +15,7 @@
 .periods > span {
     @apply text-sm;
     @apply mx-3;
-    @apply bg-gray-200;
+    @apply bg-gray-100;
     @apply text-center;
     @apply text-gray-800;
     @apply w-16;

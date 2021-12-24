@@ -1,7 +1,7 @@
 .track {
     @apply flex;
     @apply cursor-pointer;
-    @apply bg-gray-200;
+    @apply bg-gray-100;
     @apply border-4;
     @apply border-transparent;
     @apply h-0.5;
