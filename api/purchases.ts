@@ -22,7 +22,7 @@ const PurchaseSchema: FastifySchema = {
 const report = client.report(3458).section<PurchaseRecord>("National Volume and Price Data");
 
 const fetch = (start: Date, end: Date): Promise<Purchase[]> =>
-    report.between("reported_for_date", formatDate(start), formatDate(end))
+    report.between("report_date", formatDate(start), formatDate(end))
         .get()
         .then(response => Array.from(parse(response)));
 

@@ -26,6 +26,7 @@ const cutoutIndex = (cutout: Iterable<Cutout>): Iterable<CutoutIndex> =>
 
         return {
             date: record.date,
+            reportDate: record.reportDate,
             carcassPrice: record.carcassPrice,
             indexPrice: round(avgPrice(records)),
             loads: round(totalLoads(record))

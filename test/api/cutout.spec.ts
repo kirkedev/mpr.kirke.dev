@@ -25,6 +25,7 @@ describe("cutout api", () => {
 
         expect(cutout).toEqual({
             date: new Date(2021, 7, 13),
+            reportDate: new Date(2021, 7, 13),
             indexPrice: 123.31,
             carcassPrice: 125.68,
             loads: 378.72

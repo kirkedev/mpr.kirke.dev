@@ -23,7 +23,7 @@ const SlaughterSchema: FastifySchema = {
 const report = client.report(2511).section<BarrowsGiltsRecord>("Barrows/Gilts");
 
 const fetch = (start: Date, end: Date): Promise<Slaughter[]> =>
-    report.between("for_date_begin", formatDate(start), formatDate(end))
+    report.between("report_date", formatDate(start), formatDate(end))
         .get()
         .then(response => Array.from(parse(response)));
 

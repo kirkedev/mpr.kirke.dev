@@ -14,7 +14,7 @@ interface Props {
 
 const series = (purchases: Purchase[]): Data[][] => [
     purchases.filter(record => record.arrangement === Arrangement.MarketFormula && !Number.isNaN(record.avgPrice))
-        .map(record => ({ date: record.date, value: record.avgPrice }))
+        .map(record => ({ date: record.date, reportDate: record.reportDate, value: record.avgPrice }))
     // purchases.filter(record => record.arrangement === Arrangement.Negotiated && !Number.isNaN(record.avgPrice))
     //     .map(record => ({ date: record.date, value: record.avgPrice }))
 ];

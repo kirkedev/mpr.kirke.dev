@@ -5,13 +5,12 @@ describe("Repository caching", () => {
     const fetch = jest.fn((start: Date, end: Date) =>
         Promise.resolve(Array.from(dates(start, end))
             .filter(date => date < new Date())
-            .map(date => ({ date }))));
+            .map(date => ({ date, reportDate: date }))));
 
     const repository = new Repository(fetch);
 
     beforeAll(() => jest.useFakeTimers().setSystemTime(new Date(2020, 4, 1).getTime()));
     afterAll(jest.useRealTimers);
-
     beforeEach(fetch.mockClear);
 
     test("initial query for multiple weeks", async () => {
@@ -43,7 +42,7 @@ describe("Repository caching", () => {
     });
 
     test("fetch missing data", async () => {
-        const result = await repository.query(new Date(2020, 3, 24), new Date(2020, 3, 30));
+        const result = await repository.query(new Date(2020, 3, 24), new Date(2020, 4, 1));
         expect(fetch).toHaveBeenCalledWith(new Date(2020, 4, 1), new Date(2020, 4, 1));
         expect(result.length).toBe(7);
         expect(fetch).toHaveBeenCalledTimes(1);

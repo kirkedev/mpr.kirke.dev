@@ -12,8 +12,8 @@ interface Props {
 }
 
 const series = (cutout: CutoutIndex[]): Data[][] => [
-    cutout.map(record => ({ date: record.date, value: record.carcassPrice })),
-    cutout.map(record => ({ date: record.date, value: record.indexPrice }))
+    cutout.map(record => ({ date: record.date, reportDate: record.reportDate, value: record.carcassPrice })),
+    cutout.map(record => ({ date: record.date, reportDate: record.reportDate, value: record.indexPrice }))
 ];
 
 const labels = ["Cutout", "Index"];

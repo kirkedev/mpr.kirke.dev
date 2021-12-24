@@ -2,6 +2,7 @@ import type { Comparator } from ".";
 
 interface Observation {
     date: Date;
+    reportDate: Date;
 }
 
 const comparator: Comparator<Observation> = ({ date: a }: Observation, { date: b }: Observation) =>

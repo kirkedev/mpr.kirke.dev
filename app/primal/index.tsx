@@ -12,12 +12,12 @@ interface Props {
 }
 
 const series = (cutout: Cutout[]): Data[][] => [
-    cutout.map(record => ({ date: record.date, value: record.bellyPrice })),
-    cutout.map(record => ({ date: record.date, value: record.hamPrice })),
-    cutout.map(record => ({ date: record.date, value: record.loinPrice })),
-    cutout.map(record => ({ date: record.date, value: record.buttPrice })),
-    cutout.map(record => ({ date: record.date, value: record.ribPrice })),
-    cutout.map(record => ({ date: record.date, value: record.picnicPrice }))
+    cutout.map(record => ({ date: record.date, reportDate: record.reportDate, value: record.bellyPrice })),
+    cutout.map(record => ({ date: record.date, reportDate: record.reportDate, value: record.hamPrice })),
+    cutout.map(record => ({ date: record.date, reportDate: record.reportDate, value: record.loinPrice })),
+    cutout.map(record => ({ date: record.date, reportDate: record.reportDate, value: record.buttPrice })),
+    cutout.map(record => ({ date: record.date, reportDate: record.reportDate, value: record.ribPrice })),
+    cutout.map(record => ({ date: record.date, reportDate: record.reportDate, value: record.picnicPrice }))
 ];
 
 const labels = ["Belly", "Ham", "Loin", "Butt", "Rib", "Picnic"];

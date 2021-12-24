@@ -21,8 +21,8 @@ interface Archive<T extends Observation> {
 
 namespace Archive {
     export const from = <T extends Observation>(data: T[]): Archive<T> => {
-        const { date: first } = data[0];
-        const { date: end } = data[data.length - 1];
+        const { reportDate: first } = data[0];
+        const { reportDate: end } = data[data.length - 1];
 
         return {
             week: Week.with(first),
@@ -34,7 +34,7 @@ namespace Archive {
 
 function archives<T extends Observation>(data: Iterable<T>): Iterable<Archive<T>> {
     const weeks = groupBy(Observation.sort(data), (previous, current) =>
-        Week.with(current.date).equals(Week.with(previous.date)));
+        Week.with(current.reportDate).equals(Week.with(previous.reportDate)));
 
     return map(weeks, Archive.from);
 }
@@ -59,12 +59,12 @@ class Repository<T extends Observation> {
             return;
         }
 
-        const start = data[0].date;
-        const end = data[data.length - 1].date;
-        const dates = new Set(map(data, record => record.date.getTime()));
+        const start = data[0].reportDate;
+        const end = data[data.length - 1].reportDate;
+        const dates = new Set(map(data, record => record.reportDate.getTime()));
 
         const cached = filter(flatten(map(Week.with(start, end), week =>
-            this.#get(week)?.data ?? [])), record => !dates.has(record.date.getTime()));
+            this.#get(week)?.data ?? [])), record => !dates.has(record.reportDate.getTime()));
 
         each(archives(Observation.sort(flatten([cached, data]))), archive =>
             this.#data.set(archive.week.toString(), archive));
@@ -83,24 +83,25 @@ class Repository<T extends Observation> {
         const grouped = groupBy(missing, (previous, current) =>
             current.previous.equals(previous));
 
-        const dates = map(grouped, group => {
+        const dates = takeWhile(map(grouped, group => {
             const today = new Date();
             const first = group[0];
             const last = group[group.length - 1];
             const start = first.day((this.#get(first)?.day ?? 0) + 1);
 
             return [start, min([today, last.end])];
-        });
+        }), ([start]) => start <= end);
 
         await Promise.all(map(dates, ([start, end]) =>
             this.#fetch(start, end)
                 .catch(() => [])
                 .then(this.#save)));
 
-        const results = flatten(map(Week.with(start, end), week => this.#get(week)?.data ?? []));
+        const results = flatten(map(Week.with(start, end), week =>
+            this.#get(week)?.data ?? []));
 
-        return Array.from(takeWhile(dropWhile(Observation.sort(results), result =>
-            result.date < start), result => result.date <= end));
+        return Array.from(takeWhile(dropWhile(Observation.sort(results),
+            result => result.reportDate < start), result => result.reportDate <= end));
     }
 }
 

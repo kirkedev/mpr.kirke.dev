@@ -12,7 +12,7 @@ interface Props {
 }
 
 const series = (data: CashIndex[]): Data[][] => [
-    data.map(({ date, indexPrice: value }) => ({ date, value }))
+    data.map(({ date, reportDate, indexPrice: value }) => ({ date, reportDate, value }))
 ];
 
 function Cash(props: Props): JSXElement {

@@ -10,8 +10,7 @@ const args = parseArgs([
     { name: "start", type: getDate },
     { name: "end", type: getDate },
     { name: "report", type: Number },
-    { name: "section", type: String },
-    { name: "column", type: String }
+    { name: "section", type: String }
 ]);
 
 const client = new MprClient("https://mpr.datamart.ams.usda.gov", "v1.1")
@@ -30,7 +29,7 @@ const weeks = Array.from(Week.with(new Date(Date.parse(args.start)), new Date(Da
 
     for (const week of weeks) {
         // eslint-disable-next-line no-await-in-loop
-        await client.between(args.column, formatDate(week.start), formatDate(week.end))
+        await client.between("report_date", formatDate(week.start), formatDate(week.end))
             .get()
             .then(response => writeFile(filename(week), JSON.stringify(response)));
 

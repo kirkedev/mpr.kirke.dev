@@ -29,7 +29,7 @@ function listener(request: IncomingMessage, response: ServerResponse): void {
 
     const [, date] = searchParams.get("q")?.split(";")
         .map(param => param.split("="))
-        .find(([key]) => key.includes("date")) ?? [];
+        .find(([key]) => key.includes("report_date")) ?? [];
 
     if (date.length === 0) {
         response.writeHead(400);

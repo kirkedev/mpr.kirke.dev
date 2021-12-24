@@ -33,14 +33,20 @@ function cashIndex(records: Iterable<Slaughter>): Iterable<CashIndex> {
     const slaughter = Observation.sort(Array.from(filterSlaughter(records)));
     const dates = groupBy(slaughter, (last, current) => isSameDay(current.date, last.date));
 
-    const totals = map(dates, slaughter => ({
-        date: slaughter[0].date,
-        weight: sumBy(slaughter, weight),
-        value: sumBy(slaughter, value)
-    }));
+    const totals = map(dates, slaughter => {
+        const { date, reportDate } = slaughter[0];
 
-    return map(rolling(totals, 2), ([last, { date, weight, value }]) => ({
+        return {
+            date,
+            reportDate,
+            weight: sumBy(slaughter, weight),
+            value: sumBy(slaughter, value)
+        };
+    });
+
+    return map(rolling(totals, 2), ([last, { date, reportDate, weight, value }]) => ({
         date,
+        reportDate,
         dailyPrice: avgPrice(value, weight),
         indexPrice: avgPrice(last.value + value, last.weight + weight)
     }));
