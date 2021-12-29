@@ -2,12 +2,12 @@ version: "3.9"
 
 services:
   api:
-    image: mpr-dashboard/api:${TAG}
+    image: ${ECR_URI:-kirkedev}/mpr-api:${TAG}
     environment:
       MPR_URL: https://mpr.datamart.ams.usda.gov
 
   app:
-    image: mpr-dashboard/app:${TAG}
+    image: ${ECR_URI:-kirkedev}/mpr-app:${TAG}
     ports:
       - "80:80"
     depends_on:

@@ -5,7 +5,7 @@
     "private": true,
     "scripts": {
         "dev": "node --es-module-specifier-resolution=node --loader ts-node/esm --inspect=0.0.0.0 index.ts",
-        "build": "docker build .. -f Dockerfile -t mpr-dashboard/api:$(git describe --tags --dirty --always)",
+        "build": "docker build .. -f Dockerfile -t ${ECR_URI:-kirkedev}/mpr-api:$TAG",
         "healthy": "node healthcheck"
     },
     "dependencies": {
