@@ -8,12 +8,12 @@
 
 .reports {
     @apply mt-24;
-    @apply container;
     @apply grid;
     @apply grid-cols-1;
     @apply md:grid-cols-2;
     @apply gap-12;
-    @apply max-w-screen-xl;
+    @apply w-full;
+    max-width: inherit;
 }
 
 .reports > div {
@@ -22,21 +22,24 @@
     @apply flex;
     @apply flex-col;
     @apply justify-evenly;
-    @apply pt-8;
-    @apply pb-4;
+    @apply pt-4;
+    @apply lg:pt-8;
+    @apply pb-2;
+    @apply lg:pb-4;
 }
 
 .timepicker {
+    max-width: inherit;
+    @apply w-full;
+    @apply fixed;
     @apply py-4;
-    @apply container;
     @apply items-center;
+    @apply justify-around;
+    @apply justify-self-center;
     @apply grid;
     @apply grid-cols-1;
-    @apply md:grid-cols-2;
-    @apply gap-12;
-    @apply fixed;
+    @apply lg:grid-cols-2;
     @apply bg-white;
-    @apply max-w-screen-xl;
     @apply shadow-sm;
 }
 

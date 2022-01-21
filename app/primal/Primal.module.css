@@ -2,11 +2,14 @@
     @apply flex;
     @apply flex-row;
     @apply justify-between;
-    @apply px-10;
+    @apply px-4;
+    @apply xl:px-10;
+    @apply overflow-x-scroll;
 }
 
 .primal :global(.chart) {
-    @apply px-10;
+    @apply px-4;
+    @apply xl:px-10;
 }
 
 .stat {
@@ -29,6 +32,8 @@
 .value {
     @apply w-16;
     @apply text-center;
+    @apply text-base;
+    @apply xl:text-xl;
     @apply font-normal;
     @apply pb-2;
 }

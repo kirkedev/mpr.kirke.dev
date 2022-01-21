@@ -2,18 +2,22 @@
     @apply flex;
     @apply justify-between;
     @apply flex-row;
-    @apply px-10;
-    @apply pb-6;
+    @apply py-2;
+    @apply px-6;
+    @apply xl:px-10;
 }
 
 .cash :global(.chart) {
-    @apply px-10;
+    @apply px-4;
+    @apply xl:px-10;
 }
 
 .stats h2 {
     @apply text-gray-700;
     @apply mt-auto;
     @apply font-normal;
+    @apply text-xl;
+    @apply xl:text-2xl;
 }
 
 .stat {
@@ -23,7 +27,6 @@
 .value {
     @apply text-gray-700;
     @apply font-normal;
-    @apply pb-2;
 }
 
 .date {

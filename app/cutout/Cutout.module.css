@@ -1,17 +1,20 @@
 .stats {
     @apply flex;
     @apply flex-row;
-    @apply px-10;
+    @apply px-4;
+    @apply xl:px-10;
 }
 
 .cutout :global(.chart) {
-    @apply px-10;
+    @apply px-4;
+    @apply md:px-10;
 }
 
 .stat {
     @apply text-gray-700;
     @apply text-center;
-    @apply mr-12;
+    @apply mr-6;
+    @apply xl:mr-12;
     @apply flex;
     @apply flex-col;
     @apply p-1;
@@ -30,6 +33,8 @@
 .value {
     @apply w-16;
     @apply text-center;
+    @apply text-base;
+    @apply xl:text-xl;
     @apply font-normal;
     @apply pb-2;
 }

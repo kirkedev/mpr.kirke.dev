@@ -8,7 +8,7 @@
 
 .datepicker {
     @apply hidden;
-    @apply md:flex;
+    @apply lg:flex;
     @apply flex-1;
     @apply flex-col;
     @apply relative;

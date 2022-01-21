@@ -3,7 +3,10 @@
 body {
     font-family: "Open Sans", sans-serif;
     @apply bg-gray-50;
-    @apply p-8;
+    @apply px-8;
+    @apply pb-8;
+    @apply pt-0;
+    @apply xl:pt-8;
 }
 
 * {

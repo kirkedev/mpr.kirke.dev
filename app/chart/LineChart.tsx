@@ -56,20 +56,20 @@ function LineChart(props: Props): JSXElement {
         end: dates()(props.end)
     }));
 
-    function selectDate(event: MouseEvent): void {
+    function selectDate(event: MouseEvent | TouchEvent): void {
         const target = event.currentTarget as HTMLElement;
         const [position] = pointer(event, getPlot(target));
         const date = dates().invert(Math.min(Math.max(position, left), marker().end));
         dispatch.call(target, "selectDate", date);
     }
 
-    function resetDate(event: MouseEvent): void {
+    function resetDate(event: MouseEvent | TouchEvent): void {
         dispatch.call(event.currentTarget as EventTarget, "selectDate", props.end);
     }
 
     const mask = Math.random().toString(32).substring(2, 7) + Math.random().toString(32).substring(2, 7);
 
-    return <div class="chart" onmousemove={selectDate} onmouseleave={resetDate}>
+    return <div class="chart" onpointermove={selectDate} onpointerleave={resetDate}>
         <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
             <defs>
                 <mask id={mask}>

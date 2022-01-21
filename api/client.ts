@@ -5,7 +5,7 @@ dotenv.config();
 
 const { MPR_URL } = process.env;
 
-if (MPR_URL === undefined || MPR_URL.length === 0) {
+if (!MPR_URL?.length) {
     console.error("Error: MPR_URL environment variable is unset");
     process.exit(1);
 }
