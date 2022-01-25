@@ -3,7 +3,9 @@
     "private": true,
     "scripts": {
         "dev": "vite --host 0.0.0.0",
-        "build": "docker build .. -f Dockerfile -t ${ECR_URI:-kirkedev}/mpr-app:$TAG"
+        "build": "docker build .. -f Dockerfile -t ${ECR_REGISTRY:-kirkedev}/mpr-app:$TAG",
+        "prepublish": "yarn build",
+        "publish": "docker push ${ECR_REGISTRY:-kirkedev}/mpr-app:$TAG"
     },
     "dependencies": {
         "d3-array": "^3.1.1",
