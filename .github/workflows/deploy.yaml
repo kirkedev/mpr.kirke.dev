@@ -21,6 +21,8 @@ jobs:
 
       - name: Setup node
         uses: actions/setup-node@v2
+        with:
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install
@@ -44,7 +46,7 @@ jobs:
 
       - name: Use ECS context
         run: | 
-            docker context create ecs mpr
+            docker context create ecs mpr --from-env
             docker context use mpr
 
       - name: Deploy images to ECS
