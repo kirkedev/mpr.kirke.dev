@@ -39,8 +39,15 @@ jobs:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
         run: yarn publish
 
-      - name: Create AWS docker context
-        run: docker context create ecs mpr
+      - name: Use Docker compose CLI
+        run: curl -L https://raw.githubusercontent.com/docker/compose-cli/main/scripts/install/install_linux.sh | sh
 
-      - name: Deploy to ECS
-        run: docker compose -f docker-compose.yaml --project-name mpr --context mpr up
+      - name: Use ECS context
+        run: | 
+            docker context create ecs mpr
+            docker context use mpr
+
+      - name: Deploy images to ECS
+        env:
+          ECR_REGISTRY: ${{ steps.login.outputs.registry }}
+        run: yarn start
