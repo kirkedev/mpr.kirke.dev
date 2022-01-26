@@ -1,6 +1,6 @@
 {
     "name": "mpr-dashboard",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "description": "Dashboard and analytics for USDA Mandatory Price Reporting",
     "author": "Andrew Kirkegaard",
     "license": "ISC",
