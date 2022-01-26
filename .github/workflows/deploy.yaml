@@ -1,15 +1,13 @@
 name: Deploy
 
+permissions:
+  id-token: write
+  contents: read
+
 on:
   push:
     tags:
       - v*
-
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_REGION: ${{ secrets.AWS_REGION }}
-  TAG: ${{ github.ref_name }}
 
 jobs:
   deploy:
@@ -28,21 +26,29 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Setup AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+
       - name: Login to Amazon ECR
         id: login
         uses: aws-actions/amazon-ecr-login@v1.3.3
 
       - name: Build docker images
+        run: yarn build
         env:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
-        run: yarn build
+          TAG: ${{ github.ref_name }}
 
       - name: Publish images to Amazon ECR
+        run: |
+          docker push $ECR_REGISTRY/mpr-api:$TAG
+          docker push $ECR_REGISTRY/mpr-app:$TAG
         env:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
-        run: |
-          docker push ${ECR_REGISTRY}/mpr-api:$TAG
-          docker push ${ECR_REGISTRY}/mpr-app:$TAG
+          TAG: ${{ github.ref_name }}
 
       - name: Use Docker compose CLI
         run: curl -L https://raw.githubusercontent.com/docker/compose-cli/main/scripts/install/install_linux.sh | sh
@@ -51,6 +57,7 @@ jobs:
         run: docker context create ecs mpr --from-env
 
       - name: Deploy images to ECS
+        run: docker --context mpr compose -f docker-compose.yaml --project-name mpr up
         env:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
-        run: docker --context mpr compose -f docker-compose.yaml --project-name mpr up
+          TAG: ${{ github.ref_name }}
