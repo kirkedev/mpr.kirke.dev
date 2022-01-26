@@ -10,9 +10,8 @@ on:
 
 jobs:
   tests:
-    name: Tests
+    name: All Tests
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -28,10 +27,24 @@ jobs:
       - name: Lint code
         run: yarn lint
 
-      - name: Run unit and integration tests
-        run: yarn workspace test all
+      - name: Run unit tests
+        run: yarn workspace test unit
 
-      - name: Upload coverage
+      - name: Upload unit test coverage
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          base-path: test
+          flag-name: unit
+          parallel: true
+
+      - name: Run integration tests
+        run: yarn workspace test integration
+
+      - name: Upload integration test coverage
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          base-path: test
+          flag-name: integration
+          parallel-finished: true
