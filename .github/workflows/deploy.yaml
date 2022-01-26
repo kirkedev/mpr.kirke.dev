@@ -40,7 +40,9 @@ jobs:
       - name: Publish images to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
-        run: yarn publish
+        run: |
+          docker push ${ECR_REGISTRY}/mpr-api:$TAG
+          docker push ${ECR_REGISTRY}/mpr-app:$TAG
 
       - name: Use Docker compose CLI
         run: curl -L https://raw.githubusercontent.com/docker/compose-cli/main/scripts/install/install_linux.sh | sh
@@ -51,4 +53,4 @@ jobs:
       - name: Deploy images to ECS
         env:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
-        run: docker --context mpr compose -f docker-compose.yaml --project-name mpr up --wait
+        run: docker --context mpr compose -f docker-compose.yaml --project-name mpr up
