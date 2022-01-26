@@ -27,24 +27,11 @@ jobs:
       - name: Lint code
         run: yarn lint
 
-      - name: Run unit tests
-        run: yarn workspace test unit
+      - name: Run all tests
+        run: yarn workspace test all
 
-      - name: Upload unit test coverage
+      - name: Upload test coverage
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           base-path: test
-          flag-name: unit
-          parallel: true
-
-      - name: Run integration tests
-        run: yarn workspace test integration
-
-      - name: Upload integration test coverage
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          base-path: test
-          flag-name: integration
-          parallel-finished: true
