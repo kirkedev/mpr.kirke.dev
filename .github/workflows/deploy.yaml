@@ -9,6 +9,7 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: ${{ secrets.AWS_REGION }}
+  TAG: ${{ github.ref_name }}
 
 jobs:
   deploy:
@@ -44,12 +45,10 @@ jobs:
       - name: Use Docker compose CLI
         run: curl -L https://raw.githubusercontent.com/docker/compose-cli/main/scripts/install/install_linux.sh | sh
 
-      - name: Use ECS context
-        run: | 
-            docker context create ecs mpr --from-env
-            docker context use mpr
+      - name: Add ECS context
+        run: docker context create ecs mpr --from-env
 
       - name: Deploy images to ECS
         env:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
-        run: yarn start
+        run: docker --context mpr compose -f docker-compose.yaml --project-name mpr up --wait
