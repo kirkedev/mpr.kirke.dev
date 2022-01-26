@@ -30,3 +30,8 @@ jobs:
 
       - name: Run unit and integration tests
         run: yarn workspace test all
+
+      - name: Upload coverage
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
