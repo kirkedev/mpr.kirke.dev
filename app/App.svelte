@@ -1,11 +1,7 @@
-<style lang="postcss">
-    div {
-        @apply uppercase;
-        @apply text-center;
-        @apply font-sans;
-    }
-</style>
+<script lang="ts">
+    import Greeting from "./Greeting.svelte";
+</script>
 
 <div>
-    <h1>Hello world!</h1>
+    <Greeting name="Andrew"/>
 </div>

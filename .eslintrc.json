@@ -97,6 +97,9 @@
         },
         "env": {
             "browser": true
+        },
+        "rules": {
+            "no-multiple-empty-lines": "off"
         }
     }]
 }
