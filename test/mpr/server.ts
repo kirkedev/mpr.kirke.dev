@@ -33,7 +33,8 @@ function listener(request: IncomingMessage, response: ServerResponse): void {
 
     if (date.length === 0) {
         response.writeHead(400);
-        return response.end();
+        response.end();
+        return;
     }
 
     const [start, end] = date.split(":").map(getDate);

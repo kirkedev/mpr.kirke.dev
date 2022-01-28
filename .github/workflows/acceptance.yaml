@@ -1,0 +1,31 @@
+name: Acceptance Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  tests:
+    name: Acceptance Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Start app
+        run: yarn dev -d
+
+      - name: Run accpetance tests
+        run: yarn workspace features test

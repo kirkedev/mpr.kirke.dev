@@ -1,8 +1,8 @@
 {
     "baseUrl": "http://localhost:3000",
     "testFiles": "*.{feature,features}",
-    "pluginsFile": "plugins.ts",
-    "supportFile": "support.ts",
+    "pluginsFile": "plugins.js",
+    "supportFile": "support.js",
     "integrationFolder": ".",
     "downloadsFolder": "downloads",
     "fixturesFolder": "fixtures",

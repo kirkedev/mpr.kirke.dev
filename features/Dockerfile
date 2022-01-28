@@ -1,4 +1,4 @@
-FROM cypress/base:16.5.0
+FROM cypress/included:9.3.1
 
 WORKDIR /home/node/mpr
 COPY package.json .yarnrc.yml yarn.lock ./
