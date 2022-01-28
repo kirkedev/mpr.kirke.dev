@@ -10,6 +10,6 @@ When("I load the app", () => {
     cy.visit("/");
 });
 
-Then("I see the MPR Dashboard header", () => {
-    cy.get("header").contains("MPR Dashboard").should("exist");
+Then("I see the MPR Dashboard", () => {
+    cy.title().should("equal", "Mpr Dashboard");
 });

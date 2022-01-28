@@ -1,4 +1,4 @@
-name: Test
+name: Acceptance Tests
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   tests:
-    name: All Tests
+    name: Acceptance Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,14 +24,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Lint code
-        run: yarn lint
+      - name: Start app
+        run: yarn dev -d
 
-      - name: Run all tests
-        run: yarn workspace test all
-
-      - name: Upload test coverage
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          base-path: test/lib
+      - name: Run accpetance tests
+        run: yarn workspace features test
