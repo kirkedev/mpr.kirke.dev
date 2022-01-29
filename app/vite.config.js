@@ -10,7 +10,7 @@ const config = defineConfig({
         outDir: "build",
         target: "esnext",
         polyfillDynamicImport: false,
-        sourcemap: "inline"
+        sourcemap: true
     },
     server: {
         proxy: {
