@@ -1,3 +1,1 @@
-<header>
-    Markets
-</header>
+<header>Markets</header>

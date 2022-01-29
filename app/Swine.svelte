@@ -1,3 +1,1 @@
-<header>
-    Swine
-</header>
+<header>Swine</header>
