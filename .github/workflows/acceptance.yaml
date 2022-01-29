@@ -24,8 +24,13 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Build app
         run: yarn build
+        env:
+          DOCKER_BUILDKIT: 1
 
       - name: Start app
         run: yarn start -d
