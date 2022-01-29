@@ -28,7 +28,7 @@ jobs:
         run: yarn build
 
       - name: Start app
-        run: docker-compose -f docker-compose.yaml up -d
+        run: yarn start -d
 
       - name: Run acceptance tests
         run: yarn workspace features test
@@ -37,4 +37,4 @@ jobs:
 
       - name: Shutdown app
         if: always()
-        run: docker-compose -f docker-compose.yaml down
+        run: yarn stop

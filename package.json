@@ -14,8 +14,8 @@
         "predev": "docker compose down --remove-orphans",
         "dev": "TAG=$(git describe --tags --dirty --always); yarn predev && docker compose up --build",
         "build": "TAG=$(git describe --tags --dirty --always); yarn workspace api build && yarn workspace app build",
-        "start": "TAG=$(git describe --tags --dirty --always); docker stack deploy -c docker-compose.yaml mpr",
-        "stop": "docker stack rm mpr"
+        "start": "TAG=$(git describe --tags --dirty --always); docker-compose -f docker-compose.yaml up",
+        "stop": "TAG=$(git describe --tags --dirty --always); docker-compose -f docker-compose.yaml down"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^5.10.1",
