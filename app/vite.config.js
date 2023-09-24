@@ -13,6 +13,7 @@ export default defineConfig({
         sourcemap: "inline"
     },
     server: {
+        port: 3000,
         proxy: {
             "^/api/[^.]*$": {
                 target: API_URL,

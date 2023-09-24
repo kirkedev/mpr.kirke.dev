@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.14 AS dev
+FROM node:lts-alpine3.17 AS dev
 ENV NODE_ENV development
 ENV MPR_HOST ${MPR_HOST}
 
@@ -12,7 +12,7 @@ RUN yarn workspace api install
 ENTRYPOINT ["yarn", "workspace", "api"]
 CMD ["nodemon"]
 
-FROM node:lts-alpine3.14 AS build
+FROM node:lts-alpine3.17 AS build
 WORKDIR /home/node/mpr
 COPY --from=dev /home/node/mpr ./
 COPY api ./api

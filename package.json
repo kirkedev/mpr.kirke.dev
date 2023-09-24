@@ -1,6 +1,6 @@
 {
     "name": "mpr-dashboard",
-    "version": "0.2.4",
+    "version": "0.3.0",
     "description": "Dashboard and analytics for USDA Mandatory Price Reporting",
     "author": "Andrew Kirkegaard",
     "license": "ISC",
@@ -18,12 +18,12 @@
         "stop": "docker stack rm mpr"
     },
     "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^5.8.0",
-        "@typescript-eslint/parser": "^5.8.0",
-        "eslint": "^8.5.0",
-        "eslint-plugin-solid": "^0.3.0",
-        "husky": "^7.0.4",
-        "typescript": "^4.5.4"
+        "@typescript-eslint/eslint-plugin": "^6.7.2",
+        "@typescript-eslint/parser": "^6.7.2",
+        "eslint": "^8.50.0",
+        "eslint-plugin-solid": "^0.13.0",
+        "husky": "^8.0.3",
+        "typescript": "^5.2.2"
     },
     "workspaces": [
         "api",
@@ -32,5 +32,6 @@
         "features",
         "test",
         "test/mpr"
-    ]
+    ],
+    "packageManager": "yarn@3.6.3"
 }
