@@ -1,4 +1,4 @@
-import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
+import { Given, Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
 let location: string;
 
@@ -7,7 +7,7 @@ Given("an app", () => {
 });
 
 When("I load the app", () => {
-    cy.visit("/");
+    cy.visit(location);
 });
 
 Then("I see the MPR Dashboard", () => {

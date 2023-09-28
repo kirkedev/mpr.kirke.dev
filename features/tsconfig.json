@@ -3,7 +3,9 @@
     "compilerOptions": {
         "target": "es5",
         "lib": ["es5", "es2015", "dom"],
-        "types": ["cypress"]
+        "types": ["cypress"],
+        "module": "CommonJS",
+        "moduleResolution": "node"
     },
     "include": ["**/*.ts"]
 }

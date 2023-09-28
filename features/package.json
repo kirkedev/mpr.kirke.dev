@@ -1,23 +1,24 @@
 {
     "name": "features",
     "private": true,
+    "type": "commonjs",
     "scripts": {
-        "open": "cypress open --detached --config testFiles='*.feature'",
-        "test": "cypress run --spec all.features"
+        "open": "cypress open --detached",
+        "test": "cypress run"
     },
     "devDependencies": {
-        "@cypress/browserify-preprocessor": "^3.0.2",
-        "@types/cypress-cucumber-preprocessor": "^4.0.2",
-        "@types/resolve": "^1.20.2"
+        "@types/resolve": "^1.20.2",
+        "esbuild": "^0.19.3"
     },
     "dependencies": {
-        "cypress": "^13.2.0",
-        "cypress-cucumber-preprocessor": "^4.3.1",
+        "@badeball/cypress-cucumber-preprocessor": "^18.0.6",
+        "cypress": "^13.3.0",
         "resolve": "^1.22.6",
         "typescript": "^5.2.2"
     },
     "cypress-cucumber-preprocessor": {
-        "nonGlobalStepDefinitions": true,
-        "stepDefinitions": "."
+        "e2e": {
+            "stepDefinitions": "**/*.steps.ts"
+        }
     }
 }
