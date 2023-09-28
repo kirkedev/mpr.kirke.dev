@@ -1,6 +1,6 @@
 import type { FastifyRequest, FastifySchema } from "fastify";
 import { formatDate, getDate } from "lib";
-import DateRangeQuery, { type QueryType } from "lib/DateRangeQuery";
+import DateRangeQuery, { type DateRangeQuery as QueryType } from "lib/DateRangeQuery";
 import Repository from "lib/Repository";
 import type Purchase from "lib/purchases";
 import type { PurchaseRecord } from "lib/purchases/mpr";
@@ -8,7 +8,7 @@ import parse from "lib/purchases/parse";
 import PurchaseResponse from "lib/purchases/response";
 import client from "./client";
 
-interface SlaughterQuery {
+interface PurchaseQuery {
     Querystring: QueryType;
 }
 
@@ -28,7 +28,7 @@ const fetch = (start: Date, end: Date): Promise<Purchase[]> =>
 
 const repository = new Repository(fetch);
 
-const getPurchases = ({ query }: FastifyRequest<SlaughterQuery>): Promise<Purchase[]> =>
+const getPurchases = ({ query }: FastifyRequest<PurchaseQuery>): Promise<Purchase[]> =>
     repository.query(getDate(query.start), getDate(query.end));
 
 export default getPurchases;

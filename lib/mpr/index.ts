@@ -39,7 +39,7 @@ function optInt(record: Record<string, Nullable<string>>, key: keyof typeof reco
 
 function optFloat(record: Record<string, Nullable<string>>, key: keyof typeof record): number {
     const value = getOptional(record, key);
-    return value == null ? NaN : getFloat(value);
+    return value == null ? Number.NaN : getFloat(value);
 }
 
 const queryString = (params: Map<string, string>): string =>

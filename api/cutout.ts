@@ -1,7 +1,6 @@
 import type { FastifyRequest, FastifySchema } from "fastify";
 import { formatDate, getDate } from "lib";
-import type { QueryType } from "lib/DateRangeQuery";
-import DateRangeQuery from "lib/DateRangeQuery";
+import DateRangeQuery, { type DateRangeQuery as QueryType } from "lib/DateRangeQuery";
 import Repository from "lib/Repository";
 import type Cutout from "lib/cutout";
 import parse from "lib/cutout/parse";
@@ -21,14 +20,15 @@ const CutoutSchema: FastifySchema = {
 
 const report = client.report(2498);
 
-function fetch(start: Date, end: Date): Promise<Cutout[]> {
+async function fetch(start: Date, end: Date): Promise<Cutout[]> {
     const request = report.between("report_date", formatDate(start), formatDate(end));
 
-    return Promise.all([
+    const [volume, values] = await Promise.all([
         request.section("Current Volume").get(),
         request.section("Cutout and Primal Values").get()
-    ]).then(([volume, values]) =>
-        Array.from(parse(volume, values)));
+    ]);
+
+    return Array.from(parse(volume, values));
 }
 
 const repository = new Repository(fetch);
