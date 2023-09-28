@@ -1,3 +1,4 @@
+import { test, expect } from "vitest";
 import type { ValuesResponse, VolumeResponse } from "lib/cutout/mpr";
 import parse from "lib/cutout/parse";
 import load from "./resources";

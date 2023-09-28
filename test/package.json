@@ -2,25 +2,24 @@
     "name": "test",
     "version": "0.3.0",
     "private": true,
+    "type": "module",
     "scripts": {
-        "lib": "jest --projects lib --watchAll",
-        "api": "jest --projects api --watchAll",
-        "unit": "jest --projects lib",
-        "integration": "jest --projects api",
-        "all": "jest --projects lib api --collectCoverageFrom='{api,lib}/**/*.ts'",
-        "watch": "jest --projects lib api --watchAll --collectCoverageFrom='{api,lib}/**/*.ts'",
-        "server": "node --es-module-specifier-resolution=node --loader ts-node/esm mpr"
+        "lib": "vitest --config lib/vitest.config.ts",
+        "api": "vitest --config api/vitest.config.ts",
+        "unit": "vitest run --config lib/vitest.config.ts --coverage",
+        "integration": "vitest run --config api/vitest.config.ts --coverage",
+        "all": "vitest run --coverage",
+        "watch": "vitest"
     },
     "devDependencies": {
         "@types/command-line-args": "^5.2.1",
-        "@types/jest": "^29.5.5",
         "@types/node": "^20.6.4",
-        "@types/resolve": "^1.20.2"
+        "@types/resolve": "^1.20.2",
+        "@vitest/coverage-istanbul": "^0.34.5"
     },
     "dependencies": {
-        "jest": "^29.7.0",
         "lib": "workspace:*",
-        "ts-jest": "^29.1.1",
-        "typescript": "^5.2.2"
+        "typescript": "^5.2.2",
+        "vitest": "^0.34.5"
     }
 }

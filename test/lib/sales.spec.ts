@@ -1,3 +1,4 @@
+import { describe, test, expect } from "vitest";
 import type { SalesResponse } from "lib/sales/mpr";
 import parse, { Cut } from "lib/sales/parse";
 import load from "./resources";
@@ -64,8 +65,8 @@ describe("parse weekly meat sales", () => {
         expect(record.type).toBe(Cut.Belly);
         expect(record.description).toBe("Derind Belly 7-9#");
         expect(record.weight).toBe(0);
-        expect(record.avgPrice).toBeNaN();
         expect(record.lowPrice).toBeNaN();
+        expect(record.avgPrice).toBeNaN();
         expect(record.highPrice).toBeNaN();
     });
 
