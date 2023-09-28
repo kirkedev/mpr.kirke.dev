@@ -1,15 +1,23 @@
 version: "3.9"
 
 services:
+  mpr:
+    build:
+      dockerfile: test/mpr/Dockerfile
+
   api:
     build:
       dockerfile: api/Dockerfile
       target: dev
+    environment:
+      MPR_URL: http://mpr:3000
     ports:
       - "9229:9229"
     volumes:
       - ./api:/home/node/mpr/api:ro
       - ./lib:/home/node/mpr/lib:ro
+    depends_on:
+      - mpr
 
   app:
     build:
