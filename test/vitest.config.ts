@@ -6,6 +6,7 @@ export default defineConfig({
         coverage: {
             all: true,
             provider: "istanbul"
-        }
+        },
+        silent: true
     }
 });
