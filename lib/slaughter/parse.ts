@@ -2,8 +2,8 @@ import type { PurchaseType } from "../PurchaseType";
 import { Arrangement, Basis, Seller } from "../PurchaseType";
 import { getDate, optFloat, optInt } from "../mpr";
 import map from "../itertools/map";
-import type Slaughter from ".";
 import type { BarrowsGilts, BarrowsGiltsRecord } from "./mpr";
+import type Slaughter from ".";
 
 const PurchaseTypes: Record<string, PurchaseType> = {
     "Prod. Sold Negotiated": [Seller.Producer, Arrangement.Negotiated, Basis.All],
@@ -16,7 +16,7 @@ const PurchaseTypes: Record<string, PurchaseType> = {
     "Packer Owned": [Seller.Packer, Arrangement.PackerOwned, Basis.All]
 };
 
-function parse(record: BarrowsGiltsRecord): Slaughter {
+function parseRecord(record: BarrowsGiltsRecord): Slaughter {
     const [seller, arrangement, basis] = PurchaseTypes[record.purchase_type];
 
     return {
@@ -36,7 +36,7 @@ function parse(record: BarrowsGiltsRecord): Slaughter {
     };
 }
 
-const parseResponse = (response: BarrowsGilts): Iterable<Slaughter> =>
-    map(response.results, parse);
+const parse = (response: BarrowsGilts): Iterable<Slaughter> =>
+    map(response.results, parseRecord);
 
-export default parseResponse;
+export default parse;

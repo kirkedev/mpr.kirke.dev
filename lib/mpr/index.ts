@@ -1,5 +1,5 @@
 import parseDate from "date-fns/parse";
-import type { Nullable } from "..";
+import type { Nullable, Optional } from "..";
 import map from "../itertools/map";
 
 interface MprResponse<Section extends string, T extends Record<string, Nullable<string>>> {
@@ -21,9 +21,9 @@ const getDate = (date: string): Date =>
 const stripCommas = (value: string): string =>
     value.replace(",", "");
 
-function getOptional(record: Record<string, Nullable<string>>, key: keyof typeof record): Nullable<string> {
+function getOptional(record: Record<string, Nullable<string>>, key: keyof typeof record): Optional<string> {
     const value = record[key];
-    return value === "" ? null : value;
+    return value === "" || value === null ? undefined : value;
 }
 
 const getInt = (value: string): number =>
@@ -37,9 +37,9 @@ function optInt(record: Record<string, Nullable<string>>, key: keyof typeof reco
     return value == null ? 0 : getInt(value);
 }
 
-function optFloat(record: Record<string, Nullable<string>>, key: keyof typeof record): number {
+function optFloat(record: Record<string, Nullable<string>>, key: keyof typeof record): Nullable<number> {
     const value = getOptional(record, key);
-    return value == null ? Number.NaN : getFloat(value);
+    return value == null ? null : getFloat(value);
 }
 
 const queryString = (params: Map<string, string>): string =>

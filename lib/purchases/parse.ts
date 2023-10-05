@@ -17,7 +17,7 @@ const PurchaseTypes: Record<string, PurchaseType> = {
     "Combined Negotiated/Negotiated Formula (live basis)": [Seller.All, Arrangement.AllNegotiated, Basis.Live]
 };
 
-function parse(record: PurchaseRecord): Purchase {
+function parseRecord(record: PurchaseRecord): Purchase {
     const [seller, arrangement, basis] = PurchaseTypes[record.purchase_type];
 
     return {
@@ -33,7 +33,7 @@ function parse(record: PurchaseRecord): Purchase {
     };
 }
 
-const parseResponse = (response: Purchases): Iterable<Purchase> =>
-    map(response.results, parse);
+const parse = (response: Purchases): Iterable<Purchase> =>
+    map(response.results, parseRecord);
 
-export default parseResponse;
+export default parse;

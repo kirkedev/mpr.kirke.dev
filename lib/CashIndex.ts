@@ -9,10 +9,22 @@ import map from "./itertools/map";
 import rolling from "./itertools/rolling";
 import type Slaughter from "./slaughter";
 
-const weight = (slaughter: Slaughter): number =>
+interface CashIndex extends Observation {
+    dailyPrice: number;
+    indexPrice: number;
+}
+
+interface Input extends Observation {
+    arrangement: Arrangement.Negotiated | Arrangement.MarketFormula | Arrangement.NegotiatedFormula;
+    headCount: number;
+    carcassWeight: number;
+    netPrice: number;
+}
+
+const weight = (slaughter: Input): number =>
     slaughter.headCount * slaughter.carcassWeight;
 
-const value = (slaughter: Slaughter): number =>
+const value = (slaughter: Input): number =>
     slaughter.netPrice * weight(slaughter);
 
 const avgPrice = (value: number, weight: number): number =>
@@ -20,14 +32,9 @@ const avgPrice = (value: number, weight: number): number =>
 
 const arrangements = [Arrangement.Negotiated, Arrangement.MarketFormula, Arrangement.NegotiatedFormula];
 
-const filterSlaughter = (slaughter: Iterable<Slaughter>): Iterable<Slaughter> =>
+const filterSlaughter = (slaughter: Iterable<Slaughter>): Iterable<Input> =>
     filter(slaughter, ({ netPrice, carcassWeight, arrangement }) =>
-        !Number.isNaN(netPrice) && !Number.isNaN(carcassWeight) && arrangements.includes(arrangement));
-
-interface CashIndex extends Observation {
-    dailyPrice: number;
-    indexPrice: number;
-}
+        netPrice != null && carcassWeight != null && arrangements.includes(arrangement)) as Iterable<Input>;
 
 function cashIndex(records: Iterable<Slaughter>): Iterable<CashIndex> {
     const slaughter = Observation.sort(Array.from(filterSlaughter(records)));

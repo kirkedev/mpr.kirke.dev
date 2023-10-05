@@ -9,9 +9,9 @@ const PurchaseResponse = Type.Array(Type.Object({
     arrangement: Type.Enum(Arrangement),
     basis: Type.Enum(Basis),
     headCount: Type.Integer({ minimum: 0 }),
-    avgPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()]),
-    lowPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()]),
-    highPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()])
+    avgPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()], { default: null }),
+    lowPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()], { default: null }),
+    highPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()], { default: null })
 }));
 
 export default PurchaseResponse;

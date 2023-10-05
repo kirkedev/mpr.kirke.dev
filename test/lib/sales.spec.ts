@@ -13,9 +13,9 @@ describe("parse daily meat sales", () => {
         expect(record.type).toBe(Cut.Belly);
         expect(record.description).toBe("Derind Belly 7-9#");
         expect(record.weight).toBe(0);
-        expect(record.avgPrice).toBeNaN();
-        expect(record.lowPrice).toBeNaN();
-        expect(record.highPrice).toBeNaN();
+        expect(record.avgPrice).toBeNull();
+        expect(record.lowPrice).toBeNull();
+        expect(record.highPrice).toBeNull();
     });
 
     test("parse Derind Belly 9-13#", () => {
@@ -49,9 +49,9 @@ describe("parse daily meat sales", () => {
         expect(record.type).toBe(Cut.Belly);
         expect(record.description).toBe("Derind Belly 17-19#");
         expect(record.weight).toBe(0);
-        expect(record.avgPrice).toBeNaN();
-        expect(record.lowPrice).toBeNaN();
-        expect(record.highPrice).toBeNaN();
+        expect(record.avgPrice).toBeNull();
+        expect(record.lowPrice).toBeNull();
+        expect(record.highPrice).toBeNull();
     });
 });
 
@@ -65,9 +65,9 @@ describe("parse weekly meat sales", () => {
         expect(record.type).toBe(Cut.Belly);
         expect(record.description).toBe("Derind Belly 7-9#");
         expect(record.weight).toBe(0);
-        expect(record.lowPrice).toBeNaN();
-        expect(record.avgPrice).toBeNaN();
-        expect(record.highPrice).toBeNaN();
+        expect(record.lowPrice).toBeNull();
+        expect(record.avgPrice).toBeNull();
+        expect(record.highPrice).toBeNull();
     });
 
     test("parse Derind Belly 9-13#", () => {
@@ -101,8 +101,8 @@ describe("parse weekly meat sales", () => {
         expect(record.type).toBe(Cut.Belly);
         expect(record.description).toBe("Derind Belly 17-19#");
         expect(record.weight).toBe(0);
-        expect(record.avgPrice).toBeNaN();
-        expect(record.lowPrice).toBeNaN();
-        expect(record.highPrice).toBeNaN();
+        expect(record.avgPrice).toBeNull();
+        expect(record.lowPrice).toBeNull();
+        expect(record.highPrice).toBeNull();
     });
 });

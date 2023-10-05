@@ -20,7 +20,7 @@ describe("get an optional float value from a record", () => {
     });
 
     test("key is not present", () => {
-        expect(optFloat({ }, "key")).toBeNaN();
+        expect(optFloat({ }, "key")).toBeNull();
     });
 });
 

@@ -9,13 +9,13 @@ const SlaughterResponse = Type.Array(Type.Object({
     arrangement: Type.Enum(Arrangement),
     basis: Type.Enum(Basis),
     headCount: Type.Integer({ minimum: 0 }),
-    carcassWeight: Type.Union([Type.Number({ minimum: 0 }), Type.Null()]),
-    liveWeight: Type.Union([Type.Number({ minimum: 0 }), Type.Null()]),
-    basePrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()]),
-    netPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()]),
-    lowPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()]),
-    highPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()]),
-    leanPercent: Type.Union([Type.Number({ minimum: 0 }), Type.Null()])
+    carcassWeight: Type.Union([Type.Number({ minimum: 0 }), Type.Null()], { default: null }),
+    liveWeight: Type.Union([Type.Number({ minimum: 0 }), Type.Null()], { default: null }),
+    basePrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()], { default: null }),
+    netPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()], { default: null }),
+    lowPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()], { default: null }),
+    highPrice: Type.Union([Type.Number({ minimum: 0 }), Type.Null()], { default: null }),
+    leanPercent: Type.Union([Type.Number({ minimum: 0 }), Type.Null()], { default: null })
 }));
 
 export default SlaughterResponse;

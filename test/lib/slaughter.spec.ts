@@ -83,13 +83,13 @@ describe("parse daily slaughter records", () => {
         expect(record.arrangement).toBe(Arrangement.NegotiatedFormula);
         expect(record.basis).toBe(Basis.All);
         expect(record.headCount).toBe(846);
-        expect(record.basePrice).toBeNaN();
-        expect(record.netPrice).toBeNaN();
-        expect(record.lowPrice).toBeNaN();
-        expect(record.highPrice).toBeNaN();
-        expect(record.liveWeight).toBeNaN();
-        expect(record.carcassWeight).toBeNaN();
-        expect(record.leanPercent).toBeNaN();
+        expect(record.basePrice).toBeNull();
+        expect(record.netPrice).toBeNull();
+        expect(record.lowPrice).toBeNull();
+        expect(record.highPrice).toBeNull();
+        expect(record.liveWeight).toBeNull();
+        expect(record.carcassWeight).toBeNull();
+        expect(record.leanPercent).toBeNull();
     });
 
     test("All producer sold", () => {
@@ -134,10 +134,10 @@ describe("parse daily slaughter records", () => {
         expect(record.arrangement).toBe(Arrangement.PackerOwned);
         expect(record.basis).toBe(Basis.All);
         expect(record.headCount).toBe(168_042);
-        expect(record.basePrice).toBeNaN();
-        expect(record.netPrice).toBeNaN();
-        expect(record.lowPrice).toBeNaN();
-        expect(record.highPrice).toBeNaN();
+        expect(record.basePrice).toBeNull();
+        expect(record.netPrice).toBeNull();
+        expect(record.lowPrice).toBeNull();
+        expect(record.highPrice).toBeNull();
         expect(record.liveWeight).toBeCloseTo(286.44);
         expect(record.carcassWeight).toBeCloseTo(216.97);
         expect(record.leanPercent).toBeCloseTo(54.40);

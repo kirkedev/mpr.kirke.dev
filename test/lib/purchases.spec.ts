@@ -28,9 +28,9 @@ describe("Parse prior day purchase records", () => {
         expect(record.arrangement).toBe(Arrangement.NegotiatedFormula);
         expect(record.basis).toBe(Basis.Carcass);
         expect(record.headCount).toBe(0);
-        expect(record.avgPrice).toBeNaN();
-        expect(record.lowPrice).toBeNaN();
-        expect(record.highPrice).toBeNaN();
+        expect(record.avgPrice).toBeNull();
+        expect(record.lowPrice).toBeNull();
+        expect(record.highPrice).toBeNull();
     });
 
     test("All negotiated, carcass basis", () => {
@@ -41,9 +41,9 @@ describe("Parse prior day purchase records", () => {
         expect(record.arrangement).toBe(Arrangement.AllNegotiated);
         expect(record.basis).toBe(Basis.Carcass);
         expect(record.headCount).toBe(0);
-        expect(record.avgPrice).toBeNaN();
-        expect(record.lowPrice).toBeNaN();
-        expect(record.highPrice).toBeNaN();
+        expect(record.avgPrice).toBeNull();
+        expect(record.lowPrice).toBeNull();
+        expect(record.highPrice).toBeNull();
     });
 
     test("Other market formula, carcass basis", () => {
@@ -106,9 +106,9 @@ describe("Parse prior day purchase records", () => {
         expect(record.arrangement).toBe(Arrangement.NegotiatedFormula);
         expect(record.basis).toBe(Basis.Live);
         expect(record.headCount).toBe(0);
-        expect(record.avgPrice).toBeNaN();
-        expect(record.lowPrice).toBeNaN();
-        expect(record.highPrice).toBeNaN();
+        expect(record.avgPrice).toBeNull();
+        expect(record.lowPrice).toBeNull();
+        expect(record.highPrice).toBeNull();
     });
 
     test("Combined Negotiated / Negotiated formula, live basis", () => {
@@ -119,8 +119,8 @@ describe("Parse prior day purchase records", () => {
         expect(record.arrangement).toBe(Arrangement.AllNegotiated);
         expect(record.basis).toBe(Basis.Live);
         expect(record.headCount).toBe(0);
-        expect(record.avgPrice).toBeNaN();
-        expect(record.lowPrice).toBeNaN();
-        expect(record.highPrice).toBeNaN();
+        expect(record.avgPrice).toBeNull();
+        expect(record.lowPrice).toBeNull();
+        expect(record.highPrice).toBeNull();
     });
 });
