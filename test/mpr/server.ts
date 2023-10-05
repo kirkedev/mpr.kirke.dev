@@ -8,6 +8,8 @@ import map from "lib/itertools/map";
 import { reduce } from "lib/itertools/accumulate";
 import type { MprResponse } from "lib/mpr";
 
+const root = process.cwd().endsWith("mpr") ? "." : "./mpr";
+
 async function merge<Section extends string, T extends Record<string, string>>(...files: string[]): Promise<MprResponse<Section, T>> {
     const contents = await Promise.all(files.map(file =>
         readFile(file, "utf8")
@@ -39,7 +41,7 @@ function listener(request: IncomingMessage, response: ServerResponse): void {
 
     const [start, end] = date.split(":").map(getDate);
     const route = decodeURIComponent(pathname.slice(pathname.indexOf("reports")));
-    const files = map(Week.with(start, end), week => resolve(route, `${week}.json`));
+    const files = map(Week.with(start, end), week => resolve(root, route, `${week}.json`));
 
     merge(...Array.from(files)).then(result => {
         response.writeHead(200, { "Content-Type": "application/json" });
