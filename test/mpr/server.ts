@@ -39,7 +39,7 @@ function listener(request: IncomingMessage, response: ServerResponse): void {
 
     const [start, end] = date.split(":").map(getDate);
     const route = decodeURIComponent(pathname.slice(pathname.indexOf("reports")));
-    const files = map(Week.with(start, end), week => resolve("mpr", route, `${week}.json`));
+    const files = map(Week.with(start, end), week => resolve(route, `${week}.json`));
 
     merge(...Array.from(files)).then(result => {
         response.writeHead(200, { "Content-Type": "application/json" });
