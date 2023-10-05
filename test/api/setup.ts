@@ -9,7 +9,8 @@ export default async function(): Promise<Callback<void>> {
     if (!process.cwd().endsWith("mpr")) process.chdir("./mpr");
     const mpr = await server(3001);
 
-    return function() {
-        mpr.close();
+    return async function() {
+        mpr.closeAllConnections();
+        await new Promise(resolve => mpr.close(resolve));
     };
 }

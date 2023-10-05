@@ -1,15 +1,16 @@
-import baseConfig from "../vitest.config";
-import { mergeConfig } from "vitest/config";
+import { defineConfig } from "vitest/config";
 
-export default mergeConfig(baseConfig, {
+export default defineConfig({
     test: {
+        root: "..",
         include: ["test/api/**/*.spec.ts"],
         cache: {
             dir: "../node_modules/.vitest/api"
         },
-        silent: true,
         globalSetup: "api/setup.ts",
         coverage: {
+            all: true,
+            provider: "istanbul",
             include: ["api/**/*.ts"],
             reportsDirectory: "test/api/coverage"
         }

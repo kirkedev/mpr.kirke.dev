@@ -8,8 +8,8 @@
         "api": "vitest --config api/vitest.config.ts",
         "unit": "vitest run --config lib/vitest.config.ts --coverage",
         "integration": "vitest run --config api/vitest.config.ts --coverage",
-        "all": "vitest run --coverage",
-        "watch": "vitest"
+        "all": "vitest run --coverage --threads false",
+        "watch": "vitest --coverage --threads false"
     },
     "devDependencies": {
         "@types/command-line-args": "^5.2.1",

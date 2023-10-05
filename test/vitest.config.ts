@@ -5,8 +5,8 @@ export default defineConfig({
         root: "..",
         coverage: {
             all: true,
-            provider: "istanbul"
-        },
-        silent: true
+            provider: "istanbul",
+            include: ["{api,lib}/**/*.ts"]
+        }
     }
 });
