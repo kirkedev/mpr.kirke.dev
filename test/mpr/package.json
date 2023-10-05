@@ -4,8 +4,7 @@
     "type": "module",
     "main": "index.ts",
     "scripts": {
-        "start": "node --es-module-specifier-resolution=node --loader ts-node/esm .",
-        "ingest": "node --es-module-specifier-resolution=node --loader ts-node/esm ingest.ts"
+        "start": "node --es-module-specifier-resolution=node --loader ts-node/esm ."
     },
     "dependencies": {
         "command-line-args": "^5.2.1",
