@@ -4,7 +4,7 @@ import getCutout, { CutoutSchema } from "./cutout";
 import getSlaughter, { SlaughterSchema } from "./slaughter";
 import getPurchases, { PurchaseSchema } from "./purchases";
 
-const api = fastify({ logger: process.env.NODE_ENV !== "test" })
+const api = fastify({ logger: true })
     .get("/health", getHealth)
     .get("/cutout", { schema: CutoutSchema }, getCutout)
     .get("/slaughter", { schema: SlaughterSchema }, getSlaughter)

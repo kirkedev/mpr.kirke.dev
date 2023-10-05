@@ -7,6 +7,7 @@ export default mergeConfig(baseConfig, {
         cache: {
             dir: "../node_modules/.vitest/api"
         },
+        silent: true,
         globalSetup: "api/setup.ts",
         coverage: {
             include: ["api/**/*.ts"],
