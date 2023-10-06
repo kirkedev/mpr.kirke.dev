@@ -13,8 +13,8 @@ interface Props {
 }
 
 const series = (purchases: Purchase[]): Data[][] => [
-    purchases.filter(record => record.arrangement === Arrangement.MarketFormula && !Number.isNaN(record.avgPrice))
-        .map(record => ({ date: record.date, reportDate: record.reportDate, value: record.avgPrice }))
+    purchases.filter(record => record.arrangement === Arrangement.MarketFormula && record.avgPrice != null)
+        .map(record => ({ date: record.date, reportDate: record.reportDate, value: record.avgPrice })) as Data[]
 ];
 
 const labels = ["Formula", "Negotiated"];
@@ -27,7 +27,7 @@ function Purchases(props: Props): JSXElement {
 
     createEffect(() => setDate(end()));
 
-    return <div id="purchases" class={styles.purchases} on:selectDate={({ detail: date }) => setDate(date)}>
+    return <div class={styles.purchases} on:selectDate={({ detail: date }) => setDate(date)}>
         <div class={styles.stats}>
             <Index each={stats()}>
                 { (stat, index) =>

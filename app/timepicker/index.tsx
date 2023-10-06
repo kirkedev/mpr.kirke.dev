@@ -12,14 +12,14 @@ interface Props {
 }
 
 function TimePicker(props: Props): JSXElement {
-    return <div id="timepicker">
+    return <>
         <div class={styles.period}>
             <PeriodSelector selected={props.period} />
         </div>
         <div class={styles.datepicker}>
             <DateSlider start={props.start} end={props.end} date={props.date} />
         </div>
-    </div>;
+    </>;
 }
 
 export default TimePicker;

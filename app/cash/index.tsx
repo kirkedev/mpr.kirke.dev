@@ -23,7 +23,7 @@ function Cash(props: Props): JSXElement {
 
     createEffect(() => setDate(end()));
 
-    return <div id="cash" class={styles.cash} on:selectDate={({ detail: date }) => setDate(date)}>
+    return <div class={styles.cash} on:selectDate={({ detail: date }) => setDate(date)}>
         <div class={styles.stats}>
             <h2>Cash Index</h2>
 
