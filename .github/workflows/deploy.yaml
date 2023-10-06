@@ -42,6 +42,20 @@ jobs:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
           TAG: ${{ github.ref_name }}
 
+      - name: Init docker swarm
+        run: docker swarm init
+
+      - name: Start app
+        run: yarn start
+
+      - name: Run smoke tests
+        env:
+          CYPRESS_BASE_URL: http://localhost
+        run: yarn workspace test smoke
+
+      - name: Stop app
+        run: yarn stop
+
       - name: Publish images to Amazon ECR
         run: |
           docker push $ECR_REGISTRY/mpr-api:$TAG

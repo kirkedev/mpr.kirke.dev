@@ -24,16 +24,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build docker images
-        run: yarn build
-
-      - name: Init docker swarm
-        run: docker swarm init
-
       - name: Start app
-        run: yarn start
+        run: yarn dev -d
 
       - name: Run acceptance tests
-        env:
-          CYPRESS_BASE_URL: http://localhost
-        run: yarn workspace test features
+        run: yarn workspace test e2e

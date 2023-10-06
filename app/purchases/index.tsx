@@ -27,7 +27,7 @@ function Purchases(props: Props): JSXElement {
 
     createEffect(() => setDate(end()));
 
-    return <div class={styles.purchases} on:selectDate={({ detail: date }) => setDate(date)}>
+    return <div id="purchases" class={styles.purchases} on:selectDate={({ detail: date }) => setDate(date)}>
         <div class={styles.stats}>
             <Index each={stats()}>
                 { (stat, index) =>
