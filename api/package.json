@@ -6,8 +6,7 @@
     "private": true,
     "scripts": {
         "dev": "node --es-module-specifier-resolution=node --loader ts-node/esm --inspect=0.0.0.0 index.ts",
-        "build": "docker build .. -f Dockerfile -t ${ECR_REGISTRY:-kirkedev}/mpr-api:$TAG",
-        "healthy": "node healthcheck"
+        "build": "docker build .. -f Dockerfile -t ${ECR_REGISTRY:-kirkedev}/mpr-api:$TAG"
     },
     "dependencies": {
         "dotenv": "^16.3.1",
