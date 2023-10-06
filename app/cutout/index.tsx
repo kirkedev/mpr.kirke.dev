@@ -26,7 +26,7 @@ function Cutout(props: Props): JSXElement {
 
     createEffect(() => setDate(end()));
 
-    return <div class={styles.cutout} on:selectDate={({ detail: date }) => setDate(date)}>
+    return <div id="cutout" class={styles.cutout} on:selectDate={({ detail: date }) => setDate(date)}>
         <div class={styles.stats}>
             <Index each={stats()}>
                 { (stat, index) =>

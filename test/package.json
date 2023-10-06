@@ -6,8 +6,9 @@
     "scripts": {
         "lib": "vitest --config lib/vitest.config.ts",
         "api": "vitest --config api/vitest.config.ts",
-        "cypress": "cypress open --detached --config-file features/cypress.config.ts",
-        "features": "cypress run --config-file features/cypress.config.ts",
+        "cypress": "cypress open --detached",
+        "smoke": "cypress run --config-file smoke/cypress.config.ts",
+        "e2e": "cypress run --config-file cypress.config.ts",
         "components": "cypress run --config-file components/cypress.config.ts",
         "unit": "vitest run --config lib/vitest.config.ts --coverage",
         "integration": "vitest run --config api/vitest.config.ts --coverage",
@@ -16,6 +17,7 @@
     },
     "devDependencies": {
         "@types/command-line-args": "^5.2.1",
+        "@types/cypress": "^1.1.3",
         "@types/node": "^20.8.2",
         "@types/resolve": "^1.20.3"
     },
@@ -31,7 +33,7 @@
     },
     "cypress-cucumber-preprocessor": {
         "e2e": {
-            "stepDefinitions": "features/**/*.spec.ts"
+            "stepDefinitions": "{smoke,features}/**/*.spec.ts"
         }
     }
 }
