@@ -37,7 +37,7 @@ function Primal(props: Props): JSXElement {
                 { (stat, index) =>
                     <div class={styles.stat}
                         classList={{ "active": selected() === index }}
-                        onclick={() => setSelected(index)}>
+                        onClick={() => setSelected(index)}>
 
                         <h5 class={styles.label}>
                             {labels[index]}

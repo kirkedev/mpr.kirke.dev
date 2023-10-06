@@ -69,7 +69,7 @@ function LineChart(props: Props): JSXElement {
 
     const mask = Math.random().toString(32).substring(2, 7) + Math.random().toString(32).substring(2, 7);
 
-    return <div class="chart" onpointermove={selectDate} onpointerleave={resetDate}>
+    return <div class="chart" onPointerMove={selectDate} onPointerLeave={resetDate}>
         <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
             <defs>
                 <mask id={mask}>
