@@ -4,9 +4,6 @@
         "target": "es5",
         "lib": ["es5", "es2015", "dom"],
         "types": ["cypress", "node"],
-        "esModuleInterop": true,
-        "module": "Node16",
-        "moduleResolution": "node16",
         "sourceMap": false
     },
     "include": ["**/*.ts"]

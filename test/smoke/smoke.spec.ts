@@ -1,28 +1,29 @@
-describe("The app loads", function() {
-    beforeEach(() => cy.visit("/"));
+import "@testing-library/cypress/add-commands";
 
-    it("should show the title", () => {
-        cy.title().should("eq", "Mpr Dashboard");
-    });
+it("loads data from the api and renders charts and stats", function() {
+    const value = /\d{2,3}\.\d{2}/;
 
-    it("should display the app", () => {
-        cy.get("#app").its("length").should("eq", 1);
-    });
+    // Page load
+    cy.visit("/");
+    cy.title().should("eq", "Mpr Dashboard");
+    cy.get("#app").should("exist");
 
-    it("should display the cash index chart", () => {
-        cy.get("#cash path.series").invoke("attr", "d").its("length").should("greaterThan", 0);
-    });
+    // Stats
+    cy.findByText("Cash Index").siblings().contains(value).should("exist");
+    cy.findByText("Cutout").siblings().contains(value).should("exist");
+    cy.findByText("Index").siblings().contains(value).should("exist");
+    cy.findByText("Formula").siblings().contains(value).should("exist");
+    cy.findByText("Belly").siblings().contains(value).should("exist");
+    cy.findByText("Ham").siblings().contains(value).should("exist");
+    cy.findByText("Loin").siblings().contains(value).should("exist");
+    cy.findByText("Butt").siblings().contains(value).should("exist");
+    cy.findByText("Rib").siblings().contains(value).should("exist");
+    cy.findByText("Picnic").siblings().contains(value).should("exist");
 
-    it("should display the cutout chart", () => {
-        cy.get("#cutout path.series").first().invoke("attr", "d").its("length").should("greaterThan", 0);
-        cy.get("#cutout path.series").last().invoke("attr", "d").its("length").should("greaterThan", 0);
-    });
-
-    it("should display the purchases chart", () => {
-        cy.get("#purchases path.series").invoke("attr", "d").its("length").should("greaterThan", 0);
-    });
-
-    it("should display the primals chart", () => {
-        cy.get("#primals path.series").invoke("attr", "d").its("length").should("greaterThan", 0);
-    });
+    // Charts
+    cy.get("div[class*=cash] path.series").invoke("attr", "d").its("length").should("be.greaterThan", 100);
+    cy.get("div[class*=cutout] path.series").first().invoke("attr", "d").its("length").should("be.greaterThan", 100);
+    cy.get("div[class*=cutout] path.series").last().invoke("attr", "d").its("length").should("be.greaterThan", 100);
+    cy.get("div[class*=purchases] path.series").invoke("attr", "d").its("length").should("be.greaterThan", 100);
+    cy.get("div[class*=primal] path.series").invoke("attr", "d").its("length").should("be.greaterThan", 100);
 });
