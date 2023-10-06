@@ -27,6 +27,9 @@ jobs:
       - name: Build docker images
         run: yarn build
 
+      - name: Init docker swarm
+        run: docker swarm init
+
       - name: Start app
         run: yarn start
 
