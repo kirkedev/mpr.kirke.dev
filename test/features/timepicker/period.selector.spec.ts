@@ -5,15 +5,15 @@ Given("I'm on the app", () => {
     cy.title().should("eq", "Mpr Dashboard");
 });
 
-Given(/the (.*) button is not selected/, (button: string) => {
+Given(/^the (.*) button is not selected$/, (button: string) => {
     cy.get("#timepicker").find("span").not(`:contains(${button})`).first().click();
 });
 
-When(/I click the (.*) button/, (button: string) => {
+When(/^I click the (.*) button$/, (button: string) => {
     cy.get("#timepicker").contains("span", button).click();
 });
 
-Then(/(.*) is highlighted/, (button: string) => {
+Then(/^(.*) is highlighted$/, (button: string) => {
     cy.get("#timepicker").find("span[class*=active]").contains(button).should("exist");
 });
 
