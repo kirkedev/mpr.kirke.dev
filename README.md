@@ -1,5 +1,5 @@
 MPR Dashboard
---------------
+-------------
 
 ### About
 This repository hosts the code for a [dashboard of daily hog and pork prices](https://mpr.kirke.dev) based on historical 
@@ -16,7 +16,6 @@ showcasing what I believe to be best practices in web development.
 It's a dockerized typescript monorepo with clean architecture, thorough testing, and CI/CD.
 
 ### Project Setup
-
 The only system dependencies are [node.js](https://nodejs.org/en/download/current) with [yarn](https://yarnpkg.com/getting-started/install) and [docker with docker-compose](https://docs.docker.com/desktop/).
 
 ```bash
@@ -28,16 +27,16 @@ The only system dependencies are [node.js](https://nodejs.org/en/download/curren
 
 Start the app in dev mode. The app will be hosted at http://localhost:3000 and a debugger is available on port `9229`.
 ```bash
-    yarn dev     
+    yarn dev   
 ```
 
 Start the app in production mode. The app will be hosted at http://localhost. Run `yarn stop` to shut it down.
 ```bash
-    yarn build && yarn start 
+    yarn build && yarn start
 ```
 
 ### Testing
-Tests reside in the [test workspace](test/). 
+Tests reside in the [test workspace](test).
 
 Run unit and integration tests. Does not require app to be running. 
 ```bash
@@ -65,10 +64,10 @@ yarn workspace test smoke
 ```
 
 ### Workflows
-Add githooks with `yarn prepare`. 
+Add githooks with `yarn prepare`.
 This will run lint on your code before committing and unit and integration tests before pushing to GitHub.
 
-Additionally: 
+Additionally:
 * [Unit and Integration Tests](.github/workflows/test.yaml) run as a pull request check.
 * [Acceptance Tests](.github/workflows/acceptance.yaml) also run as a pull request check.
 * [Deploy](.github/workflows/deploy.yaml) runs when a new version tag is created. The docker images are built, smoke tested, pushed to Amazon ECR, and deployed to production.
