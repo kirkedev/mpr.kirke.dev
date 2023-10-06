@@ -6292,7 +6292,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "mpr-dashboard@workspace:."
   dependencies:
-    "@bahmutov/cypress-esbuild-preprocessor": ^2.2.0
     "@typescript-eslint/eslint-plugin": ^6.7.4
     "@typescript-eslint/parser": ^6.7.4
     eslint: ^8.50.0
@@ -7956,6 +7955,7 @@ __metadata:
   resolution: "test@workspace:test"
   dependencies:
     "@badeball/cypress-cucumber-preprocessor": ^18.0.6
+    "@bahmutov/cypress-esbuild-preprocessor": ^2.2.0
     "@types/command-line-args": ^5.2.1
     "@types/node": ^20.8.2
     "@types/resolve": ^1.20.3
