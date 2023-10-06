@@ -9,11 +9,10 @@
         "prepare": "husky install .githooks",
         "lint": "eslint . --ext .ts,.tsx",
         "fix": "yarn lint --fix",
-        "predev": "docker compose down --remove-orphans",
-        "dev": "TAG=$(git describe --tags --match 'v*' --dirty --always); yarn predev && docker compose up --build",
+        "stop": "TAG=$(git describe --tags --match 'v*' --dirty --always); docker compose down --remove-orphans",
+        "dev": "TAG=$(git describe --tags --match 'v*' --dirty --always); yarn stop && docker compose up --build",
         "build": "TAG=$(git describe --tags --match 'v*' --dirty --always); yarn workspace api build && yarn workspace app build",
-        "start": "TAG=$(git describe --tags --match 'v*' --dirty --always); docker stack deploy -c docker-compose.yaml mpr",
-        "stop": "docker stack rm mpr"
+        "start": "TAG=$(git describe --tags --match 'v*' --dirty --always); yarn stop && docker compose -f docker-compose.yaml up"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^6.7.4",

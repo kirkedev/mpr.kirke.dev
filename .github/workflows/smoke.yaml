@@ -1,0 +1,35 @@
+name: Smoke Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tests:
+    name: Smoke Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build images
+        run: yarn build
+
+      - name: Start app
+        run: yarn start -d
+
+      - name: Run smoke tests
+        run: yarn workspace test smoke
+
+      - name: Shutdown app
+        if: always()
+        run: yarn stop

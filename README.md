@@ -19,21 +19,26 @@ It's a dockerized typescript monorepo with clean architecture, thorough testing,
 The only system dependencies are [node.js](https://nodejs.org/en/download/current) with [yarn](https://yarnpkg.com/getting-started/install) and [docker with docker-compose](https://docs.docker.com/desktop/).
 
 ```bash
-    git clone git@github.com:kirkedev/mpr-dashboard.git
-    yarn install
-    yarn prepare
+git clone git@github.com:kirkedev/mpr-dashboard.git
+yarn install
+yarn prepare
 ```
-### Commands
 
+### Commands
 Start the app in dev mode. The app will be hosted at http://localhost:3000 and a debugger is available on port `9229`.
 ```bash
-    yarn dev   
+yarn dev   
 ```
 
-Start the app in production mode. The app will be hosted at http://localhost. Run `yarn stop` to shut it down.
+Start the app in production mode. The app will be hosted at http://localhost.
 ```bash
-    yarn build && yarn start
+yarn build && yarn start
 ```
+
+Shut down the app.
+```bash
+yarn stop
+````
 
 ### Testing
 Tests reside in the [test workspace](test).
@@ -41,7 +46,6 @@ Tests reside in the [test workspace](test).
 Run unit and integration tests. Does not require app to be running. 
 ```bash
 yarn workspace test all
-
 ```
 Run end-to-end acceptance tests. App must be running in dev mode.
 ```bash
@@ -70,4 +74,5 @@ This will run lint on your code before committing and unit and integration tests
 Additionally:
 * [Unit and Integration Tests](.github/workflows/test.yaml) run as a pull request check.
 * [Acceptance Tests](.github/workflows/acceptance.yaml) also run as a pull request check.
+* [Smoke Tests](.github/workflows/smoke.yaml) run when merging to main so that main is always production ready.
 * [Deploy](.github/workflows/deploy.yaml) runs when a new version tag is created. The docker images are built, smoke tested, pushed to Amazon ECR, and deployed to production.
