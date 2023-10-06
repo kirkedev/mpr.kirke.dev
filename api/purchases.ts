@@ -3,7 +3,6 @@ import { formatDate, getDate } from "lib";
 import QuerySchema, { type DateRangeQuery } from "lib/DateRangeQuery";
 import Repository from "lib/Repository";
 import type Purchase from "lib/purchases";
-import type { PurchaseRecord } from "lib/purchases/mpr";
 import parse from "lib/purchases/parse";
 import PurchaseResponse from "lib/purchases/response";
 import client from "./client";
@@ -19,7 +18,7 @@ const PurchaseSchema: FastifySchema = {
     }
 };
 
-const report = client.report(3458).section<PurchaseRecord>("National Volume and Price Data");
+const report = client.report(3458).section("National Volume and Price Data");
 
 const fetch = (start: Date, end: Date): Promise<Purchase[]> =>
     report.between("report_date", formatDate(start), formatDate(end))

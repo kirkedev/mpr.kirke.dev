@@ -1,9 +1,9 @@
 import type { Nullable } from "..";
-import type { MprResponse } from "../mpr";
+import type { MprRecord, MprResponse } from "../mpr";
 import type MprReport from "../mpr/MprReport";
 import type MprSection from "../mpr/MprSection";
 
-interface SalesRecord extends Record<string, Nullable<string>> {
+interface SalesRecord extends MprRecord {
     report_date: string;
     Item_Description: string;
     total_pounds: Nullable<string>;

@@ -2,7 +2,9 @@ import parseDate from "date-fns/parse";
 import type { Nullable, Optional } from "..";
 import map from "../itertools/map";
 
-interface MprResponse<Section extends string, T extends Record<string, Nullable<string>>> {
+type MprRecord = Record<string, Nullable<string>>;
+
+interface MprResponse<Section extends string, T extends MprRecord> {
     reportSection: Section;
     stats: {
         returnedRows: number;
@@ -47,4 +49,4 @@ const queryString = (params: Map<string, string>): string =>
 
 export { getDate, getInt, getFloat, optInt, optFloat, queryString };
 
-export type { MprResponse };
+export type { MprRecord, MprResponse };

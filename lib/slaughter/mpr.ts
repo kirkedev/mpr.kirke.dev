@@ -1,8 +1,9 @@
 import type { Nullable } from "..";
-import type { MprResponse } from "../mpr";
+import type { MprRecord, MprResponse } from "../mpr";
 import type MprReport from "../mpr/MprReport";
+import type MprSection from "../mpr/MprSection";
 
-interface BarrowsGiltsRecord extends Record<string, Nullable<string>> {
+interface BarrowsGiltsRecord extends MprRecord {
     for_date_begin: string;
     report_date: string;
     purchase_type: string;
@@ -22,6 +23,9 @@ interface BarrowsGiltsRecord extends Record<string, Nullable<string>> {
 
 type Section = "Barrows/Gilts";
 type BarrowsGilts = MprResponse<Section, BarrowsGiltsRecord>;
-type SlaughterReport = MprReport<Section>;
+
+interface SlaughterReport extends MprReport<Section> {
+    section(section: "Barrows/Gilts"): MprSection<"Barrows/Gilts", BarrowsGiltsRecord>;
+}
 
 export type { SlaughterReport, BarrowsGilts, BarrowsGiltsRecord };
