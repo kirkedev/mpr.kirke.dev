@@ -24,8 +24,13 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Start app
-        run: yarn dev -d
+      - name: Build docker images
+        run: yarn build
 
-      - name: Run accpetance tests
+      - name: Start app
+        run: yarn start
+
+      - name: Run acceptance tests
+        env:
+          CYPRESS_BASE_URL: http://localhost
         run: yarn workspace features test
