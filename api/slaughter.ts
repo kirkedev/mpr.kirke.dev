@@ -3,7 +3,6 @@ import { formatDate, getDate } from "lib";
 import QuerySchema, { type DateRangeQuery } from "lib/DateRangeQuery";
 import Repository from "lib/Repository";
 import type Slaughter from "lib/slaughter";
-import type { BarrowsGiltsRecord } from "lib/slaughter/mpr";
 import parse from "lib/slaughter/parse";
 import SlaughterResponse from "lib/slaughter/response";
 import client from "./client";
@@ -19,7 +18,7 @@ const SlaughterSchema: FastifySchema = {
     }
 };
 
-const report = client.report(2511).section<BarrowsGiltsRecord>("Barrows/Gilts");
+const report = client.report(2511).section("Barrows/Gilts");
 
 const fetch = (start: Date, end: Date): Promise<Slaughter[]> =>
     report.between("report_date", formatDate(start), formatDate(end))
