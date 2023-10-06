@@ -1,12 +1,8 @@
-import axios from "axios";
-import type { Nullable } from "..";
-import type { MprResponse } from ".";
+import type { MprRecord, MprResponse } from ".";
 import { queryString } from ".";
 import MprRequest from "./MprRequest";
 
-class MprSection<Section extends string, T extends Record<string, Nullable<string>>>
-    extends MprRequest<MprResponse<Section, T>> {
-
+class MprSection<Section extends string, T extends MprRecord> extends MprRequest<MprResponse<Section, T>> {
     public constructor(private readonly baseUrl: string, filters?: Map<string, string>, sort?: string) {
         super(filters, sort);
     }
@@ -14,11 +10,6 @@ class MprSection<Section extends string, T extends Record<string, Nullable<strin
     public get url(): string {
         const query = queryString(this.query);
         return query.length === 0 ? this.baseUrl : `${this.baseUrl}?${query}`;
-    }
-
-    public get(): Promise<MprResponse<Section, T>> {
-        return axios.get<MprResponse<Section, T>>(this.url).then(({ data }) =>
-            typeof data === "string" ? Promise.reject(data) : data);
     }
 }
 
