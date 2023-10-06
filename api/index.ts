@@ -11,4 +11,4 @@ import api from "./api";
         api.log.error(error);
         process.exit(1);
     }
-}());
+})();
