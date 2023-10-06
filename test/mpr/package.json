@@ -12,10 +12,7 @@
         "typescript": "^5.2.2"
     },
     "devDependencies": {
-        "@types/node": "^20.6.4",
+        "@types/node": "^20.8.2",
         "lib": "workspace:*"
-    },
-    "engines": {
-        "yarn": "3.6.3"
     }
 }
