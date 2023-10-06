@@ -1,5 +1,4 @@
 import { defineConfig } from "cypress";
-import type Cypress from "cypress";
 import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
 import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
 import { createEsbuildPlugin } from "@badeball/cypress-cucumber-preprocessor/esbuild";

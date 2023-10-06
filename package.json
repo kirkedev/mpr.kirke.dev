@@ -9,8 +9,6 @@
         "prepare": "husky install .githooks",
         "lint": "eslint . --ext .ts,.tsx",
         "fix": "yarn lint --fix",
-        "pretest": "docker-compose --file docker-compose.test.yaml down --remove-orphans && docker-compose --file docker-compose.test.yaml build",
-        "test": "yarn pretest && docker-compose --file docker-compose.test.yaml run --rm sut",
         "predev": "docker compose down --remove-orphans",
         "dev": "TAG=$(git describe --tags --dirty --always); yarn predev && docker compose up --build",
         "build": "TAG=$(git describe --tags --dirty --always); yarn workspace api build && yarn workspace app build",
@@ -29,7 +27,6 @@
         "api",
         "app",
         "lib",
-        "features",
         "test",
         "test/mpr"
     ],

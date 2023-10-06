@@ -1,11 +1,12 @@
 {
-    "extends": "../tsconfig.json",
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
         "target": "es5",
         "lib": ["es5", "es2015", "dom"],
         "types": ["cypress"],
-        "module": "CommonJS",
-        "moduleResolution": "node"
+        "esModuleInterop": true,
+        "module": "Node16",
+        "moduleResolution": "node16"
     },
     "include": ["**/*.ts"]
 }
