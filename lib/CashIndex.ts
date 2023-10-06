@@ -14,17 +14,17 @@ interface CashIndex extends Observation {
     indexPrice: number;
 }
 
-interface Input extends Observation {
+interface Values extends Observation {
     arrangement: Arrangement.Negotiated | Arrangement.MarketFormula | Arrangement.NegotiatedFormula;
     headCount: number;
     carcassWeight: number;
     netPrice: number;
 }
 
-const weight = (slaughter: Input): number =>
+const weight = (slaughter: Values): number =>
     slaughter.headCount * slaughter.carcassWeight;
 
-const value = (slaughter: Input): number =>
+const value = (slaughter: Values): number =>
     slaughter.netPrice * weight(slaughter);
 
 const avgPrice = (value: number, weight: number): number =>
@@ -32,9 +32,9 @@ const avgPrice = (value: number, weight: number): number =>
 
 const arrangements = [Arrangement.Negotiated, Arrangement.MarketFormula, Arrangement.NegotiatedFormula];
 
-const filterSlaughter = (slaughter: Iterable<Slaughter>): Iterable<Input> =>
+const filterSlaughter = (slaughter: Iterable<Slaughter>): Iterable<Values> =>
     filter(slaughter, ({ netPrice, carcassWeight, arrangement }) =>
-        netPrice != null && carcassWeight != null && arrangements.includes(arrangement)) as Iterable<Input>;
+        carcassWeight != null && netPrice != null && arrangements.includes(arrangement)) as Iterable<Values>;
 
 function cashIndex(records: Iterable<Slaughter>): Iterable<CashIndex> {
     const slaughter = Observation.sort(Array.from(filterSlaughter(records)));

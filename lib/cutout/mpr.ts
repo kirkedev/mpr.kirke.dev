@@ -1,8 +1,8 @@
-import type { MprResponse } from "../mpr";
+import type { MprRecord, MprResponse } from "../mpr";
 import type MprReport from "../mpr/MprReport";
 import type MprSection from "../mpr/MprSection";
 
-interface VolumeRecord extends Record<string, string> {
+interface VolumeRecord extends MprRecord {
     slug_id: string;
     slug_name: string;
     report_title: string;
@@ -12,7 +12,7 @@ interface VolumeRecord extends Record<string, string> {
     temp_process_total_load: string;
 }
 
-interface ValuesRecord extends Record<string, string> {
+interface ValuesRecord extends MprRecord {
     slug_id: string;
     slug_name: string;
     report_title: string;

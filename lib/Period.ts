@@ -1,12 +1,12 @@
 import { subMonths, subYears } from "date-fns";
-import type { Optional, UnaryOperator } from ".";
+import type { UnaryOperator } from ".";
 
 type Description = "1M" | "3M" | "6M" | "1Y";
 
 class Period {
     public constructor(
         public readonly description: Description,
-        public readonly from: UnaryOperator<Optional<Date>, Date>) {
+        public readonly from: UnaryOperator<Date, Date>) {
     }
 
     public get start(): Date {
@@ -18,19 +18,19 @@ class Period {
 }
 
 namespace Period {
-    export const OneMonth = new Period("1M", (date = new Date()) =>
+    export const OneMonth = new Period("1M", (date: Date) =>
         subMonths(date, 1));
 
-    export const ThreeMonths = new Period("3M", (date = new Date()) =>
+    export const ThreeMonths = new Period("3M", (date: Date) =>
         subMonths(date, 3));
 
-    export const SixMonths = new Period("6M", (date = new Date()) =>
+    export const SixMonths = new Period("6M", (date: Date) =>
         subMonths(date, 6));
 
-    export const OneYear = new Period("1Y", (date = new Date()) =>
+    export const OneYear = new Period("1Y", (date: Date) =>
         subYears(date, 1));
 
-    export function from(description: string): Period {
+    export function from(description: Description): Period {
         switch (description) {
             case "1M":
                 return OneMonth;
@@ -40,8 +40,6 @@ namespace Period {
                 return SixMonths;
             case "1Y":
                 return OneYear;
-            default:
-                throw new Error(`Invalid Period description: ${description}`);
         }
     }
 }

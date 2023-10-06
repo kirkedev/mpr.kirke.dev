@@ -10,25 +10,25 @@ afterAll(function() {
 });
 
 test("one month ago", () => {
-    const period = Period.OneMonth;
+    const period = Period.from("1M");
     expect(period.description).toBe("1M");
     expect(period.start).toEqual(new Date(2020, 3, 1));
 });
 
 test("three months ago", () => {
-    const period = Period.ThreeMonths;
+    const period = Period.from("3M");
     expect(period.description).toBe("3M");
     expect(period.start).toEqual(new Date(2020, 1, 1));
 });
 
 test("six months ago", () => {
-    const period = Period.SixMonths;
+    const period = Period.from("6M");
     expect(period.description).toBe("6M");
     expect(period.start).toEqual(new Date(2019, 10, 1));
 });
 
 test("one year ago", () => {
-    const period = Period.OneYear;
+    const period = Period.from("1Y");
     expect(period.description).toBe("1Y");
     expect(period.start).toEqual(new Date(2019, 4, 1));
 });
