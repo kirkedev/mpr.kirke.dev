@@ -25,7 +25,7 @@ Then("I see one month of data on each chart", () => {
     cy.get("#primals path.series").invoke("attr", "d").its("length").should("eq", 433);
 });
 
-Then("I see three months data on each chart", () => {
+Then("I see three months of data on each chart", () => {
     cy.get("#cash path.series").invoke("attr", "d").its("length").should("eq", 1093);
     cy.get("#cutout path.series").first().invoke("attr", "d").its("length").should("eq", 1073);
     cy.get("#cutout path.series").last().invoke("attr", "d").its("length").should("eq", 1075);
@@ -33,7 +33,7 @@ Then("I see three months data on each chart", () => {
     cy.get("#primals path.series").invoke("attr", "d").its("length").should("eq", 1115);
 });
 
-Then("I see six months data on each chart", () => {
+Then("I see six months of data on each chart", () => {
     cy.get("#cash path.series").invoke("attr", "d").its("length").should("eq", 2073);
     cy.get("#cutout path.series").first().invoke("attr", "d").its("length").should("eq", 2021);
     cy.get("#cutout path.series").last().invoke("attr", "d").its("length").should("eq", 2021);
