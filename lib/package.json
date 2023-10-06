@@ -1,16 +1,17 @@
 {
     "name": "lib",
+    "version": "0.3.0",
     "private": true,
     "main": "index.ts",
     "type": "module",
     "dependencies": {
-        "@sinclair/typebox": "^0.23.2",
-        "axios": "^0.24.0",
-        "date-fns": "^2.27.0",
-        "lru-cache": "^6.0.0"
+        "@sinclair/typebox": "^0.31.17",
+        "axios": "^1.5.1",
+        "date-fns": "^2.30.0",
+        "lru-cache": "^10.0.1"
     },
     "devDependencies": {
-        "@types/lru-cache": "^5.1.1",
-        "typescript": "^4.5.4"
+        "@types/lru-cache": "^7.10.10",
+        "typescript": "^5.2.2"
     }
 }

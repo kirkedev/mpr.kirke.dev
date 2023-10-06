@@ -1,3 +1,4 @@
+import { test, expect } from "vitest";
 import request from "./request";
 import type { HealthStatus } from "api/health";
 

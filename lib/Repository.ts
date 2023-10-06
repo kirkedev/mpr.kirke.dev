@@ -1,4 +1,4 @@
-import LRU from "lru-cache";
+import { LRUCache } from "lru-cache";
 import min from "date-fns/min";
 import getISODay from "date-fns/getISODay";
 import isThisISOWeek from "date-fns/isThisISOWeek";
@@ -40,9 +40,9 @@ function archives<T extends Observation>(data: Iterable<T>): Iterable<Archive<T>
 }
 
 class Repository<T extends Observation> {
-    readonly #data = new LRU<string, Archive<T>>({
+    readonly #data = new LRUCache<string, Archive<T>>({
         max: 54,
-        maxAge: 24 * 60 * 60 * 1000
+        ttl: 24 * 60 * 60 * 1000
     });
 
     readonly #fetch: BinaryOperator<Date, Date, Promise<T[]>>;

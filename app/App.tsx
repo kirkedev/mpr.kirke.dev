@@ -42,23 +42,26 @@ const { center: bisectDate } = bisector<Observation, Date>(observation => observ
 const getObservation = (data: Data[], date: Date): Data =>
     data[bisectDate(data, date)];
 
-const fetch = ({ start, end }: DateRange): Promise<Resources> =>
-    Promise.all([
-        cutout.query(Week.with(start).previous.start, end),
-        slaughter.query(Week.with(start).previous.start, end),
-        purchases.query(Week.with(start).previous.start, end)
+function fetch({ start, end }: DateRange): Promise<Resources> {
+    start = Week.with(start).previous.start;
+
+    return Promise.all([
+        cutout.query(start, end),
+        slaughter.query(start, end),
+        purchases.query(start, end)
     ]).then(([cutout, slaughter, purchases]) => ({
         cutout: Array.from(dropWhile(cutout, record => record.date < start)),
         cutoutIndex: Array.from(dropWhile(cutoutIndex(cutout), record => record.date < start)),
         cashIndex: Array.from(dropWhile(cashIndex(slaughter), record => record.date < start)),
         purchases: Array.from(dropWhile(purchases, record => record.date < start))
     }));
+}
 
 function App(): JSXElement {
     const [period, setPeriod] = createSignal(Period.ThreeMonths);
 
     const range = createMemo<DateRange>(function() {
-        const end = new Date();
+        const end = import.meta.env.PROD ? new Date() : new Date(2021, 11, 23);
         return { start: period().from(end), end };
     });
 

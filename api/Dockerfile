@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.14 AS dev
+FROM node:lts-alpine3.18 AS dev
 ENV NODE_ENV development
 ENV MPR_HOST ${MPR_HOST}
 
@@ -12,7 +12,7 @@ RUN yarn workspace api install
 ENTRYPOINT ["yarn", "workspace", "api"]
 CMD ["nodemon"]
 
-FROM node:lts-alpine3.14 AS build
+FROM node:lts-alpine3.18 AS build
 WORKDIR /home/node/mpr
 COPY --from=dev /home/node/mpr ./
 COPY api ./api
@@ -20,7 +20,7 @@ COPY lib ./lib
 
 RUN yarn workspace api esbuild index.ts --outfile=index.cjs --bundle --platform=node --minify --analyze
 
-FROM node:lts-alpine3.14 AS api
+FROM node:lts-alpine3.18 AS api
 WORKDIR /home/node/mpr
 COPY --from=build /home/node/mpr/api/index.cjs ./
 

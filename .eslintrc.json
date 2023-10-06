@@ -11,8 +11,9 @@
             "./api/tsconfig.json",
             "./app/tsconfig.json",
             "./lib/tsconfig.json",
-            "./features/tsconfig.json",
-            "./test/tsconfig.json"
+            "./test/tsconfig.json",
+            "./test/features/tsconfig.json",
+            "./test/mpr/tsconfig.json"
         ]
     },
     "plugins": ["@typescript-eslint"],

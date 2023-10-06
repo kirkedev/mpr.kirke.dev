@@ -1,3 +1,4 @@
+import { describe, test, expect } from "vitest";
 import MprClient from "lib/mpr/MprClient";
 
 describe("MPR Report", () => {

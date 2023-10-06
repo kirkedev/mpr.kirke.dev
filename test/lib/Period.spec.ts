@@ -1,7 +1,13 @@
+import { vi, test, expect, beforeAll, afterAll } from "vitest";
 import Period from "lib/Period";
 
-beforeAll(() => jest.useFakeTimers().setSystemTime(new Date(2020, 4, 1).getTime()));
-afterAll(jest.useRealTimers);
+beforeAll(function() {
+    vi.useFakeTimers().setSystemTime(new Date(2020, 4, 1).getTime());
+});
+
+afterAll(function() {
+    vi.useRealTimers();
+});
 
 test("one month ago", () => {
     const period = Period.OneMonth;

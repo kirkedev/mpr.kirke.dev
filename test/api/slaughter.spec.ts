@@ -1,3 +1,4 @@
+import { describe, test, expect } from "vitest";
 import Slaughter from "lib/slaughter";
 import type { SlaughterResponse } from "lib/slaughter/response";
 import cashIndex from "lib/CashIndex";

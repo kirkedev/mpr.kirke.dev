@@ -1,3 +1,4 @@
+import { describe, test, expect } from "vitest";
 import type { BarrowsGilts } from "lib/slaughter/mpr";
 import parse from "lib/slaughter/parse";
 import cashIndex from "lib/CashIndex";

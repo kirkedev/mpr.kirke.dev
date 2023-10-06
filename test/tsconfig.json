@@ -6,7 +6,6 @@
         { "path": "../lib" }
     ],
     "compilerOptions": {
-        "composite": true,
-        "module": "CommonJS"
+        "composite": true
     }
 }

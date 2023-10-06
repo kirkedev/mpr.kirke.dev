@@ -1,3 +1,4 @@
+import { vi, describe, test, expect, afterEach } from "vitest";
 import dates from "lib/dates";
 import Week from "lib/Week";
 import map, { flatMap } from "lib/itertools/map";
@@ -220,7 +221,7 @@ test("group an empty iterable", () => {
 });
 
 test("run a callback against each item in an iterable", () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     const range = dates(new Date(2020, 4, 1), new Date(2020, 4, 7));
     each(range, callback);
     expect(callback).toHaveBeenCalledTimes(7);

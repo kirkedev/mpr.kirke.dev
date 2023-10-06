@@ -1,3 +1,4 @@
+import { describe, test, expect } from "vitest";
 import { formatDate, getDate as parseDate } from "lib";
 import { getDate, optFloat, optInt } from "lib/mpr";
 
@@ -19,7 +20,7 @@ describe("get an optional float value from a record", () => {
     });
 
     test("key is not present", () => {
-        expect(optFloat({ }, "key")).toBeNaN();
+        expect(optFloat({ }, "key")).toBeNull();
     });
 });
 

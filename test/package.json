@@ -1,25 +1,36 @@
 {
     "name": "test",
+    "version": "0.3.0",
     "private": true,
+    "type": "module",
     "scripts": {
-        "lib": "jest --projects lib --watchAll",
-        "api": "jest --projects api --watchAll",
-        "unit": "jest --projects lib",
-        "integration": "jest --projects api",
-        "all": "jest --projects lib api --collectCoverageFrom='{api,lib}/**/*.ts'",
-        "watch": "jest --projects lib api --watchAll --collectCoverageFrom='{api,lib}/**/*.ts'",
-        "server": "node --es-module-specifier-resolution=node --loader ts-node/esm mpr"
+        "lib": "vitest --config lib/vitest.config.ts",
+        "api": "vitest --config api/vitest.config.ts",
+        "cypress": "cypress open --detached --config-file features/cypress.config.ts",
+        "features": "cypress run --config-file features/cypress.config.ts",
+        "components": "cypress run --config-file components/cypress.config.ts",
+        "unit": "vitest run --config lib/vitest.config.ts --coverage",
+        "integration": "vitest run --config api/vitest.config.ts --coverage",
+        "all": "vitest run --coverage --threads false",
+        "watch": "vitest --coverage --threads false"
     },
     "devDependencies": {
-        "@types/command-line-args": "^5.2.0",
-        "@types/jest": "^27.0.3",
-        "@types/node": "^17.0.2",
-        "@types/resolve": "^1.20.1"
+        "@types/command-line-args": "^5.2.1",
+        "@types/node": "^20.8.2",
+        "@types/resolve": "^1.20.3",
+        "@vitest/coverage-istanbul": "^0.34.6"
     },
     "dependencies": {
-        "jest": "^27.4.5",
+        "@badeball/cypress-cucumber-preprocessor": "^18.0.6",
+        "cypress": "^13.3.0",
+        "esbuild": "^0.19.4",
         "lib": "workspace:*",
-        "ts-jest": "^27.1.2",
-        "typescript": "^4.5.4"
+        "typescript": "^5.2.2",
+        "vitest": "^0.34.6"
+    },
+    "cypress-cucumber-preprocessor": {
+        "e2e": {
+            "stepDefinitions": "features/**/*.spec.ts"
+        }
     }
 }

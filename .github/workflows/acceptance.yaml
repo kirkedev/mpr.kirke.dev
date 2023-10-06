@@ -14,18 +14,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           cache: yarn
 
       - name: Install dependencies
         run: yarn install
 
-      - name: Start app
-        run: yarn dev -d
+      - name: Build docker images
+        run: yarn build
 
-      - name: Run accpetance tests
-        run: yarn workspace features test
+      - name: Init docker swarm
+        run: docker swarm init
+
+      - name: Start app
+        run: yarn start
+
+      - name: Run acceptance tests
+        env:
+          CYPRESS_BASE_URL: http://localhost
+        run: yarn workspace test features

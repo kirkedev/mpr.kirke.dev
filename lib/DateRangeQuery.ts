@@ -8,4 +8,4 @@ const DateRangeQuery = Type.Object({
 
 export default DateRangeQuery;
 
-export type QueryType = Static<typeof DateRangeQuery>;
+export type DateRangeQuery = Static<typeof DateRangeQuery>;

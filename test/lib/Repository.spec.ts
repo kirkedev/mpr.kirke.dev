@@ -1,17 +1,26 @@
+import { vi, describe, test, expect, beforeAll, afterAll, beforeEach } from "vitest";
 import dates from "lib/dates";
 import Repository from "lib/Repository";
 
 describe("Repository caching", () => {
-    const fetch = jest.fn((start: Date, end: Date) =>
+    const fetch = vi.fn((start: Date, end: Date) =>
         Promise.resolve(Array.from(dates(start, end))
             .filter(date => date < new Date())
             .map(date => ({ date, reportDate: date }))));
 
     const repository = new Repository(fetch);
 
-    beforeAll(() => jest.useFakeTimers().setSystemTime(new Date(2020, 4, 1).getTime()));
-    afterAll(jest.useRealTimers);
-    beforeEach(fetch.mockClear);
+    beforeAll(function() {
+        vi.useFakeTimers().setSystemTime(new Date(2020, 4, 1).getTime());
+    });
+
+    afterAll(function() {
+        vi.useRealTimers();
+    });
+
+    beforeEach(function() {
+        fetch.mockClear();
+    });
 
     test("initial query for multiple weeks", async () => {
         const result = await repository.query(new Date(2020, 3, 11), new Date(2020, 3, 26));
@@ -56,7 +65,7 @@ describe("Repository caching", () => {
 });
 
 test("don't cache empty results", async () => {
-    const fetch = jest.fn(() => Promise.resolve([]));
+    const fetch = vi.fn(() => Promise.resolve([]));
     const repository = new Repository(fetch);
 
     let result = await repository.query(new Date(2020, 4, 6), new Date(2020, 4, 8));

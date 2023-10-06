@@ -1,17 +1,15 @@
 import path from "path";
 import dotenv from "dotenv";
+import type { Callback } from "lib";
 import server from "../mpr/server";
-import type { Server } from "http";
 
-interface Globals extends Record<string, unknown> {
-    server?: Server;
-}
+dotenv.config({ path: path.resolve("api", ".env") });
 
-const globals = global as Globals;
+export default async function(): Promise<Callback<void>> {
+    const mpr = await server(3001);
 
-dotenv.config({ path: path.resolve("./api", ".env") });
-
-export default async function(): Promise<void> {
-    if (!process.cwd().endsWith("mpr")) process.chdir("./mpr");
-    globals.server = await server(3001);
+    return async function() {
+        mpr.closeAllConnections();
+        await new Promise(resolve => mpr.close(resolve));
+    };
 }
