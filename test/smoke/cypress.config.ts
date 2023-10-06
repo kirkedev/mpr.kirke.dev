@@ -8,7 +8,7 @@ export default defineConfig({
     screenshotOnRunFailure: false,
     video: false,
     e2e: {
-        baseUrl: "http://localhost:3000",
+        baseUrl: "http://localhost",
         specPattern: "smoke/**/*.spec.ts",
         supportFile: false
     }

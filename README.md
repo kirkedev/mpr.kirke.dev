@@ -2,12 +2,12 @@ MPR Dashboard
 --------------
 
 ### About
-This repository hosts the code for a [dashboard of daily hog and pork prices](http://mpr.kirke.dev) based on historical 
+This repository hosts the code for a [dashboard of daily hog and pork prices](https://mpr.kirke.dev) based on historical 
 [Mandatory Price Reporting](https://mpr.datamart.ams.usda.gov/) data hosted by the USDA's [Agricultural Marketing Service](https://www.ams.usda.gov/).
 
 [Lean hog futures](https://www.cmegroup.com/markets/agriculture/livestock/lean-hogs.html) traders normally retrieve 
 these reports as PDFs, like [this afternoon cutout report](https://www.ams.usda.gov/mnreports/ams_2498.pdf).
-While these reports are great, it's not really possible to see price trends over time, and seasonality is a huge component of meat prices. 
+While these reports are great, it's not really possible to see price trends over time, and seasonality is a huge component of agriculture prices. 
 I know traders who write them down in a legal pad, and others who are a little more technical that manually maintain an Excel spreadsheet. 
 Fortunately for everyone the USDA hosts an API with historical data.
 
@@ -31,8 +31,7 @@ Start the app in dev mode. The app will be hosted at http://localhost:3000 and a
     yarn dev     
 ```
 
-Start the app in production mode. You will need to be connected to a docker swarm with `docker swarm init`. 
-The app will be hosted at http://localhost. Run `yarn stop` to shut it down.
+Start the app in production mode. The app will be hosted at http://localhost. Run `yarn stop` to shut it down.
 ```bash
     yarn build && yarn start 
 ```
@@ -43,25 +42,31 @@ Tests reside in the [test workspace](test/).
 Run unit and integration tests. Does not require app to be running. 
 ```bash
 yarn workspace test all
-```
 
+```
 Run end-to-end acceptance tests. App must be running in dev mode.
 ```bash
 yarn workspace test e2e
 ```
 
-Run unit and integration tests in watch mode 
+Run unit and integration tests in watch mode
 ```bash
 yarn workspace test watch
 ```
 
-Open cypress for end-to-end and component tests 
+Open cypress for end-to-end and component tests
 ```bash
 yarn workspace test cypress
 ```
+
+Run smoke tests only. App must be running locally in production mode. 
+```bash
+yarn workspace test smoke
+```
+
 ### Workflows
 Add githooks with `yarn prepare`. 
-This will run lint on your code before committing and run unit and integration tests before pushing to GitHub.
+This will run lint on your code before committing and unit and integration tests before pushing to GitHub.
 
 Additionally: 
 * [Unit and Integration Tests](.github/workflows/test.yaml) run as a pull request check.
