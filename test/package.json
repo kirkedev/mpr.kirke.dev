@@ -33,7 +33,7 @@
     },
     "cypress-cucumber-preprocessor": {
         "e2e": {
-            "stepDefinitions": "{smoke,features}/**/*.spec.ts"
+            "stepDefinitions": "features/**/*.spec.ts"
         }
     }
 }
