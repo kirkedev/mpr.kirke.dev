@@ -30,8 +30,5 @@
         "test",
         "test/mpr"
     ],
-    "packageManager": "yarn@3.6.3",
-    "dependencies": {
-        "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0"
-    }
+    "packageManager": "yarn@3.6.3"
 }
