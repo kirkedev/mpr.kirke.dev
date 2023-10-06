@@ -1,6 +1,6 @@
 import "@testing-library/cypress/add-commands";
 
-it("loads", function() {
+it("loads data from the api and renders charts and stats", function() {
     const value = /\d{2,3}\.\d{2}/;
 
     // Page load
