@@ -67,11 +67,12 @@ Run smoke tests only. App must be running locally in production mode.
 yarn workspace test smoke
 ```
 
-### Workflows
-Add githooks with `yarn prepare`.
-This will run lint on your code before committing and unit and integration tests before pushing to GitHub.
+### CI/CD Workflows
+Add git hooks with `yarn prepare`
+* [Lint](./.githooks/pre-commit) will run before committing
+* [Unit and Integration Tests](./.githooks/pre-push) will run before pushing to GitHub
 
-Additionally:
+GitHub Actions
 * [Unit and Integration Tests](.github/workflows/test.yaml) run as a pull request check.
 * [Acceptance Tests](.github/workflows/acceptance.yaml) also run as a pull request check.
 * [Smoke Tests](.github/workflows/smoke.yaml) run when merging to main so that main is always production ready.

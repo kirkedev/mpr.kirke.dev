@@ -52,6 +52,7 @@ jobs:
         run: yarn workspace test smoke
 
       - name: Stop app
+        if: always()
         run: yarn stop
 
       - name: Publish images to Amazon ECR
