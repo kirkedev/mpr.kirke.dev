@@ -6,7 +6,9 @@ it("loads data from the api and renders charts and stats", function() {
     // Page load
     cy.visit("/");
     cy.title().should("eq", "Mpr Dashboard");
-    cy.get("#app").should("exist");
+    cy.findByText("Error").should("not.exist");
+    cy.findByText("Time Period").should("exist");
+    cy.findByText("Cash Index").should("exist");
 
     // Stats
     cy.findByText("Cash Index").siblings().contains(value).should("exist");
