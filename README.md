@@ -25,29 +25,34 @@ yarn prepare
 ```
 
 ### Commands
-Start the app in dev mode. The app will be hosted at http://localhost:3000 and a debugger is available on port `9229`.
+Start the app in dev mode. The app will be hosted at http://localhost:3000 and a debugger is available on port `9229`
 ```bash
 yarn dev   
 ```
 
-Start the app in production mode. The app will be hosted at http://localhost.
+Start the app in production mode. The app will be hosted at http://localhost
 ```bash
 yarn build && yarn start
 ```
 
-Shut down the app.
+Shut down the app
 ```bash
 yarn stop
-````
+```
+
+Fix lint errors
+```bash
+yarn fix
+```
 
 ### Testing
 Tests reside in the [test workspace](test).
 
-Run unit and integration tests. Does not require app to be running. 
+Run unit and integration tests. Does not require app to be running 
 ```bash
 yarn workspace test all
 ```
-Run end-to-end acceptance tests. App must be running in dev mode.
+Run end-to-end acceptance tests. App must be running in dev mode
 ```bash
 yarn workspace test e2e
 ```
@@ -62,18 +67,18 @@ Open cypress for end-to-end and component tests
 yarn workspace test cypress
 ```
 
-Run smoke tests only. App must be running locally in production mode. 
+Run smoke tests. App must be running locally in production mode
 ```bash
 yarn workspace test smoke
 ```
 
 ### CI/CD Workflows
 Add git hooks with `yarn prepare`
-* [Lint](./.githooks/pre-commit) will run before committing
-* [Unit and Integration Tests](./.githooks/pre-push) will run before pushing to GitHub
+* [Lint](./.githooks/pre-commit) runs before committing
+* [Unit and Integration Tests](./.githooks/pre-push) run before pushing to GitHub
 
 GitHub Actions
-* [Unit and Integration Tests](.github/workflows/test.yaml) run as a pull request check.
-* [Acceptance Tests](.github/workflows/acceptance.yaml) also run as a pull request check.
-* [Smoke Tests](.github/workflows/smoke.yaml) run when merging to main so that main is always production ready.
-* [Deploy](.github/workflows/deploy.yaml) runs when a new version tag is created. The docker images are built, smoke tested, pushed to Amazon ECR, and deployed to production.
+* [Unit and Integration Tests](.github/workflows/test.yaml) run as a pull request check
+* [Acceptance Tests](.github/workflows/acceptance.yaml) also run as a pull request check
+* [Smoke Tests](.github/workflows/smoke.yaml) run when merging to main so that main is always production ready
+* [Deploy](.github/workflows/deploy.yaml) runs when a new version tag is created. The docker images are built, smoke tested, pushed to Amazon ECR, and deployed to production
