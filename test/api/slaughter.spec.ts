@@ -27,12 +27,36 @@ describe("slaughter api", () => {
         const cash = await request<SlaughterResponse>("/slaughter?start=2021-08-09&end=2021-08-16")
             .then(([, body]) => Array.from(cashIndex(Slaughter.parse(body))));
 
-        expect(cash).toEqual([
-            { date: new Date(2021, 7, 9), reportDate: new Date(2021, 7, 10), dailyPrice: 110.59, indexPrice: 110.77 },
-            { date: new Date(2021, 7, 10), reportDate: new Date(2021, 7, 11), dailyPrice: 110.32, indexPrice: 110.45 },
-            { date: new Date(2021, 7, 11), reportDate: new Date(2021, 7, 12), dailyPrice: 110.06, indexPrice: 110.19 },
-            { date: new Date(2021, 7, 12), reportDate: new Date(2021, 7, 13), dailyPrice: 109.75, indexPrice: 109.90 },
-            { date: new Date(2021, 7, 13), reportDate: new Date(2021, 7, 16), dailyPrice: 109.59, indexPrice: 109.67 }
-        ]);
+        expect(cash).toEqual([{
+        //  https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2021/LH210809.txt
+            date: new Date(2021, 7, 9),
+            reportDate: new Date(2021, 7, 10),
+            dailyPrice: 110.59,
+            indexPrice: 110.77
+        }, {
+        //  https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2021/LH210810.txt
+            date: new Date(2021, 7, 10),
+            reportDate: new Date(2021, 7, 11),
+            dailyPrice: 110.32,
+            indexPrice: 110.45
+        }, {
+        //  https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2021/LH210811.txt
+            date: new Date(2021, 7, 11),
+            reportDate: new Date(2021, 7, 12),
+            dailyPrice: 110.06,
+            indexPrice: 110.19
+        }, {
+        //  https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2021/LH210812.txt
+            date: new Date(2021, 7, 12),
+            reportDate: new Date(2021, 7, 13),
+            dailyPrice: 109.75,
+            indexPrice: 109.90
+        }, {
+        //  https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2021/LH210813.txt
+            date: new Date(2021, 7, 13),
+            reportDate: new Date(2021, 7, 16),
+            dailyPrice: 109.59,
+            indexPrice: 109.67
+        }]);
     });
 });

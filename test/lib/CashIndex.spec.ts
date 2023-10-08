@@ -9,6 +9,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     const index = Array.from(cashIndex(slaughter));
 
     test("Lean Hog Index for 2/1/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190201.txt
         const record = index[0];
         expect(record.date).toEqual(new Date(2019, 1, 1));
         expect(record.dailyPrice).toBeCloseTo(57.45);
@@ -16,6 +17,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/4/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190204.txt
         const record = index[1];
         expect(record.date).toEqual(new Date(2019, 1, 4));
         expect(record.dailyPrice).toBeCloseTo(57.18);
@@ -23,6 +25,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/5/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190205.txt
         const record = index[2];
         expect(record.date).toEqual(new Date(2019, 1, 5));
         expect(record.dailyPrice).toBeCloseTo(57.13);
@@ -30,6 +33,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/6/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190206.txt
         const record = index[3];
         expect(record.date).toEqual(new Date(2019, 1, 6));
         expect(record.dailyPrice).toBeCloseTo(56.65);
@@ -37,6 +41,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/7/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190207.txt
         const record = index[4];
         expect(record.date).toEqual(new Date(2019, 1, 7));
         expect(record.dailyPrice).toBeCloseTo(56.40);
@@ -44,6 +49,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/8/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190208.txt
         const record = index[5];
         expect(record.date).toEqual(new Date(2019, 1, 8));
         expect(record.dailyPrice).toBeCloseTo(55.98);
@@ -51,6 +57,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/11/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190211.txt
         const record = index[6];
         expect(record.date).toEqual(new Date(2019, 1, 11));
         expect(record.dailyPrice).toBeCloseTo(55.78);
@@ -58,6 +65,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/12/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190212.txt
         const record = index[7];
         expect(record.date).toEqual(new Date(2019, 1, 12));
         expect(record.dailyPrice).toBeCloseTo(55.32);
@@ -65,6 +73,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/13/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190213.txt
         const record = index[8];
         expect(record.date).toEqual(new Date(2019, 1, 13));
         expect(record.dailyPrice).toBeCloseTo(55.16);
@@ -72,6 +81,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/14/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190214.txt
         const record = index[9];
         expect(record.date).toEqual(new Date(2019, 1, 14));
         expect(record.dailyPrice).toBeCloseTo(54.89);
@@ -79,6 +89,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/15/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190215.txt
         const record = index[10];
         expect(record.date).toEqual(new Date(2019, 1, 15));
         expect(record.dailyPrice).toBeCloseTo(54.64);
@@ -86,6 +97,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/18/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190218.txt
         const record = index[11];
         expect(record.date).toEqual(new Date(2019, 1, 18));
         expect(record.dailyPrice).toBeCloseTo(54.08);
@@ -93,6 +105,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/19/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190219.txt
         const record = index[12];
         expect(record.date).toEqual(new Date(2019, 1, 19));
         expect(record.dailyPrice).toBeCloseTo(54.19);
@@ -100,6 +113,7 @@ describe("Calculate the CME Lean Hog Index", () => {
     });
 
     test("Lean Hog Index for 2/20/2019", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190220.txt
         const record = index[13];
         expect(record.date).toEqual(new Date(2019, 1, 20));
         expect(record.dailyPrice).toBeCloseTo(53.93);

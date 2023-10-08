@@ -24,6 +24,7 @@ describe("cutout api", () => {
         const [cutout] = await request<CutoutResponse>("/cutout?start=2021-08-09&end=2021-08-13")
             .then(([, body]) => Array.from(cutoutIndex(Cutout.parse(body))));
 
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2021/PC210813.txt
         expect(cutout).toEqual({
             date: new Date(2021, 7, 13),
             reportDate: new Date(2021, 7, 13),
