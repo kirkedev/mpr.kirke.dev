@@ -24,7 +24,7 @@ jobs:
       - name: Lint code
         run: yarn lint
 
-      - name: Run all tests
+      - name: Run unit tests
         run: yarn workspace test unit
 
   acceptance:
