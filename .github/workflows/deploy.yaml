@@ -42,11 +42,11 @@ jobs:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
           TAG: ${{ github.ref_name }}
 
-      - name: Init docker swarm
-        run: docker swarm init
-
       - name: Start app
-        run: yarn start
+        run: yarn start -d
+        env:
+          ECR_REGISTRY: ${{ steps.login.outputs.registry }}
+          TAG: ${{ github.ref_name }}
 
       - name: Run smoke tests
         run: yarn workspace test smoke

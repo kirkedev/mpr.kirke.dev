@@ -4,15 +4,10 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "lib": "vitest --config lib/vitest.config.ts",
-        "api": "vitest --config api/vitest.config.ts",
         "cypress": "cypress open --detached",
         "smoke": "cypress run --config-file smoke/cypress.config.ts",
         "e2e": "cypress run --config-file cypress.config.ts",
-        "components": "cypress run --config-file components/cypress.config.ts",
-        "unit": "vitest run --config lib/vitest.config.ts --coverage",
-        "integration": "vitest run --config api/vitest.config.ts --coverage",
-        "all": "vitest run --coverage --threads false",
+        "unit": "vitest run --coverage --threads false",
         "watch": "vitest --coverage --threads false"
     },
     "devDependencies": {

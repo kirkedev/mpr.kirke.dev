@@ -1,7 +1,4 @@
-import dotenv from "dotenv";
 import MprClient from "lib/mpr/MprClient";
-
-dotenv.config();
 
 const { MPR_URL } = process.env;
 

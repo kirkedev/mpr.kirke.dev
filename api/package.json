@@ -9,7 +9,6 @@
         "build": "docker build .. -f Dockerfile -t ${ECR_REGISTRY:-kirkedev}/mpr-api:$TAG"
     },
     "dependencies": {
-        "dotenv": "^16.3.1",
         "fastify": "^4.23.2",
         "lib": "workspace:*"
     },

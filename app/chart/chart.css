@@ -3,6 +3,10 @@ svg {
     @apply h-full;
 }
 
+.chart {
+    @apply touch-none;
+}
+
 .chart .marker {
     @apply fill-white;
     @apply text-xs;
