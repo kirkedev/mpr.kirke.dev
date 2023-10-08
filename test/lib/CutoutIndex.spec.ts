@@ -9,6 +9,7 @@ describe("Calculate the CME Cutout Index", () => {
     const cutout = Array.from(cutoutIndex(parseCutout(volume, values)));
 
     test("Cutout Index for 4/7/2020", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2020/PC200407.txt
         const record = cutout[0];
         expect(record.date).toEqual(new Date(2020, 3, 7));
         expect(record.indexPrice).toBeCloseTo(57.91);
@@ -17,6 +18,7 @@ describe("Calculate the CME Cutout Index", () => {
     });
 
     test("Cutout Index for 4/8/2020", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2020/PC200408.txt
         const record = cutout[1];
         expect(record.date).toEqual(new Date(2020, 3, 8));
         expect(record.indexPrice).toBeCloseTo(55.82);
@@ -25,6 +27,7 @@ describe("Calculate the CME Cutout Index", () => {
     });
 
     test("Cutout Index for 4/9/2020", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2020/PC200409.txt
         const record = cutout[2];
         expect(record.date).toEqual(new Date(2020, 3, 9));
         expect(record.indexPrice).toBeCloseTo(54.30);
@@ -33,6 +36,7 @@ describe("Calculate the CME Cutout Index", () => {
     });
 
     test("Cutout Index for 4/10/2020", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2020/PC200410.txt
         const record = cutout[3];
         expect(record.date).toEqual(new Date(2020, 3, 10));
         expect(record.indexPrice).toBeCloseTo(53.47);
@@ -41,6 +45,7 @@ describe("Calculate the CME Cutout Index", () => {
     });
 
     test("Cutout Index for 4/13/2020", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2020/PC200413.txt
         const record = cutout[4];
         expect(record.date).toEqual(new Date(2020, 3, 13));
         expect(record.indexPrice).toBeCloseTo(52.57);
@@ -49,6 +54,7 @@ describe("Calculate the CME Cutout Index", () => {
     });
 
     test("Cutout Index for 4/14/2020", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2020/PC200414.txt
         const record = cutout[5];
         expect(record.date).toEqual(new Date(2020, 3, 14));
         expect(record.indexPrice).toBeCloseTo(52.26);
@@ -57,6 +63,7 @@ describe("Calculate the CME Cutout Index", () => {
     });
 
     test("Cutout Index for 4/15/2020", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2020/PC200415.txt
         const record = cutout[6];
         expect(record.date).toEqual(new Date(2020, 3, 15));
         expect(record.indexPrice).toBeCloseTo(52.42);
@@ -65,6 +72,7 @@ describe("Calculate the CME Cutout Index", () => {
     });
 
     test("Cutout Index for 4/16/2020", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2020/PC200416.txt
         const record = cutout[7];
         expect(record.date).toEqual(new Date(2020, 3, 16));
         expect(record.indexPrice).toBeCloseTo(53.31);
@@ -73,6 +81,7 @@ describe("Calculate the CME Cutout Index", () => {
     });
 
     test("Cutout Index for 4/17/2020", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2020/PC200417.txt
         const record = cutout[8];
         expect(record.date).toEqual(new Date(2020, 3, 17));
         expect(record.indexPrice).toBeCloseTo(54.68);
@@ -81,6 +90,7 @@ describe("Calculate the CME Cutout Index", () => {
     });
 
     test("Cutout Index for 4/20/2020", () => {
+        // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2020/PC200420.txt
         const record = cutout[9];
         expect(record.date).toEqual(new Date(2020, 3, 20));
         expect(record.indexPrice).toBeCloseTo(57.11);
