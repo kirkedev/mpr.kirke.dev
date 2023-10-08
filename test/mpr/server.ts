@@ -16,11 +16,13 @@ async function merge<Section extends string, T extends Record<string, string>>(.
             .catch(() => "{\"results\":[]}")
             .then(JSON.parse) as Promise<MprResponse<Section, T>>));
 
+    const { reportSection } = contents[0];
+
     const results = reduce<MprResponse<Section, T>, T[]>(contents, (results, response) =>
         results.concat(response.results), []);
 
     return {
-        reportSection: contents[0].reportSection,
+        reportSection,
         stats: { returnedRows: results.length },
         results
     };
@@ -47,7 +49,7 @@ function listener(request: IncomingMessage, response: ServerResponse): void {
         response.writeHead(200, { "Content-Type": "application/json" });
 
         if (result.results.length === 0) {
-            response.write("No Results Found. ");
+            response.write("No Results Found.");
         } else {
             response.write(JSON.stringify(result));
         }

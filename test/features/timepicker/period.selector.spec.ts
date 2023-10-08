@@ -1,3 +1,4 @@
+import "@testing-library/cypress/add-commands.js";
 import { Given, Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
 Given("I'm on the app", () => {
@@ -11,11 +12,11 @@ Given(/^the (.*) button is not selected$/, (button: string) => {
 });
 
 When(/^I click the (.*) button$/, (button: string) => {
-    cy.get("div[class*=timepicker]").contains("span", button).click();
+    cy.findByText(button).click();
 });
 
 Then(/^(.*) is highlighted$/, (button: string) => {
-    cy.get("div[class*=timepicker]").find("span[class*=active]").contains(button).should("exist");
+    cy.findByText(button).invoke("attr", "class").should("contain", "active");
 });
 
 Then("I see one month of data on each chart", () => {
