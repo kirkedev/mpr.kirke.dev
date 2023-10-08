@@ -2431,7 +2431,6 @@ __metadata:
   resolution: "api@workspace:api"
   dependencies:
     "@types/node": ^20.8.2
-    dotenv: ^16.3.1
     esbuild: ^0.19.4
     fastify: ^4.23.2
     lib: "workspace:*"
