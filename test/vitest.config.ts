@@ -8,6 +8,7 @@ export default defineConfig({
             all: true,
             provider: "istanbul",
             include: ["{api,lib}/**/*.ts"],
+            exclude: ["api/client.ts", "api/index.ts"],
             reportsDirectory: "test/coverage"
         }
     }
