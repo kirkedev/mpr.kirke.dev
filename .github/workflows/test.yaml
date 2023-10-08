@@ -51,3 +51,4 @@ jobs:
       - name: Shutdown app
         if: always()
         run: yarn stop
+        continue-on-error: true
