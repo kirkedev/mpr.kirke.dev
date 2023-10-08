@@ -7,7 +7,7 @@ on:
 
 jobs:
   tests:
-    name: All Tests
+    name: Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,4 +25,29 @@ jobs:
         run: yarn lint
 
       - name: Run all tests
-        run: yarn workspace test all
+        run: yarn workspace test unit
+
+  acceptance:
+    name: Acceptance Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Start app
+        run: yarn dev -d
+
+      - name: Run acceptance tests
+        run: yarn workspace test e2e
+
+      - name: Shutdown app
+        if: always()
+        run: yarn stop
