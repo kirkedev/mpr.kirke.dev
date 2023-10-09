@@ -1,12 +1,10 @@
 {
-    "include": ["**/*.ts", "**/*.tsx", "*.js", "**/*.css"],
+    "include": ["**/*.ts", "**/*.svelte", "**/*.css"],
     "references": [
         { "path":  "../lib" }
     ],
     "extends": "../tsconfig.json",
     "compilerOptions": {
-        "composite": true,
-        "jsx": "preserve",
-        "jsxImportSource": "solid-js"
+        "composite": true
     }
 }

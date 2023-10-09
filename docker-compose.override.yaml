@@ -24,7 +24,7 @@ services:
     environment:
       API_URL: http://api:3000
     volumes:
-      - ./app:/home/node/mpr/app:ro
+      - ./app:/home/node/mpr/app
       - ./lib:/home/node/mpr/lib:ro
     ports:
       - "3000:3000"

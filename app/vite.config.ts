@@ -1,13 +1,12 @@
 import { defineConfig } from "vite";
-import solidPlugin from "vite-plugin-solid";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
 
 export default defineConfig({
-    plugins: [solidPlugin()],
+    plugins: [svelte()],
     cacheDir: "../node_modules/.vite",
     build: {
         outDir: "build",
-        target: "esnext",
-        sourcemap: "inline"
+        minify: true
     },
     server: {
         port: 3000,
