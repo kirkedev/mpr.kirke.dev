@@ -7,7 +7,7 @@
     "private": true,
     "scripts": {
         "prepare": "husky install .githooks",
-        "lint": "eslint . --ext .ts,.tsx",
+        "lint": "eslint . --ext .ts,.svelte",
         "fix": "yarn lint --fix",
         "stop": "TAG=${TAG:-$(git describe --tags --match 'v*' --dirty --always)}; docker compose down --remove-orphans",
         "dev": "TAG=${TAG:-$(git describe --tags --match 'v*' --dirty --always)}; yarn stop && docker compose up --build",
@@ -18,7 +18,7 @@
         "@typescript-eslint/eslint-plugin": "^6.7.4",
         "@typescript-eslint/parser": "^6.7.4",
         "eslint": "^8.50.0",
-        "eslint-plugin-solid": "^0.13.0",
+        "eslint-plugin-svelte": "^2.34.0",
         "husky": "^8.0.3",
         "typescript": "^5.2.2"
     },

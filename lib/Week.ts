@@ -5,8 +5,8 @@ import isSameISOWeek from "date-fns/isSameISOWeek";
 import setISODay from "date-fns/setISODay";
 import setISOWeek from "date-fns/setISOWeek";
 import setISOWeekYear from "date-fns/setISOWeekYear";
-import type { Comparator } from ".";
 import dates from "./dates";
+import type { Comparator } from ".";
 
 function* iterateWeeks(start: Week, end: Week): Iterator<Week> {
     const { week: startWeek, year: startYear } = start;
@@ -119,17 +119,20 @@ class Week {
         return this.day(Weekday.Sunday);
     }
 
-    public start = this.monday;
+    public get start(): Date {
+        return this.monday;
+    }
 
-    public end = this.sunday;
+    public get end(): Date {
+        return this.sunday;
+    }
 
     public get days(): Iterable<Date> {
         return dates(this.start, this.end);
     }
 
-    public day(weekday: Weekday): Date {
-        return setISODay(setISOWeek(setISOWeekYear(new Date(), this.year), this.week), weekday);
-    }
+    public day = (weekday: Weekday): Date =>
+        setISODay(setISOWeek(setISOWeekYear(new Date(), this.year), this.week), weekday);
 
     public contains = (date: Date): boolean =>
         isSameISOWeek(date, this.start);

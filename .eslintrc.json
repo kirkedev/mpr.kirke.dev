@@ -1,7 +1,6 @@
 {
     "env": {
-        "es2021": true,
-        "node": true
+        "es2023": true
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -12,9 +11,11 @@
             "./app/tsconfig.json",
             "./lib/tsconfig.json",
             "./test/tsconfig.json",
+            "./test/mpr/tsconfig.json",
             "./test/features/tsconfig.json",
-            "./test/mpr/tsconfig.json"
-        ]
+            "./test/smoke/tsconfig.json"
+        ],
+        "extraFileExtensions": [".svelte"]
     },
     "plugins": ["@typescript-eslint"],
     "extends": [
@@ -85,16 +86,30 @@
         "@typescript-eslint/space-infix-ops": "error"
     },
     "overrides": [{
-        "files": ["app/**/*.{ts,tsx}"],
+        "files": ["api/**/*.ts"],
+        "env": {
+            "node": true
+        }
+    },{
+        "files": ["lib/**/*.ts"],
+        "env": {
+            "shared-node-browser": true
+        }
+    }, {
+        "files": ["app/**/*.ts"],
+        "env": {
+            "browser": true
+        }
+    },{
+        "files": ["app/**/*.svelte"],
         "env": {
             "browser": true
         },
+        "plugins": ["svelte"],
+        "parser": "svelte-eslint-parser",
         "parserOptions": {
-            "ecmaFeatures": {
-                "jsx": true
-            }
+            "parser": "@typescript-eslint/parser"
         },
-        "plugins": ["solid"],
-        "extends": ["plugin:solid/recommended"]
+        "extends": ["plugin:svelte/recommended"]
     }]
 }
