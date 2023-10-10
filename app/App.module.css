@@ -1,4 +1,4 @@
-.App {
+.app {
     @apply container;
     @apply mx-auto;
     @apply max-w-screen-xl;
