@@ -3,7 +3,8 @@
     "include": ["./**/*.ts"],
     "references": [
         { "path": "../api" },
-        { "path": "../lib" }
+        { "path": "../lib" },
+        { "path": "../app" }
     ],
     "compilerOptions": {
         "composite": true

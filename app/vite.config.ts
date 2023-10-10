@@ -1,12 +1,22 @@
-import { defineConfig } from "vite";
-import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { defineConfig, type UserConfig } from "vite";
+import { svelte, vitePreprocess } from "@sveltejs/vite-plugin-svelte";
+import autoprefixer from "autoprefixer";
+import tailwindcss from "tailwindcss";
+import type { Plugin } from "postcss";
 
 export default defineConfig({
-    plugins: [svelte()],
     cacheDir: "../node_modules/.vite",
     build: {
         outDir: "build",
         minify: true
+    },
+    plugins: [
+        svelte({ preprocess: vitePreprocess() })
+    ],
+    css: {
+        postcss: {
+            plugins: [autoprefixer(), tailwindcss() as Plugin]
+        }
     },
     server: {
         port: 3000,
@@ -17,4 +27,4 @@ export default defineConfig({
             }
         }
     }
-});
+}) satisfies UserConfig;

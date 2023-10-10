@@ -50,6 +50,11 @@ Run unit and integration tests. Does not require app to be running
 yarn workspace test unit
 ```
 
+Run app component tests
+```bash
+yarn workspace test app
+```
+
 Run end-to-end acceptance tests. App must be running in dev mode
 ```bash
 yarn workspace test e2e
