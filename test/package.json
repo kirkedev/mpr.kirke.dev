@@ -6,7 +6,8 @@
     "scripts": {
         "cypress": "cypress open --detached",
         "smoke": "cypress run --config-file smoke/cypress.config.ts",
-        "e2e": "cypress run --config-file cypress.config.ts",
+        "e2e": "cypress run --e2e",
+        "app": "cypress run --component",
         "unit": "vitest run --coverage --threads false",
         "watch": "vitest --coverage --threads false"
     },
