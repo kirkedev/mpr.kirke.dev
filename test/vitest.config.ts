@@ -1,14 +1,14 @@
-import { defineConfig } from "vitest/config";
+import { mergeConfig } from "vitest/config";
+import config from "../app/vite.config";
 
-export default defineConfig({
+export default mergeConfig(config, {
     test: {
         root: "..",
-        include: ["{api,lib}/**/*.spec.ts"],
+        include: ["{api,app,lib}/**/*.spec.ts"],
         coverage: {
             all: true,
-            provider: "istanbul",
-            include: ["{api,lib}/**/*.ts"],
-            exclude: ["api/client.ts", "api/index.ts"],
+            include: ["{api,app,lib}/**/*.ts", "app/**/*.svelte"],
+            exclude: ["**/*.d.ts", "api/client.ts", "api/index.ts", "app/svg-colors.ts"],
             reportsDirectory: "test/coverage"
         }
     }

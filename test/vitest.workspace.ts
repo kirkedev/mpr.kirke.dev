@@ -10,4 +10,9 @@ export default defineWorkspace([{
     test: {
         name: "lib"
     }
+}, {
+    extends: "app/vitest.config.ts",
+    test: {
+        name: "app"
+    }
 }]);

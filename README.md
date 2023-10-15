@@ -50,9 +50,9 @@ Run unit and integration tests. Does not require app to be running
 yarn workspace test unit
 ```
 
-Run app component tests
+Run unit and integration tests in watch mode
 ```bash
-yarn workspace test app
+yarn workspace test watch
 ```
 
 Run end-to-end acceptance tests. App must be running in dev mode
@@ -60,12 +60,7 @@ Run end-to-end acceptance tests. App must be running in dev mode
 yarn workspace test e2e
 ```
 
-Run unit and integration tests in watch mode
-```bash
-yarn workspace test watch
-```
-
-Open cypress for end-to-end and component tests
+Open cypress for end-to-end acceptance tests
 ```bash
 yarn workspace test cypress
 ```
@@ -75,12 +70,17 @@ Run smoke tests. App must be running locally in production mode
 yarn workspace test smoke
 ```
 
+Open storybook
+```bash
+yarn workspace test ui
+```
+
 ### CI/CD Workflows
 Add git hooks with `yarn prepare`
 * [Lint](./.githooks/pre-commit) runs before committing
 * [Unit and Integration Tests](./.githooks/pre-push) run before pushing to GitHub
 
 GitHub Actions
-* [All Tests](.github/workflows/test.yaml) run as a pull request check
+* [Lint, Unit, Integration, and Acceptance Tests](.github/workflows/test.yaml) run as a pull request check
 * [Smoke Tests](.github/workflows/smoke.yaml) run when merging to main so that main is always production ready
 * [Deploy](.github/workflows/deploy.yaml) runs when a new version tag is created. The docker images are built, smoke tested, pushed to Amazon ECR, and deployed to production

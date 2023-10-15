@@ -3,6 +3,7 @@ import { svelte, vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import autoprefixer from "autoprefixer";
 import tailwindcss from "tailwindcss";
 import type { Plugin } from "postcss";
+import svgColors from "./svg-colors";
 
 export default defineConfig({
     cacheDir: "../node_modules/.vite",
@@ -15,7 +16,12 @@ export default defineConfig({
     ],
     css: {
         postcss: {
-            plugins: [autoprefixer(), tailwindcss() as Plugin]
+            plugins: [
+                autoprefixer(),
+                tailwindcss({
+                    content: ["index.html", "**/*.svelte", "**/*.css", "**/*.module.css"],
+                    plugins: [svgColors]
+                }) as Plugin]
         }
     },
     server: {
