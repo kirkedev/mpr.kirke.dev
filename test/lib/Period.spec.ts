@@ -32,3 +32,8 @@ test("one year ago", () => {
     expect(period.description).toBe("1Y");
     expect(period.start).toEqual(new Date(2019, 4, 1));
 });
+
+test("period equality check", () => {
+    expect(Period.from("1M").equals(Period.from("1M"))).toBe(true);
+    expect(Period.from("1M").equals(Period.from("3M"))).toBe(false);
+});
