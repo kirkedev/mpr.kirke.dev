@@ -100,7 +100,7 @@
         "env": {
             "browser": true
         }
-    },{
+    }, {
         "files": ["app/**/*.svelte"],
         "env": {
             "browser": true

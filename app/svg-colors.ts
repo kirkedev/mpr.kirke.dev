@@ -1,5 +1,6 @@
 import plugin from "tailwindcss/plugin";
-import type { Config } from "tailwindcss";
+
+// Adds tailwindcss utilities to use theme colors on svg fill and stroke properties
 
 const svgUtilities = (colorObj: Record<string, string | Record<string, string>>, colorGroup = ""): Record<string, string> =>
     Object.keys(colorObj).reduce((vars, colorKey) => {
@@ -15,9 +16,4 @@ const svgUtilities = (colorObj: Record<string, string | Record<string, string>>,
         return { ...vars, ...newVars };
     }, {});
 
-module.exports = {
-    content: ["index.html", "**/*.svelte", "**/*.css", "**/*.module.css"],
-    plugins: [
-        plugin(({ addUtilities, theme }) => addUtilities(svgUtilities(theme("colors"))))
-    ]
-} satisfies Config;
+export default plugin(({ addUtilities, theme }) => addUtilities(svgUtilities(theme("colors"))));

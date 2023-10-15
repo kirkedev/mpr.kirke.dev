@@ -2,7 +2,6 @@ import { defineConfig } from "cypress";
 import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
 import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
 import { createEsbuildPlugin } from "@badeball/cypress-cucumber-preprocessor/esbuild";
-import viteConfig from "app/vite.config";
 
 export default defineConfig({
     screenshotOnRunFailure: false,
@@ -20,17 +19,6 @@ export default defineConfig({
             }));
 
             return config;
-        }
-    },
-
-    component: {
-        supportFile: "app/support.ts",
-        specPattern: ["app/**/*.spec.ts"],
-        indexHtmlFile: "app/index.html",
-        devServer: {
-            framework: "svelte",
-            bundler: "vite",
-            viteConfig
         }
     }
 });
