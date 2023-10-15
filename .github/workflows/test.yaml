@@ -53,10 +53,10 @@ jobs:
         run: yarn stop
         continue-on-error: true
 
-    storybook:
-      name: Build Storybook
-      runs-on: ubuntu-latest
-      steps:
+  storybook:
+    name: Build Storybook
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout
         uses: actions/checkout@v4
 
