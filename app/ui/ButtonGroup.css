@@ -5,14 +5,14 @@
     @apply md:flex;
 }
 
-.periods {
+.items {
     @apply flex;
     @apply flex-row;
     @apply justify-center;
     @apply items-center;
 }
 
-.periods > span {
+.items > .item {
     @apply text-sm;
     @apply mx-3;
     @apply bg-gray-100;
@@ -24,11 +24,11 @@
     @apply cursor-pointer;
 }
 
-.periods > span.active {
+.items > .selected.item {
     @apply cursor-default;
 }
 
-.periods > span.active {
+.items > .selected.item {
     @apply bg-blue-500;
     @apply text-white;
 }

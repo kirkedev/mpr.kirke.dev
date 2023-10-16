@@ -105,6 +105,9 @@
         "env": {
             "browser": true
         },
+        "globals": {
+            "$$Generic": "readonly"
+        },
         "plugins": ["svelte"],
         "parser": "svelte-eslint-parser",
         "parserOptions": {

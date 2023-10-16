@@ -1,4 +1,4 @@
-name: All Tests
+name: Merge Code
 
 on:
   pull_request:
@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  tests:
-    name: Unit Tests
+  lint:
+    name: Lint Code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,6 +23,21 @@ jobs:
 
       - name: Lint code
         run: yarn lint
+
+  tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install
 
       - name: Run unit tests
         run: yarn workspace test unit

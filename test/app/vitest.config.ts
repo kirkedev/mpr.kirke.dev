@@ -12,6 +12,7 @@ export default mergeConfig(config, {
         environment: "jsdom",
         coverage: {
             all: true,
+            provider: "istanbul",
             include: ["app/**/*.ts", "app/**/*.svelte"],
             reportsDirectory: "test/app/coverage"
         }

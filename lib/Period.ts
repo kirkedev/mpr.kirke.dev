@@ -15,6 +15,9 @@ class Period {
 
     public equals = (other: Period): boolean =>
         this.description === other.description;
+
+    public toString = (): string =>
+        this.description;
 }
 
 namespace Period {
