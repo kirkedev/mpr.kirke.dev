@@ -10,6 +10,7 @@ export default defineConfig({
         globalSetup: "api/setup.ts",
         coverage: {
             all: true,
+            provider: "istanbul",
             include: ["api/**/*.ts"],
             reportsDirectory: "test/api/coverage"
         }

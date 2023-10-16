@@ -4344,7 +4344,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^9.0.0, @testing-library/dom@npm:^9.3.1":
+"@testing-library/dom@npm:^9.0.0, @testing-library/dom@npm:^9.3.1, @testing-library/dom@npm:^9.3.3":
   version: 9.3.3
   resolution: "@testing-library/dom@npm:9.3.3"
   dependencies:
@@ -4371,7 +4371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/user-event@npm:^14.4.0":
+"@testing-library/user-event@npm:^14.4.0, @testing-library/user-event@npm:^14.5.1":
   version: 14.5.1
   resolution: "@testing-library/user-event@npm:14.5.1"
   peerDependencies:
@@ -13885,7 +13885,9 @@ __metadata:
     "@storybook/testing-library": ^0.2.2
     "@storybook/theming": ^7.4.6
     "@testing-library/cypress": ^10.0.1
+    "@testing-library/dom": ^9.3.3
     "@testing-library/svelte": ^4.0.4
+    "@testing-library/user-event": ^14.5.1
     "@types/command-line-args": ^5.2.1
     "@types/cypress": ^1.1.3
     "@types/node": ^20.8.2

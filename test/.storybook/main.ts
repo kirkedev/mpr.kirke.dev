@@ -1,5 +1,4 @@
 import type { StorybookConfig } from "@storybook/svelte-vite";
-
 import { join, dirname } from "path";
 
 /**
@@ -30,7 +29,7 @@ const config: StorybookConfig = {
     },
     docs: {
         autodocs: "tag",
-    },
+    }
 };
 
 export default config;
