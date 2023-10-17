@@ -1,13 +1,15 @@
-<script lang="ts">
-</script>
-
 <style lang="postcss">
-    @import "App.module.css";
+    @import "app.css";
 </style>
+
+<script lang="ts">
+    import PeriodSelector from "./PeriodSelector.svelte";
+</script>
 
 <div class="app">
     <div class="timepicker">
-        TimePicker
+        <h3>Time Period</h3>
+        <PeriodSelector class="period"/>
     </div>
     <div class="reports">
         <div>Reports</div>

@@ -14,18 +14,20 @@ type Story = StoryObj<typeof Component>;
 
 export const PeriodSelector: Story = {
     args: {
-        items: Periods
+        items: Periods,
+        selected: Period.ThreeMonths
     },
     play: async (context): Promise<void> => {
         const container = within(context.canvasElement);
-        await userEvent.click(container.getByText("1M"));
-        await userEvent.click(container.getByText("3M"));
-        await userEvent.click(container.getByText("6M"));
-        await userEvent.click(container.getByText("1Y"));
+        const user = userEvent.setup();
+        await user.click(container.getByText("1M"));
+        await user.click(container.getByText("3M"));
+        await user.click(container.getByText("6M"));
+        await user.click(container.getByText("1Y"));
     }
 };
 
-export const WithSelection: Story = {
+export const DefaultSelection: Story = {
     args: {
         items: Periods,
         selected: Period.ThreeMonths
