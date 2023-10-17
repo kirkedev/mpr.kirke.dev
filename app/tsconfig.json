@@ -1,4 +1,5 @@
 {
+    "rootDir": "..",
     "include": ["**/*.ts", "**/*.svelte", "**/*.css"],
     "references": [
         { "path":  "../lib" }
