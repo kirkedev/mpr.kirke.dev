@@ -9,7 +9,7 @@
         "e2e": "cypress run --e2e",
         "unit": "vitest run --coverage --threads false",
         "watch": "vitest --coverage --threads false",
-        "ui": "storybook dev -p 6006"
+        "ui": "storybook dev -c ui/.storybook"
     },
     "devDependencies": {
         "@badeball/cypress-cucumber-preprocessor": "^18.0.6",

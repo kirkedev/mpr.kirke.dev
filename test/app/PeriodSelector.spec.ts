@@ -1,7 +1,7 @@
 import { expect, describe, test, vi, beforeEach } from "vitest";
 import { render, within } from "@testing-library/svelte";
 import { userEvent } from "@testing-library/user-event";
-import PeriodSelector from "app/periods/PeriodSelector.svelte";
+import PeriodSelector from "app/PeriodSelector.svelte";
 import Period from "lib/Period";
 
 describe("Period Selection", () => {
