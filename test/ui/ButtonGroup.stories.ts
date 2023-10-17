@@ -4,12 +4,23 @@ import Period, { Periods } from "lib/Period";
 
 const Component = {
     title: "Button Group",
-    component: ButtonGroup
+    component: ButtonGroup,
+    argTypes: {
+        "select": {
+            action: "select"
+        }
+    }
 } satisfies Meta<ButtonGroup>;
 
 export default Component;
 
 type Story = StoryObj<typeof Component>;
+
+export const Fruits: Story = {
+    args: {
+        items: ["Apples", "Oranges", "Bananas", "Pears"]
+    }
+};
 
 export const PeriodSelector: Story = {
     args: {
