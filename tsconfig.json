@@ -1,5 +1,4 @@
 {
-    "rootDir": ".",
     "compilerOptions": {
         "target": "ESNext",
         "strict": true,
