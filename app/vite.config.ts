@@ -19,7 +19,7 @@ export default defineConfig({
             plugins: [
                 autoprefixer(),
                 tailwindcss({
-                    content: ["index.html", "**/*.svelte", "**/*.css", "**/*.module.css"],
+                    content: ["index.html", "**/*.svelte", "**/*.css"],
                     plugins: [svgColors]
                 }) as Plugin]
         }
