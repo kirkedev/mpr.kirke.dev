@@ -45,35 +45,15 @@ yarn fix
 ```
 
 ### Testing
-Run unit and integration tests. Does not require app to be running 
-```bash
-yarn workspace test unit
-```
 
-Run unit and integration tests in watch mode
-```bash
-yarn workspace test watch
-```
-
-Run end-to-end acceptance tests. App must be running in dev mode
-```bash
-yarn workspace test e2e
-```
-
-Open cypress for end-to-end acceptance tests
-```bash
-yarn workspace test cypress
-```
-
-Run smoke tests. App must be running locally in production mode
-```bash
-yarn workspace test smoke
-```
-
-Open storybook
-```bash
-yarn workspace test ui
-```
+| Command                       | Description                                                        |
+|-------------------------------|--------------------------------------------------------------------|
+| `yarn workspace test unit`    | Run unit and integration tests. Does not require app to be running |
+| `yarn workspace test watch`   | Run unit and integration tests in watch mode                       |
+| `yarn workspace test ui`      | Open storybook                                                     |
+| `yarn workspace test e2e`     | Run end-to-end acceptance tests. App must be running in dev mode   |
+| `yarn workspace test cypress` | Open cypress for end-to-end acceptance tests                       |
+| `yarn workspace test smoke`   | Run smoke tests. App must be running locally in production mode    |
 
 ### CI/CD Workflows
 Add git hooks with `yarn prepare`
