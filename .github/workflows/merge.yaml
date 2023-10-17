@@ -1,4 +1,4 @@
-name: Merge Code
+name: Pull Request
 
 on:
   pull_request:
@@ -84,4 +84,4 @@ jobs:
         run: yarn install
 
       - name: Build storybook
-        run: yarn workspace test storybook build
+        run: yarn workspace test storybook build -c ui/.storybook
