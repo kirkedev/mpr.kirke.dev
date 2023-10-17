@@ -20,6 +20,7 @@
         "eslint": "^8.51.0",
         "eslint-plugin-svelte": "^2.34.0",
         "husky": "^8.0.3",
+        "lint-staged": "^15.0.1",
         "typescript": "^5.2.2"
     },
     "workspaces": [
