@@ -9,7 +9,6 @@ export default defineConfig({
         },
         coverage: {
             all: true,
-            provider: "istanbul",
             include: ["lib/**/*.ts"],
             reportsDirectory: "test/lib/coverage"
         }

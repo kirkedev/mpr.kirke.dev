@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export abstract class MprRequest<T> {
     protected constructor(
         protected readonly filters = new Map<string, string>(),
@@ -9,7 +7,7 @@ export abstract class MprRequest<T> {
     public readonly abstract url: string;
 
     public async get(): Promise<T> {
-        const { data } = await axios.get<T>(this.url);
+        const data = await fetch(this.url).then(response => response.json());
         return typeof data === "string" ? Promise.reject(data) : data;
     }
 
