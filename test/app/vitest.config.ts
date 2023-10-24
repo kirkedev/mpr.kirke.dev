@@ -8,11 +8,10 @@ export default mergeConfig(config, {
         cache: {
             dir: "../node_modules/.vitest/app"
         },
-        setupFiles: "test/app/setup.ts",
+        setupFiles: ["test/app/setup.ts"],
         environment: "jsdom",
         coverage: {
             all: true,
-            provider: "istanbul",
             include: ["app/**/*.ts", "app/**/*.svelte"],
             reportsDirectory: "test/app/coverage"
         }
