@@ -1,7 +1,6 @@
 {
-    "rootDir": "..",
     "extends": "../tsconfig.json",
-    "include": ["./**/*.ts"],
+    "include": ["./**/*.ts", "./ui/**/*.svelte"],
     "references": [
         { "path": "../api" },
         { "path": "../lib" },
