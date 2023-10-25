@@ -1,11 +1,16 @@
-<script context="module">
-    import ButtonGroup from "app/ui/ButtonGroup.svelte";
+<script context="module" lang="ts">
     import { Story, Template } from "@storybook/addon-svelte-csf";
     import Period, { Periods } from "lib/Period";
+    import ButtonGroup from "app/ui/ButtonGroup.svelte";
 
     export const meta = {
         title: "ButtonGroup",
-        component: ButtonGroup
+        component: ButtonGroup,
+        argTypes: {
+            "select": {
+                action: "select"
+            }
+        }
     };
 </script>
 
@@ -19,5 +24,6 @@
 
 <Story name="Period Selector" args={{
     items: Periods,
-    selected: Period.ThreeMonths
+    selected: Period.ThreeMonths,
+    onSelect: "action"
 }}/>
