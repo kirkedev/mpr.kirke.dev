@@ -1,5 +1,4 @@
 import "vitest-dom/extend-expect";
-import "cross-fetch/polyfill";
 import { afterAll, beforeAll } from "vitest";
 import server from "./server";
 
