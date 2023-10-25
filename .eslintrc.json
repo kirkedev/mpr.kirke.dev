@@ -4,17 +4,9 @@
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 12,
+        "ecmaVersion": "latest",
         "sourceType": "module",
-        "project": [
-            "./api/tsconfig.json",
-            "./app/tsconfig.json",
-            "./lib/tsconfig.json",
-            "./test/tsconfig.json",
-            "./test/mpr/tsconfig.json",
-            "./test/features/tsconfig.json",
-            "./test/smoke/tsconfig.json"
-        ],
+        "project": true,
         "extraFileExtensions": [".svelte"]
     },
     "plugins": ["@typescript-eslint"],
@@ -90,7 +82,7 @@
         "env": {
             "node": true
         }
-    },{
+    }, {
         "files": ["lib/**/*.ts"],
         "env": {
             "shared-node-browser": true
@@ -101,12 +93,15 @@
             "browser": true
         }
     }, {
-        "files": ["app/**/*.svelte"],
+        "files": ["app/**/*.svelte", "test/ui/**/*.svelte"],
         "env": {
             "browser": true
         },
         "globals": {
-            "$$Generic": "readonly"
+            "$$Generic": "readonly",
+            "$$Props": "readonly",
+            "$$Events:": "readonly",
+            "$$Slots": "readonly"
         },
         "plugins": ["svelte"],
         "parser": "svelte-eslint-parser",
