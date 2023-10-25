@@ -51,10 +51,10 @@ class Repository<T extends Observation> {
         this.#fetch = fetch;
     }
 
-    #get = (week: Week): Optional<Archive<T>> =>
+    readonly #get = (week: Week): Optional<Archive<T>> =>
         this.#data.get(week.toString());
 
-    #save = (data: T[]): void => {
+    readonly #save = (data: T[]): void => {
         if (data.length === 0) {
             return;
         }
