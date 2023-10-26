@@ -14,3 +14,4 @@ videos
 screenshots
 node_modules
 storybook-static
+vitest.config.ts.timestamp*
