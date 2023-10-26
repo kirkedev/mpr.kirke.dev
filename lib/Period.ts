@@ -1,6 +1,9 @@
 import { subMonths, subYears } from "date-fns";
 import type { UnaryOperator } from ".";
 
+const today = (): Date =>
+    import.meta.env.PROD ? new Date() : new Date(2021, 11, 23);
+
 type Description = "1M" | "3M" | "6M" | "1Y";
 
 class Period {
@@ -10,7 +13,11 @@ class Period {
     }
 
     public get start(): Date {
-        return this.from(new Date());
+        return this.from(today());
+    }
+
+    public get end(): Date {
+        return today();
     }
 
     public equals = (other: Period): boolean =>

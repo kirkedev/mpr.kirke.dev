@@ -1,68 +1,62 @@
-import { derived, writable, type Readable } from "svelte/store";
-import Result from "lib/Result";
+import { derived, type Readable, writable } from "svelte/store";
+import type Cutout from "lib/cutout";
 import cutoutIndex from "lib/CutoutIndex";
-import { dropWhile } from "lib/itertools/drop";
 import map from "lib/itertools/map";
-import type { Resources } from "../api";
-import { formatNumber, getObservation, today } from "../api/lib";
+import { dropWhile } from "lib/itertools/drop";
+import { formatNumber, getObservation } from "../api/lib";
 import type { Series } from "../ui/LineChart";
+import api from "../api";
 
 interface Stat {
     label: string;
     value: string;
 }
 
-interface DataSeries {
+interface CutoutViewModel {
+    date: Date;
+    stats: Stat[];
     cutout: Series;
     index: Series;
 }
 
-export interface CutoutViewModel extends DataSeries {
-    date: Date;
-    stats: Stat[];
+interface CutoutStore extends Readable<CutoutViewModel> {
+    selectDate: (date: Date) => void;
+    resetDate: () => void;
 }
 
-interface CutoutStore extends Readable<Result<CutoutViewModel>> {
-    select: (date: Date) => void;
-}
+function store(response: Cutout[]): CutoutStore {
+    const { start, end } = api.period;
+    const date = writable(end);
+    const records = dropWhile(cutoutIndex(response), record => record.date < start);
 
-function store(api: Readable<Result<Resources>>): CutoutStore {
-    const date = writable(today);
+    const index = Array.from(map(records, ({ date, indexPrice: value }) => ({
+        date, value
+    })));
 
-    const series = derived(api, result =>
-        Result.map(result, data => {
-            const start = data.period.from(today);
-            const records = dropWhile(cutoutIndex(data.cutout), record => record.date < start);
+    const cutout = Array.from(map(records, ({ date, carcassPrice: value }) => ({
+        date, value
+    })));
 
-            const index = Array.from(map(records, ({ date, indexPrice: value }) => ({
-                date, value
-            })));
-
-            const cutout = Array.from(map(records, ({ date, carcassPrice: value }) => ({
-                date, value
-            })));
-
-            return { cutout, index };
-        }));
-
-    const { subscribe } = derived([series, date], ([result, date]) =>
-        Result.map(result, ({ cutout, index }) => ({
-            date,
-            cutout,
-            index,
-            stats: [{
-                label: "Cutout",
-                value: formatNumber(getObservation(cutout, date).value)
-            }, {
-                label: "Index",
-                value: formatNumber(getObservation(index, date).value)
-            }]
-        })));
+    const { subscribe } = derived(date, date => ({
+        date,
+        cutout,
+        index,
+        stats: [{
+            label: "Cutout",
+            value: formatNumber(getObservation(cutout, date).value)
+        }, {
+            label: "Index",
+            value: formatNumber(getObservation(index, date).value)
+        }]
+    }));
 
     return {
         subscribe,
-        select: (selected: Date) => date.set(selected)
+        selectDate: (selected: Date) => date.set(selected),
+        resetDate: () => date.set(api.period.end)
     };
 }
 
 export default store;
+
+export type { CutoutViewModel, CutoutStore };
