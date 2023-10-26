@@ -30,5 +30,8 @@
         "test",
         "test/mpr"
     ],
-    "packageManager": "yarn@3.6.3"
+    "packageManager": "yarn@4.0.0",
+    "engines": {
+        "node": ">=18"
+    }
 }

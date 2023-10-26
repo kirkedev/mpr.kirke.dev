@@ -4,7 +4,7 @@
     "private": true,
     "type": "module",
     "dependencies": {
-        "@sinclair/typebox": "^0.31.18",
+        "@sinclair/typebox": "^0.31.20",
         "date-fns": "^2.30.0",
         "lru-cache": "^10.0.1"
     },
