@@ -1,10 +1,8 @@
 import "vitest-dom/extend-expect";
-import { afterAll, beforeAll } from "vitest";
 import server from "./server";
+import { afterAll } from "vitest";
 
-beforeAll(() => {
-    server.listen({ onUnhandledRequest: "error" });
-});
+server.listen({ onUnhandledRequest: "error" });
 
 afterAll(() => {
     server.close();

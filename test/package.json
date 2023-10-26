@@ -8,8 +8,8 @@
         "e2e": "cypress run --e2e",
         "smoke": "cypress run --config-file smoke/cypress.config.ts",
         "ui": "storybook dev -c ui/.storybook",
-        "unit": "vitest run --coverage --threads false",
-        "watch": "vitest --coverage --threads false"
+        "unit": "vitest run --coverage",
+        "watch": "vitest --coverage"
     },
     "devDependencies": {
         "@storybook/addon-essentials": "^7.5.1",
