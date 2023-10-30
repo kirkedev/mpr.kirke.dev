@@ -1,15 +1,15 @@
 import { describe, expect, test } from "vitest";
 import { get } from "svelte/store";
-import cutoutStore from "app/cutout/store";
+import CutoutInteractor from "lib/cutout/Interactor";
 import Period from "lib/Period";
 import api from "app/api";
 
 describe("Cutout ViewModel", async () => {
     api.fetch(Period.OneMonth);
-    const store = await get(api).then(({ cutout }) => cutoutStore(cutout));
+    const interactor = await get(api).then(({ cutout }) => new CutoutInteractor(cutout, api.period));
 
     test("derive Cutout ViewModel from api response", () => {
-        const model = get(store);
+        const model = interactor.state;
         expect(model.date).toEqual(new Date(2021, 11, 23));
 
         expect(model.cutout.slice(-5)).toEqual([{
@@ -40,49 +40,48 @@ describe("Cutout ViewModel", async () => {
         });
     });
 
-    test("selecting a date updates the stats", () => {
-        let model = get(store);
-        expect(model.date).toEqual(new Date(2021, 11, 23));
-        store.selectDate(new Date(2021, 11, 17));
+    test("selecting a date updates the stats", async () => {
+        expect(interactor.state.date).toEqual(new Date(2021, 11, 23));
 
-        model = get(store);
-        expect(model.date).toEqual(new Date(2021, 11, 17));
+        const next = interactor.next();
+        interactor.selectDate(new Date(2021, 11, 17));
 
-        expect(model.stats).toContainEqual({
+        const result = await next;
+        expect(result.value.date).toEqual(new Date(2021, 11, 17));
+
+        expect(result.value.stats).toContainEqual({
             label: "Index",
             value: "87.50"
         });
 
-        expect(model.stats).toContainEqual({
+        expect(result.value.stats).toContainEqual({
             label: "Cutout",
             value: "85.82"
         });
     });
 
     test("reset date after selecting date", () => {
-        store.selectDate(new Date(2021, 11, 17));
-        let model = get(store);
-        expect(model.date).toEqual(new Date(2021, 11, 17));
+        interactor.selectDate(new Date(2021, 11, 17));
+        expect(interactor.state.date).toEqual(new Date(2021, 11, 17));
 
-        expect(model.stats).toContainEqual({
+        expect(interactor.state.stats).toContainEqual({
             label: "Index",
             value: "87.50"
         });
 
-        expect(model.stats).toContainEqual({
+        expect(interactor.state.stats).toContainEqual({
             label: "Cutout",
             value: "85.82"
         });
 
-        store.resetDate();
-        model = get(store);
+        interactor.selectDate(api.period.end);
 
-        expect(model.stats).toContainEqual({
+        expect(interactor.state.stats).toContainEqual({
             label: "Index",
             value: "86.80"
         });
 
-        expect(model.stats).toContainEqual({
+        expect(interactor.state.stats).toContainEqual({
             label: "Cutout",
             value: "91.47"
         });
