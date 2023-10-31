@@ -1,9 +1,10 @@
-import { round } from ".";
-import Observation from "./Observation";
-import { sumBy } from "./itertools/accumulate";
-import map from "./itertools/map";
-import rolling from "./itertools/rolling";
-import type Cutout from "./cutout";
+import { round } from "../index";
+import type { Series } from "../Observation";
+import Observation from "../Observation";
+import { sumBy } from "../itertools/accumulate";
+import map from "../itertools/map";
+import rolling from "../itertools/rolling";
+import type Cutout from ".";
 
 interface CutoutIndex extends Observation {
     indexPrice: number;
@@ -32,6 +33,18 @@ const cutoutIndex = (cutout: Iterable<Cutout>): Iterable<CutoutIndex> =>
         };
     });
 
-export default cutoutIndex;
+namespace CutoutIndex {
+    export const from = cutoutIndex;
 
-export type { CutoutIndex };
+    export const indexSeries = (cutout: Iterable<CutoutIndex>): Series =>
+        Array.from(map(cutout, ({ date, indexPrice: value }) => ({
+            date, value
+        })));
+
+    export const dailySeries = (cutout: Iterable<CutoutIndex>): Series =>
+        Array.from(map(cutout, ({ date, carcassPrice: value }) => ({
+            date, value
+        })));
+}
+
+export default CutoutIndex;

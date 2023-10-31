@@ -1,12 +1,12 @@
-import { describe, test, expect } from "vitest";
-import cutoutIndex from "lib/CutoutIndex";
+import { describe, expect, test } from "vitest";
 import parseCutout from "lib/cutout/parse";
+import CutoutIndex from "lib/cutout/CutoutIndex";
 import type { ValuesResponse, VolumeResponse } from "lib/cutout/mpr";
 import load from "./resources";
 
 describe("Calculate the CME Cutout Index", () => {
     const [values, volume] = load<[ValuesResponse, VolumeResponse]>("cutout_index.json");
-    const cutout = Array.from(cutoutIndex(parseCutout(volume, values)));
+    const cutout = Array.from(CutoutIndex.from(parseCutout(volume, values)));
 
     test("Cutout Index for 4/7/2020", () => {
         // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2020/PC200407.txt

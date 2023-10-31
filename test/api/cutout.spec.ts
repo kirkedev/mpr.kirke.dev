@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import Cutout from "lib/cutout";
 import type { CutoutResponse } from "lib/cutout/response";
-import cutoutIndex from "lib/CutoutIndex";
+import CutoutIndex from "lib/cutout/CutoutIndex";
 import request from "./request";
 
 describe("cutout api", () => {
@@ -22,7 +22,7 @@ describe("cutout api", () => {
 
     test("calculate the CME Cutout Index from the api response", async () => {
         const [cutout] = await request<CutoutResponse>("/cutout?start=2021-08-09&end=2021-08-13")
-            .then(([, body]) => Array.from(cutoutIndex(Cutout.parse(body))));
+            .then(([, body]) => Array.from(CutoutIndex.from(Cutout.parse(body))));
 
         // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2021/PC210813.txt
         expect(cutout).toEqual({
