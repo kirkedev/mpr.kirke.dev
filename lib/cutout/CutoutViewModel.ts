@@ -29,6 +29,13 @@ class CutoutViewModel {
         return this.#date;
     }
 
+    public get stats(): Stat[] {
+        return [
+            Stat.from("Cutout", this.cutout, this.#date),
+            Stat.from("Index", this.index, this.#date)
+        ];
+    }
+
     public get cutout(): Series {
         return this.#series[0];
     }
@@ -40,19 +47,8 @@ class CutoutViewModel {
     public get dates(): readonly [Date, Date] {
         return Observation.extent(flatten<Observation>(this.#series));
     }
-
     public get values(): readonly [number, number] {
         return extent(flatMap(this.#series, (record: Data) => record.value));
-    }
-
-    public get stats(): Stat[] {
-        return [{
-            label: "Cutout",
-            value: Stat.from(this.cutout, this.#date)
-        }, {
-            label: "Index",
-            value: Stat.from(this.index, this.#date)
-        }];
     }
 }
 

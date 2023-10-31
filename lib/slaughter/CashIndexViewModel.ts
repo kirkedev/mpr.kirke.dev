@@ -26,10 +26,7 @@ class CashIndexViewModel {
     }
 
     public get stats(): Stat {
-        return {
-            label: "Cash",
-            value: Stat.from(this.#series, this.#date)
-        };
+        return Stat.from("Cash", this.#series, this.#date);
     }
 
     public get series(): Series {

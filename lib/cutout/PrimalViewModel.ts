@@ -44,10 +44,8 @@ class PrimalViewModel {
     }
 
     public get stats(): Stat[] {
-        return Primals.map((label, index) => ({
-            label,
-            value: Stat.from(this.#series[index], this.#date)
-        }));
+        return Primals.map((label, index) =>
+            Stat.from(label, this.#series[index], this.#date));
     }
 
     public get series(): Series {
