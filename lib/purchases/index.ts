@@ -1,9 +1,9 @@
 import { getDate, type Nullable } from "..";
-import type Observation from "../Observation";
+import type { MprObservation } from "../Observation";
 import type { Arrangement, Basis, Seller } from "../PurchaseType";
 import { type PurchaseResponse } from "./response";
 
-interface Purchase extends Observation {
+interface Purchase extends MprObservation {
     seller: Seller;
     arrangement: Arrangement;
     basis: Basis;
