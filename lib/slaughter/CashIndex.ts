@@ -1,13 +1,14 @@
 import isSameDay from "date-fns/isSameDay";
-import { round } from ".";
-import Observation from "./Observation";
-import { Arrangement } from "./PurchaseType";
-import { sumBy } from "./itertools/accumulate";
-import filter from "./itertools/filter";
-import groupBy from "./itertools/groupBy";
-import map from "./itertools/map";
-import rolling from "./itertools/rolling";
-import type Slaughter from "./slaughter";
+import { round } from "../index";
+import type { Series } from "../Observation";
+import Observation from "../Observation";
+import { Arrangement } from "../PurchaseType";
+import { sumBy } from "../itertools/accumulate";
+import filter from "../itertools/filter";
+import groupBy from "../itertools/groupBy";
+import map from "../itertools/map";
+import rolling from "../itertools/rolling";
+import type Slaughter from "./index";
 
 interface CashIndex extends Observation {
     dailyPrice: number;
@@ -57,6 +58,18 @@ function cashIndex(records: Iterable<Slaughter>): Iterable<CashIndex> {
     }));
 }
 
-export default cashIndex;
+namespace CashIndex {
+    export const from = cashIndex;
 
-export type { CashIndex };
+    export const indexSeries = (cutout: Iterable<CashIndex>): Series =>
+        Array.from(map(cutout, ({ date, indexPrice: value }) => ({
+            date, value
+        })));
+
+    export const dailySeries = (cutout: Iterable<CashIndex>): Series =>
+        Array.from(map(cutout, ({ date, dailyPrice: value }) => ({
+            date, value
+        })));
+}
+
+export default CashIndex;

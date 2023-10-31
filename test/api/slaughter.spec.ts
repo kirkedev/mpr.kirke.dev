@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import Slaughter from "lib/slaughter";
 import type { SlaughterResponse } from "lib/slaughter/response";
-import cashIndex from "lib/CashIndex";
+import CashIndex from "lib/slaughter/CashIndex";
 import request from "./request";
 
 describe("slaughter api", () => {
@@ -25,7 +25,7 @@ describe("slaughter api", () => {
 
     test("calculate the CME Lean Hog Index", async () => {
         const cash = await request<SlaughterResponse>("/slaughter?start=2021-08-09&end=2021-08-16")
-            .then(([, body]) => Array.from(cashIndex(Slaughter.parse(body))));
+            .then(([, body]) => Array.from(CashIndex.from(Slaughter.parse(body))));
 
         expect(cash).toEqual([{
         //  https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2021/LH210809.txt

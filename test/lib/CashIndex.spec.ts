@@ -1,12 +1,12 @@
-import { describe, test, expect } from "vitest";
+import { describe, expect, test } from "vitest";
 import type { BarrowsGilts } from "lib/slaughter/mpr";
 import parse from "lib/slaughter/parse";
-import cashIndex from "lib/CashIndex";
+import CashIndex from "lib/slaughter/CashIndex";
 import load from "./resources";
 
 describe("Calculate the CME Lean Hog Index", () => {
     const slaughter = parse(load<BarrowsGilts>("cash_index.json"));
-    const index = Array.from(cashIndex(slaughter));
+    const index = Array.from(CashIndex.from(slaughter));
 
     test("Lean Hog Index for 2/1/2019", () => {
         // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2019/LH190201.txt
