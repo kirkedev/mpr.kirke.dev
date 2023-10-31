@@ -5,7 +5,7 @@ type Action<T> = UnaryOperator<T, T>;
 class Interactor<State> implements AsyncIterableIterator<State> {
     #done = false;
     #state: State;
-    #notify: UnaryOperator<void, void> = () => undefined;
+    readonly #subscribers = new Array<UnaryOperator<void, void>>();
 
     public constructor(state: State) {
         this.#state = state;
@@ -22,12 +22,20 @@ class Interactor<State> implements AsyncIterableIterator<State> {
         return this.#done
             ? Promise.resolve(this.result)
             : new Promise(resolve => {
-                this.#notify = () => resolve(this.result);
+                this.#subscribers.push(() => resolve(this.result));
             });
     }
 
     public [Symbol.asyncIterator](): AsyncIterableIterator<State> {
         return this;
+    }
+
+    #notify(): void{
+        const notify = this.#subscribers.shift();
+
+        if (notify != null ) {
+            notify();
+        }
     }
 
     public get state(): State {

@@ -77,3 +77,18 @@ test("collect interactor states to array", async () => {
     expect(interactor.done).toBe(true);
     expect(states).toEqual([10, 100, 1000]);
 });
+
+test("multiple subscribers", async () => {
+    const interactor = new Interactor(0);
+
+    const states = [
+        interactor.next().then(result => result.value),
+        interactor.next().then(result => result.value),
+        interactor.next().then(result => result.value)
+    ];
+
+    interactor.execute(plus(10));
+    interactor.execute(multiply(10));
+    interactor.execute(multiply(5));
+    expect(await Promise.all(states)).toEqual([10, 100, 500]);
+});
