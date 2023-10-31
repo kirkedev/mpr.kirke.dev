@@ -1,12 +1,17 @@
 import { describe, expect, test } from "vitest";
 import { get } from "svelte/store";
-import CutoutInteractor from "lib/cutout/Interactor";
 import Period from "lib/Period";
+import CutoutInteractor from "lib/cutout/CutoutInteractor";
 import api from "app/api";
+import { dropWhile } from "lib/itertools/drop";
+import CutoutIndex from "lib/cutout/CutoutIndex";
 
 describe("Cutout ViewModel", async () => {
     api.fetch(Period.OneMonth);
-    const interactor = await get(api).then(({ cutout }) => new CutoutInteractor(cutout, api.period));
+
+    const interactor = await get(api)
+        .then(({ cutout }) => dropWhile(CutoutIndex.from(cutout), cutout => cutout.date < api.period.start))
+        .then(cutout => new CutoutInteractor(cutout));
 
     test("derive Cutout ViewModel from api response", () => {
         const model = interactor.state;

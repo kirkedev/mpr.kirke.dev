@@ -61,12 +61,12 @@ function cashIndex(records: Iterable<Slaughter>): Iterable<CashIndex> {
 namespace CashIndex {
     export const from = cashIndex;
 
-    export const indexSeries = (cutout: Iterable<CashIndex>): Series =>
+    export const index = (cutout: Iterable<CashIndex>): Series =>
         Array.from(map(cutout, ({ date, indexPrice: value }) => ({
             date, value
         })));
 
-    export const dailySeries = (cutout: Iterable<CashIndex>): Series =>
+    export const daily = (cutout: Iterable<CashIndex>): Series =>
         Array.from(map(cutout, ({ date, dailyPrice: value }) => ({
             date, value
         })));

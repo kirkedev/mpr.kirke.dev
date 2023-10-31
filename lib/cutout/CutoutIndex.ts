@@ -1,4 +1,4 @@
-import { round } from "../index";
+import { round } from "..";
 import type { Series } from "../Observation";
 import Observation from "../Observation";
 import { sumBy } from "../itertools/accumulate";
@@ -36,12 +36,12 @@ const cutoutIndex = (cutout: Iterable<Cutout>): Iterable<CutoutIndex> =>
 namespace CutoutIndex {
     export const from = cutoutIndex;
 
-    export const indexSeries = (cutout: Iterable<CutoutIndex>): Series =>
+    export const index = (cutout: Iterable<CutoutIndex>): Series =>
         Array.from(map(cutout, ({ date, indexPrice: value }) => ({
             date, value
         })));
 
-    export const dailySeries = (cutout: Iterable<CutoutIndex>): Series =>
+    export const daily = (cutout: Iterable<CutoutIndex>): Series =>
         Array.from(map(cutout, ({ date, carcassPrice: value }) => ({
             date, value
         })));

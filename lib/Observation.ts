@@ -1,4 +1,5 @@
-import type { Comparator } from ".";
+import { type Comparator, extent as numericExtent } from ".";
+import map from "./itertools/map";
 
 interface Observation {
     date: Date;
@@ -25,8 +26,13 @@ namespace Observation {
     export const sort = <T extends Observation>(observations: Iterable<T>): T[] =>
         Array.from(observations).sort(compare);
 
-    export const find = <T extends Observation>(data: Iterable<T>, date: Date): T =>
-        bisect(sort(data), date);
+    export const find = <T extends Observation>(observations: Iterable<T>, date: Date): T =>
+        bisect(sort(observations), date);
+
+    export function extent<T extends Observation>(observations: Iterable<T>): readonly [Date, Date] {
+        const [min, max] = numericExtent(map(observations, observation => observation.date.getTime()));
+        return [new Date(min), new Date(max)] as const;
+    }
 }
 
 interface MprObservation extends Observation {

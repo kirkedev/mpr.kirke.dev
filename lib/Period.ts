@@ -1,8 +1,6 @@
 import { subMonths, subYears } from "date-fns";
 import type { UnaryOperator } from ".";
-
-const today = (): Date =>
-    import.meta.env.PROD ? new Date() : new Date(2021, 11, 23);
+import { today } from ".";
 
 type Description = "1M" | "3M" | "6M" | "1Y";
 
