@@ -4,23 +4,23 @@ import cutoutIndex from "../CutoutIndex";
 import type Period from "../Period";
 import { dropWhile } from "../itertools/drop";
 import map from "../itertools/map";
-import { formatNumber, getObservation } from "app/api/lib";
+import { formatNumber } from "app/api/lib";
 import type { Series } from "app/ui/LineChart";
+import Observation from "../Observation";
 
 interface Stat {
     label: string;
     value: string;
 }
 
-interface CutoutViewModel {
-    date: Date;
+interface CutoutViewModel extends Observation {
     stats: Stat[];
     cutout: Series;
     index: Series;
 }
 
 const getStat = (series: Series, date: Date): string =>
-    formatNumber(getObservation(series, date).value);
+    formatNumber(Observation.get(series, date).value);
 
 const selectDate = (date: Date): Action<CutoutViewModel> =>
     ({ cutout, index }) => ({

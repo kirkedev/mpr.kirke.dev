@@ -30,7 +30,7 @@ class Interactor<State> implements AsyncIterableIterator<State> {
         return this;
     }
 
-    #notify(): void{
+    #notify(): void {
         const notify = this.#subscribers.shift();
 
         if (notify != null ) {

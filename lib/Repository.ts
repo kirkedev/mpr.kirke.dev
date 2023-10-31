@@ -3,7 +3,7 @@ import min from "date-fns/min";
 import getISODay from "date-fns/getISODay";
 import isThisISOWeek from "date-fns/isThisISOWeek";
 import type { BinaryOperator, Optional } from ".";
-import Observation from "./Observation";
+import Observation, { type MprObservation } from "./Observation";
 import Week, { Weekday } from "./Week";
 import map from "./itertools/map";
 import filter from "./itertools/filter";
@@ -13,14 +13,14 @@ import { dropWhile } from "./itertools/drop";
 import { takeWhile } from "./itertools/take";
 import { each } from "./itertools/accumulate";
 
-interface Archive<T extends Observation> {
+interface Archive<T extends MprObservation> {
     readonly week: Week;
     readonly day: Weekday;
     readonly data: T[];
 }
 
 namespace Archive {
-    export const from = <T extends Observation>(data: T[]): Archive<T> => {
+    export const from = <T extends MprObservation>(data: T[]): Archive<T> => {
         const { reportDate: first } = data[0];
         const { reportDate: end } = data[data.length - 1];
 
@@ -32,14 +32,14 @@ namespace Archive {
     };
 }
 
-function archives<T extends Observation>(data: Iterable<T>): Iterable<Archive<T>> {
+function archives<T extends MprObservation>(data: Iterable<T>): Iterable<Archive<T>> {
     const weeks = groupBy(Observation.sort(data), (previous, current) =>
         Week.with(current.reportDate).equals(Week.with(previous.reportDate)));
 
     return map(weeks, Archive.from);
 }
 
-class Repository<T extends Observation> {
+class Repository<T extends MprObservation> {
     readonly #data = new LRUCache<string, Archive<T>>({
         max: 54,
         ttl: 24 * 60 * 60 * 1000

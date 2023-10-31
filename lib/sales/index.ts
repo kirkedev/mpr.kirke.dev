@@ -1,10 +1,10 @@
 import type { Nullable } from "..";
-import type Observation from "../Observation";
-import type { Cut } from "./parse";
 import { getDate } from "..";
+import type { MprObservation } from "../Observation";
+import type { Cut } from "./parse";
 import type { SalesResponse } from "./response";
 
-interface Sales extends Observation {
+interface Sales extends MprObservation {
     type: Cut;
     description: string;
     weight: number;

@@ -1,4 +1,4 @@
-import { describe, test, expect } from "vitest";
+import { describe, expect, test } from "vitest";
 import Cutout from "lib/cutout";
 import type { CutoutResponse } from "lib/cutout/response";
 import cutoutIndex from "lib/CutoutIndex";
@@ -27,7 +27,6 @@ describe("cutout api", () => {
         // https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/pork_cutout/2021/PC210813.txt
         expect(cutout).toEqual({
             date: new Date(2021, 7, 13),
-            reportDate: new Date(2021, 7, 13),
             indexPrice: 123.31,
             carcassPrice: 125.68,
             loads: 378.72

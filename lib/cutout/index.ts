@@ -1,8 +1,8 @@
 import { getDate } from "..";
-import type Observation from "../Observation";
+import type { MprObservation } from "../Observation";
 import type { CutoutResponse } from "./response";
 
-interface Cutout extends Observation {
+interface Cutout extends MprObservation {
     primalLoads: number;
     trimmingLoads: number;
     carcassPrice: number;
