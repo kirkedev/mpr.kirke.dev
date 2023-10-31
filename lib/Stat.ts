@@ -12,8 +12,10 @@ interface Stat {
 }
 
 namespace Stat {
-    export const from = (series: Series, date: Date): string =>
-        formatNumber(Observation.find(series, date).value);
+    export const from = (label: string, series: Series, date: Date): Stat => ({
+        label,
+        value: formatNumber(Observation.find(series, date).value)
+    });
 }
 
 export default Stat;
