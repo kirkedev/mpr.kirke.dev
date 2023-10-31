@@ -40,7 +40,7 @@ const store: ApiStore = {
     subscribe,
     fetch: period.set,
     get period(): Period {
-        return get(period); 
+        return get(period);
     }
 };
 

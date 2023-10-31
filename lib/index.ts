@@ -1,5 +1,6 @@
 import format from "date-fns/format";
 import parseDate from "date-fns/parse";
+import { reduce } from "./itertools/accumulate";
 
 type UnaryOperator<T, R> = (item: T) => R;
 type Callback<T> = UnaryOperator<T, unknown>;
@@ -18,13 +19,19 @@ const round = (value: number): number =>
 
 const dateFormat = "yyyy-MM-dd";
 
-const today = new Date();
+const today = (): Date =>
+    import.meta.env.PROD ? new Date() : new Date(2021, 11, 23);
 
 const getDate = (date: string): Date =>
-    parseDate(date, dateFormat, today);
+    parseDate(date, dateFormat, today());
 
 const formatDate = (date: Date): string =>
     format(date, dateFormat);
+
+const extent = (values: Iterable<number>): readonly [number, number] =>
+    reduce(values, ([min, max], value) =>
+        [Math.min(value, min), Math.max(value, max)]
+    , [-Infinity, Infinity]);
 
 export type {
     UnaryOperator,
@@ -37,4 +44,4 @@ export type {
     Comparator
 };
 
-export { invert, round, getDate, formatDate };
+export { invert, round, getDate, formatDate, today, extent };
