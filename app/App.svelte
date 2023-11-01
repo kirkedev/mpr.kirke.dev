@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import type Period from "lib/Period";
-    import Cutout from "./Cutout.svelte";
     import data from "./api";
+    import Cutout from "./reports/Cutout.svelte";
 </script>
 
 <style lang="postcss">

@@ -7,7 +7,7 @@
     @apply overflow-x-scroll;
 }
 
-.primal :global(.chart) {
+.primal .chart {
     @apply px-4;
     @apply xl:px-10;
 }
@@ -24,7 +24,7 @@
     @apply border-transparent;
 }
 
-.stat:global(.active) {
+.stat.active {
     @apply border-purple-400;
     @apply text-gray-700;
 }
@@ -46,19 +46,19 @@
     @apply text-xs;
 }
 
-.primal :global(.plot) g path {
+.primal .plot g path {
     @apply stroke-purple-400;
     stroke-width: 4;
 }
 
-.primal :global(.plot) g circle {
+.primal .plot g circle {
     @apply fill-purple-400;
 }
 
-.primal :global(.marker) rect {
+.primal .marker rect {
     @apply fill-purple-400;
 }
 
-.primal :global(.marker) text {
+.primal .marker text {
     @apply fill-white;
 }
