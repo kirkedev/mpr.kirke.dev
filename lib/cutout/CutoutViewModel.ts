@@ -47,6 +47,7 @@ class CutoutViewModel {
     public get dates(): readonly [Date, Date] {
         return Observation.extent(flatten<Observation>(this.#series));
     }
+
     public get values(): readonly [number, number] {
         return extent(flatMap(this.#series, (record: Data) => record.value));
     }

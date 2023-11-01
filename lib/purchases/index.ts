@@ -1,6 +1,8 @@
 import { getDate, type Nullable } from "..";
-import type { MprObservation } from "../Observation";
-import type { Arrangement, Basis, Seller } from "../PurchaseType";
+import type { MprObservation, Series } from "../Observation";
+import { Arrangement, type Basis, type Seller } from "../PurchaseType";
+import map from "../itertools/map";
+import filter from "../itertools/filter";
 import { type PurchaseResponse } from "./response";
 
 interface Purchase extends MprObservation {
@@ -19,6 +21,13 @@ namespace Purchase {
             date: getDate(record.date),
             reportDate: getDate(record.reportDate)
         }));
+
+    export const marketFormula = (purchases: Iterable<Purchase>): Series =>
+        Array.from(map(filter(purchases, purchase => purchase.arrangement === Arrangement.MarketFormula),
+            ({ date, avgPrice: value }) => ({
+                date,
+                value: value ?? Number.NaN
+            })));
 }
 
 export default Purchase;
