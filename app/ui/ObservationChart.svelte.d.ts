@@ -15,8 +15,8 @@ declare interface Events {
 
 declare interface Slots {
     plot: {
-        x: ScaleLinear<number, number>;
-        y: ScaleTime<number, Date>;
+        x: ScaleTime<number, number>;
+        y: ScaleLinear<number, number>;
     };
 }
 
