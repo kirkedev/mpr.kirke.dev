@@ -198,6 +198,28 @@ test("combine two months into one sequence", () => {
     expect(last(merged)).toEqual([undefined, new Date(2020, 1, 29)]);
 });
 
+test("transpose iterables", () => {
+    const january = dates(new Date(2020, 0, 1), new Date(2020, 0, 31));
+    const years = map(january, date => date.getFullYear());
+    const months = map(january, date => date.getMonth());
+    const days = map(january, date => date.getDate());
+    const merged = zip(january, years, months, days);
+    expect(first(merged)).toEqual([new Date(2020, 0, 1), 2020, 0, 1]);
+
+    expect(Array.from(slice(merged, 1, 5))).toEqual([
+        [new Date(2020, 0, 2), 2020, 0, 2],
+        [new Date(2020, 0, 3), 2020, 0, 3],
+        [new Date(2020, 0, 4), 2020, 0, 4],
+        [new Date(2020, 0, 5), 2020, 0, 5]
+    ]);
+
+    const [date, year, month, day] = last(merged);
+    expect(date).toEqual(new Date(2020, 0, 31));
+    expect(year).toEqual(2020);
+    expect(month).toEqual(0);
+    expect(day).toEqual(31);
+});
+
 test("group dates by Week", () => {
     const range = dates(new Date(2020, 3, 1), new Date(2020, 3, 30));
 

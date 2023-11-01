@@ -1,26 +1,29 @@
 import { iterate } from ".";
 
-function* mergeIterators<T, U>(first: Iterator<T>, second: Iterator<U>): Iterator<[T, U]> {
-    let firstResult = first.next();
-    let secondResult = second.next();
+type SpreadIterable<T> = { [K in keyof T]: Iterable<T[K]> };
+type SpreadIterator<T> = { [K in keyof T]: Iterator<T[K]> };
 
-    while (!firstResult.done || !secondResult.done) {
-        yield [firstResult.value, secondResult.value];
-        firstResult = first.next();
-        secondResult = second.next();
+function* mergeIterators<T extends Array<unknown>>(...iterators: SpreadIterator<T>): Iterator<T> {
+    let results = iterators.map(iterator => iterator.next());
+
+    while (!results.every(result => result.done)) {
+        yield results.map(result => result.value) as T;
+        results = iterators.map(iterator => iterator.next());
     }
 }
 
-class MergedIterable<T, U> implements Iterable<[T, U]> {
-    public constructor(
-        private readonly first: Iterable<T>,
-        private readonly second: Iterable<U>) {}
+class MergedIterable<T extends Array<unknown>> implements Iterable<T> {
+    readonly #iterables: SpreadIterable<T>;
 
-    public [Symbol.iterator] = (): Iterator<[T, U]> =>
-        mergeIterators(iterate(this.first), iterate(this.second));
+    public constructor(iterables: SpreadIterable<T>) {
+        this.#iterables = iterables;
+    }
+
+    public [Symbol.iterator] = (): Iterator<T> =>
+        mergeIterators(...this.#iterables.map(iterate)) as Iterator<T>;
 }
 
-const zip = <T, U>(first: Iterable<T>, second: Iterable<U>): Iterable<[T, U]> =>
-    new MergedIterable(first, second);
+const zip = <T extends Array<unknown>>(...iterables: SpreadIterable<T>): Iterable<T> =>
+    new MergedIterable(iterables);
 
 export default zip;
