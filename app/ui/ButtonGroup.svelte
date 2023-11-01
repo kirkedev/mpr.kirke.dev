@@ -1,10 +1,12 @@
+<script lang="ts" context="module">
+    import { createEventDispatcher } from "svelte";
+</script>
+
 <style lang="postcss">
     @import "./ButtonGroup.css";
 </style>
 
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
-
     type T = $$Generic<object>;
 
     interface Events {

@@ -1,0 +1,8 @@
+svg {
+    @apply w-full;
+    @apply h-full;
+}
+
+.chart {
+    @apply touch-none;
+}

@@ -1,12 +1,14 @@
-import { type SvelteComponentTyped } from "svelte";
+import { type SvelteComponent } from "svelte";
 
 declare interface Props<T extends object> {
     items: T[];
     selected?: T;
 }
 
-declare interface Events<T extends object> {
-    select: T;
+export declare interface Events<T extends object> {
+    select: CustomEvent<T>;
 }
 
-export default class extends SvelteComponentTyped<Props<T>, Events<T>, never> {}
+declare class ButtonGroup<T> extends SvelteComponent<Props<T>, Events<T>> {}
+
+export default ButtonGroup;
