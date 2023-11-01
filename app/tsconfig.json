@@ -1,6 +1,6 @@
 {
     "rootDir": "..",
-    "include": ["**/*.ts", "**/*.svelte", "**/*.css"],
+    "include": ["**/*.ts", "**/*.d.ts", "**/*.svelte", "**/*.css"],
     "references": [
         { "path":  "../lib" }
     ],
