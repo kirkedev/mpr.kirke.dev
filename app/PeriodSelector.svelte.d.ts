@@ -1,4 +1,14 @@
-import ButtonGroup from "ui/ButtonGroup.svelte";
 import type Period from "lib/Period";
+import { SvelteComponent } from "svelte";
 
-export default class extends ButtonGroup<Period> {}
+interface Props {
+
+}
+
+interface Events {
+    select: CustomEvent<Period>;
+}
+
+declare class PeriodSelector extends SvelteComponent<Props, Events> {}
+
+export default PeriodSelector;

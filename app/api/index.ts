@@ -36,12 +36,12 @@ const { subscribe } = derived(period, function(period) {
     }));
 });
 
-const store: ApiStore = {
+const store = (): ApiStore => ({
     subscribe,
     fetch: period.set,
     get period(): Period {
         return get(period);
     }
-};
+});
 
 export default store;
