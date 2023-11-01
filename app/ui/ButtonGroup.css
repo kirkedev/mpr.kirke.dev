@@ -17,7 +17,7 @@
     @apply cursor-pointer;
 }
 
-.items > .selected.item {
+.items > .item[data-selected=true] {
     @apply cursor-default;
     @apply bg-blue-500;
     @apply text-white;
