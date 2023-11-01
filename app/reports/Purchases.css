@@ -6,7 +6,7 @@
 
 }
 
-.purchases :global(.chart) {
+.purchases .chart {
     @apply px-4;
     @apply xl:px-10;
 }
@@ -46,29 +46,29 @@
     @apply text-xs;
 }
 
-.purchases :global(.plot) g:first-child path {
+.purchases .plot g:first-child path {
     @apply stroke-pink-400;
     stroke-width: 4;
 }
 
-.purchases :global(.plot) g:nth-child(2) path {
+.purchases .plot g:nth-child(2) path {
     @apply stroke-pink-400;
     @apply opacity-25;
     stroke-width: 4;
 }
 
-.purchases :global(.plot) g:first-child circle {
+.purchases .plot g:first-child circle {
     @apply fill-pink-400;
 }
 
-.purchases :global(.plot) g:nth-child(2) circle {
+.purchases .plot g:nth-child(2) circle {
     @apply hidden;
 }
 
-.purchases :global(.marker) rect {
+.purchases .marker rect {
     @apply fill-pink-400;
 }
 
-.purchases :global(.marker) text {
+.purchases .marker text {
     @apply fill-white;
 }

@@ -7,7 +7,7 @@
     @apply xl:px-10;
 }
 
-.cash :global(.chart) {
+.cash .chart {
     @apply px-4;
     @apply xl:px-10;
 }
@@ -34,19 +34,19 @@
     @apply font-normal;
 }
 
-.cash :global(.plot) g:first-child path {
+.cash .plot g:first-child path {
     stroke-width: 4;
     @apply stroke-emerald-400;
 }
 
-.cash :global(.plot) g:first-child circle {
+.cash .plot g:first-child circle {
     @apply fill-emerald-400;
 }
 
-.cash :global(.marker) rect {
+.cash .marker rect {
     @apply fill-emerald-400;
 }
 
-.cash :global(.marker) text {
+.cash .marker text {
     @apply fill-white;
 }
