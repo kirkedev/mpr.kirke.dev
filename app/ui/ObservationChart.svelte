@@ -15,7 +15,6 @@
     export let height = 340;
     export let dates: [Date, Date];
     export let values: [number, number];
-
     let plot: SVGElement;
 
     type Events = {
