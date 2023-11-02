@@ -46,4 +46,5 @@ namespace Primal {
 }
 
 export default Primal;
+
 export { Primals };
