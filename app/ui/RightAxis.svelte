@@ -5,24 +5,25 @@
 </script>
 
 <style lang="postcss">
-    @import "Axis.css";
+    @import "./Axis.css";
 </style>
 
 <script lang="ts">
     export let scale: AxisScale<number>;
+    export let left = 0;
+    export let top = 0;
     export let ticks = 5;
-    export let tickSizeInner = 10;
-    export let tickSizeOuter = 0;
-    export let tickPadding = 24;
+    export let tickSize = 0;
+    export let tickPadding = 12;
 
     function axis(element: SVGGElement): void {
         select(element).transition()
             .call(axisRight(scale)
                 .ticks(ticks)
-                .tickSizeInner(tickSizeInner)
-                .tickSizeOuter(tickSizeOuter)
+                .tickSizeInner(tickSize)
+                .tickSizeOuter(0)
                 .tickPadding(tickPadding));
     }
 </script>
 
-<g class="y axis" use:axis/>
+<g class="y axis" transform={`translate(${left}, ${top})`} use:axis/>
