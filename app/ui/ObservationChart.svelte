@@ -17,8 +17,9 @@
     export let values: [number, number];
 
     const margin = 24;
+    const bottomMargin = 30;
     $: right = width - margin;
-    $: bottom = height - margin;
+    $: bottom = height - bottomMargin;
     $: x = scaleTime().domain(dates).rangeRound([0, right]);
     $: y = scaleLinear().domain(values).rangeRound([bottom, 0]).nice();
 
