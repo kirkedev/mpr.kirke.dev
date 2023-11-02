@@ -3,9 +3,9 @@ import type { AxisScale } from "d3-axis";
 
 declare interface Props {
     scale: AxisScale<Date>;
+    left?: number;
+    top?: number;
     ticks?: number;
-    tickSizeInner?: number;
-    tickSizeOuter?: number;
     tickPadding?: number;
 }
 

@@ -21,7 +21,8 @@ export default defineConfig({
                 tailwindcss({
                     content: ["index.html", "**/*.svelte", "**/*.css"],
                     plugins: [svgColors]
-                }) as Plugin]
+                }) as Plugin
+            ]
         }
     },
     server: {

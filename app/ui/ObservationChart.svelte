@@ -15,7 +15,12 @@
     export let height = 340;
     export let dates: [Date, Date];
     export let values: [number, number];
-    let plot: SVGElement;
+
+    const margin = 24;
+    $: right = width - margin;
+    $: bottom = height - margin;
+    $: x = scaleTime().domain(dates).rangeRound([0, right]);
+    $: y = scaleLinear().domain(values).rangeRound([bottom, 0]).nice();
 
     type Events = {
         selectDate: Date;
@@ -23,12 +28,11 @@
     };
 
     const dispatch = createEventDispatcher<Events>();
-    const x = scaleTime().domain(dates).rangeRound([0, width]);
-    const y = scaleLinear().domain(values).rangeRound([height, 0]);
+    let svg: SVGSVGElement;
 
-    function selectDate(event: MouseEvent | TouchEvent): void {
-        const [position] = pointer(event, plot);
-        const date = x.invert(position);
+    function selectDate(event: PointerEvent): void {
+        const [position] = pointer(event, svg);
+        const date = x.invert(Math.max(Math.min(position, right), 0));
         dispatch("selectDate", date);
     }
 
@@ -38,10 +42,17 @@
 </script>
 
 <div class="chart" on:pointermove={selectDate} on:pointerleave={resetDate}>
-    <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
-        <BottomAxis scale={x}/>
-        <RightAxis scale={y}/>
-        <g class="plot" bind:this={plot}>
+    <svg bind:this={svg} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
+        <BottomAxis
+            scale={x}
+            top={bottom}/>
+
+        <RightAxis
+            scale={y}
+            left={width}
+            tickSize={-width}/>
+
+        <g class="plot">
             <slot name="plot" x={x} y={y}/>
         </g>
     </svg>
