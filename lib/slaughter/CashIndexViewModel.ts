@@ -21,10 +21,6 @@ class CashIndexViewModel {
         this.#date = date;
     }
 
-    public get date(): Date {
-        return this.#date;
-    }
-
     public get stats(): Stat {
         return Stat.from("Cash", this.#series, this.#date);
     }
@@ -38,7 +34,11 @@ class CashIndexViewModel {
     }
 
     public get values(): readonly [number, number] {
-        return extent(map(this.#series, (record: Data) => record.value));
+        return extent(map<Data, number>(this.#series, record => record.value));
+    }
+
+    public get selected(): Data {
+        return Observation.find(this.series, this.#date);
     }
 }
 

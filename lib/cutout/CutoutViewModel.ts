@@ -24,11 +24,6 @@ class CutoutViewModel {
         this.#series = series;
         this.#date = date;
     }
-
-    public get date(): Date {
-        return this.#date;
-    }
-
     public get stats(): Stat[] {
         return [
             Stat.from("Cutout", this.cutout, this.#date),
@@ -49,7 +44,11 @@ class CutoutViewModel {
     }
 
     public get values(): readonly [number, number] {
-        return extent(flatMap(this.#series, (record: Data) => record.value));
+        return extent(flatMap<Data, number>(this.#series, record => record.value));
+    }
+
+    public get selected(): Data {
+        return Observation.find(this.cutout, this.#date);
     }
 }
 

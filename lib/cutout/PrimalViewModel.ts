@@ -56,7 +56,11 @@ class PrimalViewModel {
     }
 
     public get values(): readonly [number, number] {
-        return extent(flatMap(this.#series, (record: Data) => record.value));
+        return extent(flatMap<Data, number>(this.#series, record => record.value));
+    }
+
+    public get selected(): Data {
+        return Observation.find(this.series, this.#date);
     }
 }
 
