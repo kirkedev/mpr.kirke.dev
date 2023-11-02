@@ -6,8 +6,9 @@ declare interface Props {
     x: ScaleTime<number, number>;
     y: ScaleLinear<number, number>;
     point: Data;
+    size?: number;
 }
 
-declare class Marker extends SvelteComponent<Props> {}
+declare class Circle extends SvelteComponent<Props> {}
 
-export default Marker;
+export default Circle;
