@@ -2,6 +2,8 @@
     import type CutoutIndex from "lib/cutout/CutoutIndex";
     import CutoutInteractor from "lib/cutout/CutoutInteractor";
     import ObservationChart from "../ui/ObservationChart.svelte";
+    import Circle from "../ui/Circle.svelte";
+    import Marker from "../ui/Marker.svelte";
     import Path from "../ui/Path.svelte";
     import Stats from "../ui/Stats.svelte";
     import store from "../store";
@@ -27,9 +29,10 @@
         on:resetDate={interactor.resetDate}>
 
         <svelte:fragment slot="plot" let:x let:y>
+            <Marker x={x} y={y} point={$model.selected}/>
             <Path x={x} y={y} data={$model.cutout} />
             <Path x={x} y={y} data={$model.index} />
+            <Circle x={x} y={y} point={$model.selected}/>
         </svelte:fragment>
-
     </ObservationChart>
 </div>
