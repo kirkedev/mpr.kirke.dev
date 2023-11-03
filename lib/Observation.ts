@@ -5,6 +5,16 @@ interface Observation {
     date: Date;
 }
 
+interface MprObservation extends Observation {
+    reportDate: Date;
+}
+
+interface Data extends Observation {
+    value: number;
+}
+
+type Series = Data[];
+
 const compare: Comparator<Observation> = ({ date: a }: Observation, { date: b }: Observation) =>
     a === b ? 0 : a < b ? -1 : 1;
 
@@ -34,16 +44,6 @@ namespace Observation {
         return [new Date(min), new Date(max)] as const;
     }
 }
-
-interface MprObservation extends Observation {
-    reportDate: Date;
-}
-
-interface Data extends Observation {
-    value: number;
-}
-
-type Series = Data[];
 
 export default Observation;
 export type { MprObservation, Data, Series };

@@ -3,7 +3,7 @@ import { formatDate, getDate } from "lib";
 import QuerySchema, { type DateRangeQuery } from "lib/DateRangeQuery";
 import Repository from "lib/Repository";
 import type Cutout from "lib/cutout";
-import parse from "lib/cutout/parse";
+import parse from "lib/cutout/mpr";
 import CutoutResponse from "lib/cutout/response";
 import client from "./client";
 

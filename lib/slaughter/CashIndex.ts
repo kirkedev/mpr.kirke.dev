@@ -1,14 +1,13 @@
 import isSameDay from "date-fns/isSameDay";
-import { round } from "../index";
-import type { Series } from "../Observation";
-import Observation from "../Observation";
+import { round } from "..";
+import Observation, { type Series } from "../Observation";
 import { Arrangement } from "../PurchaseType";
 import { sumBy } from "../itertools/accumulate";
 import filter from "../itertools/filter";
 import groupBy from "../itertools/groupBy";
 import map from "../itertools/map";
 import rolling from "../itertools/rolling";
-import type Slaughter from "./index";
+import type Slaughter from ".";
 
 interface CashIndex extends Observation {
     dailyPrice: number;

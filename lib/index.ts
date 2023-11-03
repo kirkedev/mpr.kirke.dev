@@ -31,7 +31,7 @@ const formatDate = (date: Date): string =>
 const extent = (values: Iterable<number>): readonly [number, number] =>
     reduce(values, ([min, max], value) =>
         [Math.min(value, min), Math.max(value, max)]
-    , [-Infinity, Infinity]);
+    , [Infinity, -Infinity]);
 
 export type {
     UnaryOperator,
