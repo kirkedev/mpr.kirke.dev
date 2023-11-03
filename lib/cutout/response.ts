@@ -18,4 +18,5 @@ const CutoutResponse = Type.Array(Type.Object({
 type CutoutResponse = Static<typeof CutoutResponse>;
 
 export default CutoutResponse;
+
 export type { CutoutResponse };

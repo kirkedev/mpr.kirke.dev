@@ -24,6 +24,7 @@ class CutoutViewModel {
         this.#series = series;
         this.#date = date;
     }
+
     public get stats(): Stat[] {
         return [
             Stat.from("Cutout", this.cutout, this.#date),

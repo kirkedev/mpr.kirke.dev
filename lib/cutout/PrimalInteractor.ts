@@ -16,7 +16,7 @@ class PrimalInteractor extends Interactor<PrimalViewModel> {
         this.execute(PrimalViewModel.selectDate());
     }
 
-    public select(primal: Primal): void {
+    public selectPrimal(primal: Primal): void {
         this.execute(PrimalViewModel.selectPrimal(primal));
     }
 }
