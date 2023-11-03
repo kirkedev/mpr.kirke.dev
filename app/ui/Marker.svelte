@@ -16,13 +16,13 @@
     $: left = x(point.date);
     $: [bottom, top] = y.range();
 
-    const height = 26;
-    const width = 64;
+    const height = 24;
+    const width = 52;
 </script>
 
 <g class="marker" transform={`translate(${left})`}>
     <line y1={top} y2={bottom}/>;
-    <g class="tooltip" transform={`translate(${-width / 2}, ${bottom - height / 2 + 4})`}>
+    <g class="tooltip" transform={`translate(${-width / 2}, ${bottom + 5 - height / 2})`}>
         <rect height={height} width={width} rx={4} y={height / 2 - 1} />
         <text dominant-baseline="middle" text-anchor="middle" y={height} x={width / 2}>
             {format(point.date, "MMM dd")}
