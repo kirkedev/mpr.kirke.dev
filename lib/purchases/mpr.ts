@@ -1,9 +1,27 @@
-import type { PurchaseType } from "../PurchaseType";
-import { Arrangement, Basis, Seller } from "../PurchaseType";
+import type { Nullable } from "..";
+import { Arrangement, Basis, Seller, type PurchaseType } from "../PurchaseType";
 import map from "../itertools/map";
-import { getDate, optFloat, optInt } from "../mpr";
+import { getDate, optFloat, optInt, type MprRecord, type MprResponse } from "../mpr";
+import type MprReport from "../mpr/MprReport";
+import type MprSection from "../mpr/MprSection";
 import type Purchase from ".";
-import type { PurchaseRecord, Purchases } from "./mpr";
+
+interface PurchaseRecord extends MprRecord {
+    report_date: string;
+    reported_for_date: string;
+    purchase_type: string;
+    head_count: Nullable<string>;
+    price_avg: Nullable<string>;
+    price_min: Nullable<string>;
+    price_max: Nullable<string>;
+}
+
+type Section = "National Volume and Price Data";
+type Purchases = MprResponse<Section, PurchaseRecord>;
+
+interface PurchaseReport extends MprReport<Section> {
+    section(section: "National Volume and Price Data"): MprSection<"National Volume and Price Data", PurchaseRecord>;
+}
 
 const PurchaseTypes: Record<string, PurchaseType> = {
     "Negotiated (carcass basis)": [Seller.All, Arrangement.Negotiated, Basis.Carcass],
@@ -37,3 +55,5 @@ const parse = (response: Purchases): Iterable<Purchase> =>
     map(response.results, parseRecord);
 
 export default parse;
+
+export type { PurchaseReport, Purchases, PurchaseRecord };

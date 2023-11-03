@@ -3,7 +3,7 @@ import { formatDate, getDate } from "lib";
 import QuerySchema, { type DateRangeQuery } from "lib/DateRangeQuery";
 import Repository from "lib/Repository";
 import type Purchase from "lib/purchases";
-import parse from "lib/purchases/parse";
+import parse from "lib/purchases/mpr";
 import PurchaseResponse from "lib/purchases/response";
 import client from "./client";
 

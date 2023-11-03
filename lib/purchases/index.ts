@@ -4,6 +4,7 @@ import { Arrangement, type Basis, type Seller } from "../PurchaseType";
 import map from "../itertools/map";
 import filter from "../itertools/filter";
 import { type PurchaseResponse } from "./response";
+import Observation from "../Observation";
 
 interface Purchase extends MprObservation {
     seller: Seller;
@@ -23,7 +24,7 @@ namespace Purchase {
         }));
 
     export const marketFormula = (purchases: Iterable<Purchase>): Series =>
-        Array.from(map(filter(purchases, purchase => purchase.arrangement === Arrangement.MarketFormula),
+        Observation.sort(map(filter(purchases, purchase => purchase.arrangement === Arrangement.MarketFormula),
             ({ date, avgPrice: value }) => ({
                 date,
                 value: value ?? Number.NaN
