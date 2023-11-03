@@ -1,10 +1,9 @@
-import type { MprRecord, MprResponse } from "../mpr";
-import type MprReport from "../mpr/MprReport";
-import type MprSection from "../mpr/MprSection";
-import type Cutout from "./index";
-import { getDate, getFloat } from "../mpr";
 import map from "../itertools/map";
 import zip from "../itertools/zip";
+import { getDate, getFloat, type MprRecord, type MprResponse } from "../mpr";
+import type MprReport from "../mpr/MprReport";
+import type MprSection from "../mpr/MprSection";
+import type Cutout from ".";
 
 interface VolumeRecord extends MprRecord {
     slug_id: string;
@@ -40,7 +39,7 @@ interface CutoutReport extends MprReport<Section> {
     section(section: "Cutout and Primal Values"): MprSection<"Cutout and Primal Values", ValuesRecord>;
 }
 
-const parse = ([volume, values]: [VolumeRecord, ValuesRecord]): Cutout => ({
+const parseRecord = ([volume, values]: [VolumeRecord, ValuesRecord]): Cutout => ({
     date: getDate(volume.report_date),
     reportDate: getDate(volume.report_date),
     primalLoads: getFloat(volume.temp_cuts_total_load),
@@ -54,9 +53,9 @@ const parse = ([volume, values]: [VolumeRecord, ValuesRecord]): Cutout => ({
     ribPrice: getFloat(values.pork_rib)
 });
 
-const parseResponse = (volume: VolumeResponse, values: ValuesResponse): Iterable<Cutout> =>
-    map(zip(volume.results, values.results), parse);
+const parse = (volume: VolumeResponse, values: ValuesResponse): Iterable<Cutout> =>
+    map(zip(volume.results, values.results), parseRecord);
 
-export default parseResponse;
+export default parse;
 
 export type { CutoutReport, ValuesRecord, VolumeRecord, ValuesResponse, VolumeResponse };

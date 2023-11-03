@@ -146,7 +146,7 @@ describe("Map cutout index values to data series", () => {
         }]);
     });
 
-    test("Daily values series", () => {
+    test("Daily value series", () => {
         expect(CutoutIndex.daily(cutout).slice(-5)).toEqual([{
             date:new Date(2020, 3, 14),
             value: 53.07

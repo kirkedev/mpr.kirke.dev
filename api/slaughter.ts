@@ -3,7 +3,7 @@ import { formatDate, getDate } from "lib";
 import QuerySchema, { type DateRangeQuery } from "lib/DateRangeQuery";
 import Repository from "lib/Repository";
 import type Slaughter from "lib/slaughter";
-import parse from "lib/slaughter/parse";
+import parse from "lib/slaughter/mpr";
 import SlaughterResponse from "lib/slaughter/response";
 import client from "./client";
 
