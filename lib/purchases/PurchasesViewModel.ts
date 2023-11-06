@@ -1,9 +1,10 @@
-import { extent, today } from "..";
+import { extent } from "..";
 import map from "../itertools/map";
 import type { Action } from "../Interactor";
 import Series, { type Data } from "../time/Series";
 import Stat from "../Stat";
 import Purchase from ".";
+import { today } from "../time";
 
 class PurchasesViewModel {
     public static from = (purchases: Iterable<Purchase>): PurchasesViewModel =>

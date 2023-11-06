@@ -1,8 +1,8 @@
 import type { Nullable } from "..";
-import { getDate } from "..";
 import type { MprObservation } from "../time/Series";
 import type { Cut } from "./parse";
 import type { SalesResponse } from "./response";
+import { getDate } from "../time";
 
 interface Sales extends MprObservation {
     type: Cut;

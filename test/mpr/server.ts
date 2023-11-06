@@ -2,11 +2,11 @@ import { resolve } from "path";
 import { readFile } from "fs/promises";
 import type { IncomingMessage, Server, ServerResponse } from "http";
 import { createServer } from "http";
-import { getDate } from "lib";
 import Week from "lib/time/Week";
 import map from "lib/itertools/map";
 import { reduce } from "lib/itertools/accumulate";
 import type { MprResponse } from "lib/mpr";
+import { getDate } from "lib/time";
 
 const root = process.cwd().endsWith("mpr") ? "." : "./mpr";
 

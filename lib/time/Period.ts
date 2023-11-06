@@ -1,6 +1,7 @@
 import { subMonths, subYears } from "date-fns";
 import type { UnaryOperator } from "../index";
-import { today } from "../index";
+
+import { today } from "./index";
 
 type Description = "1M" | "3M" | "6M" | "1Y";
 

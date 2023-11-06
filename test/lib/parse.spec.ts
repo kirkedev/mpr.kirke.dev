@@ -1,6 +1,6 @@
-import { describe, test, expect } from "vitest";
-import { formatDate, getDate as parseDate } from "lib";
+import { describe, expect, test } from "vitest";
 import { getDate, optFloat, optInt } from "lib/mpr";
+import { formatDate, getDate as parseDate } from "lib/time";
 
 describe("get an optional integer value from a record", () => {
     test("key is present with value", () => {
