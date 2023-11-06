@@ -1,6 +1,6 @@
 import isSameDay from "date-fns/isSameDay";
 import { round } from "..";
-import Observation, { type Series } from "../Observation";
+import Observation, { type Series } from "../Series";
 import { Arrangement } from "../PurchaseType";
 import { sumBy } from "../itertools/accumulate";
 import filter from "../itertools/filter";

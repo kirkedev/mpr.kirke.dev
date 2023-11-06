@@ -1,5 +1,5 @@
-import { type Comparator, extent as numericExtent } from ".";
 import map from "./itertools/map";
+import { type Comparator, extent as numericExtent } from ".";
 
 interface Observation {
     date: Date;
@@ -32,7 +32,7 @@ function bisect<T extends Observation>(observations: T[], date: Date): T {
             : bisect(observations.slice(position), date);
 }
 
-namespace Observation {
+namespace Series {
     export const sort = <T extends Observation>(observations: Iterable<T>): T[] =>
         Array.from(observations).sort(compare);
 
@@ -45,5 +45,6 @@ namespace Observation {
     }
 }
 
-export default Observation;
-export type { MprObservation, Data, Series };
+export default Series;
+
+export type { Observation, MprObservation, Data };

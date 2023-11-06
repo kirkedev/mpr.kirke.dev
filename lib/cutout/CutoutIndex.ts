@@ -1,6 +1,6 @@
 import { round } from "..";
-import type { Series } from "../Observation";
-import Observation from "../Observation";
+import type { Series } from "../Series";
+import Observation from "../Series";
 import { sumBy } from "../itertools/accumulate";
 import map from "../itertools/map";
 import rolling from "../itertools/rolling";

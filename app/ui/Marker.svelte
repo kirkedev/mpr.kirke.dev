@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import { format } from "date-fns";
-    import { type ScaleTime, type ScaleLinear } from "d3-scale";
-    import type { Data } from "lib/Observation";
+    import { type ScaleLinear, type ScaleTime } from "d3-scale";
+    import type { Data } from "lib/Series";
 </script>
 
 <style lang="postcss">

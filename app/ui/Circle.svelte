@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import type { ScaleLinear, ScaleTime } from "d3-scale";
-    import type { Data } from "lib/Observation";
+    import type { Data } from "lib/Series";
 </script>
 
 <script lang="ts">

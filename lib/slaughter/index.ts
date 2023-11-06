@@ -1,5 +1,5 @@
 import { getDate, type Nullable } from "..";
-import type { MprObservation } from "../Observation";
+import type { MprObservation } from "../Series";
 import type { Arrangement, Basis, Seller } from "../PurchaseType";
 import type { SlaughterResponse } from "./response";
 

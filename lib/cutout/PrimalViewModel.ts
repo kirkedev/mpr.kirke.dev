@@ -2,7 +2,7 @@ import { extent, today } from "..";
 import flatten from "../itertools/flatten";
 import { flatMap } from "../itertools/map";
 import type { Action } from "../Interactor";
-import Observation, { type Data, type Series } from "../Observation";
+import Observation, { type Data, type Series } from "../Series";
 import Stat from "../Stat";
 import Primal, { Primals } from "./Primal";
 import type Cutout from ".";
