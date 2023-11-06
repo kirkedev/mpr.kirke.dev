@@ -3,7 +3,7 @@ import { readFile } from "fs/promises";
 import type { IncomingMessage, Server, ServerResponse } from "http";
 import { createServer } from "http";
 import { getDate } from "lib";
-import Week from "lib/Week";
+import Week from "lib/time/Week";
 import map from "lib/itertools/map";
 import { reduce } from "lib/itertools/accumulate";
 import type { MprResponse } from "lib/mpr";

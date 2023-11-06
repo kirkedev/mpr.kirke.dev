@@ -1,7 +1,7 @@
 import { extent, today } from "..";
 import map from "../itertools/map";
 import type { Action } from "../Interactor";
-import Observation, { type Data, type Series } from "../Series";
+import Series, { type Data } from "../time/Series";
 import Stat from "../Stat";
 import Purchase from ".";
 
@@ -29,7 +29,7 @@ class PurchasesViewModel {
     }
 
     public get dates(): readonly [Date, Date] {
-        return Observation.extent(this.#series);
+        return Series.extent(this.#series);
     }
 
     public get values(): readonly [number, number] {
@@ -37,7 +37,7 @@ class PurchasesViewModel {
     }
 
     public get selected(): Data {
-        return Observation.find(this.#series, this.#date);
+        return Series.find(this.#series, this.#date);
     }
 }
 

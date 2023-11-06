@@ -2,7 +2,7 @@ import { extent, today } from "..";
 import flatten from "../itertools/flatten";
 import { flatMap } from "../itertools/map";
 import type { Action } from "../Interactor";
-import Observation, { type Data, type Series } from "../Series";
+import Series, { type Data, type Observation } from "../time/Series";
 import Stat from "../Stat";
 import Primal, { Primals } from "./Primal";
 import type Cutout from ".";
@@ -44,7 +44,7 @@ class PrimalViewModel {
     }
 
     public get dates(): readonly [Date, Date] {
-        return Observation.extent(flatten<Observation>(this.#series));
+        return Series.extent(flatten<Observation>(this.#series));
     }
 
     public get values(): readonly [number, number] {
@@ -52,7 +52,7 @@ class PrimalViewModel {
     }
 
     public get selected(): Data {
-        return Observation.find(this.series, this.#date);
+        return Series.find(this.series, this.#date);
     }
 }
 

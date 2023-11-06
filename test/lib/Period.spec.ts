@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import Period from "lib/Period";
+import Period from "lib/time/Period";
 
 test("one month ago", () => {
     const period = Period.from("1M");
