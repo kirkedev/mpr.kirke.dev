@@ -1,7 +1,7 @@
 import { extent, today } from "..";
 import map from "../itertools/map";
 import type { Action } from "../Interactor";
-import Observation, { type Series, type Data } from "../Observation";
+import Observation, { type Data, type Series } from "../Series";
 import Stat from "../Stat";
 import CashIndex from "./CashIndex";
 

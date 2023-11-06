@@ -3,7 +3,7 @@ import min from "date-fns/min";
 import getISODay from "date-fns/getISODay";
 import isThisISOWeek from "date-fns/isThisISOWeek";
 import type { BinaryOperator, Optional } from ".";
-import Observation, { type MprObservation } from "./Observation";
+import Observation, { type MprObservation } from "./Series";
 import Week, { Weekday } from "./Week";
 import map from "./itertools/map";
 import filter from "./itertools/filter";

@@ -1,10 +1,10 @@
 import { getDate, type Nullable } from "..";
-import type { MprObservation, Series } from "../Observation";
+import type { MprObservation, Series } from "../Series";
+import Observation from "../Series";
 import { Arrangement, type Basis, type Seller } from "../PurchaseType";
 import map from "../itertools/map";
 import filter from "../itertools/filter";
 import { type PurchaseResponse } from "./response";
-import Observation from "../Observation";
 
 interface Purchase extends MprObservation {
     seller: Seller;

@@ -1,4 +1,4 @@
-import Observation, { type Series } from "./Observation";
+import Observation, { type Series } from "./Series";
 
 interface Stat {
     label: string;

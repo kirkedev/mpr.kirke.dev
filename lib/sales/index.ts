@@ -1,6 +1,6 @@
 import type { Nullable } from "..";
 import { getDate } from "..";
-import type { MprObservation } from "../Observation";
+import type { MprObservation } from "../Series";
 import type { Cut } from "./parse";
 import type { SalesResponse } from "./response";
 

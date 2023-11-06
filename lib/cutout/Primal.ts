@@ -1,7 +1,7 @@
-import type { Series } from "../Observation";
+import type { Series } from "../Series";
+import Observation from "../Series";
 import map from "../itertools/map";
 import type Cutout from ".";
-import Observation from "../Observation";
 
 enum Primal {
     Belly = "Belly",
