@@ -1,5 +1,5 @@
 import map from "../itertools/map";
-import { type Comparator } from "../index";
+import { type Comparator } from "..";
 import { extent as numericExtent } from "../itertools";
 
 interface Observation {
