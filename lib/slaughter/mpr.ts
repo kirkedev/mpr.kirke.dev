@@ -1,9 +1,9 @@
 import type { Nullable } from "..";
 import map from "../itertools/map";
-import { getDate, optFloat, optInt, type MprRecord, type MprResponse } from "../mpr";
+import { getDate, type MprRecord, type MprResponse, optFloat, optInt } from "../mpr";
 import type MprReport from "../mpr/MprReport";
 import type MprSection from "../mpr/MprSection";
-import { Arrangement, Basis, Seller, type PurchaseType } from "../PurchaseType";
+import { Arrangement, Basis, type PurchaseType, Seller } from "../mpr/PurchaseType";
 import type Slaughter from ".";
 
 interface BarrowsGiltsRecord extends MprRecord {
