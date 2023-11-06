@@ -1,6 +1,6 @@
 import { type Nullable } from "..";
 import Series, { type MprObservation } from "../time/Series";
-import { Arrangement, type Basis, type Seller } from "../PurchaseType";
+import { Arrangement, type Basis, type Seller } from "../mpr/PurchaseType";
 import map from "../itertools/map";
 import filter from "../itertools/filter";
 import { type PurchaseResponse } from "./response";

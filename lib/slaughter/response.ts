@@ -1,6 +1,6 @@
 import type { Static } from "@sinclair/typebox";
 import { Type } from "@sinclair/typebox";
-import { Arrangement, Basis, Seller } from "../PurchaseType";
+import { Arrangement, Basis, Seller } from "../mpr/PurchaseType";
 
 const SlaughterResponse = Type.Array(Type.Object({
     date: Type.String({ format: "date" }),

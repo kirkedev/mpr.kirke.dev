@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { Arrangement, Basis, Seller } from "lib/PurchaseType";
+import { Arrangement, Basis, Seller } from "lib/mpr/PurchaseType";
 import parse, { type BarrowsGilts } from "lib/slaughter/mpr";
 import CashIndex from "lib/slaughter/CashIndex";
 import CashIndexViewModel from "lib/slaughter/CashIndexViewModel";

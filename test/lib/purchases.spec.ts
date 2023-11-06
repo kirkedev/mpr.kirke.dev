@@ -1,5 +1,5 @@
-import { describe, test, expect } from "vitest";
-import { Arrangement, Basis, Seller } from "lib/PurchaseType";
+import { describe, expect, test } from "vitest";
+import { Arrangement, Basis, Seller } from "lib/mpr/PurchaseType";
 import Purchase from "lib/purchases";
 import parse, { type Purchases } from "lib/purchases/mpr";
 import PurchasesViewModel from "lib/purchases/PurchasesViewModel";
