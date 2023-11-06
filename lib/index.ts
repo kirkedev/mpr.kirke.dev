@@ -1,5 +1,3 @@
-import { reduce } from "./itertools/accumulate";
-
 type UnaryOperator<T, R> = (item: T) => R;
 type Callback<T> = UnaryOperator<T, unknown>;
 type Predicate<T> = UnaryOperator<T, boolean>;
@@ -15,11 +13,6 @@ const invert = <T>(predicate: Predicate<T>): Predicate<T> =>
 const round = (value: number): number =>
     Math.round((value + Number.EPSILON) * 100) / 100;
 
-const extent = (values: Iterable<number>): readonly [number, number] =>
-    reduce(values, ([min, max], value) =>
-        [Math.min(value, min), Math.max(value, max)]
-    , [Infinity, -Infinity]);
-
 export type {
     UnaryOperator,
     BinaryOperator,
@@ -31,4 +24,4 @@ export type {
     Comparator
 };
 
-export { invert, round, extent };
+export { invert, round };

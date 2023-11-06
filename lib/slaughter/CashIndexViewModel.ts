@@ -1,10 +1,10 @@
-import { extent } from "..";
 import map from "../itertools/map";
 import type { Action } from "../Interactor";
 import Series, { type Data } from "../time/Series";
 import Stat from "../Stat";
 import CashIndex from "./CashIndex";
 import { today } from "../time";
+import { extent } from "../itertools";
 
 class CashIndexViewModel {
     public static from = (cash: Iterable<CashIndex>): CashIndexViewModel =>

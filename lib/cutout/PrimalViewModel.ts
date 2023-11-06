@@ -1,4 +1,3 @@
-import { extent } from "..";
 import flatten from "../itertools/flatten";
 import { flatMap } from "../itertools/map";
 import type { Action } from "../Interactor";
@@ -7,6 +6,7 @@ import Stat from "../Stat";
 import Primal, { Primals } from "./Primal";
 import type Cutout from ".";
 import { today } from "../time";
+import { extent } from "../itertools";
 
 class PrimalViewModel {
     public static from = (cutout: Iterable<Cutout>): PrimalViewModel =>
