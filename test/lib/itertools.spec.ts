@@ -1,6 +1,6 @@
-import { vi, describe, test, expect, afterEach } from "vitest";
-import dates from "lib/dates";
-import Week from "lib/Week";
+import { afterEach, describe, expect, test, vi } from "vitest";
+import dates from "lib/time/dates";
+import Week from "lib/time/Week";
 import map, { flatMap } from "lib/itertools/map";
 import take, { takeUntil, takeWhile } from "lib/itertools/take";
 import chunk from "lib/itertools/chunk";

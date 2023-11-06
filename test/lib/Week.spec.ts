@@ -1,5 +1,5 @@
-import { describe, test, expect } from "vitest";
-import Week from "lib/Week";
+import { describe, expect, test } from "vitest";
+import Week from "lib/time/Week";
 
 test("format a Week as ISO 8601", () => {
     const week = new Week(2020, 17);

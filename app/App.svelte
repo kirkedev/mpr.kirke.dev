@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import type Period from "lib/Period";
+    import type Period from "lib/time/Period";
     import data from "./api";
     import Cutout from "./reports/Cutout.svelte";
 </script>

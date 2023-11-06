@@ -1,4 +1,4 @@
-import Observation, { type Series } from "./Series";
+import Series from "./time/Series";
 
 interface Stat {
     label: string;
@@ -13,7 +13,7 @@ const { format: formatNumber } = new Intl.NumberFormat("en-US", {
 namespace Stat {
     export const from = (label: string, series: Series, date: Date): Stat => ({
         label,
-        value: formatNumber(Observation.find(series, date).value)
+        value: formatNumber(Series.find(series, date).value)
     });
 }
 

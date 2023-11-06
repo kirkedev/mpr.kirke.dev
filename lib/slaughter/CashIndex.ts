@@ -1,6 +1,6 @@
 import isSameDay from "date-fns/isSameDay";
 import { round } from "..";
-import Observation, { type Series } from "../Series";
+import Series, { type Observation } from "../time/Series";
 import { Arrangement } from "../PurchaseType";
 import { sumBy } from "../itertools/accumulate";
 import filter from "../itertools/filter";
@@ -37,7 +37,7 @@ const filterSlaughter = (slaughter: Iterable<Slaughter>): Iterable<Values> =>
         carcassWeight != null && netPrice != null && arrangements.includes(arrangement)) as Iterable<Values>;
 
 function cashIndex(records: Iterable<Slaughter>): Iterable<CashIndex> {
-    const slaughter = Observation.sort(Array.from(filterSlaughter(records)));
+    const slaughter = Series.sort(Array.from(filterSlaughter(records)));
     const dates = groupBy(slaughter, (last, current) => isSameDay(current.date, last.date));
 
     const totals = map(dates, slaughter => {

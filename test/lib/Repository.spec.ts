@@ -1,5 +1,5 @@
-import { vi, describe, test, expect, beforeAll, afterAll, beforeEach } from "vitest";
-import dates from "lib/dates";
+import { afterAll, beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
+import dates from "lib/time/dates";
 import Repository from "lib/Repository";
 
 describe("Repository caching", () => {

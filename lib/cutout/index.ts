@@ -1,5 +1,5 @@
 import { getDate } from "..";
-import type { MprObservation } from "../Series";
+import type { MprObservation } from "../time/Series";
 import type { CutoutResponse } from "./response";
 
 interface Cutout extends MprObservation {

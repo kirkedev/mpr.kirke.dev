@@ -1,6 +1,6 @@
 import type { FastifyRequest, FastifySchema } from "fastify";
 import { formatDate, getDate } from "lib";
-import QuerySchema, { type DateRangeQuery } from "lib/DateRangeQuery";
+import QuerySchema, { type DateRangeQuery } from "lib/time/DateRangeQuery";
 import Repository from "lib/Repository";
 import type Cutout from "lib/cutout";
 import parse from "lib/cutout/mpr";

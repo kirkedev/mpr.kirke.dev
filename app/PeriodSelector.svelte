@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import Period, { Periods } from "lib/Period";
+    import Period, { Periods } from "lib/time/Period";
     import { ButtonGroup } from "./ui";
 </script>
 

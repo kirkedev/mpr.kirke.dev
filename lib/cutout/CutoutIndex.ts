@@ -1,6 +1,5 @@
 import { round } from "..";
-import type { Series } from "../Series";
-import Observation from "../Series";
+import Series, { type Observation } from "../time/Series";
 import { sumBy } from "../itertools/accumulate";
 import map from "../itertools/map";
 import rolling from "../itertools/rolling";
@@ -22,7 +21,7 @@ const avgPrice = (records: Cutout[]): number =>
     sumBy(records, totalValue) / sumBy(records, totalLoads);
 
 const cutoutIndex = (cutout: Iterable<Cutout>): Iterable<CutoutIndex> =>
-    map(rolling(Observation.sort(Array.from(cutout)), 5), function(records) {
+    map(rolling(Series.sort(Array.from(cutout)), 5), function(records) {
         const record = records[records.length - 1];
 
         return {

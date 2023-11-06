@@ -1,6 +1,6 @@
 import { derived, get, type Readable, writable } from "svelte/store";
-import Week from "lib/Week";
-import Period from "lib/Period";
+import Week from "lib/time/Week";
+import Period from "lib/time/Period";
 import type Cutout from "lib/cutout";
 import type Purchase from "lib/purchases";
 import cutout from "./cutout";

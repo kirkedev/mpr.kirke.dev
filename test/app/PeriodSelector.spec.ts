@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { render, within } from "@testing-library/svelte";
 import { userEvent } from "@testing-library/user-event";
 import PeriodSelector from "app/PeriodSelector.svelte";
-import Period, { Periods } from "lib/Period";
+import Period, { Periods } from "lib/time/Period";
 
 function assertSelected(this: HTMLElement, selected: string): void {
     Periods.forEach(({ description }) => {

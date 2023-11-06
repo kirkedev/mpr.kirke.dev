@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
 import { get } from "svelte/store";
-import Period from "lib/Period";
-import api from "app/api";
 import { count } from "lib/itertools/accumulate";
 import { first, last } from "lib/itertools/slice";
+import Period from "lib/time/Period";
+import api from "app/api";
 
 describe("fetch periods", () => {
     test("fetch one month of data", async () => {

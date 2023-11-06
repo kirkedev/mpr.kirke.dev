@@ -1,6 +1,5 @@
 import { getDate, type Nullable } from "..";
-import type { MprObservation, Series } from "../Series";
-import Observation from "../Series";
+import Series, { type MprObservation } from "../time/Series";
 import { Arrangement, type Basis, type Seller } from "../PurchaseType";
 import map from "../itertools/map";
 import filter from "../itertools/filter";
@@ -24,7 +23,7 @@ namespace Purchase {
         }));
 
     export const marketFormula = (purchases: Iterable<Purchase>): Series =>
-        Observation.sort(map(filter(purchases, purchase => purchase.arrangement === Arrangement.MarketFormula),
+        Series.sort(map(filter(purchases, purchase => purchase.arrangement === Arrangement.MarketFormula),
             ({ date, avgPrice: value }) => ({
                 date,
                 value: value ?? Number.NaN
