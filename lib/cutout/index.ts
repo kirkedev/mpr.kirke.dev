@@ -1,6 +1,6 @@
-import { getDate } from "..";
 import type { MprObservation } from "../time/Series";
 import type { CutoutResponse } from "./response";
+import { getDate } from "../time";
 
 interface Cutout extends MprObservation {
     primalLoads: number;
