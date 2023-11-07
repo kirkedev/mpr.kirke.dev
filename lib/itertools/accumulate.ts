@@ -27,10 +27,10 @@ const countIf = <T>(iterable: Iterable<T>, predicate: Predicate<T>): number =>
     count(filter(iterable, predicate));
 
 const min = (values: Iterable<number>): number =>
-    reduce(values, (min, value) => Math.min(value, min), Infinity);
+    reduce(values, Math.min, Infinity);
 
 const max = (values: Iterable<number>): number =>
-    reduce(values, (max, value) => Math.max(value, max), -Infinity);
+    reduce(values, Math.max, -Infinity);
 
 const extent = (values: Iterable<number>): readonly [number, number] =>
     reduce(values, ([min, max], value) =>
