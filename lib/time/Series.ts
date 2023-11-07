@@ -1,6 +1,5 @@
-import map from "../itertools/map";
 import { type Comparator } from "..";
-import { extent as numericExtent } from "../itertools";
+import { extentBy } from "../itertools/accumulate";
 
 interface Observation {
     date: Date;
@@ -41,7 +40,7 @@ namespace Series {
         bisect(sort(observations), date);
 
     export function extent<T extends Observation>(observations: Iterable<T>): readonly [Date, Date] {
-        const [min, max] = numericExtent(map(observations, observation => observation.date.getTime()));
+        const [min, max] = extentBy(observations, observation => observation.date.getTime());
         return [new Date(min), new Date(max)] as const;
     }
 }
