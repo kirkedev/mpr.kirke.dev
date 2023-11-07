@@ -1,11 +1,11 @@
+import { extent } from "../itertools";
 import { flatMap } from "../itertools/map";
 import flatten from "../itertools/flatten";
-import type { Action } from "../Interactor";
-import Series, { type Data, type Observation } from "../time/Series";
-import Stat from "../Stat";
-import CutoutIndex from "./CutoutIndex";
 import { today } from "../time";
-import { extent } from "../itertools";
+import Series, { type Data, type Observation } from "../time/Series";
+import CutoutIndex from "./CutoutIndex";
+import type { Action } from "../Interactor";
+import Stat from "../Stat";
 
 class CutoutViewModel {
     public static from = (cutout: Iterable<CutoutIndex>): CutoutViewModel =>

@@ -26,25 +26,24 @@ const count = <T>(iterable: Iterable<T>): number =>
 const countIf = <T>(iterable: Iterable<T>, predicate: Predicate<T>): number =>
     count(filter(iterable, predicate));
 
-const min = (values: Iterable<number>): number =>
-    reduce(values, Math.min, Infinity);
+const min = (iterable: Iterable<number>): number =>
+    reduce(iterable, Math.min, Infinity);
 
-const max = (values: Iterable<number>): number =>
-    reduce(values, Math.max, -Infinity);
+const max = (iterable: Iterable<number>): number =>
+    reduce(iterable, Math.max, -Infinity);
 
-const extent = (values: Iterable<number>): readonly [number, number] =>
-    reduce(values, ([min, max], value) =>
-        [Math.min(value, min), Math.max(value, max)]
-    , [Infinity, -Infinity]);
+const extent = (iterable: Iterable<number>): readonly [number, number] =>
+    reduce(iterable, ([min, max], value) =>
+        [Math.min(value, min), Math.max(value, max)], [Infinity, -Infinity]);
 
-const minBy = <T>(values: Iterable<T>, operator: UnaryOperator<T, number>): number =>
-    min(map(values, operator));
+const minBy = <T>(iterable: Iterable<T>, operator: UnaryOperator<T, number>): number =>
+    min(map(iterable, operator));
 
-const maxBy = <T>(values: Iterable<T>, operator: UnaryOperator<T, number>): number =>
-    max(map(values, operator));
+const maxBy = <T>(iterable: Iterable<T>, operator: UnaryOperator<T, number>): number =>
+    max(map(iterable, operator));
 
-const extentBy = <T>(values: Iterable<T>, operator: UnaryOperator<T, number>): readonly [number, number] =>
-    extent(map(values, operator));
+const extentBy = <T>(iterable: Iterable<T>, operator: UnaryOperator<T, number>): readonly [number, number] =>
+    extent(map(iterable, operator));
 
 const none = <T>(iterable: Iterable<T>, predicate: Predicate<T>): boolean =>
     find(iterable, predicate) === undefined;
