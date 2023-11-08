@@ -37,7 +37,7 @@ const filterSlaughter = (slaughter: Iterable<Slaughter>): Iterable<Values> =>
         carcassWeight != null && netPrice != null && arrangements.includes(arrangement)) as Iterable<Values>;
 
 function cashIndex(records: Iterable<Slaughter>): Iterable<CashIndex> {
-    const slaughter = Series.sort(Array.from(filterSlaughter(records)));
+    const slaughter = Series.sort(filterSlaughter(records));
     const dates = groupBy(slaughter, (last, current) => isSameDay(current.date, last.date));
 
     const totals = map(dates, slaughter => {

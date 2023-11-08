@@ -21,7 +21,7 @@ const avgPrice = (records: Cutout[]): number =>
     sumBy(records, totalValue) / sumBy(records, totalLoads);
 
 const cutoutIndex = (cutout: Iterable<Cutout>): Iterable<CutoutIndex> =>
-    map(rolling(Series.sort(Array.from(cutout)), 5), function(records) {
+    map(rolling(Series.sort(cutout), 5), function(records) {
         const record = records[records.length - 1];
 
         return {
