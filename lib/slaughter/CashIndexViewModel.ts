@@ -1,7 +1,7 @@
 import map from "../itertools/map";
 import type { Action } from "../Interactor";
 import Series, { type Data } from "../time/Series";
-import Stat from "../Stat";
+import type Stat from "../Stat";
 import CashIndex from "./CashIndex";
 import { today } from "../time";
 import { extent } from "../itertools";
@@ -22,7 +22,7 @@ class CashIndexViewModel {
     }
 
     public get stats(): Stat {
-        return Stat.from("Cash Index", this.#series, this.#date);
+        return Series.stat("Cash Index", this.#series, this.#date);
     }
 
     public get series(): Series {

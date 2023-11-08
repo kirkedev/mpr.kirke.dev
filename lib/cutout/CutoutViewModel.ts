@@ -3,9 +3,9 @@ import { flatMap } from "../itertools/map";
 import flatten from "../itertools/flatten";
 import { today } from "../time";
 import Series, { type Data, type Observation } from "../time/Series";
-import CutoutIndex from "./CutoutIndex";
 import type { Action } from "../Interactor";
-import Stat from "../Stat";
+import type Stat from "../Stat";
+import CutoutIndex from "./CutoutIndex";
 
 class CutoutViewModel {
     public static from = (cutout: Iterable<CutoutIndex>): CutoutViewModel =>
@@ -27,8 +27,8 @@ class CutoutViewModel {
 
     public get stats(): Stat[] {
         return [
-            Stat.from("Cutout", this.cutout, this.#date),
-            Stat.from("Index", this.index, this.#date)
+            Series.stat("Cutout", this.cutout, this.#date),
+            Series.stat("Index", this.index, this.#date)
         ];
     }
 

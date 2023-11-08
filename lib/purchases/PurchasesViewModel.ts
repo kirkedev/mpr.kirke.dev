@@ -1,7 +1,7 @@
 import map from "../itertools/map";
 import type { Action } from "../Interactor";
 import Series, { type Data } from "../time/Series";
-import Stat from "../Stat";
+import type Stat from "../Stat";
 import Purchase from ".";
 import { today } from "../time";
 import { extent } from "../itertools";
@@ -22,7 +22,7 @@ class PurchasesViewModel {
     }
 
     public get stats(): Stat {
-        return Stat.from("Formula", this.#series, this.#date);
+        return Series.stat("Formula", this.#series, this.#date);
     }
 
     public get series(): Series {

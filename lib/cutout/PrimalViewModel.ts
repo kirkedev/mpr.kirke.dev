@@ -2,7 +2,7 @@ import flatten from "../itertools/flatten";
 import { flatMap } from "../itertools/map";
 import type { Action } from "../Interactor";
 import Series, { type Data, type Observation } from "../time/Series";
-import Stat from "../Stat";
+import type Stat from "../Stat";
 import Primal, { Primals } from "./Primal";
 import type Cutout from ".";
 import { today } from "../time";
@@ -37,7 +37,7 @@ class PrimalViewModel {
 
     public get stats(): Stat[] {
         return Primals.map((label, index) =>
-            Stat.from(label, this.#series[index], this.#date));
+            Series.stat(label, this.#series[index], this.#date));
     }
 
     public get series(): Series {
