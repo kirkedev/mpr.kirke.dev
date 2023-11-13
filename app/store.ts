@@ -3,13 +3,7 @@ import { type Readable, writable } from "svelte/store";
 
 function store<T>(interactor: Interactor<T>): Readable<T> {
     const { set, subscribe } = writable<T>(interactor.state);
-
-    (async function() {
-        for await (const state of interactor) {
-            set(state);
-        }
-    })();
-
+    interactor.each(set);
     return { subscribe };
 }
 
