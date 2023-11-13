@@ -1,4 +1,4 @@
-import type { UnaryOperator } from ".";
+import type { Callback, UnaryOperator } from ".";
 
 type Action<T> = UnaryOperator<T, T>;
 
@@ -63,6 +63,12 @@ class Interactor<State> implements AsyncIterableIterator<State> {
     public execute(action: Action<State>): void {
         if (!this.#done) {
             this.state = action(this.state);
+        }
+    }
+
+    public async each(callback: Callback<State>): Promise<void> {
+        for await (const state of this) {
+            callback(state);
         }
     }
 }
