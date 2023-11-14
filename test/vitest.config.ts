@@ -2,6 +2,7 @@ import { mergeConfig } from "vitest/config";
 import config from "../app/vite.config";
 
 export default mergeConfig(config, {
+    envDir: "test",
     test: {
         root: "..",
         include: ["{api,app,lib}/**/*.spec.ts"],
