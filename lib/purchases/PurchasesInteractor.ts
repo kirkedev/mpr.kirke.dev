@@ -7,13 +7,13 @@ class PurchasesInteractor extends Interactor<PurchasesViewModel> {
         super(PurchasesViewModel.from(records));
     }
 
-    public selectDate(date: Date): void {
+    public selectDate = (date: Date): void => {
         this.execute(PurchasesViewModel.selectDate(date));
-    }
+    };
 
-    public resetDate(): void {
+    public resetDate = (): void => {
         this.execute(PurchasesViewModel.selectDate());
-    }
+    };
 }
 
 export default PurchasesInteractor;

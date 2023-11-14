@@ -7,13 +7,13 @@ class CashIndexInteractor extends Interactor<CashIndexViewModel> {
         super(CashIndexViewModel.from(records));
     }
 
-    public selectDate(date: Date): void {
+    public selectDate = (date: Date): void => {
         this.execute(CashIndexViewModel.selectDate(date));
-    }
+    };
 
-    public resetDate(): void {
+    public resetDate = (): void => {
         this.execute(CashIndexViewModel.selectDate());
-    }
+    };
 }
 
 export default CashIndexInteractor;
