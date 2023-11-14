@@ -5,7 +5,7 @@
     "type": "module",
     "private": true,
     "scripts": {
-        "dev": "node --es-module-specifier-resolution=node --loader ts-node/esm --inspect=0.0.0.0 index.ts",
+        "dev": "vite-node --watch index.ts",
         "build": "docker buildx build .. -f Dockerfile -t ${ECR_REGISTRY:-kirkedev}/mpr-api:$TAG"
     },
     "dependencies": {
@@ -15,16 +15,7 @@
     "devDependencies": {
         "@types/node": "^20.8.9",
         "esbuild": "^0.19.5",
-        "nodemon": "^3.0.1",
-        "ts-node": "^10.9.1",
-        "typescript": "^5.2.2"
-    },
-    "nodemonConfig": {
-        "ext": "ts",
-        "watch": [
-            "./",
-            "../lib"
-        ],
-        "exec": "yarn dev"
+        "typescript": "^5.2.2",
+        "vite-node": "0.34.6"
     }
 }

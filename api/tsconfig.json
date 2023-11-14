@@ -6,6 +6,7 @@
         { "path": "../lib" }
     ],
     "compilerOptions": {
-        "composite": true
+        "composite": true,
+        "types": ["vite/client"]
     }
 }
