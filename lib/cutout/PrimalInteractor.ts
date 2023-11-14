@@ -8,17 +8,17 @@ class PrimalInteractor extends Interactor<PrimalViewModel> {
         super(PrimalViewModel.from(cutout));
     }
 
-    public selectDate(date: Date): void {
+    public selectDate = (date: Date): void => {
         this.execute(PrimalViewModel.selectDate(date));
-    }
+    };
 
-    public resetDate(): void {
+    public resetDate = (): void => {
         this.execute(PrimalViewModel.selectDate());
-    }
+    };
 
-    public selectPrimal(primal: Primal): void {
+    public selectPrimal = (primal: Primal): void => {
         this.execute(PrimalViewModel.selectPrimal(primal));
-    }
+    };
 }
 
 export default PrimalInteractor;

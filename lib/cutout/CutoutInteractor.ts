@@ -7,13 +7,13 @@ class CutoutInteractor extends Interactor<CutoutViewModel> {
         super(CutoutViewModel.from(cutout));
     }
 
-    public selectDate(date: Date): void {
+    public selectDate = (date: Date): void => {
         this.execute(CutoutViewModel.selectDate(date));
-    }
+    };
 
-    public resetDate(): void {
+    public resetDate = (): void => {
         this.execute(CutoutViewModel.selectDate());
-    }
+    };
 }
 
 export default CutoutInteractor;
