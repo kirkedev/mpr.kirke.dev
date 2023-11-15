@@ -1,12 +1,6 @@
 import { expect, test } from "vitest";
 import Period from "lib/time/Period";
 
-test("one month ago", () => {
-    const period = Period.from("1M");
-    expect(period.description).toBe("1M");
-    expect(period.start).toEqual(new Date(2021, 10, 23));
-});
-
 test("three months ago", () => {
     const period = Period.from("3M");
     expect(period.description).toBe("3M");
@@ -26,6 +20,6 @@ test("one year ago", () => {
 });
 
 test("period equality check", () => {
-    expect(Period.from("1M").equals(Period.from("1M"))).toBe(true);
-    expect(Period.from("1M").equals(Period.from("3M"))).toBe(false);
+    expect(Period.from("3M").equals(Period.from("3M"))).toBe(true);
+    expect(Period.from("3M").equals(Period.from("6M"))).toBe(false);
 });

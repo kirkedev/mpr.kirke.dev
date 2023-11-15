@@ -6,27 +6,6 @@ import Period from "lib/time/Period";
 import api from "app/api";
 
 describe("fetch periods", () => {
-    test("fetch one month of data", async () => {
-        api.fetch(Period.OneMonth);
-        const { cutoutIndex, purchases, cashIndex, primals } = await get(api);
-
-        expect(count(cutoutIndex)).toBe(21);
-        expect(first(cutoutIndex).date).toEqual(new Date(2021, 10, 23));
-        expect(last(cutoutIndex).date).toEqual(new Date(2021, 11, 22));
-
-        expect(count(purchases)).toBe(189);
-        expect(first(purchases).date).toEqual(new Date(2021, 10, 23));
-        expect(last(purchases).date).toEqual(new Date(2021, 11, 22));
-
-        expect(count(cashIndex)).toBe(21);
-        expect(first(cashIndex).date).toEqual(new Date(2021, 10, 23));
-        expect(last(cashIndex).date).toEqual(new Date(2021, 11, 22));
-
-        expect(count(primals)).toBe(21);
-        expect(first(primals).date).toEqual(new Date(2021, 10, 23));
-        expect(last(primals).date).toEqual(new Date(2021, 11, 22));
-    });
-
     test("fetch three months of data", async () => {
         api.fetch(Period.ThreeMonths);
         const { cutoutIndex, purchases, cashIndex, primals } = await get(api);
