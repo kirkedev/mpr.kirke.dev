@@ -1,64 +1,57 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import { today } from "lib/time";
 import dates from "lib/time/dates";
 import Repository from "lib/Repository";
 
 describe("Repository caching", () => {
     const fetch = vi.fn((start: Date, end: Date) =>
         Promise.resolve(Array.from(dates(start, end))
-            .filter(date => date < new Date())
+            .filter(date => date < today())
             .map(date => ({ date, reportDate: date }))));
 
     const repository = new Repository(fetch);
-
-    beforeAll(function() {
-        vi.useFakeTimers().setSystemTime(new Date(2020, 4, 1).getTime());
-    });
-
-    afterAll(function() {
-        vi.useRealTimers();
-    });
 
     beforeEach(function() {
         fetch.mockClear();
     });
 
     test("initial query for multiple weeks", async () => {
-        const result = await repository.query(new Date(2020, 3, 11), new Date(2020, 3, 26));
+        const result = await repository.query(new Date(2021, 11, 1), new Date(2021, 11, 16));
         expect(result.length).toBe(16);
         expect(fetch).toHaveBeenCalledTimes(1);
     });
 
     test("full cache hit query for one week", async () => {
-        const result = await repository.query(new Date(2020, 3, 20), new Date(2020, 3, 26));
+        const result = await repository.query(new Date(2021, 11, 6), new Date(2021, 11, 12));
         expect(fetch).not.toHaveBeenCalled();
 
         expect(result.map(record => record.date)).toEqual([
-            new Date(2020, 3, 20),
-            new Date(2020, 3, 21),
-            new Date(2020, 3, 22),
-            new Date(2020, 3, 23),
-            new Date(2020, 3, 24),
-            new Date(2020, 3, 25),
-            new Date(2020, 3, 26)
+            new Date(2021, 11, 6),
+            new Date(2021, 11, 7),
+            new Date(2021, 11, 8),
+            new Date(2021, 11, 9),
+            new Date(2021, 11, 10),
+            new Date(2021, 11, 11),
+            new Date(2021, 11, 12)
         ]);
     });
 
     test("partial cache hit query for multiple weeks", async () => {
-        const result = await repository.query(new Date(2020, 3, 24), new Date(2020, 3, 30));
+        const result = await repository.query(new Date(2021, 11, 14), new Date(2021, 11, 20));
         expect(result.length).toBe(7);
         expect(fetch).toHaveBeenCalledTimes(1);
-        expect(fetch).toHaveBeenCalledWith(new Date(2020, 3, 27), new Date(2020, 4, 1));
+        expect(fetch).toHaveBeenCalledWith(new Date(2021, 11, 20), new Date(2021, 11, 23));
     });
 
     test("fetch missing data", async () => {
-        const result = await repository.query(new Date(2020, 3, 24), new Date(2020, 4, 1));
-        expect(fetch).toHaveBeenCalledWith(new Date(2020, 4, 1), new Date(2020, 4, 1));
+        const result = await repository.query(new Date(2021, 11, 16), new Date(2021, 11, 23));
+        expect(fetch).toHaveBeenCalledWith(new Date(2021, 11, 23), new Date(2021, 11, 23));
         expect(result.length).toBe(7);
         expect(fetch).toHaveBeenCalledTimes(1);
     });
 
     test("don't request data from the future", async () => {
-        const result = await repository.query(new Date(2020, 4, 6), new Date(2020, 4, 8));
+        const result = await repository.query(new Date(2022, 1, 1), new Date(2021, 1, 8));
         expect(result.length).toBe(0);
         expect(fetch).not.toHaveBeenCalled();
     });

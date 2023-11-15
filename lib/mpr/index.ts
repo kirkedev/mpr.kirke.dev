@@ -15,10 +15,8 @@ interface MprResponse<Section extends string, T extends MprRecord> {
 
 const dateFormat = "M/d/yyyy";
 
-const today = new Date();
-
 const getDate = (date: string): Date =>
-    parseDate(date, dateFormat, today);
+    parseDate(date, dateFormat, new Date());
 
 const stripCommas = (value: string): string =>
     value.replace(",", "");
