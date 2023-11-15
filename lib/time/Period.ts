@@ -2,7 +2,7 @@ import { subMonths, subYears } from "date-fns";
 import type { UnaryOperator } from "..";
 import { today } from ".";
 
-type Description = "1M" | "3M" | "6M" | "1Y";
+type Description = "3M" | "6M" | "1Y";
 
 class Period {
     public constructor(
@@ -26,9 +26,6 @@ class Period {
 }
 
 namespace Period {
-    export const OneMonth = new Period("1M", (date: Date) =>
-        subMonths(date, 1));
-
     export const ThreeMonths = new Period("3M", (date: Date) =>
         subMonths(date, 3));
 
@@ -40,8 +37,6 @@ namespace Period {
 
     export function from(description: Description): Period {
         switch (description) {
-            case "1M":
-                return OneMonth;
             case "3M":
                 return ThreeMonths;
             case "6M":
@@ -52,7 +47,7 @@ namespace Period {
     }
 }
 
-const Periods = [Period.OneMonth, Period.ThreeMonths, Period.SixMonths, Period.OneYear] as const;
+const Periods = [Period.ThreeMonths, Period.SixMonths, Period.OneYear] as const;
 
 export default Period;
 

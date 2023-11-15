@@ -28,20 +28,6 @@ describe("Period Selection", () => {
         expect(handler).toHaveBeenCalledTimes(0);
     });
 
-    test("Select 1M", async () => {
-        await user.click(within(container).getByText("1M"));
-        assertSelected.call(container, "1M");
-        expect(handler).toHaveBeenCalledOnce();
-        expect(handler).toHaveBeenCalledWith(expect.objectContaining({ detail: Period.OneMonth }));
-    });
-
-    test("Select 3M", async () => {
-        await user.click(within(container).getByText("3M"));
-        assertSelected.call(container, "3M");
-        expect(handler).toHaveBeenCalledOnce();
-        expect(handler).toHaveBeenCalledWith(expect.objectContaining({ detail: Period.ThreeMonths }));
-    });
-
     test("Select 6M", async () => {
         await user.click(within(container).getByText("6M"));
         assertSelected.call(container, "6M");
@@ -54,5 +40,12 @@ describe("Period Selection", () => {
         assertSelected.call(container, "1Y");
         expect(handler).toHaveBeenCalledOnce();
         expect(handler).toHaveBeenCalledWith(expect.objectContaining({ detail: Period.OneYear }));
+    });
+
+    test("Select 3M", async () => {
+        await user.click(within(container).getByText("3M"));
+        assertSelected.call(container, "3M");
+        expect(handler).toHaveBeenCalledOnce();
+        expect(handler).toHaveBeenCalledWith(expect.objectContaining({ detail: Period.ThreeMonths }));
     });
 });
