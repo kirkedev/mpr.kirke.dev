@@ -1,7 +1,7 @@
 import { LRUCache } from "lru-cache";
 import min from "date-fns/min";
 import getISODay from "date-fns/getISODay";
-import isThisISOWeek from "date-fns/isThisISOWeek";
+import isSameISOWeek from "date-fns/isSameISOWeek";
 import type { BinaryOperator, Optional } from ".";
 import Observation, { type MprObservation } from "./time/Series";
 import Week, { Weekday } from "./time/Week";
@@ -12,6 +12,7 @@ import groupBy from "./itertools/groupBy";
 import { dropWhile } from "./itertools/drop";
 import { takeWhile } from "./itertools/take";
 import { each } from "./itertools/accumulate";
+import { today } from "./time";
 
 interface Archive<T extends MprObservation> {
     readonly week: Week;
@@ -26,7 +27,7 @@ namespace Archive {
 
         return {
             week: Week.with(first),
-            day: isThisISOWeek(end) ? getISODay(end) : Weekday.Sunday,
+            day: isSameISOWeek(end, today()) ? getISODay(end) : Weekday.Sunday,
             data
         };
     };
@@ -71,7 +72,7 @@ class Repository<T extends MprObservation> {
     };
 
     public async query(start: Date, end: Date): Promise<T[]> {
-        end = min([end, new Date()]);
+        end = min([end, today()]);
 
         if (start > end) {
             return [];
@@ -84,12 +85,11 @@ class Repository<T extends MprObservation> {
             current.previous.equals(previous));
 
         const dates = takeWhile(map(grouped, group => {
-            const today = new Date();
             const first = group[0];
             const last = group[group.length - 1];
             const start = first.day((this.#get(first)?.day ?? 0) + 1);
 
-            return [start, min([today, last.end])];
+            return [start, min([today(), last.end])];
         }), ([start]) => start <= end);
 
         await Promise.all(map(dates, ([start, end]) =>
