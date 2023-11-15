@@ -5125,7 +5125,7 @@ __metadata:
     fastify: "npm:^4.24.3"
     lib: "workspace:*"
     typescript: "npm:^5.2.2"
-    vite-node: "npm:0.34.6"
+    vite-node: "npm:^0.34.6"
   languageName: unknown
   linkType: soft
 
@@ -13314,6 +13314,22 @@ __metadata:
   bin:
     vite-node: vite-node.mjs
   checksum: ae49fd24874162196dd41477afe51dd8dc0bd1e8cb4ae885455d1d5569e14f628941f9867044bff263620536446e17d7e2c0828c9ea84b6308b9eb5711e80991
+  languageName: node
+  linkType: hard
+
+"vite-node@npm:^0.34.6":
+  version: 0.34.7
+  resolution: "vite-node@npm:0.34.7"
+  dependencies:
+    cac: "npm:^6.7.14"
+    debug: "npm:^4.3.4"
+    mlly: "npm:^1.4.0"
+    pathe: "npm:^1.1.1"
+    picocolors: "npm:^1.0.0"
+    vite: "npm:^3.0.0 || ^4.0.0 || ^5.0.0-0"
+  bin:
+    vite-node: vite-node.mjs
+  checksum: b0bbd8d0059f41ee3ac6e5af79e5d1cd8d0ce9f93dc748a4fcb7e56d7de4058f4a8c36974aa03285fa96eb6e033bd96f5d6817bdd013e0653d882a5f13599839
   languageName: node
   linkType: hard
 
