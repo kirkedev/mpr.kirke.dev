@@ -16,7 +16,7 @@
     max-width: inherit;
 }
 
-.reports > div {
+.reports > :global(.report) {
     @apply shadow-md;
     @apply bg-white;
     @apply flex;

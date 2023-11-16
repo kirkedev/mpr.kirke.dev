@@ -1,7 +1,9 @@
 <script lang="ts" context="module">
     import type Period from "lib/time/Period";
-    import data from "./api";
+    import PeriodSelector from "./PeriodSelector.svelte";
+    import Cash from "./reports/Cash.svelte";
     import Cutout from "./reports/Cutout.svelte";
+    import data from "./api";
 </script>
 
 <style lang="postcss">
@@ -9,8 +11,6 @@
 </style>
 
 <script lang="ts">
-    import PeriodSelector from "./PeriodSelector.svelte";
-
     function fetchData({ detail: period }: CustomEvent<Period>): void {
         data.fetch(period);
     }
@@ -25,9 +25,10 @@
     {#await $data}
         <div class="loading">Loading...</div>
     {:then data}
+        <Cash cash={data.cashIndex}/>
         <Cutout cutout={data.cutoutIndex}/>
     {:catch error}
-        <div class="loading">{error.message}</div>
+        <div class="error">{error.message}</div>
     {/await}
     </div>
 </div>
