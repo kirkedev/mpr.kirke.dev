@@ -1,4 +1,4 @@
-.stats {
+:global(.stats) {
     @apply flex;
     @apply justify-between;
     @apply flex-row;
@@ -7,12 +7,12 @@
     @apply xl:px-10;
 }
 
-.cash .chart {
+.cash :global(.chart) {
     @apply px-4;
     @apply xl:px-10;
 }
 
-.stats h2 {
+:global(.stats h2) {
     @apply text-gray-700;
     @apply mt-auto;
     @apply font-normal;
@@ -34,19 +34,19 @@
     @apply font-normal;
 }
 
-.cash .plot g:first-child path {
+.cash :global(.plot path) {
     stroke-width: 4;
     @apply stroke-emerald-400;
 }
 
-.cash .plot g:first-child circle {
+.cash :global(.plot circle) {
     @apply fill-emerald-400;
 }
 
-.cash .marker rect {
+.cash :global(.marker rect) {
     @apply fill-emerald-400;
 }
 
-.cash .marker text {
+.cash :global(.marker text) {
     @apply fill-white;
 }

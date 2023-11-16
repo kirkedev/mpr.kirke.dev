@@ -53,8 +53,6 @@
             left={width}
             tickSize={-width}/>
 
-        <g class="plot">
-            <slot name="plot" x={x} y={y}/>
-        </g>
+        <slot name="plot" x={x} y={y}/>
     </svg>
 </div>

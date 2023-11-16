@@ -3,9 +3,10 @@
     @apply flex-row;
     @apply px-4;
     @apply xl:px-10;
+    @apply mb-4;
 }
 
-.cutout .chart {
+:global(.chart) {
     @apply px-4;
     @apply md:px-10;
 }
@@ -22,7 +23,7 @@
     border-bottom: 3px solid;
 }
 
-.stat:first-child {
+.stat:nth-child(1) {
     @apply border-blue-400;
 }
 
@@ -46,29 +47,25 @@
     @apply text-xs;
 }
 
-.cutout .plot g:first-child path {
+.cutout :global(.plot path:nth-child(2)) {
     @apply stroke-blue-400;
     stroke-width: 4;
 }
 
-.cutout .plot g:nth-child(2) path {
+.cutout :global(.plot path:nth-child(3))  {
     @apply stroke-blue-400;
     @apply opacity-25;
     stroke-width: 4;
 }
 
-.cutout .plot g:first-child circle {
+.cutout :global(.plot circle) {
     @apply fill-blue-400;
 }
 
-.cutout .plot g:nth-child(2) circle {
-    @apply hidden;
-}
-
-.cutout .marker rect {
+.cutout :global(.marker rect) {
     @apply fill-blue-400;
 }
 
-.cutout .marker text {
+.cutout :global(.marker text) {
     @apply fill-white;
 }

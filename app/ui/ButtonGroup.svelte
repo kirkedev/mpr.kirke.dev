@@ -3,7 +3,7 @@
 </script>
 
 <style lang="postcss">
-    @import "./ButtonGroup.css";
+    @import "ButtonGroup.css";
 </style>
 
 <script lang="ts">

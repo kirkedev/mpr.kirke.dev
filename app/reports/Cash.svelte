@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-    import type CutoutIndex from "lib/cutout/CutoutIndex";
-    import CutoutInteractor from "lib/cutout/CutoutInteractor";
+    import type CashIndex from "lib/slaughter/CashIndex";
+    import CashIndexInteractor from "lib/slaughter/CashIndexInteractor";
     import ObservationChart from "../ui/ObservationChart.svelte";
     import Circle from "../ui/Circle.svelte";
     import Marker from "../ui/Marker.svelte";
@@ -9,23 +9,19 @@
 </script>
 
 <style lang="postcss">
-    @import "Cutout.css";
+    @import "Cash.css";
 </style>
 
 <script lang="ts">
-    export let cutout: Iterable<CutoutIndex>;
-    const interactor = new CutoutInteractor(cutout);
+    export let cash: Iterable<CashIndex>;
+    const interactor = new CashIndexInteractor(cash);
     const model = store(interactor);
 </script>
 
-<div class="cutout report">
+<div class="cash report">
     <div class="stats">
-        {#each $model.stats as stat}
-            <div class="stat">
-                <h5 class="label">{stat.label}</h5>
-                <h3 class="value">{stat.value}</h3>
-            </div>
-        {/each}
+        <h2 class="label">{$model.stats.label}</h2>
+        <h2 class="value">{$model.stats.value}</h2>
     </div>
 
     <ObservationChart
@@ -36,8 +32,7 @@
 
         <g class="plot" slot="plot" let:x let:y>
             <Marker x={x} y={y} point={$model.selected}/>
-            <Path x={x} y={y} data={$model.cutout}/>
-            <Path x={x} y={y} data={$model.index}/>
+            <Path x={x} y={y} data={$model.series} />
             <Circle x={x} y={y} point={$model.selected}/>
         </g>
     </ObservationChart>
