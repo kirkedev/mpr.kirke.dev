@@ -37,7 +37,7 @@
         "storybook": "^7.5.1",
         "svelte": "^4.2.2",
         "typescript": "^5.2.2",
-        "vite": "^4.5.0",
+        "vite": "^5.0.0",
         "vitest": "^0.34.6",
         "vitest-dom": "^0.1.1"
     },

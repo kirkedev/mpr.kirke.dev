@@ -5,7 +5,7 @@
     "type": "module",
     "private": true,
     "scripts": {
-        "dev": "vite-node --watch index.ts",
+        "dev": "NODE_OPTIONS=--inspect vite-node --watch index.ts",
         "build": "docker buildx build .. -f Dockerfile -t ${ECR_REGISTRY:-kirkedev}/mpr-api:$TAG"
     },
     "dependencies": {
@@ -16,6 +16,6 @@
         "@types/node": "^20.8.9",
         "esbuild": "^0.19.5",
         "typescript": "^5.2.2",
-        "vite-node": "0.34.6"
+        "vite-node": "^0.34.6"
     }
 }
