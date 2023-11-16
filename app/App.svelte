@@ -3,6 +3,7 @@
     import PeriodSelector from "./PeriodSelector.svelte";
     import Cash from "./reports/Cash.svelte";
     import Cutout from "./reports/Cutout.svelte";
+    import Purchases from "./reports/Purchases.svelte";
     import data from "./api";
 </script>
 
@@ -11,7 +12,7 @@
 </style>
 
 <script lang="ts">
-    function fetchData({ detail: period }: CustomEvent<Period>): void {
+    function fetch({ detail: period }: CustomEvent<Period>): void {
         data.fetch(period);
     }
 </script>
@@ -19,7 +20,7 @@
 <div class="app">
     <div class="timepicker">
         <h3>Time Period</h3>
-        <PeriodSelector on:select={fetchData}/>
+        <PeriodSelector on:select={fetch}/>
     </div>
     <div class="reports">
     {#await $data}
@@ -27,6 +28,7 @@
     {:then data}
         <Cash cash={data.cashIndex}/>
         <Cutout cutout={data.cutoutIndex}/>
+        <Purchases purchases={data.purchases}/>
     {:catch error}
         <div class="error">{error.message}</div>
     {/await}
