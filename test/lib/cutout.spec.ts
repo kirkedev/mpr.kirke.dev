@@ -9,6 +9,7 @@ import PrimalViewModel from "lib/cutout/PrimalViewModel";
 import PrimalInteractor from "lib/cutout/PrimalInteractor";
 import load from "./resources";
 import { tick, collect } from ".";
+import { iterateAsync } from "lib/itertools";
 
 test("Parse primal cutout values and volume response from MPR endpoint", () => {
     const [values, volume] = load<[ValuesResponse, VolumeResponse]>("cutout.json");
@@ -236,7 +237,8 @@ describe("Cutout Interactor", () => {
 
     test("select a date", async () => {
         const interactor = new CutoutInteractor(cutout);
-        const next = interactor.next();
+        const iterator = iterateAsync(interactor);
+        const next = iterator.next();
         interactor.selectDate(new Date(2020, 3, 14));
         const { value: model } = await next;
 
@@ -248,7 +250,7 @@ describe("Cutout Interactor", () => {
 
     test("reset selected date", async () => {
         const interactor = new CutoutInteractor(cutout);
-        const collectStates = collect(interactor);
+        const [states, close] = collect(interactor);
 
         interactor.selectDate(new Date(2020, 3, 17));
         await tick();
@@ -256,8 +258,7 @@ describe("Cutout Interactor", () => {
         interactor.resetDate();
         await tick();
 
-        interactor.close();
-        const states = await collectStates;
+        close();
 
         expect(states.map(state => state.selected)).toEqual([{
             date: new Date(2020, 3, 20),
@@ -480,7 +481,9 @@ describe("Primal interactor", () => {
 
     test("select a primal", async () => {
         const interactor = new PrimalInteractor(cutout);
-        const next = interactor.next();
+        const iterator = iterateAsync(interactor);
+
+        const next = iterator.next();
         interactor.selectPrimal(Primal.Ham);
         const { value: model } = await next;
 
@@ -509,7 +512,9 @@ describe("Primal interactor", () => {
 
     test("select a date", async () => {
         const interactor = new PrimalInteractor(cutout);
-        const next = interactor.next();
+        const iterator = iterateAsync(interactor);
+
+        const next = iterator.next();
         interactor.selectDate(new Date(2020, 3, 14));
         const { value: model } = await next;
 
@@ -521,7 +526,7 @@ describe("Primal interactor", () => {
 
     test("select primals", async () => {
         const interactor = new PrimalInteractor(cutout);
-        const collectStates = collect(interactor);
+        const [states, close] = collect(interactor);
 
         interactor.selectPrimal(Primal.Ham);
         await tick();
@@ -541,8 +546,7 @@ describe("Primal interactor", () => {
         interactor.selectPrimal(Primal.Belly);
         await tick();
 
-        interactor.close();
-        const states = await collectStates;
+        close();
 
         expect(states.map(state => state.selected)).toEqual([{
             date: new Date(2020, 3, 20),
@@ -570,7 +574,7 @@ describe("Primal interactor", () => {
 
     test("reset selected date", async () => {
         const interactor = new PrimalInteractor(cutout);
-        const collector = collect(interactor);
+        const [states, close] = collect(interactor);
 
         interactor.selectDate(new Date(2020, 3, 17));
         await tick();
@@ -578,8 +582,7 @@ describe("Primal interactor", () => {
         interactor.resetDate();
         await tick();
 
-        interactor.close();
-        const states = await collector;
+        close();
 
         expect(states.map(state => state.selected)).toEqual([{
             date: new Date(2020, 3, 20),

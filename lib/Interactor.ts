@@ -1,37 +1,45 @@
 import type { Callback, UnaryOperator } from ".";
+import { iterateAsync } from "./itertools";
 
 type Action<T> = UnaryOperator<T, T>;
 
-class Interactor<State> implements AsyncIterableIterator<State> {
+class States<State> implements AsyncIterator<State> {
+    public static async each<State>(states: States<State>, callback: Callback<State>): Promise<void> {
+        while (!states.done) {
+            callback(states.value);
+            await states.next();
+        }
+    }
+
     #done = false;
-    #state: State;
+    #value: State;
     readonly #subscribers = new Array<UnaryOperator<void, void>>();
 
-    public constructor(state: State) {
-        this.#state = state;
-    }
-
-    private get result(): IteratorResult<State> {
-        return {
-            done: this.#done,
-            value: this.state
-        };
-    }
-
-    #notify(): void {
+    readonly #notify = (): void => {
         const notify = this.#subscribers.shift();
 
         if (notify != null ) {
             notify();
         }
+    };
+
+    public constructor(value: State) {
+        this.#value = value;
     }
 
-    public get state(): State {
-        return this.#state;
+    private get result(): IteratorResult<State> {
+        return {
+            done: this.#done,
+            value: this.#value
+        };
     }
 
-    public set state(state: State) {
-        this.#state = state;
+    public get value(): State {
+        return this.#value;
+    }
+
+    public set value(value: State) {
+        this.#value = value;
         this.#notify();
     }
 
@@ -44,38 +52,58 @@ class Interactor<State> implements AsyncIterableIterator<State> {
         this.#notify();
     }
 
-    public next = (): Promise<IteratorResult<State>> => {
+    public next(): Promise<IteratorResult<State>> {
         return this.#done
             ? Promise.resolve(this.result)
             : new Promise(resolve => {
                 this.#subscribers.push(() => resolve(this.result));
             });
-    };
-
-    public [Symbol.asyncIterator] = (): AsyncIterableIterator<State> => {
-        return this;
-    };
+    }
 
     public close = (): void => {
-        this.done = true;
+        this.#done = true;
     };
+}
+
+class Interactor<State> implements AsyncIterable<State> {
+    #state: State;
+    readonly #subscribers = new Set<States<State>>();
+
+    readonly #notify = (): void => {
+        this.#subscribers.forEach(subscriber => subscriber.value = this.#state);
+    };
+
+    public constructor(state: State) {
+        this.#state = state;
+    }
+
+    public [Symbol.asyncIterator] = (): States<State> => {
+        const iterator = new States(this.#state);
+        this.#subscribers.add(iterator);
+        return iterator;
+    };
+
+    public get state(): State {
+        return this.#state;
+    }
+
+    public set state(state: State) {
+        this.#state = state;
+        this.#notify();
+    }
 
     public execute = (action: Action<State>): void => {
         this.state = action(this.state);
     };
 
-    public each = async (callback: Callback<State>): Promise<void> => {
-        callback(this.state);
-
-        for await (const state of this) {
-            callback(state);
-        }
-    };
-
     public subscribe = (callback: Callback<State>): Callback<void> => {
-        this.#done = false;
-        this.each(callback);
-        return this.close.bind(this);
+        const states = iterateAsync(this) as States<State>;
+
+        States.each(states, callback).then(() => {
+            this.#subscribers.delete(states);
+        });
+
+        return states.close;
     };
 }
 
