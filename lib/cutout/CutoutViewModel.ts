@@ -1,4 +1,4 @@
-import { extent } from "../itertools";
+import { extent } from "../itertools/accumulate";
 import { flatMap } from "../itertools/map";
 import flatten from "../itertools/flatten";
 import { today } from "../time";

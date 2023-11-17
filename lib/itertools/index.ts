@@ -1,5 +1,7 @@
 const iterate = <T>(iterable: Iterable<T>): Iterator<T> =>
     iterable[Symbol.iterator]();
 
-export { iterate };
-export { extent } from "./accumulate";
+const iterateAsync = <T>(iterable: AsyncIterable<T>): AsyncIterator<T> =>
+    iterable[Symbol.asyncIterator]();
+
+export { iterate, iterateAsync };
