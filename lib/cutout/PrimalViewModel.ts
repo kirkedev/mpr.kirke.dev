@@ -1,12 +1,10 @@
-import flatten from "../itertools/flatten";
-import { flatMap } from "../itertools/map";
 import type { Action } from "../Interactor";
-import Series, { type Data, type Observation } from "../time/Series";
 import type Stat from "../Stat";
-import Primal, { Primals } from "./Primal";
-import type Cutout from ".";
 import { today } from "../time";
-import { extent } from "../itertools";
+import { extentBy } from "../itertools/accumulate";
+import Series, { type Data } from "../time/Series";
+import type Cutout from ".";
+import Primal, { Primals } from "./Primal";
 
 class PrimalViewModel {
     public static from = (cutout: Iterable<Cutout>): PrimalViewModel =>
@@ -45,11 +43,11 @@ class PrimalViewModel {
     }
 
     public get dates(): readonly [Date, Date] {
-        return Series.extent(flatten<Observation>(this.#series));
+        return Series.extent(this.series);
     }
 
     public get values(): readonly [number, number] {
-        return extent(flatMap<Data, number>(this.#series, record => record.value));
+        return extentBy(this.series, record => record.value);
     }
 
     public get selected(): Data {

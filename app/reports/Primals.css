@@ -7,7 +7,7 @@
     @apply overflow-x-scroll;
 }
 
-.primal .chart {
+.primals .chart {
     @apply px-4;
     @apply xl:px-10;
 }
@@ -46,19 +46,19 @@
     @apply text-xs;
 }
 
-.primal .plot g path {
+.primals :global(.plot path) {
     @apply stroke-purple-400;
     stroke-width: 4;
 }
 
-.primal .plot g circle {
+.primals :global(.plot circle) {
     @apply fill-purple-400;
 }
 
-.primal .marker rect {
+.primals :global(.marker rect) {
     @apply fill-purple-400;
 }
 
-.primal .marker text {
+.primals .marker text {
     @apply fill-white;
 }
