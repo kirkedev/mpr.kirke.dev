@@ -1,10 +1,12 @@
 <script lang="ts" context="module">
     import type Cutout from "lib/cutout";
+    import { Primals } from "lib/cutout/Primal";
     import PrimalInteractor from "lib/cutout/PrimalInteractor";
+    import { click } from "../ui";
     import ObservationChart from "../ui/ObservationChart.svelte";
-    import Circle from "../ui/Circle.svelte";
     import Marker from "../ui/Marker.svelte";
     import Path from "../ui/Path.svelte";
+    import Circle from "../ui/Circle.svelte";
     import store from "../store";
 </script>
 
@@ -20,8 +22,10 @@
 
 <div class="primals report">
     <div class="stats">
-        {#each $model.stats as stat}
-            <div class="stat">
+        {#each $model.stats as stat, index}
+            <div role="button" tabindex="0" class={stat.selected ? "selected stat" : "stat"}
+                on:click={interactor.selectPrimal.bind(interactor, Primals[index])}
+                on:keypress={click}>
                 <h5 class="label">{stat.label}</h5>
                 <h3 class="value">{stat.value}</h3>
             </div>
