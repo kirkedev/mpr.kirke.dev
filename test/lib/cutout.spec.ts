@@ -443,28 +443,34 @@ describe("Primal ViewModel", () => {
 
         expect(model.stats).toEqual([{
             label: "Belly",
-            value: "81.32"
+            value: "81.32",
+            selected: true
         }, {
             label: "Ham",
-            value: "40.83"
+            value: "40.83",
+            selected: false
         }, {
             label: "Loin",
-            value: "94.94"
+            value: "94.94",
+            selected: false
         }, {
             label: "Butt",
-            value: "66.75"
+            value: "66.75",
+            selected: false
         }, {
             label: "Rib",
-            value: "111.59"
+            value: "111.59",
+            selected: false
         }, {
             label: "Picnic",
-            value: "41.57"
+            value: "41.57",
+            selected: false
         }]);
     });
 
     test("Extents for series dates and values", () => {
         expect(model.dates).toEqual([new Date(2020, 3, 7), new Date(2020, 3, 20)]);
-        expect(model.values).toEqual([27.33, 111.59]);
+        expect(model.values).toEqual([31.84, 81.32]);
     });
 });
 

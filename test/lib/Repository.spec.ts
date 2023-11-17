@@ -2,9 +2,10 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { today } from "lib/time";
 import dates from "lib/time/dates";
 import Repository from "lib/Repository";
+import type { MprObservation } from "lib/time/Series";
 
 describe("Repository caching", () => {
-    const fetch = vi.fn((start: Date, end: Date) =>
+    const fetch = vi.fn((start: Date, end: Date): Promise<MprObservation[]> =>
         Promise.resolve(Array.from(dates(start, end))
             .filter(date => date < today())
             .map(date => ({ date, reportDate: date }))));

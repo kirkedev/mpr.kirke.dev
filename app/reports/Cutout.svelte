@@ -5,7 +5,6 @@
     import Circle from "../ui/Circle.svelte";
     import Marker from "../ui/Marker.svelte";
     import Path from "../ui/Path.svelte";
-    import store from "../store";
 </script>
 
 <style lang="postcss">
@@ -14,8 +13,7 @@
 
 <script lang="ts">
     export let cutout: Iterable<CutoutIndex>;
-    const interactor = new CutoutInteractor(cutout);
-    const model = store(interactor);
+    const model = new CutoutInteractor(cutout);
 </script>
 
 <div class="cutout report">
@@ -31,8 +29,8 @@
     <ObservationChart
         dates={$model.dates}
         values={$model.values}
-        on:selectDate={event => interactor.selectDate(event.detail)}
-        on:resetDate={interactor.resetDate}>
+        on:selectDate={event => model.selectDate(event.detail)}
+        on:resetDate={model.resetDate}>
 
         <g class="plot" slot="plot" let:x let:y>
             <Marker x={x} y={y} point={$model.selected}/>
