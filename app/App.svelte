@@ -4,6 +4,7 @@
     import Cash from "./reports/Cash.svelte";
     import Cutout from "./reports/Cutout.svelte";
     import Purchases from "./reports/Purchases.svelte";
+    import Primals from "./reports/Primals.svelte";
     import data from "./api";
 </script>
 
@@ -29,6 +30,7 @@
         <Cash cash={data.cashIndex}/>
         <Cutout cutout={data.cutoutIndex}/>
         <Purchases purchases={data.purchases}/>
+        <Primals cutout={data.cutout}/>
     {:catch error}
         <div class="error">{error.message}</div>
     {/await}

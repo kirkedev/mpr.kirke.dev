@@ -14,7 +14,7 @@ export interface Resources {
     cashIndex: Iterable<CashIndex>;
     cutoutIndex: Iterable<CutoutIndex>;
     purchases: Iterable<Purchase>;
-    primals: Iterable<Cutout>;
+    cutout: Iterable<Cutout>;
 }
 
 interface ApiStore extends Readable<Promise<Resources>> {
@@ -36,7 +36,7 @@ const { subscribe } = derived(period, function(period): Promise<Resources> {
         cashIndex: dropWhile(CashIndex.from(slaughter), record => record.date < period.start),
         cutoutIndex: dropWhile(CutoutIndex.from(cutout), record => record.date < period.start),
         purchases: dropWhile(purchases, record => record.date < period.start),
-        primals: dropWhile(cutout, record => record.date < period.start)
+        cutout: dropWhile(cutout, record => record.date < period.start)
     }));
 });
 
