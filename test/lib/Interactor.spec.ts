@@ -33,7 +33,7 @@ test("stop state generation with close", async () => {
     expect(await result).toEqual({ done: true, value: 50 });
 
     interactor.execute(plus(50));
-    expect(interactor.state).toBe(50);
+    expect(interactor.state).toBe(100);
 });
 
 test("restart closed interactor", () => {
@@ -44,11 +44,11 @@ test("restart closed interactor", () => {
 
     interactor.close();
     interactor.execute(plus(50));
-    expect(interactor.state).toBe(50);
+    expect(interactor.state).toBe(100);
 
     interactor.done = false;
     interactor.execute(plus(50));
-    expect(interactor.state).toBe(100);
+    expect(interactor.state).toBe(150);
 });
 
 test("collect interactor states to array", async () => {

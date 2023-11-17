@@ -8,7 +8,7 @@ import api from "app/api";
 describe("fetch periods", () => {
     test("fetch three months of data", async () => {
         api.fetch(Period.ThreeMonths);
-        const { cutoutIndex, purchases, cashIndex, primals } = await get(api);
+        const { cutoutIndex, purchases, cashIndex, cutout } = await get(api);
 
         expect(count(cutoutIndex)).toBe(64);
         expect(first(cutoutIndex).date).toEqual(new Date(2021, 8, 23));
@@ -22,14 +22,14 @@ describe("fetch periods", () => {
         expect(first(cashIndex).date).toEqual(new Date(2021, 8, 23));
         expect(last(cashIndex).date).toEqual(new Date(2021, 11, 22));
 
-        expect(count(primals)).toBe(64);
-        expect(first(primals).date).toEqual(new Date(2021, 8, 23));
-        expect(last(primals).date).toEqual(new Date(2021, 11, 22));
+        expect(count(cutout)).toBe(64);
+        expect(first(cutout).date).toEqual(new Date(2021, 8, 23));
+        expect(last(cutout).date).toEqual(new Date(2021, 11, 22));
     });
 
     test("fetch six months of data", async () => {
         api.fetch(Period.SixMonths);
-        const { cutoutIndex, purchases, cashIndex, primals } = await get(api);
+        const { cutoutIndex, purchases, cashIndex, cutout } = await get(api);
 
         expect(count(cutoutIndex)).toBe(128);
         expect(first(cutoutIndex).date).toEqual(new Date(2021, 5, 23));
@@ -43,14 +43,14 @@ describe("fetch periods", () => {
         expect(first(cashIndex).date).toEqual(new Date(2021, 5, 23));
         expect(last(cashIndex).date).toEqual(new Date(2021, 11, 22));
 
-        expect(count(primals)).toBe(128);
-        expect(first(primals).date).toEqual(new Date(2021, 5, 23));
-        expect(last(primals).date).toEqual(new Date(2021, 11, 22));
+        expect(count(cutout)).toBe(128);
+        expect(first(cutout).date).toEqual(new Date(2021, 5, 23));
+        expect(last(cutout).date).toEqual(new Date(2021, 11, 22));
     });
 
     test("fetch one year of data", async () => {
         api.fetch(Period.OneYear);
-        const { cutoutIndex, purchases, cashIndex, primals } = await get(api);
+        const { cutoutIndex, purchases, cashIndex, cutout } = await get(api);
 
         expect(count(cutoutIndex)).toBe(254);
         expect(first(cutoutIndex).date).toEqual(new Date(2020, 11, 23));
@@ -64,8 +64,8 @@ describe("fetch periods", () => {
         expect(first(cashIndex).date).toEqual(new Date(2020, 11, 23));
         expect(last(cashIndex).date).toEqual(new Date(2021, 11, 22));
 
-        expect(count(primals)).toBe(254);
-        expect(first(primals).date).toEqual(new Date(2020, 11, 23));
-        expect(last(primals).date).toEqual(new Date(2021, 11, 22));
+        expect(count(cutout)).toBe(254);
+        expect(first(cutout).date).toEqual(new Date(2020, 11, 23));
+        expect(last(cutout).date).toEqual(new Date(2021, 11, 22));
     });
 });

@@ -61,15 +61,21 @@ class Interactor<State> implements AsyncIterableIterator<State> {
     }
 
     public execute(action: Action<State>): void {
-        if (!this.#done) {
-            this.state = action(this.state);
-        }
+        this.state = action(this.state);
     }
 
     public async each(callback: Callback<State>): Promise<void> {
+        callback(this.state);
+
         for await (const state of this) {
             callback(state);
         }
+    }
+
+    public subscribe(callback: Callback<State>): Callback<void> {
+        this.#done = false;
+        this.each(callback);
+        return this.close.bind(this);
     }
 }
 

@@ -59,10 +59,6 @@ class PrimalViewModel {
     public get selected(): Data {
         return Series.find(this.series, this.#date);
     }
-
-    public get primal(): Primal {
-        return this.#primal;
-    }
 }
 
 export default PrimalViewModel;
