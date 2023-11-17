@@ -24,7 +24,7 @@
     @apply border-transparent;
 }
 
-.stat.active {
+.selected.stat {
     @apply border-purple-400;
     @apply text-gray-700;
 }

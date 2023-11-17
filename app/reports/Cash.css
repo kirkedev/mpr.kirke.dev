@@ -1,4 +1,4 @@
-:global(.stats) {
+.stats {
     @apply flex;
     @apply justify-between;
     @apply flex-row;
@@ -12,7 +12,7 @@
     @apply xl:px-10;
 }
 
-:global(.stats h2) {
+.stats h2 {
     @apply text-gray-700;
     @apply mt-auto;
     @apply font-normal;

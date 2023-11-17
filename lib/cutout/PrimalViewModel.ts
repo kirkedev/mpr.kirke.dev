@@ -6,6 +6,10 @@ import Series, { type Data } from "../time/Series";
 import type Cutout from ".";
 import Primal, { Primals } from "./Primal";
 
+interface PrimalStat extends Stat {
+    selected: boolean;
+}
+
 class PrimalViewModel {
     public static from = (cutout: Iterable<Cutout>): PrimalViewModel =>
         new PrimalViewModel(today(), Primal.Belly, [
@@ -33,9 +37,11 @@ class PrimalViewModel {
         this.#series = series;
     }
 
-    public get stats(): Stat[] {
-        return Primals.map((label, index) =>
-            Series.stat(label, this.#series[index], this.#date));
+    public get stats(): PrimalStat[] {
+        return Primals.map((label, index) => ({
+            ...Series.stat(label, this.#series[index], this.#date),
+            selected: Primals[index] === this.#primal
+        }));
     }
 
     public get series(): Series {
@@ -52,6 +58,10 @@ class PrimalViewModel {
 
     public get selected(): Data {
         return Series.find(this.series, this.#date);
+    }
+
+    public get primal(): Primal {
+        return this.#primal;
     }
 }
 
