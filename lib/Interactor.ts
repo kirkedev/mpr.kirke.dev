@@ -18,18 +18,6 @@ class Interactor<State> implements AsyncIterableIterator<State> {
         };
     }
 
-    public next(): Promise<IteratorResult<State>> {
-        return this.#done
-            ? Promise.resolve(this.result)
-            : new Promise(resolve => {
-                this.#subscribers.push(() => resolve(this.result));
-            });
-    }
-
-    public [Symbol.asyncIterator](): AsyncIterableIterator<State> {
-        return this;
-    }
-
     #notify(): void {
         const notify = this.#subscribers.shift();
 
@@ -56,27 +44,39 @@ class Interactor<State> implements AsyncIterableIterator<State> {
         this.#notify();
     }
 
-    public close(): void {
+    public next = (): Promise<IteratorResult<State>> => {
+        return this.#done
+            ? Promise.resolve(this.result)
+            : new Promise(resolve => {
+                this.#subscribers.push(() => resolve(this.result));
+            });
+    };
+
+    public [Symbol.asyncIterator] = (): AsyncIterableIterator<State> => {
+        return this;
+    };
+
+    public close = (): void => {
         this.done = true;
-    }
+    };
 
-    public execute(action: Action<State>): void {
+    public execute = (action: Action<State>): void => {
         this.state = action(this.state);
-    }
+    };
 
-    public async each(callback: Callback<State>): Promise<void> {
+    public each = async (callback: Callback<State>): Promise<void> => {
         callback(this.state);
 
         for await (const state of this) {
             callback(state);
         }
-    }
+    };
 
-    public subscribe(callback: Callback<State>): Callback<void> {
+    public subscribe = (callback: Callback<State>): Callback<void> => {
         this.#done = false;
         this.each(callback);
         return this.close.bind(this);
-    }
+    };
 }
 
 export default Interactor;
