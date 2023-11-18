@@ -3,24 +3,13 @@ import { iterateAsync } from "./itertools";
 
 type Action<T> = UnaryOperator<T, T>;
 
-class States<State> implements AsyncIterator<State> {
-    public static async each<State>(states: States<State>, callback: Callback<State>): Promise<void> {
-        while (!states.done) {
-            callback(states.value);
-            await states.next();
-        }
-    }
-
+class StateIterator<State> implements AsyncIterator<State> {
     #done = false;
     #value: State;
     readonly #subscribers = new Array<UnaryOperator<void, void>>();
 
     readonly #notify = (): void => {
-        const notify = this.#subscribers.shift();
-
-        if (notify != null ) {
-            notify();
-        }
+        this.#subscribers.shift()?.();
     };
 
     public constructor(value: State) {
@@ -60,6 +49,13 @@ class States<State> implements AsyncIterator<State> {
             });
     }
 
+    public each = async (callback: Callback<State>): Promise<void> => {
+        while (!this.done) {
+            callback(this.value);
+            await this.next();
+        }
+    };
+
     public close = (): void => {
         this.done = true;
     };
@@ -67,7 +63,7 @@ class States<State> implements AsyncIterator<State> {
 
 class Interactor<State> implements AsyncIterable<State> {
     #state: State;
-    readonly #subscribers = new Set<States<State>>();
+    readonly #subscribers = new Set<StateIterator<State>>();
 
     readonly #notify = (): void => {
         this.#subscribers.forEach(subscriber => subscriber.value = this.#state);
@@ -77,8 +73,8 @@ class Interactor<State> implements AsyncIterable<State> {
         this.#state = state;
     }
 
-    public [Symbol.asyncIterator] = (): States<State> => {
-        const iterator = new States(this.#state);
+    public [Symbol.asyncIterator] = (): StateIterator<State> => {
+        const iterator = new StateIterator(this.#state);
         this.#subscribers.add(iterator);
         return iterator;
     };
@@ -97,9 +93,9 @@ class Interactor<State> implements AsyncIterable<State> {
     };
 
     public subscribe = (callback: Callback<State>): Callback<void> => {
-        const states = iterateAsync(this) as States<State>;
+        const states = iterateAsync(this) as StateIterator<State>;
 
-        States.each(states, callback).then(() => {
+        states.each(callback).then(() => {
             this.#subscribers.delete(states);
         });
 
