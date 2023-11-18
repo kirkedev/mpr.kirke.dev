@@ -61,7 +61,7 @@ class States<State> implements AsyncIterator<State> {
     }
 
     public close = (): void => {
-        this.#done = true;
+        this.done = true;
     };
 }
 
