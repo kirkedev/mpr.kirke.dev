@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.17 AS dev
+FROM node:lts-alpine3.18 AS dev
 ENV NODE_ENV development
 ENV VITE_DATE 2021-12-23
 
