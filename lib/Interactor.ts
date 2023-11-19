@@ -2,6 +2,7 @@ import type { Callback, UnaryOperator } from ".";
 import { iterateAsync } from "./itertools";
 
 type Action<T> = UnaryOperator<T, T>;
+type AsyncAction<T> = UnaryOperator<T, Promise<T>>;
 
 class StateIterator<State> implements AsyncIterator<State> {
     #done = false;
@@ -104,8 +105,8 @@ class Interactor<State> implements AsyncIterable<State> {
         this.#notify();
     }
 
-    public execute = (action: Action<State>): void => {
-        this.state = action(this.state);
+    public execute = (action: Action<State> | AsyncAction<State>): void => {
+        Promise.resolve(action(this.state)).then(state => this.state = state);
     };
 
     public subscribe = (callback: Callback<State>): Callback<void> => {
