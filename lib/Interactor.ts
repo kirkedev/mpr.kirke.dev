@@ -6,6 +6,7 @@ type Action<T> = UnaryOperator<T, T>;
 class StateIterator<State> implements AsyncIterator<State> {
     #done = false;
     #value: State;
+    #onClose?: UnaryOperator<StateIterator<State>, void>;
     readonly #subscribers = new Array<UnaryOperator<void, void>>();
 
     readonly #notify = (): void => {
@@ -14,6 +15,11 @@ class StateIterator<State> implements AsyncIterator<State> {
 
     public constructor(value: State) {
         this.#value = value;
+    }
+
+    public onClose(onClose: UnaryOperator<StateIterator<State>, void>): this {
+        this.#onClose = onClose;
+        return this;
     }
 
     private get result(): IteratorResult<State> {
@@ -38,7 +44,12 @@ class StateIterator<State> implements AsyncIterator<State> {
 
     public set done(done: boolean) {
         this.#done = done;
-        this.#notify();
+
+        while (this.#subscribers.length) {
+            this.#notify();
+        }
+
+        this.#onClose?.(this);
     }
 
     public next(): Promise<IteratorResult<State>> {
@@ -73,8 +84,13 @@ class Interactor<State> implements AsyncIterable<State> {
         this.#state = state;
     }
 
+    public get subscribers(): number {
+        return this.#subscribers.size;
+    }
+
     public [Symbol.asyncIterator] = (): StateIterator<State> => {
-        const iterator = new StateIterator(this.#state);
+        const iterator = new StateIterator(this.#state)
+            .onClose(iterator => this.#subscribers.delete(iterator));
         this.#subscribers.add(iterator);
         return iterator;
     };
@@ -94,11 +110,7 @@ class Interactor<State> implements AsyncIterable<State> {
 
     public subscribe = (callback: Callback<State>): Callback<void> => {
         const states = iterateAsync(this) as StateIterator<State>;
-
-        states.each(callback).then(() => {
-            this.#subscribers.delete(states);
-        });
-
+        states.each(callback);
         return states.close;
     };
 }
