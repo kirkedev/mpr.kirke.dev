@@ -1,23 +1,23 @@
-import Interactor from "../Interactor";
+import ObservableState from "../async/ObservableState";
 import type Primal from "./Primal";
 import PrimalViewModel from "./PrimalViewModel";
 import type Cutout from ".";
 
-class PrimalInteractor extends Interactor<PrimalViewModel> {
+class PrimalInteractor extends ObservableState<PrimalViewModel> {
     public constructor(cutout: Iterable<Cutout>) {
         super(PrimalViewModel.from(cutout));
     }
 
     public selectDate = (date: Date): void => {
-        this.execute(PrimalViewModel.selectDate(date));
+        this.dispatch(PrimalViewModel.selectDate(date));
     };
 
     public resetDate = (): void => {
-        this.execute(PrimalViewModel.selectDate());
+        this.dispatch(PrimalViewModel.selectDate());
     };
 
     public selectPrimal = (primal: Primal): void => {
-        this.execute(PrimalViewModel.selectPrimal(primal));
+        this.dispatch(PrimalViewModel.selectPrimal(primal));
     };
 }
 

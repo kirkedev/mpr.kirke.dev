@@ -6,7 +6,8 @@ import PurchasesViewModel from "lib/purchases/PurchasesViewModel";
 import PurchasesInteractor from "lib/purchases/PurchasesInteractor";
 import load from "./resources";
 import { collect, tick } from ".";
-import { iterateAsync } from "lib/itertools";
+
+import { iterate } from "lib/async";
 
 describe("Parse prior day purchase records", () => {
     const records = Array.from(parse(load<Purchases>("purchases.json")));
@@ -196,7 +197,7 @@ describe("Purchases Interactor", () => {
 
     test("select a date", async () => {
         const interactor = new PurchasesInteractor(purchases);
-        const iterator = iterateAsync(interactor);
+        const iterator = iterate(interactor);
         const next = iterator.next();
         interactor.selectDate(new Date(2021, 11, 16));
         const { value: model } = await next;
