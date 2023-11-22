@@ -1,12 +1,12 @@
-import { iterate } from ".";
 import type { BinaryOperator } from "..";
+import { iterate } from ".";
 
 function* groupItems<T>(items: Iterator<T>, group: BinaryOperator<T, T, boolean>): Iterator<T[]> {
     const first = items.next();
     if (first.done) return;
 
     let result = items.next();
-    let data = [first.value];
+    const data = [first.value];
 
     while (!result.done) {
         const { value } = result;
@@ -15,8 +15,7 @@ function* groupItems<T>(items: Iterator<T>, group: BinaryOperator<T, T, boolean>
         if (group(last, value)) {
             data.push(value);
         } else {
-            yield data.slice();
-            data = [value];
+            yield data.splice(0, data.length, value);
         }
 
         result = items.next();

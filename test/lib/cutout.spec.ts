@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+import { iterate } from "lib/async";
 import parse from "lib/cutout/mpr";
 import type { ValuesResponse, VolumeResponse } from "lib/cutout/mpr";
 import CutoutIndex from "lib/cutout/CutoutIndex";
@@ -9,7 +10,6 @@ import PrimalViewModel from "lib/cutout/PrimalViewModel";
 import PrimalInteractor from "lib/cutout/PrimalInteractor";
 import load from "./resources";
 import { tick, collect } from ".";
-import { iterateAsync } from "lib/itertools";
 
 test("Parse primal cutout values and volume response from MPR endpoint", () => {
     const [values, volume] = load<[ValuesResponse, VolumeResponse]>("cutout.json");
@@ -237,7 +237,7 @@ describe("Cutout Interactor", () => {
 
     test("select a date", async () => {
         const interactor = new CutoutInteractor(cutout);
-        const iterator = iterateAsync(interactor);
+        const iterator = iterate(interactor);
         const next = iterator.next();
         interactor.selectDate(new Date(2020, 3, 14));
         const { value: model } = await next;
@@ -481,9 +481,9 @@ describe("Primal interactor", () => {
 
     test("select a primal", async () => {
         const interactor = new PrimalInteractor(cutout);
-        const iterator = iterateAsync(interactor);
-
+        const iterator = iterate(interactor);
         const next = iterator.next();
+
         interactor.selectPrimal(Primal.Ham);
         const { value: model } = await next;
 
@@ -512,9 +512,9 @@ describe("Primal interactor", () => {
 
     test("select a date", async () => {
         const interactor = new PrimalInteractor(cutout);
-        const iterator = iterateAsync(interactor);
-
+        const iterator = iterate(interactor);
         const next = iterator.next();
+
         interactor.selectDate(new Date(2020, 3, 14));
         const { value: model } = await next;
 

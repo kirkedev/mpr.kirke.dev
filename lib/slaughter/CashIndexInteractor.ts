@@ -1,18 +1,18 @@
-import Interactor from "../Interactor";
+import ObservableState from "../async/ObservableState";
 import type CashIndex from "./CashIndex";
 import CashIndexViewModel from "./CashIndexViewModel";
 
-class CashIndexInteractor extends Interactor<CashIndexViewModel> {
+class CashIndexInteractor extends ObservableState<CashIndexViewModel> {
     public constructor(records: Iterable<CashIndex>) {
         super(CashIndexViewModel.from(records));
     }
 
     public selectDate = (date: Date): void => {
-        this.execute(CashIndexViewModel.selectDate(date));
+        this.dispatch(CashIndexViewModel.selectDate(date));
     };
 
     public resetDate = (): void => {
-        this.execute(CashIndexViewModel.selectDate());
+        this.dispatch(CashIndexViewModel.selectDate());
     };
 }
 
