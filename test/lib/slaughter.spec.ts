@@ -1,13 +1,13 @@
 import { describe, expect, test } from "vitest";
+import { iterate } from "lib/async";
+import { collect } from "lib/async/accumulate";
 import { Arrangement, Basis, Seller } from "lib/mpr/PurchaseType";
 import parse, { type BarrowsGilts } from "lib/slaughter/mpr";
 import CashIndex from "lib/slaughter/CashIndex";
 import CashIndexViewModel from "lib/slaughter/CashIndexViewModel";
 import CashIndexInteractor from "lib/slaughter/CashIndexInteractor";
+import { tick } from ".";
 import load from "./resources";
-import { collect, tick } from ".";
-
-import { iterate } from "lib/async";
 
 describe("Parse daily slaughter response from MPR", () => {
     const records = Array.from(parse(load<BarrowsGilts>("slaughter.json")));
@@ -371,7 +371,7 @@ describe("Cash Index Interactor", () => {
 
     test("reset selected date", async () => {
         const interactor = new CashIndexInteractor(cash);
-        const [states, close] = collect(interactor);
+        const close = collect(interactor);
 
         interactor.selectDate(new Date(2019, 1, 14));
         await tick();
@@ -379,7 +379,7 @@ describe("Cash Index Interactor", () => {
         interactor.resetDate();
         await tick();
 
-        close();
+        const states = close();
 
         expect(states.map(state => state.selected)).toEqual([{
             date: new Date(2019, 1, 20),

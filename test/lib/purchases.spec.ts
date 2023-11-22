@@ -1,13 +1,13 @@
 import { describe, expect, test } from "vitest";
+import { iterate } from "lib/async";
+import { collect } from "lib/async/accumulate";
 import { Arrangement, Basis, Seller } from "lib/mpr/PurchaseType";
 import Purchase from "lib/purchases";
 import parse, { type Purchases } from "lib/purchases/mpr";
 import PurchasesViewModel from "lib/purchases/PurchasesViewModel";
 import PurchasesInteractor from "lib/purchases/PurchasesInteractor";
+import { tick } from ".";
 import load from "./resources";
-import { collect, tick } from ".";
-
-import { iterate } from "lib/async";
 
 describe("Parse prior day purchase records", () => {
     const records = Array.from(parse(load<Purchases>("purchases.json")));
@@ -210,7 +210,7 @@ describe("Purchases Interactor", () => {
 
     test("reset selected date", async () => {
         const interactor = new PurchasesInteractor(purchases);
-        const [states, close] = collect(interactor);
+        const close = collect(interactor);
 
         interactor.selectDate(new Date(2021, 11, 16));
         await tick();
@@ -218,7 +218,7 @@ describe("Purchases Interactor", () => {
         interactor.resetDate();
         await tick();
 
-        close();
+        const states = close();
 
         expect(states.map(state => state.selected)).toEqual([{
             date: new Date(2021, 11, 22),
