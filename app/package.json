@@ -8,34 +8,27 @@
         "build": "docker buildx build .. -f Dockerfile -t ${ECR_REGISTRY:-kirkedev}/mpr-app:$TAG"
     },
     "dependencies": {
-        "d3-array": "^3.2.4",
         "d3-axis": "^3.0.0",
-        "d3-drag": "^3.0.0",
-        "d3-format": "^3.1.0",
         "d3-scale": "^4.0.2",
         "d3-selection": "^3.0.0",
         "d3-shape": "^3.2.0",
-        "d3-time-format": "^4.1.0",
         "d3-transition": "^3.0.1",
         "lib": "workspace:*",
-        "svelte": "^4.2.2"
+        "polymorph-js": "^1.0.2",
+        "svelte": "^4.2.7"
     },
     "devDependencies": {
-        "@sveltejs/vite-plugin-svelte": "^3.0.0",
-        "@types/d3-array": "^3.0.9",
-        "@types/d3-axis": "^3.0.5",
-        "@types/d3-drag": "^3.0.5",
-        "@types/d3-format": "^3.0.3",
-        "@types/d3-scale": "^4.0.6",
-        "@types/d3-selection": "^3.0.8",
-        "@types/d3-shape": "^3.1.4",
-        "@types/d3-time-format": "^4.0.2",
-        "@types/d3-transition": "^3.0.6",
+        "@sveltejs/vite-plugin-svelte": "^3.0.1",
+        "@types/d3-axis": "^3.0.6",
+        "@types/d3-scale": "^4.0.8",
+        "@types/d3-selection": "^3.0.10",
+        "@types/d3-shape": "^3.1.6",
+        "@types/d3-transition": "^3.0.8",
         "autoprefixer": "^10.4.16",
         "dotenv": "^16.3.1",
         "postcss": "^8.4.31",
         "tailwindcss": "^3.3.5",
-        "typescript": "^5.2.2",
-        "vite": "^5.0.0"
+        "typescript": "^5.3.2",
+        "vite": "^5.0.3"
     }
 }
