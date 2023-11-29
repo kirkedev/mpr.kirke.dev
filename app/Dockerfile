@@ -1,7 +1,6 @@
 FROM node:lts-alpine3.18 AS dev
 ENV NODE_ENV development
 ENV API_URL ${API_URL}
-ENV VITE_DATE 2021-12-23
 
 WORKDIR /home/node/mpr
 COPY package.json .yarnrc.yml yarn.lock tsconfig.json ./
@@ -14,6 +13,7 @@ ENTRYPOINT ["yarn", "workspace", "app"]
 CMD ["dev"]
 
 FROM node:lts-alpine3.18 AS build
+ENV NODE_ENV production
 WORKDIR /home/node/mpr
 COPY --from=dev /home/node/mpr ./
 

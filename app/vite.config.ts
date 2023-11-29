@@ -5,11 +5,18 @@ import tailwindcss from "tailwindcss";
 import type { Plugin } from "postcss";
 import svgColors from "./svg-colors";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 export default defineConfig({
     cacheDir: "../node_modules/.vite",
     build: {
         outDir: "build",
-        minify: true
+        minify:  isProduction ? "esbuild" : false
+    },
+    define: {
+        "process.env.DATE": isProduction
+            ? JSON.stringify("")
+            : JSON.stringify("2021-12-23")
     },
     plugins: [
         svelte({ preprocess: vitePreprocess() })
@@ -19,7 +26,7 @@ export default defineConfig({
             plugins: [
                 autoprefixer(),
                 tailwindcss({
-                    content: ["index.html", "**/*.svelte", "**/*.css"],
+                    content: ["index.html", "**/*.ts", "**/*.svelte", "**/*.css"],
                     plugins: [svgColors]
                 }) as Plugin
             ]
