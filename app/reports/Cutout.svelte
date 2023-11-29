@@ -13,12 +13,14 @@
 
 <script lang="ts">
     export let cutout: Iterable<CutoutIndex>;
-    const model = new CutoutInteractor(cutout);
+    $: model = new CutoutInteractor(cutout);
+    $: stats = model.stats;
+    $: selected = model.selected;
 </script>
 
 <div class="cutout report">
     <div class="stats">
-        {#each $model.stats as stat}
+        {#each $stats as stat}
             <div class="stat">
                 <h5 class="label">{stat.label}</h5>
                 <h3 class="value">{stat.value}</h3>
@@ -27,16 +29,16 @@
     </div>
 
     <ObservationChart
-        dates={$model.dates}
-        values={$model.values}
+        dates={model.dates}
+        values={model.values}
         on:selectDate={event => model.selectDate(event.detail)}
         on:resetDate={model.resetDate}>
 
         <g class="plot" slot="plot" let:x let:y>
-            <Marker x={x} y={y} point={$model.selected}/>
-            <Path x={x} y={y} data={$model.cutout}/>
-            <Path x={x} y={y} data={$model.index}/>
-            <Circle x={x} y={y} point={$model.selected}/>
+            <Marker x={x} y={y} point={$selected}/>
+            <Path x={x} y={y} data={model.cutout}/>
+            <Path x={x} y={y} data={model.index}/>
+            <Circle x={x} y={y} point={$selected}/>
         </g>
     </ObservationChart>
 </div>

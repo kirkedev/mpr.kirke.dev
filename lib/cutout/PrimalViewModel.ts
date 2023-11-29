@@ -1,8 +1,7 @@
-import type { Action } from "../Interactor";
-import type Stat from "../Stat";
-import { today } from "../time";
 import { extentBy } from "../itertools/accumulate";
+import { today } from "../time";
 import Series, { type Data } from "../time/Series";
+import type Stat from "../Stat";
 import type Cutout from ".";
 import Primal, { Primals } from "./Primal";
 
@@ -20,12 +19,6 @@ class PrimalViewModel {
             Primal.rib(cutout),
             Primal.picnic(cutout)
         ]);
-
-    public static selectDate = (date = today()): Action<PrimalViewModel> =>
-        model => new PrimalViewModel(date, model.#primal, model.#series);
-
-    public static selectPrimal = (primal: Primal): Action<PrimalViewModel> =>
-        model => new PrimalViewModel(model.#date, primal, model.#series);
 
     readonly #date: Date;
     readonly #primal: Primal;
@@ -59,6 +52,14 @@ class PrimalViewModel {
     public get selected(): Data {
         return Series.find(this.series, this.#date);
     }
+
+    public selectDate = (date = today()): PrimalViewModel =>
+        new PrimalViewModel(date, this.#primal, this.#series);
+
+    public selectPrimal = (primal: Primal): PrimalViewModel =>
+        new PrimalViewModel(this.#date, primal, this.#series);
 }
 
 export default PrimalViewModel;
+
+export { type PrimalStat };
