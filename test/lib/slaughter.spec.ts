@@ -357,13 +357,13 @@ describe("Cash Index Interactor", () => {
 
     test("select a date", async () => {
         const interactor = new CashIndexInteractor(cash);
-        const iterator = iterate(interactor);
+        const iterator = iterate(interactor.selected);
         const next = iterator.next();
 
         interactor.selectDate(new Date(2019, 1, 14));
-        const { value: model } = await next;
+        const { value: selected } = await next;
 
-        expect(model.selected).toEqual({
+        expect(selected).toEqual({
             date: new Date(2019, 1, 14),
             value: 55.02
         });
@@ -371,7 +371,8 @@ describe("Cash Index Interactor", () => {
 
     test("reset selected date", async () => {
         const interactor = new CashIndexInteractor(cash);
-        const close = collect(interactor);
+        const stats = collect(interactor.stats);
+        const selected = collect(interactor.selected);
 
         interactor.selectDate(new Date(2019, 1, 14));
         await tick();
@@ -379,12 +380,7 @@ describe("Cash Index Interactor", () => {
         interactor.resetDate();
         await tick();
 
-        const states = close();
-
-        expect(states.map(state => state.selected)).toEqual([{
-            date: new Date(2019, 1, 20),
-            value: 54.06
-        }, {
+        expect(selected()).toEqual([{
             date: new Date(2019, 1, 14),
             value: 55.02
         }, {
@@ -392,10 +388,7 @@ describe("Cash Index Interactor", () => {
             value: 54.06
         }]);
 
-        expect(states.map(state => state.stats)).toEqual([{
-            label: "Cash Index",
-            value: "54.06"
-        }, {
+        expect(stats()).toEqual([{
             label: "Cash Index",
             value: "55.02"
         }, {

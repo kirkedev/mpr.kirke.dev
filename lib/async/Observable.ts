@@ -18,15 +18,13 @@ class Observer<T> implements AsyncIterator<T> {
     };
 
     public return = (): Promise<IteratorResult<T>> => {
-        const done = { value: undefined, done: true } as const;
-
         while (this.#subscribers.length) {
-            this.#subscribers.shift()?.(done);
+            this.#subscribers.shift()?.({ value: undefined, done: true });
         }
 
         this.#done = true;
         this.onClose?.(this);
-        return Promise.resolve(done);
+        return Promise.resolve({ value: undefined, done: true });
     };
 }
 

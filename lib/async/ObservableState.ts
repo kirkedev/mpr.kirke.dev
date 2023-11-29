@@ -38,12 +38,13 @@ class ObservableState<State> implements AsyncIterable<State> {
     public [Symbol.asyncIterator] = (): AsyncIterator<State> =>
         iterate(this.#states);
 
-    public dispatch = (action: Action<State> | AsyncAction<State>): void => {
+    public dispatch = (action: Action<State> | AsyncAction<State>): this => {
         Promise.resolve(action(this.state)).then(state => this.state = state);
+        return this;
     };
 
-    public subscribe = (callback: Callback<State>): Callback<void> => {
-        callback(this.#state);
+    public subscribe = (callback: Callback<State>): UnaryOperator<void, Promise<void>> => {
+        callback(this.state);
         return each(this, callback);
     };
 }

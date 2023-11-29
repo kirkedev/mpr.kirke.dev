@@ -197,12 +197,12 @@ describe("Purchases Interactor", () => {
 
     test("select a date", async () => {
         const interactor = new PurchasesInteractor(purchases);
-        const iterator = iterate(interactor);
+        const iterator = iterate(interactor.selected);
         const next = iterator.next();
         interactor.selectDate(new Date(2021, 11, 16));
-        const { value: model } = await next;
+        const { value: selected } = await next;
 
-        expect(model.selected).toEqual({
+        expect(selected).toEqual({
             date: new Date(2021, 11, 16),
             value: 72.56
         });
@@ -210,7 +210,8 @@ describe("Purchases Interactor", () => {
 
     test("reset selected date", async () => {
         const interactor = new PurchasesInteractor(purchases);
-        const close = collect(interactor);
+        const selected = collect(interactor.selected);
+        const stats = collect(interactor.stats);
 
         interactor.selectDate(new Date(2021, 11, 16));
         await tick();
@@ -218,12 +219,7 @@ describe("Purchases Interactor", () => {
         interactor.resetDate();
         await tick();
 
-        const states = close();
-
-        expect(states.map(state => state.selected)).toEqual([{
-            date: new Date(2021, 11, 22),
-            value: 70.84
-        }, {
+        expect(selected()).toEqual([{
             date: new Date(2021, 11, 16),
             value: 72.56
         }, {
@@ -231,10 +227,7 @@ describe("Purchases Interactor", () => {
             value: 70.84
         }]);
 
-        expect(states.map(state => state.stats)).toEqual([{
-            label: "Formula",
-            value: "70.84"
-        }, {
+        expect(stats()).toEqual([{
             label: "Formula",
             value: "72.56"
         }, {

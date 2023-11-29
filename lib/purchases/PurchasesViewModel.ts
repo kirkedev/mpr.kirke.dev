@@ -1,17 +1,12 @@
-import { extent } from "../itertools/accumulate";
-import map from "../itertools/map";
+import { extentBy } from "../itertools/accumulate";
 import { today } from "../time";
 import Series, { type Data } from "../time/Series";
-import type { Action } from "../Interactor";
 import type Stat from "../Stat";
 import Purchase from ".";
 
 class PurchasesViewModel {
     public static from = (purchases: Iterable<Purchase>): PurchasesViewModel =>
         new PurchasesViewModel(today(), Purchase.marketFormula(purchases));
-
-    public static selectDate = (date = today()): Action<PurchasesViewModel> =>
-        model => new PurchasesViewModel(date, model.#series);
 
     readonly #date: Date;
     readonly #series: Series;
@@ -34,12 +29,15 @@ class PurchasesViewModel {
     }
 
     public get values(): readonly [number, number] {
-        return extent(map<Data, number>(this.#series, record => record.value));
+        return extentBy(this.#series, record => record.value);
     }
 
     public get selected(): Data {
         return Series.find(this.#series, this.#date);
     }
+
+    public selectDate = (date = today()): PurchasesViewModel =>
+        new PurchasesViewModel(date, this.#series);
 }
 
 export default PurchasesViewModel;

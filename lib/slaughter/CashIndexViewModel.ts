@@ -1,17 +1,12 @@
-import { extent } from "../itertools/accumulate";
-import map from "../itertools/map";
+import { extentBy } from "../itertools/accumulate";
 import { today } from "../time";
 import Series, { type Data } from "../time/Series";
-import type { Action } from "../Interactor";
 import type Stat from "../Stat";
 import CashIndex from "./CashIndex";
 
 class CashIndexViewModel {
     public static from = (cash: Iterable<CashIndex>): CashIndexViewModel =>
         new CashIndexViewModel(today(), CashIndex.index(cash));
-
-    public static selectDate = (date = today()): Action<CashIndexViewModel> =>
-        model => new CashIndexViewModel(date, model.#series);
 
     readonly #date: Date;
     readonly #series: Series;
@@ -34,12 +29,15 @@ class CashIndexViewModel {
     }
 
     public get values(): readonly [number, number] {
-        return extent(map<Data, number>(this.#series, record => record.value));
+        return extentBy(this.#series, record => record.value);
     }
 
     public get selected(): Data {
         return Series.find(this.series, this.#date);
     }
+
+    public selectDate = (date = today()): CashIndexViewModel =>
+        new CashIndexViewModel(date, this.#series);
 }
 
 export default CashIndexViewModel;

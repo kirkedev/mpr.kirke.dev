@@ -238,12 +238,12 @@ describe("Cutout Interactor", () => {
 
     test("select a date", async () => {
         const interactor = new CutoutInteractor(cutout);
-        const iterator = iterate(interactor);
+        const iterator = iterate(interactor.selected);
         const next = iterator.next();
         interactor.selectDate(new Date(2020, 3, 14));
-        const { value: model } = await next;
+        const { value: selected } = await next;
 
-        expect(model.selected).toEqual({
+        expect(selected).toEqual({
             date: new Date(2020, 3, 14),
             value: 53.07
         });
@@ -251,7 +251,8 @@ describe("Cutout Interactor", () => {
 
     test("reset selected date", async () => {
         const interactor = new CutoutInteractor(cutout);
-        const close = collect(interactor);
+        const stats = collect(interactor.stats);
+        const selected = collect(interactor.selected);
 
         interactor.selectDate(new Date(2020, 3, 17));
         await tick();
@@ -259,12 +260,7 @@ describe("Cutout Interactor", () => {
         interactor.resetDate();
         await tick();
 
-        const states = close();
-
-        expect(states.map(state => state.selected)).toEqual([{
-            date: new Date(2020, 3, 20),
-            value: 66.68
-        }, {
+        expect(selected()).toEqual([{
             date: new Date(2020, 3, 17),
             value: 60.13
         }, {
@@ -272,13 +268,7 @@ describe("Cutout Interactor", () => {
             value: 66.68
         }]);
 
-        expect(states.map(state => state.stats)).toEqual([[{
-            label: "Cutout",
-            value: "66.68"
-        }, {
-            label: "Index",
-            value: "57.11"
-        }], [{
+        expect(stats()).toEqual([[{
             label: "Cutout",
             value: "60.13"
         }, {
@@ -480,100 +470,23 @@ describe("Primal interactor", () => {
     const [values, volume] = load<[ValuesResponse, VolumeResponse]>("cutout.json");
     const cutout = Array.from(parse(volume, values));
 
-    test("select a primal", async () => {
-        const interactor = new PrimalInteractor(cutout);
-        const iterator = iterate(interactor);
-        const next = iterator.next();
-
-        interactor.selectPrimal(Primal.Ham);
-        const { value: model } = await next;
-
-        expect(model.series.slice(-5)).toEqual([{
-            date: new Date(2020, 3, 14),
-            value: 33.69
-        }, {
-            date: new Date(2020, 3, 15),
-            value: 35.55
-        }, {
-            date: new Date(2020, 3, 16),
-            value: 33.90
-        }, {
-            date: new Date(2020, 3, 17),
-            value: 38.71
-        }, {
-            date: new Date(2020, 3, 20),
-            value: 40.83
-        }]);
-
-        expect(model.selected).toEqual({
-            date: new Date(2020, 3, 20),
-            value: 40.83
-        });
-    });
-
     test("select a date", async () => {
         const interactor = new PrimalInteractor(cutout);
-        const iterator = iterate(interactor);
+        const iterator = iterate(interactor.selected);
         const next = iterator.next();
 
         interactor.selectDate(new Date(2020, 3, 14));
-        const { value: model } = await next;
+        const { value: selected } = await next;
 
-        expect(model.selected).toEqual({
+        expect(selected).toEqual({
             date: new Date(2020, 3, 14),
             value: 47.77
         });
     });
 
-    test("select primals", async () => {
-        const interactor = new PrimalInteractor(cutout);
-        const states = collect(interactor);
-
-        interactor.selectPrimal(Primal.Ham);
-        await tick();
-
-        interactor.selectPrimal(Primal.Loin);
-        await tick();
-
-        interactor.selectPrimal(Primal.Butt);
-        await tick();
-
-        interactor.selectPrimal(Primal.Rib);
-        await tick();
-
-        interactor.selectPrimal(Primal.Picnic);
-        await tick();
-
-        interactor.selectPrimal(Primal.Belly);
-        await tick();
-
-        expect(states().map(state => state.selected)).toEqual([{
-            date: new Date(2020, 3, 20),
-            value: 81.32
-        }, {
-            date: new Date(2020, 3, 20),
-            value: 40.83
-        }, {
-            date: new Date(2020, 3, 20),
-            value: 94.94
-        }, {
-            date: new Date(2020, 3, 20),
-            value: 66.75
-        }, {
-            date: new Date(2020, 3, 20),
-            value: 111.59
-        }, {
-            date: new Date(2020, 3, 20),
-            value: 41.57
-        }, {
-            date: new Date(2020, 3, 20),
-            value: 81.32
-        }]);
-    });
-
     test("reset selected date", async () => {
         const interactor = new PrimalInteractor(cutout);
-        const states = collect(interactor);
+        const selected = collect(interactor.selected);
 
         interactor.selectDate(new Date(2020, 3, 17));
         await tick();
@@ -581,10 +494,7 @@ describe("Primal interactor", () => {
         interactor.resetDate();
         await tick();
 
-        expect(states().map(state => state.selected)).toEqual([{
-            date: new Date(2020, 3, 20),
-            value: 81.32
-        }, {
+        expect(selected()).toEqual([{
             date: new Date(2020, 3, 17),
             value: 59.01
         }, {

@@ -1,8 +1,0 @@
-.stats {
-    @apply flex;
-    @apply justify-between;
-    @apply flex-row;
-    @apply py-2;
-    @apply px-6;
-    @apply xl:px-10;
-}

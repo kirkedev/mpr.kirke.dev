@@ -1,9 +1,7 @@
-import { extent } from "../itertools/accumulate";
-import { flatMap } from "../itertools/map";
+import { extentBy } from "../itertools/accumulate";
 import flatten from "../itertools/flatten";
 import { today } from "../time";
 import Series, { type Data, type Observation } from "../time/Series";
-import type { Action } from "../Interactor";
 import type Stat from "../Stat";
 import CutoutIndex from "./CutoutIndex";
 
@@ -13,9 +11,6 @@ class CutoutViewModel {
             CutoutIndex.daily(cutout),
             CutoutIndex.index(cutout)
         ]);
-
-    public static selectDate = (date = today()): Action<CutoutViewModel> =>
-        model => new CutoutViewModel(date, model.#series);
 
     readonly #date: Date;
     readonly #series: Series[];
@@ -45,12 +40,15 @@ class CutoutViewModel {
     }
 
     public get values(): readonly [number, number] {
-        return extent(flatMap<Data, number>(this.#series, record => record.value));
+        return extentBy(flatten<Data>(this.#series), record => record.value);
     }
 
     public get selected(): Data {
         return Series.find(this.cutout, this.#date);
     }
+
+    public selectDate = (date: Date = today()): CutoutViewModel =>
+        new CutoutViewModel(date, this.#series);
 }
 
 export default CutoutViewModel;

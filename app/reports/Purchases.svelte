@@ -13,27 +13,29 @@
 
 <script lang="ts">
     export let purchases: Iterable<Purchase>;
-    const model = new PurchasesInteractor(purchases);
+    $: model = new PurchasesInteractor(purchases);
+    $: stats = model.stats;
+    $: selected = model.selected;
 </script>
 
 <div class="purchases report">
     <div class="stats">
         <div class="stat">
-            <h5 class="label">{$model.stats.label}</h5>
-            <h3 class="value">{$model.stats.value}</h3>
+            <h5 class="label">{$stats.label}</h5>
+            <h3 class="value">{$stats.value}</h3>
         </div>
     </div>
 
     <ObservationChart
-        dates={$model.dates}
-        values={$model.values}
+        dates={model.dates}
+        values={model.values}
         on:selectDate={event => model.selectDate(event.detail)}
         on:resetDate={model.resetDate}>
 
         <g class="plot" slot="plot" let:x let:y>
-            <Marker x={x} y={y} point={$model.selected}/>
-            <Path x={x} y={y} data={$model.series}/>
-            <Circle x={x} y={y} point={$model.selected}/>
+            <Marker x={x} y={y} point={$selected}/>
+            <Path x={x} y={y} data={model.series}/>
+            <Circle x={x} y={y} point={$selected}/>
         </g>
     </ObservationChart>
 </div>
