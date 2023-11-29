@@ -5,6 +5,7 @@
     @apply py-2;
     @apply px-6;
     @apply xl:px-10;
+    @apply mb-4;
 }
 
 .cash :global(.chart) {
@@ -36,6 +37,7 @@
 
 .cash :global(.plot path) {
     stroke-width: 4;
+    @apply fill-none;
     @apply stroke-emerald-400;
 }
 

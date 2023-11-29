@@ -5,6 +5,7 @@ import type { Data } from "lib/Observation";
 declare interface Props {
     x: ScaleTime<number, number>;
     y: ScaleLinear<number, number>;
+    padding?: number;
     point: Data;
 }
 
