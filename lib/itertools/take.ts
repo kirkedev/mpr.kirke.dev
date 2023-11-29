@@ -4,7 +4,7 @@ import { iterate } from ".";
 import enumerate from "./enumerate";
 import map from "./map";
 
-export function* takeElements<T>(iterator: Iterator<T>, predicate: Predicate<T>): Iterator<T> {
+function* takeElements<T>(iterator: Iterator<T>, predicate: Predicate<T>): Iterator<T> {
     let { done, value } = iterator.next();
 
     while (!done && predicate(value)) {

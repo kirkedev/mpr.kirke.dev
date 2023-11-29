@@ -91,9 +91,18 @@ test("lazily map a date range", () => {
 });
 
 test("flat map a nested date range", () => {
-    const range = take(dates(new Date(2019, 0, 1)), 10);
-    const items = flatMap(chunk(range, 7), date => date.getDate());
-    expect(Array.from(items)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    const range = take(dates(new Date(2019, 0, 1)), 5);
+    const items = flatMap(range, date => [date.getFullYear(), date.getMonth(), date.getDate()]);
+    expect(Array.from(items)).toEqual([2019, 0, 1, 2019, 0, 2, 2019, 0, 3, 2019, 0, 4, 2019, 0, 5]);
+
+    expect(Array.from(map(chunk(items, 3), ([year, month, date]) => new Date(year, month, date))))
+        .toEqual([
+            new Date(2019, 0, 1),
+            new Date(2019, 0, 2),
+            new Date(2019, 0, 3),
+            new Date(2019, 0, 4),
+            new Date(2019, 0, 5)
+        ]);
 });
 
 test("count the number of days in a month", () => {
