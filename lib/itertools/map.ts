@@ -23,8 +23,8 @@ class MappedIterable<T, R> implements Iterable<R> {
 const map = <T, R>(iterable: Iterable<T>, operator: UnaryOperator<T, R>): Iterable<R> =>
     new MappedIterable(iterable, operator);
 
-const flatMap = <T, R>(iterable: Iterable<Iterable<T>>, operator: UnaryOperator<T, R>): Iterable<R> =>
-    map(flatten(iterable), operator);
+const flatMap = <T, R>(iterable: Iterable<T>, operator: UnaryOperator<T, Iterable<R>>): Iterable<R> =>
+    flatten(map(iterable, operator));
 
 export default map;
 
