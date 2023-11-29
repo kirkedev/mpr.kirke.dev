@@ -14,8 +14,7 @@
 <script lang="ts">
     export let cutout: Iterable<CutoutIndex>;
     $: model = new CutoutInteractor(cutout);
-    $: stats = model.stats;
-    $: selected = model.selected;
+    $: ({ stats, selected } = model);
 </script>
 
 <div class="cutout report">

@@ -14,8 +14,7 @@
 <script lang="ts">
     export let cash: Iterable<CashIndex>;
     $: model = new CashIndexInteractor(cash);
-    $: stats = model.stats;
-    $: selected = model.selected;
+    $: ({ stats, selected } = model);
 </script>
 
 <div class="cash report">

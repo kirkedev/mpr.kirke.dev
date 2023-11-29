@@ -14,8 +14,7 @@
 <script lang="ts">
     export let purchases: Iterable<Purchase>;
     $: model = new PurchasesInteractor(purchases);
-    $: stats = model.stats;
-    $: selected = model.selected;
+    $: ({ stats, selected } = model);
 </script>
 
 <div class="purchases report">
