@@ -40,16 +40,22 @@ function archives<T extends MprObservation>(data: Iterable<T>): Iterable<Archive
     return map(weeks, Archive.from);
 }
 
-class Repository<T extends MprObservation> {
-    readonly #data = new LRUCache<string, Archive<T>>({
-        max: 54,
-        ttl: 24 * 60 * 60 * 1000
-    });
+interface Options {
+    max?: number;
+    ttl?: number;
+}
 
+class Repository<T extends MprObservation> {
+    readonly #data: LRUCache<string, Archive<T>>;
     readonly #fetch: BinaryOperator<Date, Date, Promise<T[]>>;
 
-    public constructor(fetch: BinaryOperator<Date, Date, Promise<T[]>>) {
+    public constructor(fetch: BinaryOperator<Date, Date, Promise<T[]>>, options: Partial<Options> = {}) {
         this.#fetch = fetch;
+
+        this.#data = new LRUCache<string, Archive<T>>(Object.assign({
+            max: 54,
+            ttl: 24 * 60 * 60 * 1000
+        }, options));
     }
 
     readonly #get = (week: Week): Optional<Archive<T>> =>
