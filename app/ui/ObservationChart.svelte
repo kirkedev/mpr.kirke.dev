@@ -2,8 +2,7 @@
     import { createEventDispatcher } from "svelte";
     import { scaleLinear, scaleTime } from "d3-scale";
     import { pointer } from "d3-selection";
-    import BottomAxis from "./BottomAxis.svelte";
-    import RightAxis from "./RightAxis.svelte";
+    import { bottomAxis, rightAxis } from "./axis";
 </script>
 
 <style lang="postcss">
@@ -44,15 +43,8 @@
 
 <div class="chart" on:pointermove={selectDate} on:pointerleave={resetDate}>
     <svg bind:this={svg} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
-        <BottomAxis
-            scale={x}
-            top={bottom}/>
-
-        <RightAxis
-            scale={y}
-            left={width}
-            tickSize={-width}/>
-
+        <g class="x axis" use:bottomAxis={{ scale: x, tickPadding: 16 }} transform={`translate(0,${bottom})`}/>
+        <g class="y axis" use:rightAxis={{ scale: y, tickSize: -width }} transform={`translate(${width},0)`}/>
         <slot name="plot" x={x} y={y}/>
     </svg>
 </div>
