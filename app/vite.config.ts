@@ -19,7 +19,14 @@ export default defineConfig({
             : JSON.stringify("2021-12-23")
     },
     plugins: [
-        svelte({ preprocess: vitePreprocess() })
+        svelte({
+            preprocess: vitePreprocess(),
+            compilerOptions: {
+                immutable: true,
+                enableSourcemap: !isProduction,
+                dev: !isProduction
+            }
+        })
     ],
     css: {
         postcss: {

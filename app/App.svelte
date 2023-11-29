@@ -18,8 +18,6 @@
     request.fetch(Period.ThreeMonths);
 </script>
 
-<svelte:options immutable={true}/>
-
 <div class={Result.isLoading($request) ? "loading app" : "app"}>
     <div class="timepicker">
         <ButtonGroup items={Array.from(Periods)} on:select={event => request.fetch(event.detail)}/>
