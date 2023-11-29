@@ -2,7 +2,6 @@
     "extends": "../tsconfig.json",
     "include": ["**/*.ts"],
     "compilerOptions": {
-        "composite": true,
-        "types": ["vite/client"]
+        "composite": true
     }
 }

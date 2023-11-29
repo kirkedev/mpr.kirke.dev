@@ -4,8 +4,8 @@ import format from "date-fns/format";
 const dateFormat = "yyyy-MM-dd";
 
 const today = (): Date =>
-    import.meta.env.VITE_DATE.length
-        ? parseDate(import.meta.env.VITE_DATE, dateFormat, new Date())
+    process.env.DATE?.length
+        ? parseDate(process.env.DATE, dateFormat, new Date())
         : new Date();
 
 const getDate = (date: string): Date =>
