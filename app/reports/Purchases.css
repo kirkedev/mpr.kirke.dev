@@ -3,6 +3,7 @@
     @apply flex-row;
     @apply px-4;
     @apply xl:px-10;
+    @apply mb-4;
 }
 
 .purchases .chart {
@@ -46,6 +47,7 @@
 }
 
 .purchases :global(.plot path) {
+    @apply fill-none;
     @apply stroke-pink-400;
     stroke-width: 4;
 }

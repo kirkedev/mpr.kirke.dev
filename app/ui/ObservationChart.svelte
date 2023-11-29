@@ -15,11 +15,11 @@
     export let dates: [Date, Date];
     export let values: [number, number];
 
-    const margin = 24;
-    const bottomMargin = 30;
+    const margin = 30;
+    const bottomMargin = 34;
     $: right = width - margin;
     $: bottom = height - bottomMargin;
-    $: x = scaleTime().domain(dates).rangeRound([0, right]);
+    $: x = scaleTime().domain(dates).rangeRound([margin, right]);
     $: y = scaleLinear().domain(values).rangeRound([bottom, 0]).nice();
 
     type Events = {
@@ -27,8 +27,9 @@
         resetDate: void;
     };
 
-    const dispatch = createEventDispatcher<Events>();
     let svg: SVGSVGElement;
+
+    const dispatch = createEventDispatcher<Events>();
 
     function selectDate(event: PointerEvent): void {
         const [position] = pointer(event, svg);

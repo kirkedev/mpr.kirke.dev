@@ -5,6 +5,12 @@
     @apply px-4;
     @apply xl:px-10;
     @apply overflow-x-scroll;
+    @apply mb-4;
+    scrollbar-width: none;
+}
+
+.stats::-webkit-scrollbar {
+    @hidden;
 }
 
 .primals .chart {
@@ -47,6 +53,7 @@
 }
 
 .primals :global(.plot path) {
+    @apply fill-none;
     @apply stroke-purple-400;
     stroke-width: 4;
 }
