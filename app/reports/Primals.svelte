@@ -18,8 +18,7 @@
     let primal = Primal.Belly;
 
     $: model = new PrimalInteractor(cutout).selectPrimal(primal);
-    $: stats = model.stats;
-    $: selected = model.selected;
+    $: ({ stats, selected } = model);
 </script>
 
 <div class="primals report">
