@@ -1,14 +1,18 @@
 import { describe, expect, test } from "vitest";
 import { get } from "svelte/store";
+import type Result from "lib/async/Result";
 import { count } from "lib/itertools/accumulate";
 import { first, last } from "lib/itertools/slice";
 import Period from "lib/time/Period";
-import api from "app/api";
+import Api, { type Resources } from "app/api";
 
 describe("fetch periods", () => {
+    const api = new Api();
+
     test("fetch three months of data", async () => {
-        api.fetch(Period.ThreeMonths);
-        const { cutoutIndex, purchases, cashIndex, cutout } = await get(api);
+        await api.fetch(Period.ThreeMonths);
+        const { data } = get(api) as Result.Success<Resources>;
+        const { cutoutIndex, purchases, cashIndex, cutout } = data;
 
         expect(count(cutoutIndex)).toBe(64);
         expect(first(cutoutIndex).date).toEqual(new Date(2021, 8, 23));
@@ -28,8 +32,9 @@ describe("fetch periods", () => {
     });
 
     test("fetch six months of data", async () => {
-        api.fetch(Period.SixMonths);
-        const { cutoutIndex, purchases, cashIndex, cutout } = await get(api);
+        await api.fetch(Period.SixMonths);
+        const { data } = get(api) as Result.Success<Resources>;
+        const { cutoutIndex, purchases, cashIndex, cutout } = data;
 
         expect(count(cutoutIndex)).toBe(128);
         expect(first(cutoutIndex).date).toEqual(new Date(2021, 5, 23));
@@ -49,8 +54,9 @@ describe("fetch periods", () => {
     });
 
     test("fetch one year of data", async () => {
-        api.fetch(Period.OneYear);
-        const { cutoutIndex, purchases, cashIndex, cutout } = await get(api);
+        await api.fetch(Period.OneYear);
+        const { data } = get(api) as Result.Success<Resources>;
+        const { cutoutIndex, purchases, cashIndex, cutout } = data;
 
         expect(count(cutoutIndex)).toBe(254);
         expect(first(cutoutIndex).date).toEqual(new Date(2020, 11, 23));
