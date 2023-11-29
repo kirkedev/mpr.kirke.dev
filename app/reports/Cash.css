@@ -21,17 +21,8 @@
     @apply xl:text-2xl;
 }
 
-.stat {
-    @apply text-right;
-}
-
 .value {
     @apply text-gray-700;
-    @apply font-normal;
-}
-
-.date {
-    @apply text-gray-400;
     @apply font-normal;
 }
 

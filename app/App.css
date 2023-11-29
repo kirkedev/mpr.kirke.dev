@@ -2,7 +2,6 @@
     @apply container;
     @apply mx-auto;
     @apply max-w-screen-xl;
-    @apply grid;
     @apply select-none;
 }
 
@@ -27,57 +26,54 @@
     @apply lg:pb-4;
 }
 
-header {
+.timepicker {
     @apply w-full;
-    @apply py-4;
-    @apply px-4;
-    @apply items-center;
-    @apply grid;
-    @apply gap-12;
-    @apply grid-cols-1;
-    @apply md:grid-cols-2;
+    @apply p-4;
+    @apply justify-center;
+    @apply md:justify-end;
     @apply bg-transparent;
     @apply max-w-screen-xl;
+    @apply flex;
+    @apply flex-none;
 }
 
-header h3 {
-    @apply text-lg;
-    @apply self-center;
-}
-
-header .title {
-    @apply hidden;
-    @apply md:inline-block;
-}
-
-.loading header > h3:after {
+.loading .reports:before {
     content: "";
+    @apply top-64;
+    @apply inset-x-1/2;
+    @apply fixed;
+    @apply -m-8;
     @apply align-middle;
     @apply self-end;
     @apply bg-white;
     @apply animate-spin;
-    @apply w-8;
-    @apply h-8;
+    @apply w-16;
+    @apply h-16;
+    @apply bg-transparent;
     @apply inline-block;
-    @apply ml-8;
     @apply rounded-full;
-    @apply border-4;
+    @apply border-8;
     @apply border-solid;
     @apply border-gray-200;
     border-top-color: rgba(59, 130, 246);
+    z-index: 9999;
 }
 
-.timepicker {
-    @apply flex;
-    @apply flex-none;
-    @apply justify-between;
+.loading .reports:after {
+    content: "Loading";
+    @apply text-center;
+    @apply align-text-bottom;
+    @apply top-64;
+    @apply w-32;
+    @apply h-32;
+    @apply -ml-16;
+    @apply -mt-16;
+    @apply inset-x-1/2;
+    @apply fixed;
 }
 
-.timepicker h3 {
-    @apply ms-4;
-    @apply flex-col;
-    @apply align-middle;
-    @apply text-base;
+.loading :global(.report) {
+    @apply opacity-75;
 }
 
 .timepicker :global(.items .item) {

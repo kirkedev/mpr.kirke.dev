@@ -6,7 +6,7 @@
     @apply mb-4;
 }
 
-.purchases .chart {
+.purchases :global(.chart) {
     @apply px-4;
     @apply xl:px-10;
 }
