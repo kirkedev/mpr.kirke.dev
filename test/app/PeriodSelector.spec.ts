@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { render, within } from "@testing-library/svelte";
 import { userEvent } from "@testing-library/user-event";
-import PeriodSelector from "app/PeriodSelector.svelte";
 import Period, { Periods } from "lib/time/Period";
+import ButtonGroup from "app/ui/ButtonGroup.svelte";
 
 function assertSelected(this: HTMLElement, selected: string): void {
     Periods.forEach(({ description }) => {
@@ -14,7 +14,14 @@ function assertSelected(this: HTMLElement, selected: string): void {
 describe("Period Selection", () => {
     const user = userEvent.setup();
     const handler = vi.fn();
-    const { container, component } = render(PeriodSelector);
+
+    const { container, component } = render(ButtonGroup, {
+        props: {
+            items: Array.from(Periods),
+            selected: Period.ThreeMonths
+        }
+    });
+
     component.$on("select", handler);
 
     beforeEach(function() {

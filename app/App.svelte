@@ -1,11 +1,12 @@
 <script lang="ts" context="module">
-    import type Period from "lib/time/Period";
-    import PeriodSelector from "./PeriodSelector.svelte";
+    import Result from "lib/async/Result";
+    import Period, { Periods } from "lib/time/Period";
+    import Api from "./api";
     import Cash from "./reports/Cash.svelte";
     import Cutout from "./reports/Cutout.svelte";
     import Purchases from "./reports/Purchases.svelte";
     import Primals from "./reports/Primals.svelte";
-    import data from "./api";
+    import ButtonGroup from "./ui/ButtonGroup.svelte";
 </script>
 
 <style lang="postcss">
@@ -13,26 +14,29 @@
 </style>
 
 <script lang="ts">
-    function fetch({ detail: period }: CustomEvent<Period>): void {
-        data.fetch(period);
-    }
+    const request = new Api();
+    let period = Period.ThreeMonths;
+    $: request.fetch(period);
 </script>
 
-<div class="app">
-    <div class="timepicker">
-        <h3>Time Period</h3>
-        <PeriodSelector on:select={fetch}/>
-    </div>
-    <div class="reports">
-    {#await $data}
-        <div class="loading">Loading...</div>
-    {:then data}
-        <Cash cash={data.cashIndex}/>
-        <Cutout cutout={data.cutoutIndex}/>
-        <Purchases purchases={data.purchases}/>
-        <Primals cutout={data.cutout}/>
-    {:catch error}
-        <div class="error">{error.message}</div>
-    {/await}
-    </div>
+<svelte:options immutable={true}/>
+
+<div class={Result.isLoading($request) ? "loading app" : "app"}>
+    <header>
+        <h3 class="title">Lean Hog Reports</h3>
+        <div class="timepicker">
+            <h3>Time Period</h3>
+            <ButtonGroup items={Array.from(Periods)} bind:selected={period}/>
+        </div>
+    </header>
+    {#if Result.isFailure($request)}
+        <div class="error">{$request.error}</div>
+    {:else if $request.data}
+        <div class="reports">
+            <Cash cash={$request.data.cashIndex}/>
+            <Cutout cutout={$request.data.cutoutIndex}/>
+            <Purchases purchases={$request.data.purchases}/>
+            <Primals cutout={$request.data.cutout}/>
+        </div>
+    {/if}
 </div>
