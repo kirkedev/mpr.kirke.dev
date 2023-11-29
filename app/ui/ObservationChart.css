@@ -6,3 +6,21 @@
     @apply w-full;
     @apply h-full;
 }
+
+.axis :global(.tick > line) {
+    @apply stroke-gray-200;
+}
+
+.axis :global(.tick > text) {
+    @apply text-gray-500;
+    @apply text-xs;
+}
+
+.axis :global(.domain) {
+    @apply hidden;
+}
+
+.y.axis :global(.tick > text) {
+    transform: translate(-14px, -8px);
+    text-anchor: end;
+}
