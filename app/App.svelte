@@ -15,20 +15,15 @@
 
 <script lang="ts">
     const request = new Api();
-    let period = Period.ThreeMonths;
-    $: request.fetch(period);
+    request.fetch(Period.ThreeMonths);
 </script>
 
 <svelte:options immutable={true}/>
 
 <div class={Result.isLoading($request) ? "loading app" : "app"}>
-    <header>
-        <h3 class="title">Lean Hog Reports</h3>
-        <div class="timepicker">
-            <h3>Time Period</h3>
-            <ButtonGroup items={Array.from(Periods)} bind:selected={period}/>
-        </div>
-    </header>
+    <div class="timepicker">
+        <ButtonGroup items={Array.from(Periods)} on:select={event => request.fetch(event.detail)}/>
+    </div>
     {#if Result.isFailure($request)}
         <div class="error">{$request.error}</div>
     {:else if $request.data}

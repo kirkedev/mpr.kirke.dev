@@ -13,7 +13,7 @@
     @hidden;
 }
 
-.primals .chart {
+.primals :global(.chart) {
     @apply px-4;
     @apply xl:px-10;
 }
@@ -66,6 +66,6 @@
     @apply fill-purple-400;
 }
 
-.primals .marker text {
+.primals :global(.marker text) {
     @apply fill-white;
 }
