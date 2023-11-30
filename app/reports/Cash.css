@@ -10,7 +10,9 @@
 
 .cash :global(.chart) {
     @apply px-4;
-    @apply xl:px-10;
+    @apply pl-2;
+    @apply xl:pr-10;
+    @apply xl:pl-4;
 }
 
 .stats h2 {

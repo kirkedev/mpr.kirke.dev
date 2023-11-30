@@ -77,7 +77,7 @@
 }
 
 .timepicker :global(.items .item) {
-    @apply rounded-full;
+    @apply rounded-2xl;
     @apply border;
     @apply border-gray-200;
     @apply bg-white;
@@ -85,8 +85,10 @@
     @apply ms-4;
     @apply w-14;
     @apply text-xs;
+    @apply shadow-sm;
 }
 
 .timepicker :global(.items .item[data-selected=true]) {
     @apply border-0;
+    @apply shadow-none;
 }

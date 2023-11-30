@@ -5,7 +5,6 @@
     import type { ScaleLinear, ScaleTime } from "d3-scale";
     import { line } from "d3-shape";
     import { interpolate } from "polymorph-js";
-    import type { Nullable } from "lib";
     import type Series from "lib/time/Series";
     import type { Data } from "lib/time/Series";
 </script>
@@ -19,13 +18,13 @@
         .x(data => x(data.date))
         .y(data => y(data.value));
 
-    const d = tweened<Nullable<string>>(null, {
+    const d = tweened<string>(undefined, {
         duration: 200,
         easing: cubicOut,
         interpolate: (a, b) => interpolate([a, b])
     });
 
-    $: d.set(path(data));
+    $: d.set(path(data) as string);
 </script>
 
 <path class="series" d={$d} transition:draw={{ duration: 500, easing: cubicInOut }}/>
