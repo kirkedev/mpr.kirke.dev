@@ -5,7 +5,7 @@ import type { Series } from "lib/Observation";
 declare interface Props {
     x: ScaleTime<number, number>;
     y: ScaleLinear<number, number>;
-    data: Series;
+    series: Series;
 }
 
 declare class Path extends SvelteComponent<Props> {}

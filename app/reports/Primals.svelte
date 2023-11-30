@@ -40,9 +40,9 @@
         on:resetDate={model.resetDate}>
 
         <g class="plot" slot="plot" let:x let:y>
-            <Marker x={x} y={y} point={$selected}/>
-            <Path x={x} y={y} data={model.series}/>
-            <Circle x={x} y={y} point={$selected}/>
+            <Marker {x} {y} point={$selected}/>
+            <Path {x} {y} series={model.series}/>
+            <Circle {x} {y} point={$selected}/>
         </g>
     </ObservationChart>
 </div>

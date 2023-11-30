@@ -3,6 +3,11 @@
     import { scaleLinear, scaleTime } from "d3-scale";
     import { pointer } from "d3-selection";
     import { bottomAxis, rightAxis } from "./axis";
+
+    interface Events {
+        selectDate: Date;
+        resetDate: void;
+    }
 </script>
 
 <style lang="postcss">
@@ -25,11 +30,6 @@
     $: x = scaleTime().domain(dates).rangeRound([left, right]);
     $: y = scaleLinear().domain(values).rangeRound([bottom, top]).nice();
 
-    type Events = {
-        selectDate: Date;
-        resetDate: void;
-    };
-
     let svg: SVGSVGElement;
 
     const dispatch = createEventDispatcher<Events>();
@@ -47,8 +47,18 @@
 
 <div class="chart" on:pointermove={selectDate} on:pointerleave={resetDate}>
     <svg bind:this={svg} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMidYMid meet">
-        <g class="x axis" use:bottomAxis={{ scale: x, tickPadding: 16 }} transform={`translate(0,${bottom})`}/>
-        <g class="y axis" use:rightAxis={{ scale: y, tickSize: left - width }} transform={`translate(${width}, 0)`}/>
-        <slot name="plot" x={x} y={y}/>
+        <g class="x axis" transform={`translate(0, ${bottom})`}
+           use:bottomAxis={{
+               scale: x,
+               tickPadding: 16
+           }}/>
+
+        <g class="y axis" transform={`translate(${width}, 0)`}
+           use:rightAxis={{
+               scale: y,
+               tickSize: left - width
+           }}/>
+
+        <slot name="plot" {x} {y}/>
     </svg>
 </div>
