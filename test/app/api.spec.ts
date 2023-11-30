@@ -4,10 +4,10 @@ import type Result from "lib/async/Result";
 import { count } from "lib/itertools/accumulate";
 import { first, last } from "lib/itertools/slice";
 import Period from "lib/time/Period";
-import Api, { type Resources } from "app/api";
+import ApiService, { type Resources } from "app/api/service";
 
 describe("fetch periods", () => {
-    const api = new Api();
+    const api = new ApiService();
 
     test("fetch three months of data", async () => {
         await api.fetch(Period.ThreeMonths);

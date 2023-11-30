@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import Result from "lib/async/Result";
     import Period, { Periods } from "lib/time/Period";
-    import Api from "./api";
+    import ApiService from "./api/service";
     import Cash from "./reports/Cash.svelte";
     import Cutout from "./reports/Cutout.svelte";
     import Purchases from "./reports/Purchases.svelte";
@@ -14,7 +14,7 @@
 </style>
 
 <script lang="ts">
-    const request = new Api();
+    const request = new ApiService();
     request.fetch(Period.ThreeMonths);
 </script>
 
