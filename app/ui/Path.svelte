@@ -12,7 +12,7 @@
 <script lang="ts">
     export let x: ScaleTime<number, number>;
     export let y: ScaleLinear<number, number>;
-    export let data: Series;
+    export let series: Series;
 
     const path = line<Data>()
         .x(data => x(data.date))
@@ -24,7 +24,7 @@
         interpolate: (a, b) => interpolate([a, b])
     });
 
-    $: d.set(path(data) as string);
+    $: d.set(path(series) as string);
 </script>
 
 <path class="series" d={$d} transition:draw={{ duration: 500, easing: cubicInOut }}/>
