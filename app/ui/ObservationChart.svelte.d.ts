@@ -6,6 +6,10 @@ declare interface Props {
     values: readonly [number, number];
     width?: number;
     height?: number;
+    leftMargin?: number;
+    topMargin?: number;
+    rightMargin?: number;
+    bottomMargin?: number;
 }
 
 declare interface Events {
