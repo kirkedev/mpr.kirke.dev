@@ -1,7 +1,9 @@
 import { iterate, type UnaryOperator } from ".";
 import flatten from "./flatten";
 
-async function* mapElementsAsync<T, R>(iterator: AsyncIterator<T>, operator: UnaryOperator<T, R>): AsyncIterator<R> {
+async function* map<T, R>(iterable: AsyncIterable<T>, operator: UnaryOperator<T, R>): AsyncIterableIterator<R> {
+    const iterator = iterate(iterable);
+
     try {
         let result = await iterator.next();
 
@@ -14,20 +16,7 @@ async function* mapElementsAsync<T, R>(iterator: AsyncIterator<T>, operator: Una
     }
 }
 
-class MappedAsyncIterable<T, R> implements AsyncIterable<R> {
-    public constructor(
-        private readonly iterable: AsyncIterable<T>,
-        private readonly operator: UnaryOperator<T, R>) {
-    }
-
-    public [Symbol.asyncIterator] = (): AsyncIterator<R> =>
-        mapElementsAsync(iterate(this.iterable), this.operator);
-}
-
-const map = <T, R>(iterable: AsyncIterable<T>, operator: UnaryOperator<T, R>): MappedAsyncIterable<T, R> =>
-    new MappedAsyncIterable(iterable, operator);
-
-const flatMap = <T, R>(iterable: AsyncIterable<T>, operator: UnaryOperator<T, AsyncIterable<R>>): AsyncIterable<R> =>
+const flatMap = <T, R>(iterable: AsyncIterable<T>, operator: UnaryOperator<T, AsyncIterable<R>>): AsyncIterableIterator<R> =>
     flatten(map(iterable, operator));
 
 export default map;

@@ -3,6 +3,7 @@ import { accumulate, collect } from "lib/async/accumulate";
 import map from "lib/async/map";
 import Observable from "lib/async/Observable";
 import ObservableState, { type Action } from "lib/async/ObservableState";
+import Result from "lib/async/Result";
 import { tick } from ".";
 
 const plus = (value: number): Action<number> =>
@@ -62,7 +63,7 @@ describe("Observable State", () => {
     });
 });
 
-describe("Reducers for a greeting state", () => {
+describe("Create reducers for a greeting state", () => {
     interface State {
         greeting: string;
         name: string;
@@ -235,5 +236,39 @@ describe("Reducers for a greeting state", () => {
             "Goodbye, Andrew!",
             "Hello, Andrew!"
         ]);
+    });
+});
+
+describe("Result class", () => {
+    test("Loading", () => {
+        const result = new Result.Loading();
+        expect(result.data).toBeUndefined();
+        expect(Result.isLoading(result)).toBe(true);
+        expect(Result.isSuccess(result)).toBe(false);
+        expect(Result.isFailure(result)).toBe(false);
+    });
+
+    test("Loading with prior data", () => {
+        const result = new Result.Loading("old data");
+        expect(result.data).toBe("old data");
+        expect(Result.isLoading(result)).toBe(true);
+        expect(Result.isSuccess(result)).toBe(false);
+        expect(Result.isFailure(result)).toBe(false);
+    });
+
+    test("Success", () => {
+        const result = new Result.Success("new data");
+        expect(result.data).toBe("new data");
+        expect(Result.isLoading(result)).toBe(false);
+        expect(Result.isSuccess(result)).toBe(true);
+        expect(Result.isFailure(result)).toBe(false);
+    });
+
+    test("Failure", () => {
+        const result = new Result.Failure(Error("A problem has occurred"));
+        expect(result.error.message).toBe("A problem has occurred");
+        expect(Result.isLoading(result)).toBe(false);
+        expect(Result.isSuccess(result)).toBe(false);
+        expect(Result.isFailure(result)).toBe(true);
     });
 });

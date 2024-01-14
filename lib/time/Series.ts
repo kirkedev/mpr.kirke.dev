@@ -1,6 +1,6 @@
+import { extentBy } from "../itertools/accumulate";
 import { type Comparator } from "..";
 import Stat from "../Stat";
-import { extentBy } from "../itertools/accumulate";
 
 interface Observation {
     date: Date;

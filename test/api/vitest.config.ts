@@ -5,9 +5,9 @@ export default defineConfig({
         root: "..",
         include: ["test/api/**/*.spec.ts"],
         cache: {
-            dir: "../node_modules/.vitest/api"
+            dir: "node_modules/.vitest/api"
         },
-        globalSetup: "api/setup.ts",
+        globalSetup: "test/api/setup.ts",
         coverage: {
             all: true,
             include: ["api/**/*.ts"],

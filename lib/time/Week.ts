@@ -1,10 +1,10 @@
-import getISOWeek from "date-fns/getISOWeek";
-import getISOWeekYear from "date-fns/getISOWeekYear";
-import getISOWeeksInYear from "date-fns/getISOWeeksInYear";
-import isSameISOWeek from "date-fns/isSameISOWeek";
-import setISODay from "date-fns/setISODay";
-import setISOWeek from "date-fns/setISOWeek";
-import setISOWeekYear from "date-fns/setISOWeekYear";
+import { getISOWeek } from "date-fns/getISOWeek";
+import { getISOWeekYear } from "date-fns/getISOWeekYear";
+import { getISOWeeksInYear } from "date-fns/getISOWeeksInYear";
+import { isSameISOWeek } from "date-fns/isSameISOWeek";
+import { setISODay } from "date-fns/setISODay";
+import { setISOWeek } from "date-fns/setISOWeek";
+import { setISOWeekYear } from "date-fns/setISOWeekYear";
 import dates from "./dates";
 import type { Comparator } from "..";
 
