@@ -4869,25 +4869,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/coverage-istanbul@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "@vitest/coverage-istanbul@npm:1.1.3"
-  dependencies:
-    debug: "npm:^4.3.4"
-    istanbul-lib-coverage: "npm:^3.2.2"
-    istanbul-lib-instrument: "npm:^6.0.1"
-    istanbul-lib-report: "npm:^3.0.1"
-    istanbul-lib-source-maps: "npm:^4.0.1"
-    istanbul-reports: "npm:^3.1.6"
-    magicast: "npm:^0.3.2"
-    picocolors: "npm:^1.0.0"
-    test-exclude: "npm:^6.0.0"
-  peerDependencies:
-    vitest: ^1.0.0
-  checksum: aef11a1f457ab43cd3401c697527776bd37677100bc1aa5fcf3f5e927b0c0a3bd0d3df7a112cb21526ac36ca65d7e641c2fb3553ae7ec96bbe558cd39afda0d0
-  languageName: node
-  linkType: hard
-
 "@vitest/coverage-v8@npm:^1.1.3":
   version: 1.1.3
   resolution: "@vitest/coverage-v8@npm:1.1.3"
@@ -9132,19 +9113,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"istanbul-lib-instrument@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "istanbul-lib-instrument@npm:6.0.1"
-  dependencies:
-    "@babel/core": "npm:^7.12.3"
-    "@babel/parser": "npm:^7.14.7"
-    "@istanbuljs/schema": "npm:^0.1.2"
-    istanbul-lib-coverage: "npm:^3.2.0"
-    semver: "npm:^7.5.4"
-  checksum: 95fd8c66e586840989cb3c7819c6da66c4742a6fedbf16b51a5c7f1898941ad07b79ddff020f479d3a1d76743ecdbf255d93c35221875687477d4b118026e7e7
-  languageName: node
-  linkType: hard
-
 "istanbul-lib-report@npm:^3.0.0, istanbul-lib-report@npm:^3.0.1":
   version: 3.0.1
   resolution: "istanbul-lib-report@npm:3.0.1"
@@ -12909,7 +12877,6 @@ __metadata:
     "@testing-library/user-event": "npm:^14.5.2"
     "@types/node": "npm:^20.11.0"
     "@types/resolve": "npm:^1.20.6"
-    "@vitest/coverage-istanbul": "npm:^1.1.3"
     "@vitest/coverage-v8": "npm:^1.1.3"
     api: "workspace:*"
     app: "workspace:*"
