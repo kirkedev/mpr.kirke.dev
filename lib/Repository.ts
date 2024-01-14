@@ -1,7 +1,5 @@
 import { LRUCache } from "lru-cache";
-import min from "date-fns/min";
-import getISODay from "date-fns/getISODay";
-import isSameISOWeek from "date-fns/isSameISOWeek";
+import { min, getISODay, isSameISOWeek } from "date-fns";
 import type { BinaryOperator, Optional } from ".";
 import Observation, { type MprObservation } from "./time/Series";
 import Week, { Weekday } from "./time/Week";

@@ -1,5 +1,4 @@
-import startOfDay from "date-fns/startOfDay";
-import addDays from "date-fns/addDays";
+import { startOfDay, addDays } from "date-fns";
 
 function* iterateDates(start: Date, end: Date): Iterator<Date> {
     let date = startOfDay(start);

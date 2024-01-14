@@ -19,7 +19,7 @@ export interface Resources {
 }
 
 const loading: Action<Result<Resources, Error>> = state =>
-    new Result.Loading(!Result.isFailure(state) ? state.data : undefined);
+    new Result.Loading(Result.isFailure(state) ? undefined : state.data);
 
 function fetch(period: Period): Promise<Resources> {
     const periodStart = period.start;

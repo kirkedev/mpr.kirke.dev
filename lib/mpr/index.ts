@@ -1,4 +1,4 @@
-import parseDate from "date-fns/parse";
+import { parse } from "date-fns/parse";
 import type { Nullable, Optional } from "..";
 import map from "../itertools/map";
 
@@ -16,7 +16,7 @@ interface MprResponse<Section extends string, T extends MprRecord> {
 const dateFormat = "M/d/yyyy";
 
 const getDate = (date: string): Date =>
-    parseDate(date, dateFormat, new Date());
+    parse(date, dateFormat, new Date());
 
 const stripCommas = (value: string): string =>
     value.replace(",", "");

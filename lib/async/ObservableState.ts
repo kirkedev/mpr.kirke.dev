@@ -7,18 +7,6 @@ type Action<T> = UnaryOperator<T, T>;
 type AsyncAction<T> = UnaryOperator<T, Promise<T>>;
 
 class ObservableState<State> implements AsyncIterable<State> {
-    public static from<State>(initial: State, iterable: AsyncIterable<State>): ObservableState<State> {
-        const observable = new ObservableState(initial);
-
-        (async function() {
-            for await (const state of iterable) {
-                observable.state = state;
-            }
-        })();
-
-        return observable;
-    }
-
     #state: State;
     readonly #states = new Observable<State>();
 

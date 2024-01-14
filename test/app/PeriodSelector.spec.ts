@@ -17,8 +17,7 @@ describe("Period Selection", () => {
 
     const { container, component } = render(ButtonGroup, {
         props: {
-            items: Array.from(Periods),
-            selected: Period.ThreeMonths
+            items: Array.from(Periods)
         }
     });
 
