@@ -354,9 +354,20 @@ describe("CashIndex ViewModel", () => {
 describe("Cash Index Interactor", () => {
     const slaughter = parse(load<BarrowsGilts>("slaughter.json"));
     const cash = Array.from(CashIndex.from(slaughter));
+    const interactor = new CashIndexInteractor(cash);
+
+    test("series and scales", () => {
+        expect(interactor.series.length).toEqual(14);
+
+        expect(interactor.dates).toEqual([
+            new Date(2019, 1, 1),
+            new Date(2019, 1, 20)
+        ]);
+
+        expect(interactor.values).toEqual([54.06, 57.41]);
+    });
 
     test("select a date", async () => {
-        const interactor = new CashIndexInteractor(cash);
         const iterator = iterate(interactor.selected);
         const next = iterator.next();
 
@@ -370,7 +381,6 @@ describe("Cash Index Interactor", () => {
     });
 
     test("reset selected date", async () => {
-        const interactor = new CashIndexInteractor(cash);
         const stats = collect(interactor.stats);
         const selected = collect(interactor.selected);
 

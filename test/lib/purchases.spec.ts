@@ -194,9 +194,20 @@ describe("Purchases ViewModel", () => {
 
 describe("Purchases Interactor", () => {
     const purchases = parse(load<Purchases>("purchases.json"));
+    const interactor = new PurchasesInteractor(purchases);
+
+    test("series and scales", () => {
+        expect(interactor.series.length).toEqual(10);
+
+        expect(interactor.dates).toEqual([
+            new Date(2021, 11, 9),
+            new Date(2021, 11, 22)
+        ]);
+
+        expect(interactor.values).toEqual([70.84, 72.56]);
+    });
 
     test("select a date", async () => {
-        const interactor = new PurchasesInteractor(purchases);
         const iterator = iterate(interactor.selected);
         const next = iterator.next();
         interactor.selectDate(new Date(2021, 11, 16));
@@ -209,7 +220,6 @@ describe("Purchases Interactor", () => {
     });
 
     test("reset selected date", async () => {
-        const interactor = new PurchasesInteractor(purchases);
         const selected = collect(interactor.selected);
         const stats = collect(interactor.stats);
 

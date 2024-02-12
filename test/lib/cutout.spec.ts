@@ -254,6 +254,16 @@ describe("Cutout Interactor", () => {
         const stats = collect(interactor.stats);
         const selected = collect(interactor.selected);
 
+        expect(interactor.cutout.length).toBe(10);
+        expect(interactor.index.length).toBe(10);
+
+        expect(interactor.dates).toEqual([
+            new Date(2020, 3, 7),
+            new Date(2020, 3, 20)
+        ]);
+
+        expect(interactor.values).toEqual([51.07, 66.68]);
+
         interactor.selectDate(new Date(2020, 3, 17));
         await tick();
 
@@ -469,9 +479,20 @@ describe("Primal ViewModel", () => {
 describe("Primal interactor", () => {
     const [values, volume] = load<[ValuesResponse, VolumeResponse]>("cutout.json");
     const cutout = Array.from(parse(volume, values));
+    const interactor = new PrimalInteractor(cutout);
+
+    test("series and scales", () => {
+        expect(interactor.series.length).toEqual(14);
+
+        expect(interactor.dates).toEqual([
+            new Date(2020, 3, 1),
+            new Date(2020, 3, 20)
+        ]);
+
+        expect(interactor.values).toEqual([31.84, 81.32]);
+    });
 
     test("select a date", async () => {
-        const interactor = new PrimalInteractor(cutout);
         const iterator = iterate(interactor.selected);
         const next = iterator.next();
 
@@ -485,7 +506,6 @@ describe("Primal interactor", () => {
     });
 
     test("reset selected date", async () => {
-        const interactor = new PrimalInteractor(cutout);
         const selected = collect(interactor.selected);
 
         interactor.selectDate(new Date(2020, 3, 17));
