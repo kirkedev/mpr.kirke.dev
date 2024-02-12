@@ -4,13 +4,13 @@
     "private": true,
     "type": "module",
     "dependencies": {
-        "@sinclair/typebox": "^0.32.8",
-        "date-fns": "^3.2.0",
-        "lru-cache": "^10.1.0"
+        "@sinclair/typebox": "^0.32.14",
+        "date-fns": "^3.3.1",
+        "lru-cache": "^10.2.0"
     },
     "devDependencies": {
         "@types/lru-cache": "^7.10.10",
-        "@types/node": "^20.11.0",
+        "@types/node": "^20.11.17",
         "typescript": "^5.3.3"
     }
 }
