@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
     import { Story, Template } from "@storybook/addon-svelte-csf";
-    import Period, { Periods } from "lib/Period";
+    import Period, { Periods } from "lib/time/Period";
     import ButtonGroup from "app/ui/ButtonGroup.svelte";
 
     export const meta = {

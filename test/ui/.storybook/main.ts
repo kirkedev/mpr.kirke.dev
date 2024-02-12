@@ -18,9 +18,6 @@ const config: StorybookConfig = {
                 viteConfigPath: "../app/vite.config.ts"
             }
         }
-    },
-    docs: {
-        autodocs: true,
     }
 };
 
