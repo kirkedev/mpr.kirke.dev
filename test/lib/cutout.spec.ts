@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { iterate } from "lib/async";
 import { collect } from "lib/async/accumulate";
-import parse from "lib/cutout/mpr";
 import type { ValuesResponse, VolumeResponse } from "lib/cutout/mpr";
+import parse from "lib/cutout/mpr";
 import CutoutIndex from "lib/cutout/CutoutIndex";
 import CutoutViewModel from "lib/cutout/CutoutViewModel";
 import CutoutInteractor from "lib/cutout/CutoutInteractor";
@@ -520,6 +520,57 @@ describe("Primal interactor", () => {
         }, {
             date: new Date(2020, 3, 20),
             value: 81.32
+        }]);
+    });
+
+    test("select a primal", async () => {
+        const iterator = iterate(interactor.stats);
+        const next = iterator.next();
+
+        interactor.selectPrimal(Primal.Ham);
+        const { value: stats } = await next;
+
+        expect(stats).toEqual([{
+            label: "Belly",
+            value: "81.32",
+            selected: false
+        }, {
+            label: "Ham",
+            value: "40.83",
+            selected: true
+        }, {
+            label: "Loin",
+            value: "94.94",
+            selected: false
+        }, {
+            label: "Butt",
+            value: "66.75",
+            selected: false
+        }, {
+            label: "Rib",
+            value: "111.59",
+            selected: false
+        }, {
+            label: "Picnic",
+            value: "41.57",
+            selected: false
+        }]);
+
+        expect(interactor.series.slice(-5)).toEqual([{
+            date: new Date(2020, 3, 14),
+            value: 33.69
+        }, {
+            date: new Date(2020, 3, 15),
+            value: 35.55
+        }, {
+            date: new Date(2020, 3, 16),
+            value: 33.90
+        }, {
+            date: new Date(2020, 3, 17),
+            value: 38.71
+        }, {
+            date: new Date(2020, 3, 20),
+            value: 40.83
         }]);
     });
 });

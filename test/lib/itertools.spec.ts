@@ -8,7 +8,7 @@ import drop, { dropUntil, dropWhile } from "lib/itertools/drop";
 import slice, { elementAt, first, last } from "lib/itertools/slice";
 import enumerate from "lib/itertools/enumerate";
 import filter, { find } from "lib/itertools/filter";
-import { all, count, countIf, each, none, one, some, sumBy } from "lib/itertools/accumulate";
+import { all, count, countIf, each, max, maxBy, min, minBy, none, one, some, sumBy } from "lib/itertools/accumulate";
 import zip from "lib/itertools/zip";
 import groupBy from "lib/itertools/groupBy";
 import rolling from "lib/itertools/rolling";
@@ -270,4 +270,38 @@ test("create a moving window of an iterable", () => {
         ["e", "f", "g"],
         ["f", "g", "h"]
     ]);
+});
+
+test("get the minimum value in a series of numbers", () => {
+    const numbers = [1, 4, -12, 4, 7, 20];
+    expect(min(numbers)).toBe(-12);
+});
+
+test("get the maximum value in a series of numbers", () => {
+    const numbers = [1, 4, -12, 4, 7, 20];
+    expect(max(numbers)).toBe(20);
+});
+
+test("get the first date in a date series", () => {
+    const dates = [
+        new Date(2020, 3, 1),
+        new Date(2020, 3, 15),
+        new Date(2020, 3, 20),
+        new Date(2019, 3, 20),
+        new Date(2021, 3, 20)
+    ];
+
+    expect(new Date(minBy(dates, date => date.getTime()))).toEqual(new Date(2019, 3, 20));
+});
+
+test("get the last date in a date series", () => {
+    const dates = [
+        new Date(2020, 3, 1),
+        new Date(2020, 3, 15),
+        new Date(2020, 3, 20),
+        new Date(2019, 3, 20),
+        new Date(2021, 3, 20)
+    ];
+
+    expect(new Date(maxBy(dates, date => date.getTime()))).toEqual(new Date(2021, 3, 20));
 });
