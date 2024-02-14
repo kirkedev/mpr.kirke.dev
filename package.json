@@ -30,7 +30,7 @@
         "test",
         "test/mpr"
     ],
-    "packageManager": "yarn@4.0.2",
+    "packageManager": "yarn@4.1.0",
     "engines": {
         "node": ">=18"
     }
