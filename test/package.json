@@ -4,9 +4,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "cypress": "cypress open --detached",
-        "e2e": "cypress run --e2e",
-        "smoke": "cypress run --config-file smoke/cypress.config.ts",
+        "smoke": "playwright test smoke",
         "unit": "vitest run --coverage",
         "watch": "vitest --coverage"
     },
@@ -14,9 +12,11 @@
         "@testing-library/dom": "^9.3.4",
         "@testing-library/svelte": "^4.1.0",
         "@testing-library/user-event": "^14.5.2",
+        "@types/detect-port": "^1",
         "@types/node": "^20.11.17",
         "@types/resolve": "^1.20.6",
         "@vitest/coverage-v8": "^1.2.2",
+        "detect-port": "^1.5.1",
         "esbuild": "^0.20.0",
         "jsdom": "^24.0.0",
         "msw": "^2.2.0",
