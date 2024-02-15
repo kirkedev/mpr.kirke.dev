@@ -1,31 +1,31 @@
-import "@testing-library/cypress/add-commands";
+import { test, expect } from "playwright/test";
 
-it("loads data from the api and renders charts and stats", function() {
+test("loads data from the api and renders charts and stats", async function({ page }) {
     const value = /\d{2,3}\.\d{2}/;
+    const path = /^.{100,}$/;
 
     // Page load
-    cy.visit("/");
-    cy.title().should("eq", "Mpr Dashboard");
-    cy.findByText("Error").should("not.exist");
-    cy.findByText("Time Period").should("exist");
-    cy.findByText("Cash Index").should("exist");
+    await page.goto("/");
+    await expect(page).toHaveTitle("Mpr Dashboard");
+    await expect(page.locator(".error")).not.toBeAttached();
+    await expect(page.locator(".reports")).toBeVisible();
 
     // Stats
-    cy.findByText("Cash Index").siblings().contains(value).should("exist");
-    cy.findByText("Cutout").siblings().contains(value).should("exist");
-    cy.findByText("Index").siblings().contains(value).should("exist");
-    cy.findByText("Formula").siblings().contains(value).should("exist");
-    cy.findByText("Belly").siblings().contains(value).should("exist");
-    cy.findByText("Ham").siblings().contains(value).should("exist");
-    cy.findByText("Loin").siblings().contains(value).should("exist");
-    cy.findByText("Butt").siblings().contains(value).should("exist");
-    cy.findByText("Rib").siblings().contains(value).should("exist");
-    cy.findByText("Picnic").siblings().contains(value).should("exist");
+    await expect(page.locator(".label:text-is(\"Cash Index\") + .value")).toContainText(value);
+    await expect(page.locator(".label:text-is(\"Cutout\") + .value")).toContainText(value);
+    await expect(page.locator(".label:text-is(\"Index\") + .value")).toContainText(value);
+    await expect(page.locator(".label:text-is(\"Formula\") + .value")).toContainText(value);
+    await expect(page.locator(".label:text-is(\"Belly\") + .value")).toContainText(value);
+    await expect(page.locator(".label:text-is(\"Ham\") + .value")).toContainText(value);
+    await expect(page.locator(".label:text-is(\"Loin\") + .value")).toContainText(value);
+    await expect(page.locator(".label:text-is(\"Butt\") + .value")).toContainText(value);
+    await expect(page.locator(".label:text-is(\"Rib\") + .value")).toContainText(value);
+    await expect(page.locator(".label:text-is(\"Picnic\") + .value")).toContainText(value);
 
     // Charts
-    cy.get("div[class*=cash] path.series").invoke("attr", "d").its("length").should("be.greaterThan", 100);
-    cy.get("div[class*=cutout] path.series").first().invoke("attr", "d").its("length").should("be.greaterThan", 100);
-    cy.get("div[class*=cutout] path.series").last().invoke("attr", "d").its("length").should("be.greaterThan", 100);
-    cy.get("div[class*=purchases] path.series").invoke("attr", "d").its("length").should("be.greaterThan", 100);
-    cy.get("div[class*=primal] path.series").invoke("attr", "d").its("length").should("be.greaterThan", 100);
+    await expect(page.locator("div[class*=cash] path.series")).toHaveAttribute("d", path);
+    await expect(page.locator("div[class*=cutout] path.series").first()).toHaveAttribute("d", path);
+    await expect(page.locator("div[class*=cutout] path.series").last()).toHaveAttribute("d", path);
+    await expect(page.locator("div[class*=purchases] path.series")).toHaveAttribute("d", path);
+    await expect(page.locator("div[class*=primal] path.series")).toHaveAttribute("d", path);
 });

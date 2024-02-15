@@ -19,7 +19,7 @@ thorough testing, and CI/CD.
 The only system dependencies are [node.js](https://nodejs.org/en/download/current) with [yarn](https://yarnpkg.com/getting-started/install) and [docker with docker-compose](https://docs.docker.com/desktop/)
 
 ```bash
-git clone git@github.com:kirkedev/mpr-dashboard.git
+git clone git@github.com:kirkedev/mpr.kirke.dev.git
 yarn install && yarn prepare
 ```
 
@@ -31,7 +31,7 @@ yarn dev
 
 Start the app in production mode. The app will be hosted at `http://localhost`
 ```bash
-yarn build && yarn start
+yarn start
 ```
 
 Shut down the app
@@ -51,9 +51,8 @@ yarn fix
 | `yarn workspace test unit`    | Run unit and integration tests. Does not require app to be running |
 | `yarn workspace test watch`   | Run unit and integration tests in watch mode                       |
 | `yarn workspace test ui`      | Open storybook                                                     |
-| `yarn workspace test e2e`     | Run end-to-end acceptance tests. App must be running in dev mode   |
-| `yarn workspace test cypress` | Open cypress for end-to-end acceptance tests                       |
-| `yarn workspace test smoke`   | Run smoke tests. App must be running locally in production mode    |
+| `yarn workspace test e2e`     | Run end-to-end acceptance tests                                    |
+| `yarn workspace test smoke`   | Run smoke tests                                                    |  
 
 ### CI/CD Workflows
 Add git hooks with `yarn prepare`
