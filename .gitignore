@@ -9,9 +9,7 @@
 !.yarn/versions
 
 build
-coverage
-videos
-screenshots
 node_modules
-storybook-static
+test/**/results
+test/**/coverage
 vitest.config.ts.timestamp*

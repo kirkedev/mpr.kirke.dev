@@ -21,12 +21,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build images
-        run: yarn build
-
-      - name: Start app
-        run: yarn start -d
-
       - name: Run smoke tests
         run: yarn workspace test smoke
 

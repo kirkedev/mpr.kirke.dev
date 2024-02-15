@@ -12,7 +12,7 @@
         "stop": "TAG=${TAG:-$(git describe --tags --match 'v*' --dirty --always)}; docker compose down --remove-orphans",
         "dev": "TAG=${TAG:-$(git describe --tags --match 'v*' --dirty --always)}; yarn stop && docker compose up --build",
         "build": "TAG=${TAG:-$(git describe --tags --match 'v*' --dirty --always)}; yarn workspace api build && yarn workspace app build",
-        "start": "TAG=${TAG:-$(git describe --tags --match 'v*' --dirty --always)}; yarn stop && docker compose -f docker-compose.yaml up"
+        "start": "TAG=${TAG:-$(git describe --tags --match 'v*' --dirty --always)}; yarn stop && yarn build && docker compose -f docker-compose.yml up"
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^7.0.1",
