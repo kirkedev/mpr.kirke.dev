@@ -46,13 +46,12 @@ yarn fix
 
 ### Testing
 
-| Command                       | Description                                                        |
-|-------------------------------|--------------------------------------------------------------------|
-| `yarn workspace test unit`    | Run unit and integration tests. Does not require app to be running |
-| `yarn workspace test watch`   | Run unit and integration tests in watch mode                       |
-| `yarn workspace test ui`      | Open storybook                                                     |
-| `yarn workspace test e2e`     | Run end-to-end acceptance tests                                    |
-| `yarn workspace test smoke`   | Run smoke tests                                                    |  
+| Command                       | Description                                  |
+|-------------------------------|----------------------------------------------|
+| `yarn workspace test unit`    | Run unit and integration tests               |
+| `yarn workspace test watch`   | Run unit and integration tests in watch mode |
+| `yarn workspace test e2e`     | Run end-to-end acceptance tests              |
+| `yarn workspace test smoke`   | Run smoke tests                              |  
 
 ### CI/CD Workflows
 Add git hooks with `yarn prepare`
@@ -60,6 +59,6 @@ Add git hooks with `yarn prepare`
 * [Unit and Integration Tests](./.githooks/pre-push) run before pushing to GitHub
 
 GitHub Actions
-* [Lint, Unit, Integration, and Acceptance Tests](.github/workflows/test.yaml) run as a pull request check
+* [Lint, Unit, Integration, and Acceptance Tests](.github/workflows/merge.yaml) run as a pull request check
 * [Smoke Tests](.github/workflows/smoke.yaml) run when merging to main so that main is always production ready
 * [Deploy](.github/workflows/deploy.yaml) runs when a new version tag is created. The docker images are built, smoke tested, pushed to Amazon ECR, and deployed to production
