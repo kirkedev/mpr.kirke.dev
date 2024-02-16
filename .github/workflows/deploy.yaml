@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Install playwright
+        run: yarn workspace test playwright install
+
       - name: Setup AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -36,20 +39,11 @@ jobs:
         id: login
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build docker images
-        run: yarn build
-        env:
-          ECR_REGISTRY: ${{ steps.login.outputs.registry }}
-          TAG: ${{ github.ref_name }}
-
-      - name: Start app
-        run: yarn start -d
-        env:
-          ECR_REGISTRY: ${{ steps.login.outputs.registry }}
-          TAG: ${{ github.ref_name }}
-
       - name: Run smoke tests
         run: yarn workspace test smoke
+        env:
+          ECR_REGISTRY: ${{ steps.login.outputs.registry }}
+          TAG: ${{ github.ref_name }}
 
       - name: Stop app
         if: always()
