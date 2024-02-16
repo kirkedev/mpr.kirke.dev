@@ -4,6 +4,7 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "e2e": "playwright test -c e2e",
         "smoke": "playwright test -c smoke",
         "unit": "vitest run --coverage",
         "watch": "vitest --coverage"

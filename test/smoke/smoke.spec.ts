@@ -1,6 +1,6 @@
 import { test, expect } from "playwright/test";
 
-test("loads data from the api and renders charts and stats", async function({ page }) {
+test("loads data from the api and renders charts and stats", async ({ page }) => {
     const value = /\d{2,3}\.\d{2}/;
     const path = /^.{100,}$/;
 
