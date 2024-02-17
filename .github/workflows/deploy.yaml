@@ -58,14 +58,39 @@ jobs:
           ECR_REGISTRY: ${{ steps.login.outputs.registry }}
           TAG: ${{ github.ref_name }}
 
-      - name: Use Docker compose CLI
-        run: curl -L https://raw.githubusercontent.com/docker/compose-cli/main/scripts/install/install_linux.sh | sh
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition mpr-api --query taskDefinition > api/task-definition.json
+          aws ecs describe-task-definition --task-definition mpr-app --query taskDefinition > app/task-definition.json
 
-      - name: Add ECS context
-        run: docker context create ecs mpr --from-env
+      - name: Render updated task definition for api
+        id: mpr-api
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: api/task-definition.json
+          container-name: api
+          image: ${{ steps.login.outputs.registry }}/mpr-api:${{ github.ref_name }}
 
-      - name: Deploy images to ECS
-        run: docker --context mpr compose -f docker-compose.yaml --project-name mpr up
-        env:
-          ECR_REGISTRY: ${{ steps.login.outputs.registry }}
-          TAG: ${{ github.ref_name }}
+      - name: Render updated task definition for app
+        id: mpr-app
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: app/task-definition.json
+          container-name: app
+          image: ${{ steps.login.outputs.registry }}/mpr-app:${{ github.ref_name }}
+
+      - name: Deploy api
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.mpr-api.outputs.task-definition }}
+          service: ${{ secrets.MPR_API_SERVICE }}
+          cluster: mpr
+          wait-for-service-stability: true
+
+      - name: Deploy app
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.mpr-app.outputs.task-definition }}
+          service: ${{ secrets.MPR_APP_SERVICE }}
+          cluster: mpr
+          wait-for-service-stability: true
