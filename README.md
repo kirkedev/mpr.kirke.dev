@@ -11,9 +11,8 @@ While these reports are great, it's not really possible to see price trends over
 I know traders who write them down in a legal pad, and others who are a little more technical that manually maintain an Excel spreadsheet. 
 Fortunately for everyone the USDA hosts an API with historical data.
 
-Aside from being useful to myself as a personal project, this repository is also a reference project for what I 
-believe to be best practices in web development. It's a dockerized typescript monorepo with clean architecture, 
-thorough testing, and CI/CD.
+Aside from being useful to myself and like two other people as a personal project, this repository also serves as a portfolio project for what I 
+believe to be best practices in web development. It's a containerized typescript monorepo with clean architecture, thorough testing, and CI/CD.
 
 ### Project Setup
 The only system dependencies are [node.js](https://nodejs.org/en/download/current) with [yarn](https://yarnpkg.com/getting-started/install) and [docker with docker-compose](https://docs.docker.com/desktop/)
