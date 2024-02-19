@@ -1,6 +1,6 @@
 {
     "name": "lib",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "private": true,
     "type": "module",
     "dependencies": {
@@ -10,7 +10,7 @@
     },
     "devDependencies": {
         "@types/lru-cache": "^7.10.10",
-        "@types/node": "^20.11.17",
+        "@types/node": "^20.11.19",
         "typescript": "^5.3.3"
     }
 }
