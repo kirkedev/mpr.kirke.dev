@@ -12,4 +12,5 @@ build
 node_modules
 test/**/results
 test/**/coverage
+vite.config.ts.timestamp*
 vitest.config.ts.timestamp*
