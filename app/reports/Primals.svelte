@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import type Cutout from "lib/cutout";
     import Primal, { Primals } from "lib/cutout/Primal";
-    import PrimalInteractor from "lib/cutout/PrimalInteractor";
+    import PrimalViewModel from "lib/cutout/PrimalViewModel";
     import { click } from "../ui";
     import ObservationChart from "../ui/ObservationChart.svelte";
     import Marker from "../ui/Marker.svelte";
@@ -17,15 +17,20 @@
     export let cutout: Iterable<Cutout>;
     let primal = Primal.Belly;
 
-    $: model = new PrimalInteractor(cutout).selectPrimal(primal);
+    $: model = PrimalViewModel.from(cutout, primal);
     $: ({ stats, selected } = model);
+
+    const select = (selected: Primal) =>
+        function() {
+            primal = selected;
+        };
 </script>
 
 <div class="primals report">
     <div class="stats">
         {#each $stats as stat, index}
             <div role="button" tabindex="0" class={stat.selected ? "selected stat" : "stat"}
-                on:click={() => primal = Primals[index]}
+                on:click={select(Primals[index])}
                 on:keypress={click}>
                 <h5 class="label">{stat.label}</h5>
                 <h3 class="value">{stat.value}</h3>

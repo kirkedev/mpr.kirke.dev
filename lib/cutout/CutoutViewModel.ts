@@ -1,30 +1,31 @@
+import ObservableState from "../async/ObservableState";
 import { extentBy } from "../itertools/accumulate";
 import flatten from "../itertools/flatten";
 import { today } from "../time";
 import Series, { type Data, type Observation } from "../time/Series";
-import type Stat from "../Stat";
+import Stat from "../Stat";
 import CutoutIndex from "./CutoutIndex";
 
 class CutoutViewModel {
     public static from = (cutout: Iterable<CutoutIndex>): CutoutViewModel =>
-        new CutoutViewModel(today(), [
+        new CutoutViewModel([
             CutoutIndex.daily(cutout),
             CutoutIndex.index(cutout)
         ]);
 
-    readonly #date: Date;
     readonly #series: Series[];
+    public readonly selected: ObservableState<Data>;
+    public readonly stats: ObservableState<Stat[]>;
 
-    private constructor(date: Date, series: Series[]) {
+    private constructor(series: Series[]) {
+        const [cutout, index] = series.map(series => Series.find(series, today()));
         this.#series = series;
-        this.#date = date;
-    }
+        this.selected = new ObservableState(cutout);
 
-    public get stats(): Stat[] {
-        return [
-            Series.stat("Cutout", this.cutout, this.#date),
-            Series.stat("Index", this.index, this.#date)
-        ];
+        this.stats = new ObservableState([
+            Stat.from("Cutout", cutout.value),
+            Stat.from("Index", index.value)
+        ]);
     }
 
     public get cutout(): Series {
@@ -43,12 +44,18 @@ class CutoutViewModel {
         return extentBy(flatten<Data>(this.#series), record => record.value);
     }
 
-    public get selected(): Data {
-        return Series.find(this.cutout, this.#date);
-    }
+    public selectDate = (date = today()): void => {
+        const [cutout, index] = this.#series.map(series => Series.find(series, date));
 
-    public selectDate = (date: Date = today()): CutoutViewModel =>
-        new CutoutViewModel(date, this.#series);
+        this.stats.state = [
+            Stat.from("Cutout", cutout.value),
+            Stat.from("Index", index.value)
+        ];
+
+        this.selected.state = cutout;
+    };
+
+    public resetDate = (): void => this.selectDate();
 }
 
 export default CutoutViewModel;

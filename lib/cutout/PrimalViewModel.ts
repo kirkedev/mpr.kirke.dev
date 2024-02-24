@@ -1,7 +1,8 @@
+import ObservableState from "../async/ObservableState";
 import { extentBy } from "../itertools/accumulate";
 import { today } from "../time";
 import Series, { type Data } from "../time/Series";
-import type Stat from "../Stat";
+import Stat from "../Stat";
 import type Cutout from ".";
 import Primal, { Primals } from "./Primal";
 
@@ -10,8 +11,8 @@ interface PrimalStat extends Stat {
 }
 
 class PrimalViewModel {
-    public static from = (cutout: Iterable<Cutout>): PrimalViewModel =>
-        new PrimalViewModel(today(), Primal.Belly, [
+    public static from = (cutout: Iterable<Cutout>, primal = Primal.Belly): PrimalViewModel =>
+        new PrimalViewModel(primal, [
             Primal.belly(cutout),
             Primal.ham(cutout),
             Primal.loin(cutout),
@@ -20,21 +21,24 @@ class PrimalViewModel {
             Primal.picnic(cutout)
         ]);
 
-    readonly #date: Date;
     readonly #primal: Primal;
     readonly #series: Series[];
 
-    private constructor(date: Date, primal: Primal, series: Series[]) {
-        this.#date = date;
+    public readonly stats: ObservableState<PrimalStat[]>;
+    public readonly selected: ObservableState<Data>;
+
+    private constructor(primal: Primal, series: Series[]) {
+        const date = today();
         this.#primal = primal;
         this.#series = series;
-    }
 
-    public get stats(): PrimalStat[] {
-        return Primals.map((label, index) => ({
-            ...Series.stat(label, this.#series[index], this.#date),
+        const stats = Primals.map((label, index) => ({
+            ...Stat.from(label, Series.find(series[index], date).value),
             selected: Primals[index] === this.#primal
         }));
+
+        this.stats = new ObservableState(stats);
+        this.selected = new ObservableState(Series.find(this.series, date));
     }
 
     public get series(): Series {
@@ -49,15 +53,16 @@ class PrimalViewModel {
         return extentBy(this.series, record => record.value);
     }
 
-    public get selected(): Data {
-        return Series.find(this.series, this.#date);
-    }
+    public selectDate = (date = today()): void => {
+        this.stats.state = Primals.map((label, index) => ({
+            ...Stat.from(label, Series.find(this.#series[index], date).value),
+            selected: Primals[index] === this.#primal
+        }));
 
-    public selectDate = (date = today()): PrimalViewModel =>
-        new PrimalViewModel(date, this.#primal, this.#series);
+        this.selected.state = Series.find(this.series, date);
+    };
 
-    public selectPrimal = (primal: Primal): PrimalViewModel =>
-        new PrimalViewModel(this.#date, primal, this.#series);
+    public resetDate = (): void => this.selectDate();
 }
 
 export default PrimalViewModel;

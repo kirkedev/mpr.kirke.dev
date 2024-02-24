@@ -1,23 +1,24 @@
+import ObservableState from "../async/ObservableState";
 import { extentBy } from "../itertools/accumulate";
 import { today } from "../time";
 import Series, { type Data } from "../time/Series";
-import type Stat from "../Stat";
+import Stat from "../Stat";
 import CashIndex from "./CashIndex";
 
 class CashIndexViewModel {
     public static from = (cash: Iterable<CashIndex>): CashIndexViewModel =>
-        new CashIndexViewModel(today(), CashIndex.index(cash));
+        new CashIndexViewModel(CashIndex.index(cash));
 
-    readonly #date: Date;
     readonly #series: Series;
+    public readonly selected: ObservableState<Data>;
+    public readonly stats: ObservableState<Stat>;
 
-    private constructor(date: Date, series: Series) {
+    private constructor(series: Series) {
         this.#series = series;
-        this.#date = date;
-    }
 
-    public get stats(): Stat {
-        return Series.stat("Cash Index", this.#series, this.#date);
+        const cash = Series.find(series, today());
+        this.selected = new ObservableState(cash);
+        this.stats = new ObservableState(Stat.from("Cash Index", cash.value));
     }
 
     public get series(): Series {
@@ -32,12 +33,13 @@ class CashIndexViewModel {
         return extentBy(this.#series, record => record.value);
     }
 
-    public get selected(): Data {
-        return Series.find(this.series, this.#date);
-    }
+    public selectDate = (date = today()): void => {
+        const cash = Series.find(this.#series, date);
+        this.selected.state = cash;
+        this.stats.state = Stat.from("Cash Index", cash.value);
+    };
 
-    public selectDate = (date = today()): CashIndexViewModel =>
-        new CashIndexViewModel(date, this.#series);
+    public resetDate = (): void => this.selectDate();
 }
 
 export default CashIndexViewModel;

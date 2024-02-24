@@ -1,6 +1,5 @@
 import { extentBy } from "../itertools/accumulate";
 import { type Comparator } from "..";
-import Stat from "../Stat";
 
 interface Observation {
     date: Date;
@@ -44,9 +43,6 @@ namespace Series {
         const [min, max] = extentBy(observations, observation => observation.date.getTime());
         return [new Date(min), new Date(max)] as const;
     }
-
-    export const stat = (label: string, series: Series, date: Date): Stat =>
-        Stat.from(label, find(series, date).value);
 }
 
 export default Series;

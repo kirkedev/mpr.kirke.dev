@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import type CashIndex from "lib/slaughter/CashIndex";
-    import CashIndexInteractor from "lib/slaughter/CashIndexInteractor";
+    import CashIndexViewModel from "lib/slaughter/CashIndexViewModel";
     import ObservationChart from "../ui/ObservationChart.svelte";
     import Circle from "../ui/Circle.svelte";
     import Marker from "../ui/Marker.svelte";
@@ -13,7 +13,7 @@
 
 <script lang="ts">
     export let cash: Iterable<CashIndex>;
-    $: model = new CashIndexInteractor(cash);
+    $: model = CashIndexViewModel.from(cash);
     $: ({ stats, selected } = model);
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import type CutoutIndex from "lib/cutout/CutoutIndex";
-    import CutoutInteractor from "lib/cutout/CutoutInteractor";
+    import CutoutViewModel from "lib/cutout/CutoutViewModel";
     import ObservationChart from "../ui/ObservationChart.svelte";
     import Circle from "../ui/Circle.svelte";
     import Marker from "../ui/Marker.svelte";
@@ -13,7 +13,7 @@
 
 <script lang="ts">
     export let cutout: Iterable<CutoutIndex>;
-    $: model = new CutoutInteractor(cutout);
+    $: model = CutoutViewModel.from(cutout);
     $: ({ stats, selected } = model);
 </script>
 

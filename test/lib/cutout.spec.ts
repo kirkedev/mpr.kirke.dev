@@ -5,10 +5,8 @@ import type { ValuesResponse, VolumeResponse } from "lib/cutout/mpr";
 import parse from "lib/cutout/mpr";
 import CutoutIndex from "lib/cutout/CutoutIndex";
 import CutoutViewModel from "lib/cutout/CutoutViewModel";
-import CutoutInteractor from "lib/cutout/CutoutInteractor";
 import Primal from "lib/cutout/Primal";
 import PrimalViewModel from "lib/cutout/PrimalViewModel";
-import PrimalInteractor from "lib/cutout/PrimalInteractor";
 import { tick } from ".";
 import load from "./resources";
 
@@ -217,12 +215,12 @@ describe("Cutout ViewModel", () => {
     });
 
     test("Selected date and formatted stats", () => {
-        expect(model.selected).toEqual({
+        expect(model.selected.state).toEqual({
             date: new Date(2020, 3, 20),
             value: 66.68
         });
 
-        expect(model.stats).toEqual([{
+        expect(model.stats.state).toEqual([{
             label: "Cutout",
             value: "66.68"
         }, {
@@ -232,12 +230,12 @@ describe("Cutout ViewModel", () => {
     });
 });
 
-describe("Cutout Interactor", () => {
+describe("Update cutout state through interactions", () => {
     const [values, volume] = load<[ValuesResponse, VolumeResponse]>("cutout.json");
     const cutout = Array.from(CutoutIndex.from(parse(volume, values)));
 
     test("select a date", async () => {
-        const interactor = new CutoutInteractor(cutout);
+        const interactor = CutoutViewModel.from(cutout);
         const iterator = iterate(interactor.selected);
         const next = iterator.next();
         interactor.selectDate(new Date(2020, 3, 14));
@@ -250,7 +248,7 @@ describe("Cutout Interactor", () => {
     });
 
     test("reset selected date", async () => {
-        const interactor = new CutoutInteractor(cutout);
+        const interactor = CutoutViewModel.from(cutout);
         const stats = collect(interactor.stats);
         const selected = collect(interactor.selected);
 
@@ -438,12 +436,12 @@ describe("Primal ViewModel", () => {
     });
 
     test("Selected date and formatted stats", () => {
-        expect(model.selected).toEqual({
+        expect(model.selected.state).toEqual({
             date: new Date(2020, 3, 20),
             value: 81.32
         });
 
-        expect(model.stats).toEqual([{
+        expect(model.stats.state).toEqual([{
             label: "Belly",
             value: "81.32",
             selected: true
@@ -476,21 +474,10 @@ describe("Primal ViewModel", () => {
     });
 });
 
-describe("Primal interactor", () => {
+describe("Update states through interactions", () => {
     const [values, volume] = load<[ValuesResponse, VolumeResponse]>("cutout.json");
     const cutout = Array.from(parse(volume, values));
-    const interactor = new PrimalInteractor(cutout);
-
-    test("series and scales", () => {
-        expect(interactor.series.length).toEqual(14);
-
-        expect(interactor.dates).toEqual([
-            new Date(2020, 3, 1),
-            new Date(2020, 3, 20)
-        ]);
-
-        expect(interactor.values).toEqual([31.84, 81.32]);
-    });
+    const interactor = PrimalViewModel.from(cutout);
 
     test("select a date", async () => {
         const iterator = iterate(interactor.selected);
@@ -520,57 +507,6 @@ describe("Primal interactor", () => {
         }, {
             date: new Date(2020, 3, 20),
             value: 81.32
-        }]);
-    });
-
-    test("select a primal", async () => {
-        const iterator = iterate(interactor.stats);
-        const next = iterator.next();
-
-        interactor.selectPrimal(Primal.Ham);
-        const { value: stats } = await next;
-
-        expect(stats).toEqual([{
-            label: "Belly",
-            value: "81.32",
-            selected: false
-        }, {
-            label: "Ham",
-            value: "40.83",
-            selected: true
-        }, {
-            label: "Loin",
-            value: "94.94",
-            selected: false
-        }, {
-            label: "Butt",
-            value: "66.75",
-            selected: false
-        }, {
-            label: "Rib",
-            value: "111.59",
-            selected: false
-        }, {
-            label: "Picnic",
-            value: "41.57",
-            selected: false
-        }]);
-
-        expect(interactor.series.slice(-5)).toEqual([{
-            date: new Date(2020, 3, 14),
-            value: 33.69
-        }, {
-            date: new Date(2020, 3, 15),
-            value: 35.55
-        }, {
-            date: new Date(2020, 3, 16),
-            value: 33.90
-        }, {
-            date: new Date(2020, 3, 17),
-            value: 38.71
-        }, {
-            date: new Date(2020, 3, 20),
-            value: 40.83
         }]);
     });
 });
