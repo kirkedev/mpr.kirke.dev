@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import type Purchase from "lib/purchases";
-    import PurchasesInteractor from "lib/purchases/PurchasesInteractor";
+    import PurchasesViewModel from "lib/purchases/PurchasesViewModel";
     import ObservationChart from "../ui/ObservationChart.svelte";
     import Circle from "../ui/Circle.svelte";
     import Marker from "../ui/Marker.svelte";
@@ -13,7 +13,7 @@
 
 <script lang="ts">
     export let purchases: Iterable<Purchase>;
-    $: model = new PurchasesInteractor(purchases);
+    $: model = PurchasesViewModel.from(purchases);
     $: ({ stats, selected } = model);
 </script>
 

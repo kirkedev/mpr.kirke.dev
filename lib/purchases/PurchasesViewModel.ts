@@ -1,23 +1,24 @@
 import { extentBy } from "../itertools/accumulate";
 import { today } from "../time";
 import Series, { type Data } from "../time/Series";
-import type Stat from "../Stat";
+import ObservableState from "../async/ObservableState";
+import Stat from "../Stat";
 import Purchase from ".";
 
 class PurchasesViewModel {
     public static from = (purchases: Iterable<Purchase>): PurchasesViewModel =>
-        new PurchasesViewModel(today(), Purchase.marketFormula(purchases));
+        new PurchasesViewModel(Purchase.marketFormula(purchases));
 
-    readonly #date: Date;
     readonly #series: Series;
+    public readonly selected: ObservableState<Data>;
+    public readonly stats: ObservableState<Stat>;
 
-    private constructor(date: Date, series: Series) {
+    private constructor(series: Series) {
+        const formula = Series.find(series, today());
+
         this.#series = series;
-        this.#date = date;
-    }
-
-    public get stats(): Stat {
-        return Series.stat("Formula", this.#series, this.#date);
+        this.selected = new ObservableState(formula);
+        this.stats = new ObservableState(Stat.from("Formula", formula.value));
     }
 
     public get series(): Series {
@@ -32,12 +33,13 @@ class PurchasesViewModel {
         return extentBy(this.#series, record => record.value);
     }
 
-    public get selected(): Data {
-        return Series.find(this.#series, this.#date);
-    }
+    public selectDate = (date = today()): void => {
+        const formula = Series.find(this.#series, date);
+        this.selected.state = formula;
+        this.stats.state = Stat.from("Formula", formula.value);
+    };
 
-    public selectDate = (date = today()): PurchasesViewModel =>
-        new PurchasesViewModel(date, this.#series);
+    public resetDate = (): void => this.selectDate();
 }
 
 export default PurchasesViewModel;

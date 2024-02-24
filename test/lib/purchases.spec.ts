@@ -5,7 +5,6 @@ import { Arrangement, Basis, Seller } from "lib/mpr/PurchaseType";
 import Purchase from "lib/purchases";
 import parse, { type Purchases } from "lib/purchases/mpr";
 import PurchasesViewModel from "lib/purchases/PurchasesViewModel";
-import PurchasesInteractor from "lib/purchases/PurchasesInteractor";
 import { tick } from ".";
 import load from "./resources";
 
@@ -180,32 +179,21 @@ describe("Purchases ViewModel", () => {
     });
 
     test("Selected date and formatted stats", () => {
-        expect(model.selected).toEqual({
+        expect(model.selected.state).toEqual({
             date: new Date(2021, 11, 22),
             value: 70.84
         });
 
-        expect(model.stats).toEqual({
+        expect(model.stats.state).toEqual({
             label: "Formula",
             value: "70.84"
         });
     });
 });
 
-describe("Purchases Interactor", () => {
+describe("Update states through interactions", () => {
     const purchases = parse(load<Purchases>("purchases.json"));
-    const interactor = new PurchasesInteractor(purchases);
-
-    test("series and scales", () => {
-        expect(interactor.series.length).toEqual(10);
-
-        expect(interactor.dates).toEqual([
-            new Date(2021, 11, 9),
-            new Date(2021, 11, 22)
-        ]);
-
-        expect(interactor.values).toEqual([70.84, 72.56]);
-    });
+    const interactor = PurchasesViewModel.from(purchases);
 
     test("select a date", async () => {
         const iterator = iterate(interactor.selected);

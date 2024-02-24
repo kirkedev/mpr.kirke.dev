@@ -5,7 +5,6 @@ import { Arrangement, Basis, Seller } from "lib/mpr/PurchaseType";
 import parse, { type BarrowsGilts } from "lib/slaughter/mpr";
 import CashIndex from "lib/slaughter/CashIndex";
 import CashIndexViewModel from "lib/slaughter/CashIndexViewModel";
-import CashIndexInteractor from "lib/slaughter/CashIndexInteractor";
 import { tick } from ".";
 import load from "./resources";
 
@@ -339,12 +338,12 @@ describe("CashIndex ViewModel", () => {
     });
 
     test("Selected date and formatted stats", () => {
-        expect(model.selected).toEqual({
+        expect(model.selected.state).toEqual({
             date: new Date(2019, 1, 20),
             value: 54.06
         });
 
-        expect(model.stats).toEqual({
+        expect(model.stats.state).toEqual({
             label: "Cash Index",
             value: "54.06"
         });
@@ -354,7 +353,7 @@ describe("CashIndex ViewModel", () => {
 describe("Cash Index Interactor", () => {
     const slaughter = parse(load<BarrowsGilts>("slaughter.json"));
     const cash = Array.from(CashIndex.from(slaughter));
-    const interactor = new CashIndexInteractor(cash);
+    const interactor = CashIndexViewModel.from(cash);
 
     test("series and scales", () => {
         expect(interactor.series.length).toEqual(14);
