@@ -64,8 +64,8 @@ class Repository<T extends MprObservation> {
             return;
         }
 
-        const start = data[0].reportDate;
-        const end = data[data.length - 1].reportDate;
+        const { reportDate: start } = data[0];
+        const { reportDate: end } = data[data.length - 1];
         const dates = new Set(map(data, record => record.reportDate.getTime()));
 
         const cached = filter(flatten(map(Week.with(start, end), week =>

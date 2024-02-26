@@ -29,14 +29,14 @@ class PrimalViewModel {
 
     private constructor(primal: Primal, series: Series[]) {
         const date = today();
-        this.#primal = primal;
-        this.#series = series;
 
         const stats = Primals.map((label, index) => ({
             ...Stat.from(label, Series.find(series[index], date).value),
-            selected: Primals[index] === this.#primal
+            selected: Primals[index] === primal
         }));
 
+        this.#primal = primal;
+        this.#series = series;
         this.stats = new ObservableState(stats);
         this.selected = new ObservableState(Series.find(this.series, date));
     }

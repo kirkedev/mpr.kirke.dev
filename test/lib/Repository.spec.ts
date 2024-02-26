@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi, it } from "vitest";
 import { today } from "lib/time";
 import dates from "lib/time/dates";
 import Repository from "lib/Repository";
@@ -44,21 +44,21 @@ describe("Repository caching", () => {
         expect(fetch).toHaveBeenCalledWith(new Date(2021, 11, 20), new Date(2021, 11, 23));
     });
 
-    test("fetch missing data", async () => {
+    it("fetches missing data", async () => {
         const result = await repository.query(new Date(2021, 11, 16), new Date(2021, 11, 23));
         expect(fetch).toHaveBeenCalledWith(new Date(2021, 11, 23), new Date(2021, 11, 23));
         expect(result.length).toBe(7);
         expect(fetch).toHaveBeenCalledTimes(1);
     });
 
-    test("don't request data from the future", async () => {
+    it("doesn't request data from the future", async () => {
         const result = await repository.query(new Date(2022, 1, 1), new Date(2021, 1, 8));
         expect(result.length).toBe(0);
         expect(fetch).not.toHaveBeenCalled();
     });
 });
 
-test("don't cache empty results", async () => {
+it("doesn't cache empty results", async () => {
     const fetch = vi.fn(() => Promise.resolve([]));
     const repository = new Repository(fetch);
 

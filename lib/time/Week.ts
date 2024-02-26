@@ -14,7 +14,7 @@ function* iterateWeeks(start: Week, end: Week): Iterator<Week> {
 
     for (let year = startYear; year <= endYear; year++) {
         const firstWeek = year === startYear ? startWeek : 1;
-        const lastWeek = year === endYear ? endWeek : getISOWeeksInYear(year);
+        const lastWeek = year === endYear ? endWeek : getISOWeeksInYear(new Date(year, 1, 1));
 
         for (let week = firstWeek; week <= lastWeek; week++) {
             yield new Week(year, week);
