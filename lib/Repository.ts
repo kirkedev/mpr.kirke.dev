@@ -51,7 +51,7 @@ class Repository<T extends MprObservation> {
         this.#fetch = fetch;
 
         this.#data = new LRUCache<string, Archive<T>>(Object.assign({
-            max: 54,
+            max: 60,
             ttl: 24 * 60 * 60 * 1000
         }, options));
     }
