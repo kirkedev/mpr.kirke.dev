@@ -1,6 +1,5 @@
 {
     "name": "mpr",
-    "version": "0.4.3",
     "type": "module",
     "main": "index.ts",
     "scripts": {
