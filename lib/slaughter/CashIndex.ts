@@ -21,6 +21,8 @@ interface Values extends Observation {
     netPrice: number;
 }
 
+const arrangements = [Arrangement.Negotiated, Arrangement.MarketFormula, Arrangement.NegotiatedFormula];
+
 const weight = (slaughter: Values): number =>
     slaughter.headCount * slaughter.carcassWeight;
 
@@ -29,8 +31,6 @@ const value = (slaughter: Values): number =>
 
 const avgPrice = (value: number, weight: number): number =>
     round(value / weight);
-
-const arrangements = [Arrangement.Negotiated, Arrangement.MarketFormula, Arrangement.NegotiatedFormula];
 
 const filterSlaughter = (slaughter: Iterable<Slaughter>): Iterable<Values> =>
     filter(slaughter, ({ netPrice, carcassWeight, arrangement }) =>
@@ -60,13 +60,13 @@ function cashIndex(records: Iterable<Slaughter>): Iterable<CashIndex> {
 namespace CashIndex {
     export const from = cashIndex;
 
-    export const index = (cutout: Iterable<CashIndex>): Series =>
-        Array.from(map(cutout, ({ date, indexPrice: value }) => ({
+    export const index = (cash: Iterable<CashIndex>): Series =>
+        Array.from(map(cash, ({ date, indexPrice: value }) => ({
             date, value
         })));
 
-    export const daily = (cutout: Iterable<CashIndex>): Series =>
-        Array.from(map(cutout, ({ date, dailyPrice: value }) => ({
+    export const daily = (cash: Iterable<CashIndex>): Series =>
+        Array.from(map(cash, ({ date, dailyPrice: value }) => ({
             date, value
         })));
 }
