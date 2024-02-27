@@ -1,4 +1,6 @@
-import { parse, format } from "date-fns";
+import { format, parse } from "date-fns";
+import type { UnaryOperator } from "..";
+import Series, { type Data } from "./Series";
 
 const dateFormat = "yyyy-MM-dd";
 
@@ -13,4 +15,7 @@ const getDate = (date: string): Date =>
 const formatDate = (date: Date): string =>
     format(date, dateFormat);
 
-export { formatDate, getDate, today };
+const findByDate = (date: Date): UnaryOperator<Series, Data> =>
+    (series: Series) => Series.find(series, date);
+
+export { formatDate, getDate, today, findByDate };
