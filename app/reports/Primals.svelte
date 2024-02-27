@@ -15,14 +15,12 @@
 
 <script lang="ts">
     export let cutout: Iterable<Cutout>;
-    let primal = Primal.Belly;
-
-    $: model = PrimalViewModel.from(cutout, primal);
+    $: model = PrimalViewModel.from(cutout, Primal.Belly);
     $: ({ stats, selected } = model);
 
-    const select = (selected: Primal) =>
+    const select = (primal: Primal) =>
         function() {
-            primal = selected;
+            model = PrimalViewModel.from(cutout, primal);
         };
 </script>
 
