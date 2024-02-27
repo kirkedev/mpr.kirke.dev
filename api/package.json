@@ -1,6 +1,5 @@
 {
     "name": "api",
-    "version": "0.4.3",
     "main": "index.ts",
     "type": "module",
     "private": true,
