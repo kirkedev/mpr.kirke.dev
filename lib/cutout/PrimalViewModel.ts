@@ -1,5 +1,8 @@
+import type { UnaryOperator } from "..";
 import ObservableState from "../async/ObservableState";
 import { extentBy } from "../itertools/accumulate";
+import map from "../itertools/map";
+import zip from "../itertools/zip";
 import { today } from "../time";
 import Series, { type Data } from "../time/Series";
 import Stat from "../Stat";
@@ -9,6 +12,9 @@ import Primal, { Primals } from "./Primal";
 interface PrimalStat extends Stat {
     selected: boolean;
 }
+
+const findByDate = (date: Date): UnaryOperator<Series, Data> =>
+    (series: Series) => Series.find(series, date);
 
 class PrimalViewModel {
     public static from = (cutout: Iterable<Cutout>, primal = Primal.Belly): PrimalViewModel =>
@@ -29,15 +35,15 @@ class PrimalViewModel {
 
     private constructor(primal: Primal, series: Series[]) {
         const date = today();
+        const observations = map(series, findByDate(date));
 
-        const stats = Primals.map((label, index) => ({
-            ...Stat.from(label, Series.find(series[index], date).value),
-            selected: Primals[index] === primal
+        const stats = map(zip(Primals, observations), ([label, observation]) => ({
+            ...Stat.from(label, observation.value), selected: label === primal
         }));
 
         this.#primal = primal;
         this.#series = series;
-        this.stats = new ObservableState(stats);
+        this.stats = new ObservableState(Array.from(stats));
         this.selected = new ObservableState(Series.find(this.series, date));
     }
 
@@ -54,11 +60,13 @@ class PrimalViewModel {
     }
 
     public selectDate = (date = today()): void => {
-        this.stats.state = Primals.map((label, index) => ({
-            ...Stat.from(label, Series.find(this.#series[index], date).value),
-            selected: Primals[index] === this.#primal
+        const observations = map(this.#series, findByDate(date));
+
+        const stats = map(zip(Primals, observations), ([label, observation]) => ({
+            ...Stat.from(label, observation.value), selected: label === this.#primal
         }));
 
+        this.stats.state = Array.from(stats);
         this.selected.state = Series.find(this.series, date);
     };
 
