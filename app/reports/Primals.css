@@ -32,9 +32,10 @@
     @apply border-transparent;
 }
 
-.selected.stat {
+.stat[data-selected=true] {
     @apply border-purple-400;
     @apply text-gray-700;
+    @apply cursor-default;
 }
 
 .value {
