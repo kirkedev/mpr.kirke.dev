@@ -27,7 +27,7 @@
 <div class="primals report">
     <div class="stats">
         {#each $stats as stat, index}
-            <div role="button" tabindex="0" class={stat.selected ? "selected stat" : "stat"}
+            <div role="button" tabindex="0" class="stat" data-selected={stat.selected ? "true" : "false"}
                 on:click={select(Primals[index])}
                 on:keypress={click}>
                 <h5 class="label">{stat.label}</h5>
