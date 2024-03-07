@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { accumulate, collect } from "lib/async/accumulate";
+import accumulate from "lib/async/accumulate";
+import collect from "lib/async/collect";
 import map from "lib/async/map";
 import Observable from "lib/async/Observable";
 import MutableState, { type Action } from "lib/async/MutableState";

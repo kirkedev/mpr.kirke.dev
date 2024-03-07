@@ -1,14 +1,14 @@
-export interface Loading<T> {
+interface Loading<T> {
     readonly status: "loading";
     readonly data?: T;
 }
 
-export interface Success<T> {
+interface Success<T> {
     readonly status: "success";
     readonly data: T;
 }
 
-export interface Failure<E extends Error> {
+interface Failure<E extends Error> {
     readonly status: "error";
     readonly error: E;
 }
@@ -42,3 +42,5 @@ namespace Result {
 type Result<T, E extends Error> = Success<T> | Loading<T> | Failure<E>;
 
 export default Result;
+
+export type { Success, Failure, Loading };

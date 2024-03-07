@@ -1,7 +1,7 @@
 import { type Callback, type UnaryOperator } from "..";
 import { iterate } from ".";
-import { each } from "./accumulate";
 import Observable from "./Observable";
+import each from "./each";
 import map from "./map";
 
 type Action<T> = UnaryOperator<T, T>;
