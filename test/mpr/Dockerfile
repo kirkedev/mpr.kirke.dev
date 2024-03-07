@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.18 AS dev
+FROM node:lts-alpine3.19 AS dev
 ENV NODE_ENV development
 
 WORKDIR /home/node/mpr

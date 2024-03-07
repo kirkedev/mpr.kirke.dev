@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.18 AS dev
+FROM node:lts-alpine3.19 AS dev
 ENV NODE_ENV development
 ENV API_URL ${API_URL}
 
@@ -12,7 +12,7 @@ RUN yarn workspace app install
 ENTRYPOINT ["yarn", "workspace", "app"]
 CMD ["dev"]
 
-FROM node:lts-alpine3.18 AS build
+FROM node:lts-alpine3.19 AS build
 ENV NODE_ENV production
 WORKDIR /home/node/mpr
 COPY --from=dev /home/node/mpr ./
