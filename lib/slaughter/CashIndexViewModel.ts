@@ -1,4 +1,4 @@
-import ObservableState from "../async/ObservableState";
+import MutableState from "../async/MutableState";
 import { extentBy } from "../itertools/accumulate";
 import { today } from "../time";
 import Series, { type Data } from "../time/Series";
@@ -10,15 +10,15 @@ class CashIndexViewModel {
         new CashIndexViewModel(CashIndex.index(cash));
 
     readonly #series: Series;
-    public readonly selected: ObservableState<Data>;
-    public readonly stats: ObservableState<Stat>;
+    public readonly selected: MutableState<Data>;
+    public readonly stats: MutableState<Stat>;
 
     private constructor(series: Series) {
         this.#series = series;
 
         const cash = Series.find(series, today());
-        this.selected = new ObservableState(cash);
-        this.stats = new ObservableState(Stat.from("Cash Index", cash.value));
+        this.selected = MutableState.from(cash);
+        this.stats = MutableState.from(Stat.from("Cash Index", cash.value));
     }
 
     public get series(): Series {
@@ -35,8 +35,8 @@ class CashIndexViewModel {
 
     public selectDate = (date = today()): void => {
         const cash = Series.find(this.#series, date);
-        this.selected.state = cash;
-        this.stats.state = Stat.from("Cash Index", cash.value);
+        this.selected.value = cash;
+        this.stats.value = Stat.from("Cash Index", cash.value);
     };
 
     public resetDate = (): void => this.selectDate();

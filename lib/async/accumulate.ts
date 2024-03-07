@@ -37,7 +37,7 @@ function collect<T>(iterable: AsyncIterable<T>): UnaryOperator<void, Array<T>> {
     };
 }
 
-async function* accumulate<T, R>(iterable: AsyncIterable<T>, accumulator: Accumulator<T, R>, value: R): AsyncIterable<R> {
+async function* accumulate<T, R>(iterable: AsyncIterable<T>, accumulator: Accumulator<T, R>, value: R): AsyncIterator<R> {
     const iterator = iterate(iterable);
 
     try {

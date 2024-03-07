@@ -1,4 +1,4 @@
-import ObservableState, { type Action } from "lib/async/ObservableState";
+import MutableState, { type Action } from "lib/async/MutableState";
 import Result from "lib/async/Result";
 import { dropWhile } from "lib/itertools/drop";
 import type Period from "lib/time/Period";
@@ -19,7 +19,7 @@ export interface Resources {
 }
 
 const loading: Action<Result<Resources, Error>> = state =>
-    new Result.Loading(Result.isFailure(state) ? undefined : state.data);
+    Result.Loading(Result.isFailure(state) ? undefined : state.data);
 
 function fetch(period: Period): Promise<Resources> {
     const periodStart = period.start;
@@ -38,9 +38,9 @@ function fetch(period: Period): Promise<Resources> {
     }));
 }
 
-class Api extends ObservableState<Result<Resources, Error>> {
+class Api extends MutableState<Result<Resources, Error>> {
     public constructor() {
-        super(new Result.Loading());
+        super(Result.Loading());
     }
 
     public async fetch(period: Period): Promise<Result<Resources, Error>> {
@@ -48,12 +48,12 @@ class Api extends ObservableState<Result<Resources, Error>> {
 
         try {
             const data = await fetch(period);
-            this.state = new Result.Success(data);
+            this.value = Result.Success(data);
         } catch (error) {
-            this.state = new Result.Failure(error as Error);
+            this.value = Result.Failure(error as Error);
         }
 
-        return this.state;
+        return this.value;
     }
 }
 

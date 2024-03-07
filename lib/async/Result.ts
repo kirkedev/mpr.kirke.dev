@@ -1,18 +1,33 @@
+export interface Loading<T> {
+    readonly status: "loading";
+    readonly data?: T;
+}
+
+export interface Success<T> {
+    readonly status: "success";
+    readonly data: T;
+}
+
+export interface Failure<E extends Error> {
+    readonly status: "error";
+    readonly error: E;
+}
+
 namespace Result {
-    export class Loading<T> {
-        public readonly status = "loading";
-        public constructor(public readonly data?: T) {}
-    }
+    export const Loading = <T>(data?: T): Loading<T> => ({
+        status: "loading",
+        data
+    });
 
-    export class Success<T> {
-        public readonly status = "success";
-        public constructor(public readonly data: T) {}
-    }
+    export const Success = <T>(data: T): Success<T> => ({
+        status: "success",
+        data
+    });
 
-    export class Failure<E extends Error> {
-        public readonly status = "error";
-        public constructor(public readonly error: E) {}
-    }
+    export const Failure = <E extends Error>(error: E): Failure<E> => ({
+        status: "error",
+        error
+    });
 
     export const isLoading = <T, E extends Error>(result: Result<T, E>): result is Loading<T> =>
         result.status === "loading";
@@ -24,6 +39,6 @@ namespace Result {
         result.status === "error";
 }
 
-type Result<T, E extends Error> = Result.Success<T> | Result.Loading<T> | Result.Failure<E>;
+type Result<T, E extends Error> = Success<T> | Loading<T> | Failure<E>;
 
 export default Result;

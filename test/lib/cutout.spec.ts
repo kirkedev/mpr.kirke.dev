@@ -215,12 +215,12 @@ describe("Cutout ViewModel", () => {
     });
 
     test("Selected date and formatted stats", () => {
-        expect(model.selected.state).toEqual({
+        expect(model.selected.value).toEqual({
             date: new Date(2020, 3, 20),
             value: 66.68
         });
 
-        expect(model.stats.state).toEqual([{
+        expect(model.stats.value).toEqual([{
             label: "Cutout",
             value: "66.68"
         }, {
@@ -436,12 +436,12 @@ describe("Primal ViewModel", () => {
     });
 
     test("Selected date and formatted stats", () => {
-        expect(model.selected.state).toEqual({
+        expect(model.selected.value).toEqual({
             date: new Date(2020, 3, 20),
             value: 81.32
         });
 
-        expect(model.stats.state).toEqual([{
+        expect(model.stats.value).toEqual([{
             label: "Belly",
             value: "81.32",
             selected: true
