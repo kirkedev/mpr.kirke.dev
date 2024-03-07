@@ -179,12 +179,12 @@ describe("Purchases ViewModel", () => {
     });
 
     test("Selected date and formatted stats", () => {
-        expect(model.selected.state).toEqual({
+        expect(model.selected.value).toEqual({
             date: new Date(2021, 11, 22),
             value: 70.84
         });
 
-        expect(model.stats.state).toEqual({
+        expect(model.stats.value).toEqual({
             label: "Formula",
             value: "70.84"
         });

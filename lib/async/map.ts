@@ -1,8 +1,6 @@
-import { iterate, type UnaryOperator } from ".";
+import { type UnaryOperator } from ".";
 
-async function* map<T, R>(iterable: AsyncIterable<T>, operator: UnaryOperator<T, R>): AsyncIterableIterator<R> {
-    const iterator = iterate(iterable);
-
+async function* map<T, R>(iterator: AsyncIterator<T>, operator: UnaryOperator<T, R>): AsyncIterableIterator<R> {
     try {
         let result = await iterator.next();
 

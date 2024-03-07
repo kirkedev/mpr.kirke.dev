@@ -1,5 +1,5 @@
-import ObservableState from "../async/ObservableState";
 import { extentBy } from "../itertools/accumulate";
+import MutableState from "../async/MutableState";
 import flatten from "../itertools/flatten";
 import { findByDate, today } from "../time";
 import Series, { type Data, type Observation } from "../time/Series";
@@ -14,15 +14,15 @@ class CutoutViewModel {
         ]);
 
     readonly #series: Series[];
-    public readonly selected: ObservableState<Data>;
-    public readonly stats: ObservableState<Stat[]>;
+    public readonly selected: MutableState<Data>;
+    public readonly stats: MutableState<Stat[]>;
 
     private constructor(series: Series[]) {
         const [cutout, index] = series.map(findByDate(today()));
         this.#series = series;
-        this.selected = new ObservableState(cutout);
+        this.selected = MutableState.from(cutout);
 
-        this.stats = new ObservableState([
+        this.stats = MutableState.from([
             Stat.from("Cutout", cutout.value),
             Stat.from("Index", index.value)
         ]);
@@ -47,12 +47,12 @@ class CutoutViewModel {
     public selectDate = (date = today()): void => {
         const [cutout, index] = this.#series.map(findByDate(date));
 
-        this.stats.state = [
+        this.stats.value = [
             Stat.from("Cutout", cutout.value),
             Stat.from("Index", index.value)
         ];
 
-        this.selected.state = cutout;
+        this.selected.value = cutout;
     };
 
     public resetDate = (): void => this.selectDate();

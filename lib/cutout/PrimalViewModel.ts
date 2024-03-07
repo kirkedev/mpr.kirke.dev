@@ -1,4 +1,4 @@
-import ObservableState from "../async/ObservableState";
+import MutableState from "../async/MutableState";
 import { extentBy } from "../itertools/accumulate";
 import map from "../itertools/map";
 import zip from "../itertools/zip";
@@ -26,8 +26,8 @@ class PrimalViewModel {
     readonly #primal: Primal;
     readonly #series: Series[];
 
-    public readonly stats: ObservableState<PrimalStat[]>;
-    public readonly selected: ObservableState<Data>;
+    public readonly stats: MutableState<PrimalStat[]>;
+    public readonly selected: MutableState<Data>;
 
     private constructor(primal: Primal, series: Series[]) {
         const date = today();
@@ -39,8 +39,8 @@ class PrimalViewModel {
 
         this.#primal = primal;
         this.#series = series;
-        this.stats = new ObservableState(Array.from(stats));
-        this.selected = new ObservableState(Series.find(this.series, date));
+        this.stats = MutableState.from(Array.from(stats));
+        this.selected = MutableState.from(Series.find(this.series, date));
     }
 
     public get series(): Series {
@@ -62,8 +62,8 @@ class PrimalViewModel {
             ...Stat.from(label, observation.value), selected: label === this.#primal
         }));
 
-        this.stats.state = Array.from(stats);
-        this.selected.state = Series.find(this.series, date);
+        this.stats.value = Array.from(stats);
+        this.selected.value = Series.find(this.series, date);
     };
 
     public resetDate = (): void => this.selectDate();

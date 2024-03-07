@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { accumulate, collect } from "lib/async/accumulate";
 import map from "lib/async/map";
 import Observable from "lib/async/Observable";
-import ObservableState, { type Action } from "lib/async/ObservableState";
+import MutableState, { type Action } from "lib/async/MutableState";
 import Result from "lib/async/Result";
 import { tick } from ".";
 
@@ -14,19 +14,19 @@ const multiply = (value: number): Action<number> =>
 
 describe("Observable State", () => {
     test("Modify observable state by dispatching actions", async () => {
-        const interactor = new ObservableState(0);
+        const interactor = MutableState.from(0);
 
         interactor.dispatch(plus(1));
         await tick();
-        expect(interactor.state).toBe(1);
+        expect(interactor.value).toBe(1);
 
         interactor.dispatch(multiply(10));
         await tick();
-        expect(interactor.state).toBe(10);
+        expect(interactor.value).toBe(10);
     });
 
     test("collect interactor states to array", async () => {
-        const interactor = new ObservableState(0);
+        const interactor = MutableState.from(0);
         const states = collect(interactor);
 
         interactor.dispatch(plus(10));
@@ -38,12 +38,12 @@ describe("Observable State", () => {
         interactor.dispatch(multiply(10));
         await tick();
 
-        expect(interactor.state).toBe(1000);
+        expect(interactor.value).toBe(1000);
         expect(states()).toEqual([10, 100, 1000]);
     });
 
     test("multiple subscribers", async () => {
-        const interactor = new ObservableState(0);
+        const interactor = MutableState.from(0);
         const first = collect(interactor);
         const second = collect(interactor);
         const third = collect(interactor);
@@ -185,8 +185,8 @@ describe("Create reducers for a greeting state", () => {
     });
 
     test("use an observable state", async () => {
-        const greeting = new ObservableState<State>({ greeting: "Hello", name: "World" });
-        const models = collect(map(greeting, state => new Greeter(state)));
+        const greeting = MutableState.from<State>({ greeting: "Hello", name: "World" });
+        const models = collect(greeting.map(state => new Greeter(state)));
 
         greeting.dispatch(updateGreeting("Goodbye"));
         await tick();
@@ -205,7 +205,7 @@ describe("Create reducers for a greeting state", () => {
     });
 
     test("subclass an observable state", async () => {
-        class Greeting extends ObservableState<State> {
+        class Greeting extends MutableState<State> {
             public constructor() {
                 super({ greeting: "Hello", name: "World" });
             }
@@ -220,7 +220,7 @@ describe("Create reducers for a greeting state", () => {
         }
 
         const state = new Greeting();
-        const models = collect(map(state, state => new Greeter(state)));
+        const models = collect(state.map( state => new Greeter(state)));
 
         state.greeting = "Goodbye";
         await tick();
@@ -241,7 +241,7 @@ describe("Create reducers for a greeting state", () => {
 
 describe("Result class", () => {
     test("Loading", () => {
-        const result = new Result.Loading();
+        const result = Result.Loading();
         expect(result.data).toBeUndefined();
         expect(Result.isLoading(result)).toBe(true);
         expect(Result.isSuccess(result)).toBe(false);
@@ -249,7 +249,7 @@ describe("Result class", () => {
     });
 
     test("Loading with prior data", () => {
-        const result = new Result.Loading("old data");
+        const result = Result.Loading("old data");
         expect(result.data).toBe("old data");
         expect(Result.isLoading(result)).toBe(true);
         expect(Result.isSuccess(result)).toBe(false);
@@ -257,7 +257,7 @@ describe("Result class", () => {
     });
 
     test("Success", () => {
-        const result = new Result.Success("new data");
+        const result = Result.Success("new data");
         expect(result.data).toBe("new data");
         expect(Result.isLoading(result)).toBe(false);
         expect(Result.isSuccess(result)).toBe(true);
@@ -265,7 +265,7 @@ describe("Result class", () => {
     });
 
     test("Failure", () => {
-        const result = new Result.Failure(Error("A problem has occurred"));
+        const result = Result.Failure(Error("A problem has occurred"));
         expect(result.error.message).toBe("A problem has occurred");
         expect(Result.isLoading(result)).toBe(false);
         expect(Result.isSuccess(result)).toBe(false);
