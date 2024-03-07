@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { iterate } from "lib/async";
-import { collect } from "lib/async/accumulate";
+import collect from "lib/async/collect";
 import { Arrangement, Basis, Seller } from "lib/mpr/PurchaseType";
 import parse, { type BarrowsGilts } from "lib/slaughter/mpr";
 import CashIndex from "lib/slaughter/CashIndex";

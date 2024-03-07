@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { iterate } from "lib/async";
-import { collect } from "lib/async/accumulate";
+import collect from "lib/async/collect";
 import type { ValuesResponse, VolumeResponse } from "lib/cutout/mpr";
 import parse from "lib/cutout/mpr";
 import CutoutIndex from "lib/cutout/CutoutIndex";

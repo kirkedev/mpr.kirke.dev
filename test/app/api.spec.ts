@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { get } from "svelte/store";
-import type Result from "lib/async/Result";
+import type { Success } from "lib/async/Result";
 import { count } from "lib/itertools/accumulate";
 import { first, last } from "lib/itertools/slice";
 import Period from "lib/time/Period";
@@ -11,7 +11,7 @@ describe("fetch periods", () => {
 
     test("fetch three months of data", async () => {
         await api.fetch(Period.ThreeMonths);
-        const { data } = get(api) as Result.Success<Resources>;
+        const { data } = get(api) as Success<Resources>;
         const { cutoutIndex, purchases, cashIndex, cutout } = data;
 
         expect(count(cutoutIndex)).toBe(64);
@@ -33,7 +33,7 @@ describe("fetch periods", () => {
 
     test("fetch six months of data", async () => {
         await api.fetch(Period.SixMonths);
-        const { data } = get(api) as Result.Success<Resources>;
+        const { data } = get(api) as Success<Resources>;
         const { cutoutIndex, purchases, cashIndex, cutout } = data;
 
         expect(count(cutoutIndex)).toBe(128);
@@ -55,7 +55,7 @@ describe("fetch periods", () => {
 
     test("fetch one year of data", async () => {
         await api.fetch(Period.OneYear);
-        const { data } = get(api) as Result.Success<Resources>;
+        const { data } = get(api) as Success<Resources>;
         const { cutoutIndex, purchases, cashIndex, cutout } = data;
 
         expect(count(cutoutIndex)).toBe(254);

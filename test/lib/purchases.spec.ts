@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { iterate } from "lib/async";
-import { collect } from "lib/async/accumulate";
+import collect from "lib/async/collect";
 import { Arrangement, Basis, Seller } from "lib/mpr/PurchaseType";
 import Purchase from "lib/purchases";
 import parse, { type Purchases } from "lib/purchases/mpr";
