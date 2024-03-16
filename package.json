@@ -7,7 +7,7 @@
     "license": "ISC",
     "private": true,
     "scripts": {
-        "prepare": "husky install .githooks",
+        "prepare": "husky install .githooks && yarn workspace test playwright install",
         "lint": "eslint . --ext .ts,.svelte",
         "fix": "yarn lint --fix",
         "stop": "TAG=${TAG:-$(git describe --tags --match 'v*' --dirty --always)}; docker compose down --remove-orphans",
