@@ -20,7 +20,7 @@ The only system dependencies are [node.js](https://nodejs.org/en/download/curren
 ```bash
 git clone git@github.com:kirkedev/mpr.kirke.dev.git
 yarn install
-yarn playwright install
+yarn workspace test playwright install
 yarn prepare
 ```
 
