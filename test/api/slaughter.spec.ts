@@ -31,27 +31,32 @@ describe("slaughter api", () => {
         //  https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2021/LH210809.txt
             date: new Date(2021, 7, 9),
             dailyPrice: 110.59,
-            indexPrice: 110.77
+            indexPrice: 110.77,
+            volume: 417545
         }, {
         //  https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2021/LH210810.txt
             date: new Date(2021, 7, 10),
             dailyPrice: 110.32,
-            indexPrice: 110.45
+            indexPrice: 110.45,
+            volume: 434993
         }, {
         //  https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2021/LH210811.txt
             date: new Date(2021, 7, 11),
             dailyPrice: 110.06,
-            indexPrice: 110.19
+            indexPrice: 110.19,
+            volume: 436525
         }, {
         //  https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2021/LH210812.txt
             date: new Date(2021, 7, 12),
             dailyPrice: 109.75,
-            indexPrice: 109.90
+            indexPrice: 109.90,
+            volume: 430424
         }, {
         //  https://www.cmegroup.com/ftp/cash_settled_commodity_index_prices/daily_data/lean_hogs/2021/LH210813.txt
             date: new Date(2021, 7, 13),
             dailyPrice: 109.59,
-            indexPrice: 109.67
+            indexPrice: 109.67,
+            volume: 497898
         }]);
     });
 });

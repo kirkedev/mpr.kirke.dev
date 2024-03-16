@@ -29,7 +29,7 @@ class WindowedIterable<T> implements Iterable<T[]> {
         iterateWindows(iterate(this.iterable), this.size);
 }
 
-const rolling = <T>(iterable: Iterable<T>, size: number): Iterable<T[]> =>
+const window = <T>(iterable: Iterable<T>, size: number): Iterable<T[]> =>
     new WindowedIterable(iterable, size);
 
-export default rolling;
+export default window;

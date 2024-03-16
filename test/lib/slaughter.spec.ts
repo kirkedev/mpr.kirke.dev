@@ -158,6 +158,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 1));
         expect(record.dailyPrice).toBeCloseTo(57.45);
         expect(record.indexPrice).toBeCloseTo(57.41);
+        expect(record.volume).toBe(743_615);
     });
 
     test("Lean Hog Index for 2/4/2019", () => {
@@ -166,6 +167,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 4));
         expect(record.dailyPrice).toBeCloseTo(57.18);
         expect(record.indexPrice).toBeCloseTo(57.36);
+        expect(record.volume).toBe(435_442);
     });
 
     test("Lean Hog Index for 2/5/2019", () => {
@@ -174,6 +176,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 5));
         expect(record.dailyPrice).toBeCloseTo(57.13);
         expect(record.indexPrice).toBeCloseTo(57.16);
+        expect(record.volume).toBe(442_685);
     });
 
     test("Lean Hog Index for 2/6/2019", () => {
@@ -182,6 +185,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 6));
         expect(record.dailyPrice).toBeCloseTo(56.65);
         expect(record.indexPrice).toBeCloseTo(56.89);
+        expect(record.volume).toBe(435_426);
     });
 
     test("Lean Hog Index for 2/7/2019", () => {
@@ -190,6 +194,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 7));
         expect(record.dailyPrice).toBeCloseTo(56.40);
         expect(record.indexPrice).toBeCloseTo(56.53);
+        expect(record.volume).toBe(406_406);
     });
 
     test("Lean Hog Index for 2/8/2019", () => {
@@ -198,6 +203,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 8));
         expect(record.dailyPrice).toBeCloseTo(55.98);
         expect(record.indexPrice).toBeCloseTo(56.14);
+        expect(record.volume).toBe(605_024);
     });
 
     test("Lean Hog Index for 2/11/2019", () => {
@@ -206,6 +212,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 11));
         expect(record.dailyPrice).toBeCloseTo(55.78);
         expect(record.indexPrice).toBeCloseTo(55.91);
+        expect(record.volume).toBe(405_743);
     });
 
     test("Lean Hog Index for 2/12/2019", () => {
@@ -214,6 +221,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 12));
         expect(record.dailyPrice).toBeCloseTo(55.32);
         expect(record.indexPrice).toBeCloseTo(55.55);
+        expect(record.volume).toBe(418_607);
     });
 
     test("Lean Hog Index for 2/13/2019", () => {
@@ -222,6 +230,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 13));
         expect(record.dailyPrice).toBeCloseTo(55.16);
         expect(record.indexPrice).toBeCloseTo(55.24);
+        expect(record.volume).toBe(423_983);
     });
 
     test("Lean Hog Index for 2/14/2019", () => {
@@ -230,6 +239,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 14));
         expect(record.dailyPrice).toBeCloseTo(54.89);
         expect(record.indexPrice).toBeCloseTo(55.02);
+        expect(record.volume).toBe(433_976);
     });
 
     test("Lean Hog Index for 2/15/2019", () => {
@@ -238,6 +248,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 15));
         expect(record.dailyPrice).toBeCloseTo(54.64);
         expect(record.indexPrice).toBeCloseTo(54.74);
+        expect(record.volume).toBe(642_740);
     });
 
     test("Lean Hog Index for 2/18/2019", () => {
@@ -246,6 +257,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 18));
         expect(record.dailyPrice).toBeCloseTo(54.08);
         expect(record.indexPrice).toBeCloseTo(54.43);
+        expect(record.volume).toBe(420_891);
     });
 
     test("Lean Hog Index for 2/19/2019", () => {
@@ -254,6 +266,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 19));
         expect(record.dailyPrice).toBeCloseTo(54.19);
         expect(record.indexPrice).toBeCloseTo(54.13);
+        expect(record.volume).toBe(448_829);
     });
 
     test("Lean Hog Index for 2/20/2019", () => {
@@ -262,6 +275,7 @@ describe("Calculate the CME Lean Hog Index", () => {
         expect(record.date).toEqual(new Date(2019, 1, 20));
         expect(record.dailyPrice).toBeCloseTo(53.93);
         expect(record.indexPrice).toBeCloseTo(54.06);
+        expect(record.volume).toBe(429_358);
     });
 });
 
