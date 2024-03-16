@@ -77,22 +77,22 @@
         "@typescript-eslint/space-infix-ops": "error"
     },
     "overrides": [{
-        "files": ["api/**/*.ts"],
+        "files": ["api/**/*.ts", "test/api/**/*.ts"],
         "env": {
             "node": true
         }
     }, {
-        "files": ["lib/**/*.ts"],
+        "files": ["lib/**/*.ts", "test/lib/**/*.ts"],
         "env": {
             "shared-node-browser": true
         }
     }, {
-        "files": ["app/**/*.ts"],
+        "files": ["app/**/*.ts", "test/app/**/*.ts"],
         "env": {
             "browser": true
         }
     }, {
-        "files": ["app/**/*.svelte", "test/ui/**/*.svelte"],
+        "files": ["app/**/*.svelte", "test/app/**/*.svelte"],
         "env": {
             "browser": true
         },

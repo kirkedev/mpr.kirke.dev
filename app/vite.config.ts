@@ -8,7 +8,6 @@ import svgColors from "./svg-colors";
 const isProduction = process.env.NODE_ENV === "production";
 
 export default defineConfig({
-    cacheDir: "../node_modules/.vite",
     build: {
         outDir: "build",
         minify:  isProduction ? "esbuild" : false
