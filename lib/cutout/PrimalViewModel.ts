@@ -1,4 +1,4 @@
-import MutableState from "../async/MutableState";
+import state, { type State, type MutableState } from "../async/state";
 import { extentBy } from "../itertools/accumulate";
 import map from "../itertools/map";
 import zip from "../itertools/zip";
@@ -14,33 +14,38 @@ interface PrimalStat extends Stat {
 
 class PrimalViewModel {
     public static from = (cutout: Iterable<Cutout>, primal = Primal.Belly): PrimalViewModel =>
-        new PrimalViewModel(primal, [
+        new PrimalViewModel([
             Primal.belly(cutout),
             Primal.ham(cutout),
             Primal.loin(cutout),
             Primal.butt(cutout),
             Primal.rib(cutout),
             Primal.picnic(cutout)
-        ]);
+        ], primal);
 
     readonly #primal: Primal;
     readonly #series: Series[];
+    readonly #date: MutableState<Date>;
 
-    public readonly stats: MutableState<PrimalStat[]>;
-    public readonly selected: MutableState<Data>;
+    public readonly stats: State<PrimalStat[]>;
+    public readonly selected: State<Data>;
 
-    private constructor(primal: Primal, series: Series[]) {
-        const date = today();
-        const observations = map(series, findByDate(date));
-
-        const stats = map(zip(Primals, observations), ([label, observation]) => ({
-            ...Stat.from(label, observation.value), selected: label === primal
-        }));
-
-        this.#primal = primal;
+    private constructor(series: Series[], primal: Primal) {
         this.#series = series;
-        this.stats = MutableState.from(Array.from(stats));
-        this.selected = MutableState.from(Series.find(this.series, date));
+        this.#primal = primal;
+        this.#date = state(today());
+
+        this.stats = this.#date.map(date => {
+            const observations = map(series, findByDate(date));
+
+            const stats = map(zip(Primals, observations), ([label, observation]) => ({
+                ...Stat.from(label, observation.value), selected: label === primal
+            }));
+
+            return Array.from(stats);
+        });
+
+        this.selected = this.#date.map(date => Series.find(this.series, date));
     }
 
     public get series(): Series {
@@ -55,18 +60,13 @@ class PrimalViewModel {
         return extentBy(this.series, record => record.value);
     }
 
-    public selectDate = (date = today()): void => {
-        const observations = map(this.#series, findByDate(date));
-
-        const stats = map(zip(Primals, observations), ([label, observation]) => ({
-            ...Stat.from(label, observation.value), selected: label === this.#primal
-        }));
-
-        this.stats.value = Array.from(stats);
-        this.selected.value = Series.find(this.series, date);
+    public selectDate = (date: Date): void => {
+        this.#date.value = date;
     };
 
-    public resetDate = (): void => this.selectDate();
+    public resetDate = (): void => {
+        this.selectDate(today());
+    };
 }
 
 export default PrimalViewModel;

@@ -1,4 +1,4 @@
-import MutableState from "../async/MutableState";
+import state, { type State, type MutableState } from "../async/state";
 import { extentBy } from "../itertools/accumulate";
 import { today } from "../time";
 import Series, { type Data } from "../time/Series";
@@ -11,14 +11,12 @@ class CashIndexViewModel {
 
     readonly #series: Series;
     public readonly selected: MutableState<Data>;
-    public readonly stats: MutableState<Stat>;
+    public readonly stats: State<Stat>;
 
     private constructor(series: Series) {
         this.#series = series;
-
-        const cash = Series.find(series, today());
-        this.selected = MutableState.from(cash);
-        this.stats = MutableState.from(Stat.from("Cash Index", cash.value));
+        this.selected = state(Series.find(series, today()));
+        this.stats = this.selected.map(selected => Stat.from("Cash Index", selected.value));
     }
 
     public get series(): Series {
@@ -33,13 +31,13 @@ class CashIndexViewModel {
         return extentBy(this.#series, record => record.value);
     }
 
-    public selectDate = (date = today()): void => {
-        const cash = Series.find(this.#series, date);
-        this.selected.value = cash;
-        this.stats.value = Stat.from("Cash Index", cash.value);
+    public selectDate = (date: Date): void => {
+        this.selected.value = Series.find(this.#series, date);
     };
 
-    public resetDate = (): void => this.selectDate();
+    public resetDate = (): void => {
+        this.selectDate(today());
+    };
 }
 
 export default CashIndexViewModel;

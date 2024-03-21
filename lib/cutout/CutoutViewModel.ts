@@ -1,8 +1,8 @@
 import { extentBy } from "../itertools/accumulate";
-import MutableState from "../async/MutableState";
+import state, { type State, type MutableState } from "../async/state";
 import flatten from "../itertools/flatten";
 import { findByDate, today } from "../time";
-import Series, { type Data, type Observation } from "../time/Series";
+import Series, { type Data } from "../time/Series";
 import Stat from "../Stat";
 import CutoutIndex from "./CutoutIndex";
 
@@ -14,18 +14,25 @@ class CutoutViewModel {
         ]);
 
     readonly #series: Series[];
-    public readonly selected: MutableState<Data>;
-    public readonly stats: MutableState<Stat[]>;
+    readonly #date: MutableState<Date>;
+
+    public readonly selected: State<Data>;
+    public readonly stats: State<Stat[]>;
 
     private constructor(series: Series[]) {
-        const [cutout, index] = series.map(findByDate(today()));
         this.#series = series;
-        this.selected = MutableState.from(cutout);
+        this.#date = state(today());
 
-        this.stats = MutableState.from([
-            Stat.from("Cutout", cutout.value),
-            Stat.from("Index", index.value)
-        ]);
+        this.stats = this.#date.map(date => {
+            const [cutout, index] = this.#series.map(findByDate(date));
+
+            return [
+                Stat.from("Cutout", cutout.value),
+                Stat.from("Index", index.value)
+            ];
+        });
+
+        this.selected = this.#date.map(date => Series.find(this.cutout, date));
     }
 
     public get cutout(): Series {
@@ -37,25 +44,20 @@ class CutoutViewModel {
     }
 
     public get dates(): readonly [Date, Date] {
-        return Series.extent(flatten<Observation>(this.#series));
+        return Series.extent(flatten(this.#series));
     }
 
     public get values(): readonly [number, number] {
-        return extentBy(flatten<Data>(this.#series), record => record.value);
+        return extentBy(flatten(this.#series), record => record.value);
     }
 
-    public selectDate = (date = today()): void => {
-        const [cutout, index] = this.#series.map(findByDate(date));
-
-        this.stats.value = [
-            Stat.from("Cutout", cutout.value),
-            Stat.from("Index", index.value)
-        ];
-
-        this.selected.value = cutout;
+    public selectDate = (date: Date): void => {
+        this.#date.value = date;
     };
 
-    public resetDate = (): void => this.selectDate();
+    public resetDate = (): void => {
+        this.selectDate(today());
+    };
 }
 
 export default CutoutViewModel;

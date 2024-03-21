@@ -1,7 +1,7 @@
+import state, { type State, type MutableState } from "../async/state";
 import { extentBy } from "../itertools/accumulate";
 import { today } from "../time";
 import Series, { type Data } from "../time/Series";
-import MutableState from "../async/MutableState";
 import Stat from "../Stat";
 import Purchase from ".";
 
@@ -11,14 +11,12 @@ class PurchasesViewModel {
 
     readonly #series: Series;
     public readonly selected: MutableState<Data>;
-    public readonly stats: MutableState<Stat>;
+    public readonly stats: State<Stat>;
 
     private constructor(series: Series) {
-        const formula = Series.find(series, today());
-
         this.#series = series;
-        this.selected = MutableState.from(formula);
-        this.stats = MutableState.from(Stat.from("Formula", formula.value));
+        this.selected = state(Series.find(series, today()));
+        this.stats = this.selected.map(selected => Stat.from("Formula", selected.value));
     }
 
     public get series(): Series {
@@ -33,13 +31,13 @@ class PurchasesViewModel {
         return extentBy(this.#series, record => record.value);
     }
 
-    public selectDate = (date = today()): void => {
-        const formula = Series.find(this.#series, date);
-        this.selected.value = formula;
-        this.stats.value = Stat.from("Formula", formula.value);
+    public selectDate = (date: Date): void => {
+        this.selected.value = Series.find(this.series, date);
     };
 
-    public resetDate = (): void => this.selectDate();
+    public resetDate = (): void => {
+        this.selectDate(today());
+    };
 }
 
 export default PurchasesViewModel;

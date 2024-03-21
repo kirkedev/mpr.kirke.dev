@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 import accumulate from "lib/async/accumulate";
 import collect from "lib/async/collect";
 import map from "lib/async/map";
-import Observable from "lib/async/Observable";
-import MutableState, { type Action } from "lib/async/MutableState";
+import Channel from "lib/async/Channel";
+import state, { type Action, MutableState } from "lib/async/state";
 import Result from "lib/async/Result";
 import { tick } from ".";
 
@@ -15,7 +15,7 @@ const multiply = (value: number): Action<number> =>
 
 describe("Observable State", () => {
     test("Modify observable state by dispatching actions", async () => {
-        const interactor = MutableState.from(0);
+        const interactor = state(0);
 
         interactor.dispatch(plus(1));
         await tick();
@@ -27,7 +27,7 @@ describe("Observable State", () => {
     });
 
     test("collect interactor states to array", async () => {
-        const interactor = MutableState.from(0);
+        const interactor = state(0);
         const states = collect(interactor);
 
         interactor.dispatch(plus(10));
@@ -44,7 +44,7 @@ describe("Observable State", () => {
     });
 
     test("multiple subscribers", async () => {
-        const interactor = MutableState.from(0);
+        const interactor = state(0);
         const first = collect(interactor);
         const second = collect(interactor);
         const third = collect(interactor);
@@ -108,7 +108,7 @@ describe("Create reducers for a greeting state", () => {
 
         type Actions = UpdateGreetingAction | UpdateNameAction;
 
-        const actions = new Observable<Actions>();
+        const actions = new Channel<Actions>();
 
         const states = accumulate(actions, (state, action) => {
             switch (action.type) {
@@ -138,7 +138,7 @@ describe("Create reducers for a greeting state", () => {
     });
 
     test("emit actions as patches to state", async () => {
-        const actions = new Observable<Partial<State>>();
+        const actions = new Channel<Partial<State>>();
 
         const states = accumulate(actions, (state, update) => ({ ...state, ...update }),
             { greeting: "Hello", name: "World" });
@@ -162,7 +162,7 @@ describe("Create reducers for a greeting state", () => {
     });
 
     test("emit actions as functions", async () => {
-        const actions = new Observable<Action<State>>();
+        const actions = new Channel<Action<State>>();
 
         const states = accumulate(actions, (state, action) => action(state),
             { greeting: "Hello", name: "World" });
@@ -186,7 +186,7 @@ describe("Create reducers for a greeting state", () => {
     });
 
     test("use an observable state", async () => {
-        const greeting = MutableState.from<State>({ greeting: "Hello", name: "World" });
+        const greeting = state({ greeting: "Hello", name: "World" });
         const models = collect(greeting.map(state => new Greeter(state)));
 
         greeting.dispatch(updateGreeting("Goodbye"));

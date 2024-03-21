@@ -1,6 +1,6 @@
 import { type Callback, type UnaryOperator } from "..";
 import { iterate } from ".";
-import Observable from "./Observable";
+import Channel from "./Channel";
 import each from "./each";
 import map from "./map";
 
@@ -35,11 +35,8 @@ class MappedState<T, R> implements State<R> {
 }
 
 class MutableState<T> implements State<T> {
-    public static from = <T>(state: T): MutableState<T> =>
-        new MutableState(state);
-
     #state: T;
-    readonly #states = new Observable<T>();
+    readonly #states = new Channel<T>();
 
     public constructor(state: T) {
         this.#state = state;
@@ -71,6 +68,11 @@ class MutableState<T> implements State<T> {
     };
 }
 
-export default MutableState;
+const state = <T>(value: T): MutableState<T> =>
+    new MutableState(value);
+
+export default state;
+
+export { MutableState };
 
 export type { Action, AsyncAction, State };

@@ -1,4 +1,4 @@
-import MutableState, { type Action } from "lib/async/MutableState";
+import { type Action, MutableState } from "lib/async/state";
 import Result from "lib/async/Result";
 import { dropWhile } from "lib/itertools/drop";
 import type Period from "lib/time/Period";

@@ -1,8 +1,8 @@
 import type { Callback } from "..";
 
-class Observer<T> implements AsyncIterator<T> {
+class Subscriber<T> implements AsyncIterator<T> {
     #done = false;
-    public onClose?: Callback<Observer<T>>;
+    public onClose?: Callback<Subscriber<T>>;
     readonly #subscribers = new Array<Callback<IteratorResult<T>>>();
 
     public emit = (value: T): void => {
@@ -28,19 +28,19 @@ class Observer<T> implements AsyncIterator<T> {
     };
 }
 
-class Observable<T> implements AsyncIterable<T> {
-    readonly #observers = new Set<Observer<T>>();
+class Channel<T> implements AsyncIterable<T> {
+    readonly #subscribers = new Set<Subscriber<T>>();
 
     public emit = (value: T): void => {
-        this.#observers.forEach(observer => observer.emit(value));
+        this.#subscribers.forEach(observer => observer.emit(value));
     };
 
     public [Symbol.asyncIterator] = (): AsyncIterator<T> => {
-        const observer = new Observer<T>();
-        this.#observers.add(observer);
-        observer.onClose = observer => this.#observers.delete(observer);
-        return observer;
+        const subscriber = new Subscriber<T>();
+        this.#subscribers.add(subscriber);
+        subscriber.onClose = observer => this.#subscribers.delete(observer);
+        return subscriber;
     };
 }
 
-export default Observable;
+export default Channel;
