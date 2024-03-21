@@ -1,6 +1,7 @@
 {
     "name": "mpr.kirke.dev",
     "version": "0.4.3",
+    "type": "module",
     "description": "Dashboard and analytics for USDA Mandatory Price Reporting",
     "homepage": "https://github.com/kirkedev/mpr.kirke.dev",
     "author": "Andrew Kirkegaard <andrew@kirke.dev> (https://github.com/kirkedev)",
@@ -31,7 +32,7 @@
         "test",
         "test/mpr"
     ],
-    "packageManager": "yarn@4.1.0",
+    "packageManager": "yarn@4.1.1",
     "engines": {
         "node": ">=18"
     }
